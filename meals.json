@@ -1,0 +1,3229 @@
+[
+  {
+    "id": 1,
+    "name": "Pasta Bolognese",
+    "cat": "pasta",
+    "crockpot": true,
+    "fridge": [
+      "Ground beef",
+      "Parmesan",
+      "Milk"
+    ],
+    "pantry": [
+      "Spaghetti",
+      "Pasta sauce",
+      "Onion",
+      "Garlic",
+      "Olive oil",
+      "Italian seasoning"
+    ],
+    "sides": [
+      "Garlic bread",
+      "Side salad"
+    ],
+    "recipe": [
+      "Heat olive oil over medium-high. Sauté onion 5 min, add garlic 1 min.",
+      "Brown beef, drain fat. Add pasta sauce and seasoning, simmer 20 min.",
+      "Cook spaghetti in salted water until al dente.",
+      "Toss pasta with sauce. Finish with Parmesan."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 38,
+      "carb": 58,
+      "fat": 18,
+      "satFat": 6,
+      "fibre": 5,
+      "sodium": 580,
+      "sugar": 8
+    },
+    "health": "balanced",
+    "cfg": true
+  },
+  {
+    "id": 2,
+    "name": "Chicken Alfredo",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Heavy cream",
+      "Parmesan",
+      "Butter"
+    ],
+    "pantry": [
+      "Fettuccine",
+      "Garlic",
+      "Olive oil",
+      "Nutmeg"
+    ],
+    "sides": [
+      "Garlic bread",
+      "Steamed broccoli"
+    ],
+    "recipe": [
+      "Cook fettuccine al dente. Reserve 1 cup pasta water.",
+      "Season and sear chicken in butter 4–5 min per side. Rest and slice.",
+      "Melt butter, add garlic, pour in cream. Whisk in Parmesan until smooth.",
+      "Toss pasta in sauce with chicken. Adjust with pasta water."
+    ],
+    "macros": {
+      "cal": 720,
+      "pro": 48,
+      "carb": 55,
+      "fat": 32,
+      "satFat": 16,
+      "fibre": 2,
+      "sodium": 640,
+      "sugar": 4
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 3,
+    "name": "Pasta & Italian Sausage",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Italian sausage",
+      "Parmesan"
+    ],
+    "pantry": [
+      "Pasta",
+      "Canned tomatoes",
+      "Olives",
+      "Zucchini",
+      "Garlic",
+      "Olive oil",
+      "Chili flakes"
+    ],
+    "sides": [
+      "Garlic bread"
+    ],
+    "recipe": [
+      "Brown sausage, remove and slice.",
+      "Sauté zucchini, garlic, chili flakes. Add olives and tomatoes, simmer 15 min.",
+      "Return sausage. Toss with cooked pasta. Finish with Parmesan."
+    ],
+    "macros": {
+      "cal": 640,
+      "pro": 32,
+      "carb": 62,
+      "fat": 26,
+      "satFat": 8,
+      "fibre": 5,
+      "sodium": 880,
+      "sugar": 7
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 4,
+    "name": "Tortellini Bolognese",
+    "cat": "pasta",
+    "crockpot": true,
+    "fridge": [
+      "Ground beef",
+      "Cheese tortellini",
+      "Parmesan"
+    ],
+    "pantry": [
+      "Pasta sauce",
+      "Garlic",
+      "Onion",
+      "Olive oil",
+      "Italian seasoning"
+    ],
+    "sides": [
+      "Garlic bread",
+      "Side salad"
+    ],
+    "recipe": [
+      "Brown beef with onion and garlic. Add pasta sauce, simmer 15 min.",
+      "Cook tortellini per package. Combine and finish with Parmesan."
+    ],
+    "macros": {
+      "cal": 610,
+      "pro": 36,
+      "carb": 62,
+      "fat": 20,
+      "satFat": 7,
+      "fibre": 4,
+      "sodium": 820,
+      "sugar": 9
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 5,
+    "name": "Tortellini a la Jared",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Cheese tortellini",
+      "Parmesan",
+      "Butter"
+    ],
+    "pantry": [
+      "Garlic",
+      "Olive oil",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [
+      "Garlic bread"
+    ],
+    "recipe": [
+      "Cook tortellini in salted water. Reserve ¼ cup pasta water.",
+      "Melt butter with garlic 1–2 min. Toss tortellini in garlic butter.",
+      "Finish generously with Parmesan."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 22,
+      "carb": 54,
+      "fat": 24,
+      "satFat": 12,
+      "fibre": 2,
+      "sodium": 580,
+      "sugar": 3
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 6,
+    "name": "Pasta & Burrata",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Burrata",
+      "Butter"
+    ],
+    "pantry": [
+      "Pasta",
+      "Cherry tomatoes",
+      "Basil",
+      "Olive oil",
+      "Garlic",
+      "Chili flakes"
+    ],
+    "sides": [
+      "Garlic bread",
+      "Side salad"
+    ],
+    "recipe": [
+      "Roast cherry tomatoes with olive oil, salt, pepper at 400°F 20 min.",
+      "Cook pasta, toss with roasted tomatoes, butter and basil.",
+      "Top each bowl with burrata. Break at table."
+    ],
+    "macros": {
+      "cal": 590,
+      "pro": 22,
+      "carb": 65,
+      "fat": 26,
+      "satFat": 10,
+      "fibre": 3,
+      "sodium": 420,
+      "sugar": 6
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 7,
+    "name": "Pizza Lasagna & Cheese Pizza",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Mozzarella",
+      "Ricotta",
+      "Parmesan",
+      "Pepperoni"
+    ],
+    "pantry": [
+      "Lasagna noodles",
+      "Pizza kit",
+      "Pizza sauce",
+      "Italian seasoning"
+    ],
+    "sides": [],
+    "recipe": [
+      "Cook lasagna noodles al dente. Mix ricotta with Parmesan and seasoning.",
+      "Layer: sauce, noodles, ricotta, mozzarella, pepperoni. Repeat twice.",
+      "Bake 375°F 35 min covered, 10 min uncovered. Rest 10 min.",
+      "Prepare pizza kit alongside per instructions."
+    ],
+    "macros": {
+      "cal": 680,
+      "pro": 42,
+      "carb": 58,
+      "fat": 30,
+      "satFat": 14,
+      "fibre": 3,
+      "sodium": 1050,
+      "sugar": 8
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 8,
+    "name": "Baked Ziti with Italian Sausage",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Italian sausage",
+      "Ricotta",
+      "Mozzarella",
+      "Parmesan"
+    ],
+    "pantry": [
+      "Ziti pasta",
+      "Pasta sauce",
+      "Garlic",
+      "Olive oil",
+      "Italian seasoning"
+    ],
+    "sides": [
+      "Garlic bread",
+      "Side salad"
+    ],
+    "recipe": [
+      "Cook ziti al dente. Brown sausage, add pasta sauce, simmer 10 min.",
+      "Mix pasta with sauce, ricotta, half the mozzarella. Pour into 9x13 dish.",
+      "Top with remaining mozzarella and Parmesan. Bake 375°F 25–30 min."
+    ],
+    "macros": {
+      "cal": 660,
+      "pro": 40,
+      "carb": 60,
+      "fat": 28,
+      "satFat": 12,
+      "fibre": 4,
+      "sodium": 980,
+      "sugar": 9
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 9,
+    "name": "Gnocchi Brown Butter & Parmesan",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Potato gnocchi",
+      "Butter",
+      "Parmesan"
+    ],
+    "pantry": [
+      "Garlic",
+      "Fresh sage",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [
+      "Side salad"
+    ],
+    "recipe": [
+      "Cook gnocchi in salted water until they float, 2–3 min. Drain.",
+      "Cook butter over medium heat, swirling, until golden brown and nutty, 4–5 min.",
+      "Add sage and garlic 30 sec. Toss gnocchi. Serve with Parmesan."
+    ],
+    "macros": {
+      "cal": 490,
+      "pro": 14,
+      "carb": 58,
+      "fat": 22,
+      "satFat": 13,
+      "fibre": 2,
+      "sodium": 520,
+      "sugar": 2
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 10,
+    "name": "Creamy Tuscan Chicken Pasta",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Heavy cream",
+      "Parmesan",
+      "Butter"
+    ],
+    "pantry": [
+      "Pasta",
+      "Sun-dried tomatoes",
+      "Garlic",
+      "Italian seasoning",
+      "Olive oil",
+      "Chicken broth"
+    ],
+    "sides": [
+      "Garlic bread"
+    ],
+    "recipe": [
+      "Sear chicken in olive oil, slice. Sauté garlic in same pan.",
+      "Add sun-dried tomatoes, then cream and broth. Stir in Parmesan.",
+      "Return chicken. Toss with cooked pasta."
+    ],
+    "macros": {
+      "cal": 730,
+      "pro": 46,
+      "carb": 58,
+      "fat": 34,
+      "satFat": 16,
+      "fibre": 3,
+      "sodium": 680,
+      "sugar": 5
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 11,
+    "name": "Penne Arrabiata with Sausage",
+    "cat": "pasta",
+    "crockpot": false,
+    "fridge": [
+      "Italian sausage",
+      "Parmesan"
+    ],
+    "pantry": [
+      "Penne",
+      "Canned tomatoes",
+      "Garlic",
+      "Olive oil",
+      "Chili flakes",
+      "Basil"
+    ],
+    "sides": [
+      "Garlic bread"
+    ],
+    "recipe": [
+      "Brown sausage, remove. Fry garlic and chili flakes in oil.",
+      "Add tomatoes, simmer 15 min. Return sausage 5 min.",
+      "Toss with penne. Finish with basil and Parmesan."
+    ],
+    "macros": {
+      "cal": 620,
+      "pro": 30,
+      "carb": 64,
+      "fat": 24,
+      "satFat": 7,
+      "fibre": 5,
+      "sodium": 920,
+      "sugar": 7
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 12,
+    "name": "Chicken & Rice with Veg",
+    "cat": "chicken",
+    "crockpot": true,
+    "fridge": [
+      "Chicken thighs",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Mixed veg",
+      "Chicken broth",
+      "Garlic",
+      "Olive oil",
+      "Seasoning"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Season chicken thighs, sear skin-down 4–5 min until golden. Flip 3 min. Remove.",
+      "Sauté garlic in drippings. Add rice, stir to coat. Pour in broth.",
+      "Nestle chicken on top. Bring to boil, cover, cook 18–20 min on low.",
+      "Steam veg separately. Serve on side."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 40,
+      "carb": 52,
+      "fat": 18,
+      "satFat": 5,
+      "fibre": 4,
+      "sodium": 560,
+      "sugar": 3
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 13,
+    "name": "Butter Chicken & Coconut Rice",
+    "cat": "chicken",
+    "crockpot": true,
+    "fridge": [
+      "Chicken thighs",
+      "Yogurt",
+      "Butter",
+      "Heavy cream"
+    ],
+    "pantry": [
+      "Basmati rice",
+      "Coconut milk",
+      "Butter chicken sauce",
+      "Garlic",
+      "Ginger",
+      "Onion",
+      "Canned tomatoes",
+      "Garam masala"
+    ],
+    "sides": [
+      "Naan bread",
+      "Mango chutney"
+    ],
+    "recipe": [
+      "Marinate chicken in yogurt, garlic, ginger, garam masala 30+ min.",
+      "Sauté onion in butter. Add chicken, brown all sides.",
+      "Add butter chicken sauce, tomatoes, simmer covered 25 min. Stir in cream last 5 min.",
+      "Cook basmati in half coconut milk, half water."
+    ],
+    "macros": {
+      "cal": 690,
+      "pro": 44,
+      "carb": 62,
+      "fat": 28,
+      "satFat": 14,
+      "fibre": 3,
+      "sodium": 840,
+      "sugar": 10
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 14,
+    "name": "Lemon Chicken Rice Noodles",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice noodles",
+      "Mixed veg",
+      "Lemon",
+      "Soy sauce",
+      "Garlic",
+      "Sesame oil"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Soak rice noodles per package. Slice chicken thin, season, cook in butter 3–4 min per side.",
+      "Sauté garlic. Add veg 3–4 min. Add noodles, soy, lemon juice, sesame oil.",
+      "Return chicken, toss to combine."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 38,
+      "carb": 54,
+      "fat": 14,
+      "satFat": 4,
+      "fibre": 4,
+      "sodium": 580,
+      "sugar": 4
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 15,
+    "name": "Chicken Stir-Fry & Rice",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Mixed veg",
+      "Soy sauce",
+      "Garlic",
+      "Ginger",
+      "Sesame oil",
+      "Cornstarch"
+    ],
+    "sides": [
+      "Spring rolls"
+    ],
+    "recipe": [
+      "Cook rice. Toss sliced chicken in cornstarch, season.",
+      "Heat sesame oil in wok until smoking. Stir-fry chicken 3–4 min. Remove.",
+      "Add garlic, ginger, veg 3–4 min. Return chicken, add soy sauce. Serve over rice."
+    ],
+    "macros": {
+      "cal": 530,
+      "pro": 40,
+      "carb": 56,
+      "fat": 12,
+      "satFat": 3,
+      "fibre": 4,
+      "sodium": 720,
+      "sugar": 4
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 16,
+    "name": "Chicken Fajitas",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Sour cream",
+      "Shredded cheese"
+    ],
+    "pantry": [
+      "Tortillas",
+      "Peppers",
+      "Onion",
+      "Fajita seasoning",
+      "Olive oil",
+      "Salsa",
+      "Lime"
+    ],
+    "sides": [
+      "Guacamole",
+      "Sour cream",
+      "Salsa"
+    ],
+    "recipe": [
+      "Toss sliced chicken in fajita seasoning and olive oil.",
+      "Cook in hot cast iron 3–4 min per side until charred. Rest and slice.",
+      "Cook peppers and onion in same pan over high heat 5–6 min.",
+      "Serve family style with warm tortillas and all toppings."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 44,
+      "carb": 48,
+      "fat": 18,
+      "satFat": 6,
+      "fibre": 4,
+      "sodium": 760,
+      "sugar": 5
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 17,
+    "name": "Mediterranean Chicken & Rice",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken thighs",
+      "Yogurt",
+      "Feta cheese"
+    ],
+    "pantry": [
+      "Rice",
+      "Olives",
+      "Cherry tomatoes",
+      "Cucumber",
+      "Lemon",
+      "Olive oil",
+      "Oregano",
+      "Garlic"
+    ],
+    "sides": [
+      "Tzatziki",
+      "Pita bread"
+    ],
+    "recipe": [
+      "Marinate chicken in yogurt, lemon, oregano, garlic 30+ min. Roast 400°F 25 min.",
+      "Cook rice in salted broth.",
+      "Arrange sliced chicken over rice with tomatoes, olives, cucumber. Crumble feta over top.",
+      "Serve with tzatziki and warm pita."
+    ],
+    "macros": {
+      "cal": 610,
+      "pro": 46,
+      "carb": 50,
+      "fat": 22,
+      "satFat": 6,
+      "fibre": 4,
+      "sodium": 680,
+      "sugar": 5
+    },
+    "health": "balanced",
+    "cfg": true
+  },
+  {
+    "id": 18,
+    "name": "Wings & Fries",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken wings",
+      "Butter"
+    ],
+    "pantry": [
+      "Frozen fries",
+      "Hot sauce",
+      "Garlic powder",
+      "Oil",
+      "Baking powder",
+      "Salt"
+    ],
+    "sides": [
+      "Celery sticks",
+      "Dipping sauce"
+    ],
+    "recipe": [
+      "Pat wings dry. Toss with baking powder, salt, garlic powder.",
+      "Bake 250°F 30 min, then 425°F 45 min flipping halfway.",
+      "Melt butter with hot sauce. Toss wings. Bake fries per package."
+    ],
+    "macros": {
+      "cal": 680,
+      "pro": 42,
+      "carb": 48,
+      "fat": 36,
+      "satFat": 10,
+      "fibre": 3,
+      "sodium": 1020,
+      "sugar": 2
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 19,
+    "name": "Power Bowls & Poutine",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Cheese curds",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Frozen fries",
+      "Gravy mix",
+      "Roasted veg",
+      "Olive oil",
+      "Seasoning"
+    ],
+    "sides": [],
+    "recipe": [
+      "Season and roast chicken at 400°F 25 min. Slice.",
+      "Roast veg with oil and seasoning.",
+      "Bake fries very crispy. Make gravy — keep hot.",
+      "For poutine: hot fries + cheese curds + hot gravy immediately. Build power bowls with rice and chicken."
+    ],
+    "macros": {
+      "cal": 720,
+      "pro": 44,
+      "carb": 68,
+      "fat": 28,
+      "satFat": 9,
+      "fibre": 4,
+      "sodium": 940,
+      "sugar": 4
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 20,
+    "name": "Chicken Shawarma with Rice",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken thighs",
+      "Yogurt",
+      "Garlic sauce"
+    ],
+    "pantry": [
+      "Basmati rice",
+      "Pita bread",
+      "Shawarma spice",
+      "Olive oil",
+      "Lemon",
+      "Onion"
+    ],
+    "sides": [
+      "Garlic sauce",
+      "Pickles"
+    ],
+    "recipe": [
+      "Marinate chicken in yogurt, shawarma spice, lemon, olive oil overnight.",
+      "Grill or broil 6–7 min per side until charred. Rest, slice thin.",
+      "Cook basmati in salted water. Warm pita.",
+      "Serve chicken over rice with pita, garlic sauce and pickles."
+    ],
+    "macros": {
+      "cal": 640,
+      "pro": 46,
+      "carb": 58,
+      "fat": 20,
+      "satFat": 5,
+      "fibre": 3,
+      "sodium": 580,
+      "sugar": 4
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 21,
+    "name": "Honey Garlic Chicken with Rice",
+    "cat": "chicken",
+    "crockpot": true,
+    "fridge": [
+      "Chicken thighs",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Honey",
+      "Soy sauce",
+      "Garlic",
+      "Chicken broth",
+      "Cornstarch",
+      "Sesame seeds"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Season chicken, sear in butter 3 min per side. Mix honey, soy, garlic, broth.",
+      "Pour sauce over chicken, simmer covered 20 min.",
+      "Remove chicken, thicken sauce with cornstarch slurry. Coat chicken in sauce.",
+      "Serve over rice with sesame seeds."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 42,
+      "carb": 58,
+      "fat": 16,
+      "satFat": 5,
+      "fibre": 2,
+      "sodium": 720,
+      "sugar": 14
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 22,
+    "name": "Chicken Pot Pie",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Butter",
+      "Milk"
+    ],
+    "pantry": [
+      "Pie crust",
+      "Mixed veg",
+      "Chicken broth",
+      "Flour",
+      "Onion",
+      "Garlic",
+      "Thyme"
+    ],
+    "sides": [],
+    "recipe": [
+      "Cook and dice chicken. Sauté onion and garlic 5 min in butter.",
+      "Add flour 2 min. Gradually whisk in broth then milk until thick.",
+      "Add chicken, veg, thyme. Pour into pie dish, top with crust. Bake 400°F 30–35 min."
+    ],
+    "macros": {
+      "cal": 620,
+      "pro": 36,
+      "carb": 54,
+      "fat": 28,
+      "satFat": 12,
+      "fibre": 4,
+      "sodium": 740,
+      "sugar": 5
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 23,
+    "name": "Chicken Schnitzel with Potato",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken breasts",
+      "Eggs",
+      "Butter"
+    ],
+    "pantry": [
+      "Breadcrumbs",
+      "Flour",
+      "Potatoes",
+      "Oil",
+      "Lemon",
+      "Paprika",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [
+      "Lemon wedges"
+    ],
+    "recipe": [
+      "Roast potato wedges at 400°F 35–40 min.",
+      "Pound chicken flat. Dredge: flour → egg → breadcrumbs.",
+      "Pan fry in butter and oil 3–4 min per side until deep golden.",
+      "Serve with potato wedges and lemon."
+    ],
+    "macros": {
+      "cal": 640,
+      "pro": 44,
+      "carb": 52,
+      "fat": 26,
+      "satFat": 8,
+      "fibre": 4,
+      "sodium": 560,
+      "sugar": 2
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 24,
+    "name": "Teriyaki Chicken with Rice",
+    "cat": "chicken",
+    "crockpot": false,
+    "fridge": [
+      "Chicken thighs",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Soy sauce",
+      "Honey",
+      "Mirin",
+      "Garlic",
+      "Ginger",
+      "Sesame seeds",
+      "Cornstarch"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Mix soy, honey, mirin, garlic, ginger. Marinate chicken 30 min.",
+      "Cook chicken in butter 5–6 min per side. Add sauce and reduce until glazed.",
+      "Serve over rice with sesame seeds and veg on side."
+    ],
+    "macros": {
+      "cal": 570,
+      "pro": 42,
+      "carb": 56,
+      "fat": 16,
+      "satFat": 5,
+      "fibre": 2,
+      "sodium": 920,
+      "sugar": 16
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 25,
+    "name": "Pork Loin with Potato & Veg",
+    "cat": "pork",
+    "crockpot": true,
+    "fridge": [
+      "Pork loin",
+      "Butter"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Mixed veg",
+      "Garlic",
+      "Olive oil",
+      "Rosemary",
+      "Thyme",
+      "Dijon mustard"
+    ],
+    "sides": [
+      "Roasted potatoes",
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Rub pork with Dijon, garlic, rosemary, thyme, salt, pepper.",
+      "Sear all sides in olive oil 2 min each.",
+      "Roast at 375°F with potatoes, butter knobs on top, until 145°F internal.",
+      "Rest 10 min before slicing."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 46,
+      "carb": 36,
+      "fat": 22,
+      "satFat": 6,
+      "fibre": 5,
+      "sodium": 480,
+      "sugar": 3
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 26,
+    "name": "Pork Kabobs with Rice & Salad",
+    "cat": "pork",
+    "crockpot": false,
+    "fridge": [
+      "Pork shoulder"
+    ],
+    "pantry": [
+      "Rice",
+      "Peppers",
+      "Onion",
+      "Olive oil",
+      "Marinade",
+      "Salad greens",
+      "Lemon"
+    ],
+    "sides": [
+      "Rice",
+      "Side salad"
+    ],
+    "recipe": [
+      "Cube pork, marinate in oil, lemon and spices 1+ hour.",
+      "Thread pork, peppers and onion onto skewers.",
+      "Grill over medium-high, turning every 3–4 min, 12–15 min total.",
+      "Serve over rice with salad on the side."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 42,
+      "carb": 48,
+      "fat": 18,
+      "satFat": 5,
+      "fibre": 4,
+      "sodium": 480,
+      "sugar": 3
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 27,
+    "name": "Pork Tacos & Salad",
+    "cat": "pork",
+    "crockpot": false,
+    "fridge": [
+      "Pork tenderloin",
+      "Sour cream",
+      "Shredded cheese"
+    ],
+    "pantry": [
+      "Tortillas",
+      "Salsa",
+      "Lettuce",
+      "Tomato",
+      "Lime",
+      "Taco seasoning",
+      "Olive oil"
+    ],
+    "sides": [
+      "Side salad",
+      "Sour cream",
+      "Salsa"
+    ],
+    "recipe": [
+      "Rub pork with taco seasoning. Sear all sides, roast 400°F until 145°F internal.",
+      "Rest 5 min and slice thin.",
+      "Warm tortillas. Build tacos with pork, cheese, sour cream, salsa. Squeeze lime."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 40,
+      "carb": 44,
+      "fat": 18,
+      "satFat": 6,
+      "fibre": 3,
+      "sodium": 680,
+      "sugar": 4
+    },
+    "health": "balanced",
+    "cfg": true
+  },
+  {
+    "id": 28,
+    "name": "Pulled Pork Sliders",
+    "cat": "pork",
+    "crockpot": true,
+    "fridge": [
+      "Pork shoulder",
+      "Butter"
+    ],
+    "pantry": [
+      "Slider buns",
+      "BBQ sauce",
+      "Brown sugar",
+      "Garlic powder",
+      "Onion powder",
+      "Smoked paprika",
+      "Apple cider vinegar",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [
+      "Coleslaw",
+      "Pickles"
+    ],
+    "recipe": [
+      "Mix dry rub: brown sugar, garlic powder, onion powder, paprika, salt, pepper. Coat pork.",
+      "Sear all sides. Slow cook low 8–10 hrs with vinegar until pull-apart tender.",
+      "Shred, toss with BBQ sauce. Serve on toasted slider buns with coleslaw."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 38,
+      "carb": 48,
+      "fat": 22,
+      "satFat": 7,
+      "fibre": 2,
+      "sodium": 920,
+      "sugar": 18
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 29,
+    "name": "Pork Chops with Apple & Potato",
+    "cat": "pork",
+    "crockpot": false,
+    "fridge": [
+      "Pork chops",
+      "Butter"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Apples",
+      "Garlic",
+      "Olive oil",
+      "Thyme",
+      "Brown sugar",
+      "Chicken broth",
+      "Dijon mustard"
+    ],
+    "sides": [
+      "Roasted potatoes"
+    ],
+    "recipe": [
+      "Season pork chops, sear in butter 3–4 min per side. Remove.",
+      "Roast potato wedges at 400°F 30 min.",
+      "Sauté garlic, add sliced apples with brown sugar 3 min. Add Dijon and broth, simmer 3 min.",
+      "Return pork to pan, coat in sauce and cook through."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 40,
+      "carb": 46,
+      "fat": 24,
+      "satFat": 8,
+      "fibre": 4,
+      "sodium": 520,
+      "sugar": 12
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 30,
+    "name": "Sweet & Sour Pork with Rice",
+    "cat": "pork",
+    "crockpot": false,
+    "fridge": [
+      "Pork tenderloin",
+      "Eggs"
+    ],
+    "pantry": [
+      "Rice",
+      "Pineapple chunks",
+      "Peppers",
+      "Onion",
+      "Soy sauce",
+      "Rice vinegar",
+      "Ketchup",
+      "Brown sugar",
+      "Cornstarch",
+      "Oil",
+      "Garlic"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Cube pork, coat in egg then cornstarch. Deep fry at 375°F until crispy.",
+      "Make sauce: ketchup, soy, vinegar, brown sugar, pineapple juice. Simmer 3 min.",
+      "Stir-fry peppers, onion, garlic. Add sauce and pineapple. Thicken. Add pork."
+    ],
+    "macros": {
+      "cal": 620,
+      "pro": 38,
+      "carb": 68,
+      "fat": 18,
+      "satFat": 4,
+      "fibre": 3,
+      "sodium": 820,
+      "sugar": 22
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 31,
+    "name": "Burgers & Fries",
+    "cat": "beef",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Cheese slices",
+      "Butter"
+    ],
+    "pantry": [
+      "Burger buns",
+      "Frozen fries",
+      "Lettuce",
+      "Tomato",
+      "Onion",
+      "Condiments"
+    ],
+    "sides": [
+      "Fries",
+      "Coleslaw"
+    ],
+    "recipe": [
+      "Form patties ¾ inch thick, press dimple in center. Season generously.",
+      "Cook over high heat 3–4 min per side. Add cheese last minute.",
+      "Toast buns in butter. Bake fries. Build burgers with toppings."
+    ],
+    "macros": {
+      "cal": 720,
+      "pro": 46,
+      "carb": 52,
+      "fat": 34,
+      "satFat": 14,
+      "fibre": 3,
+      "sodium": 820,
+      "sugar": 6
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 32,
+    "name": "Smash Burgers & Fries",
+    "cat": "beef",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Cheese slices",
+      "Butter"
+    ],
+    "pantry": [
+      "Burger buns",
+      "Frozen fries",
+      "Pickles",
+      "Condiments"
+    ],
+    "sides": [
+      "Fries",
+      "Pickles"
+    ],
+    "recipe": [
+      "Divide beef into loose 2oz balls — don't compress.",
+      "Heat cast iron until smoking. Add ball, immediately smash flat. Season.",
+      "Cook 1.5–2 min until edges dark. Flip, add cheese. Toast buns in butter."
+    ],
+    "macros": {
+      "cal": 740,
+      "pro": 44,
+      "carb": 52,
+      "fat": 38,
+      "satFat": 16,
+      "fibre": 2,
+      "sodium": 860,
+      "sugar": 5
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 33,
+    "name": "Beef Roast with Veg & Potato",
+    "cat": "beef",
+    "crockpot": true,
+    "fridge": [
+      "Beef roast",
+      "Butter"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Carrots",
+      "Onion",
+      "Beef broth",
+      "Garlic",
+      "Rosemary",
+      "Thyme",
+      "Flour"
+    ],
+    "sides": [
+      "Roasted potatoes"
+    ],
+    "recipe": [
+      "Dust roast in seasoned flour. Sear all sides deeply, 3 min per side.",
+      "Roast at 325°F with veg and broth until 135°F internal.",
+      "Rest 15 min, slice against grain. Use pan juices as jus."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 52,
+      "carb": 34,
+      "fat": 24,
+      "satFat": 9,
+      "fibre": 5,
+      "sodium": 520,
+      "sugar": 4
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 34,
+    "name": "DIY Donair / Beef Wrap",
+    "cat": "beef",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Sour cream",
+      "Shredded cheese"
+    ],
+    "pantry": [
+      "Pitas",
+      "Tomato",
+      "Onion",
+      "Lettuce",
+      "Donair sauce",
+      "Garlic powder",
+      "Oregano",
+      "Cayenne"
+    ],
+    "sides": [
+      "Donair sauce",
+      "Diced tomato"
+    ],
+    "recipe": [
+      "Mix beef with garlic powder, oregano, cayenne, salt. Form into tight loaf. Bake 350°F 30–35 min.",
+      "Cool slightly, slice very thin. Crisp slices briefly in pan.",
+      "Warm pitas. Build wraps with beef, veg, cheese, donair sauce."
+    ],
+    "macros": {
+      "cal": 620,
+      "pro": 40,
+      "carb": 48,
+      "fat": 28,
+      "satFat": 11,
+      "fibre": 3,
+      "sodium": 780,
+      "sugar": 6
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 35,
+    "name": "Tacos",
+    "cat": "beef",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Sour cream",
+      "Shredded cheese"
+    ],
+    "pantry": [
+      "Taco shells",
+      "Salsa",
+      "Lettuce",
+      "Tomato",
+      "Taco seasoning",
+      "Lime"
+    ],
+    "sides": [
+      "Sour cream",
+      "Salsa",
+      "Guacamole"
+    ],
+    "recipe": [
+      "Brown beef, drain fat. Add taco seasoning and ½ cup water, simmer 3–5 min.",
+      "Warm taco shells. Dice tomato, shred lettuce.",
+      "Build tacos with beef and toppings. Squeeze lime."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 36,
+      "carb": 44,
+      "fat": 26,
+      "satFat": 10,
+      "fibre": 4,
+      "sodium": 820,
+      "sugar": 4
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 36,
+    "name": "Taco & Fajitas",
+    "cat": "beef",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Sour cream",
+      "Shredded cheese"
+    ],
+    "pantry": [
+      "Tortillas",
+      "Peppers",
+      "Onion",
+      "Taco seasoning",
+      "Olive oil",
+      "Salsa",
+      "Lime"
+    ],
+    "sides": [
+      "Sour cream",
+      "Salsa"
+    ],
+    "recipe": [
+      "Brown beef with taco seasoning. Cook peppers and onion in oil over high heat until charred.",
+      "Warm tortillas. Serve family style with all toppings."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 38,
+      "carb": 46,
+      "fat": 24,
+      "satFat": 9,
+      "fibre": 4,
+      "sodium": 800,
+      "sugar": 4
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 37,
+    "name": "Slow Cooker Stew & Bread",
+    "cat": "beef",
+    "crockpot": true,
+    "fridge": [
+      "Beef stew meat",
+      "Butter"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Carrots",
+      "Celery",
+      "Onion",
+      "Beef broth",
+      "Tomato paste",
+      "Bread",
+      "Flour",
+      "Garlic",
+      "Thyme",
+      "Worcestershire"
+    ],
+    "sides": [
+      "Crusty bread"
+    ],
+    "recipe": [
+      "Dust beef in flour, brown in batches in butter.",
+      "Add all to slow cooker with veg, broth, tomato paste, Worcestershire and thyme.",
+      "Cook low 8 hrs. Serve with crusty bread."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 44,
+      "carb": 48,
+      "fat": 18,
+      "satFat": 6,
+      "fibre": 7,
+      "sodium": 680,
+      "sugar": 6
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 38,
+    "name": "Korean Beef Bowl with Rice",
+    "cat": "beef",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Soy sauce",
+      "Sesame oil",
+      "Brown sugar",
+      "Garlic",
+      "Ginger",
+      "Green onion",
+      "Sesame seeds",
+      "Chili flakes"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Cook rice. Brown beef in sesame oil, drain most fat.",
+      "Add garlic, ginger 1 min. Add soy sauce, brown sugar, chili flakes. Simmer until glossy.",
+      "Serve over rice. Top with green onion and sesame seeds."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 38,
+      "carb": 56,
+      "fat": 20,
+      "satFat": 7,
+      "fibre": 2,
+      "sodium": 940,
+      "sugar": 10
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 39,
+    "name": "Beef Stroganoff with Egg Noodles",
+    "cat": "beef",
+    "crockpot": true,
+    "fridge": [
+      "Beef sirloin or stew meat",
+      "Sour cream",
+      "Butter"
+    ],
+    "pantry": [
+      "Egg noodles",
+      "Beef broth",
+      "Mushrooms",
+      "Onion",
+      "Garlic",
+      "Flour",
+      "Worcestershire sauce",
+      "Dijon mustard"
+    ],
+    "sides": [
+      "Side salad"
+    ],
+    "recipe": [
+      "Slice beef thin, season, sear in butter in batches. Remove.",
+      "Cook onion, mushrooms 6–8 min until golden. Add garlic, flour, then broth, Worcestershire, Dijon.",
+      "Return beef, simmer 5 min. Remove from heat, stir in sour cream. Serve over egg noodles."
+    ],
+    "macros": {
+      "cal": 640,
+      "pro": 46,
+      "carb": 52,
+      "fat": 26,
+      "satFat": 10,
+      "fibre": 3,
+      "sodium": 780,
+      "sugar": 5
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 40,
+    "name": "Meatballs & Marinara",
+    "cat": "beef",
+    "crockpot": true,
+    "fridge": [
+      "Ground beef",
+      "Ground pork",
+      "Eggs",
+      "Parmesan"
+    ],
+    "pantry": [
+      "Spaghetti",
+      "Pasta sauce",
+      "Breadcrumbs",
+      "Garlic",
+      "Onion",
+      "Italian seasoning",
+      "Milk"
+    ],
+    "sides": [
+      "Garlic bread"
+    ],
+    "recipe": [
+      "Soak breadcrumbs in milk. Mix with beef, pork, egg, Parmesan, grated onion, garlic, seasoning.",
+      "Form golf-ball meatballs. Brown in batches.",
+      "Simmer in pasta sauce 20–25 min. Serve over spaghetti."
+    ],
+    "macros": {
+      "cal": 660,
+      "pro": 46,
+      "carb": 58,
+      "fat": 24,
+      "satFat": 9,
+      "fibre": 5,
+      "sodium": 940,
+      "sugar": 9
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 41,
+    "name": "Cottage Pie",
+    "cat": "beef",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Butter",
+      "Milk"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Beef broth",
+      "Carrots",
+      "Onion",
+      "Garlic",
+      "Tomato paste",
+      "Worcestershire",
+      "Flour",
+      "Thyme"
+    ],
+    "sides": [],
+    "recipe": [
+      "Brown beef, add onion, carrots, garlic. Add flour, tomato paste, Worcestershire, broth, thyme. Simmer 15 min.",
+      "Make creamy mashed potato with butter and milk.",
+      "Pour filling in dish, spread mashed potato over top. Fork surface. Bake 400°F 20–25 min until golden."
+    ],
+    "macros": {
+      "cal": 600,
+      "pro": 38,
+      "carb": 52,
+      "fat": 24,
+      "satFat": 9,
+      "fibre": 6,
+      "sodium": 680,
+      "sugar": 6
+    },
+    "health": "balanced",
+    "cfg": true
+  },
+  {
+    "id": 42,
+    "name": "Salmon with Garlic Bread",
+    "cat": "fish",
+    "crockpot": false,
+    "fridge": [
+      "Salmon fillets",
+      "Butter",
+      "Lemon"
+    ],
+    "pantry": [
+      "Baguette",
+      "Garlic",
+      "Olive oil",
+      "Dill",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [
+      "Garlic bread",
+      "Lemon wedges"
+    ],
+    "recipe": [
+      "Season salmon with dill, salt, pepper. Bake 400°F 12–15 min until it flakes.",
+      "Mix softened butter with garlic, salt. Spread on halved baguette.",
+      "Broil garlic bread 2–3 min until golden. Serve salmon with lemon wedges."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 44,
+      "carb": 28,
+      "fat": 26,
+      "satFat": 7,
+      "fibre": 1,
+      "sodium": 480,
+      "sugar": 2
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 43,
+    "name": "Salmon Broccolini & Garlic Bread",
+    "cat": "fish",
+    "crockpot": false,
+    "fridge": [
+      "Salmon fillets",
+      "Butter",
+      "Lemon"
+    ],
+    "pantry": [
+      "Broccolini",
+      "Baguette",
+      "Garlic",
+      "Olive oil",
+      "Soy sauce",
+      "Honey"
+    ],
+    "sides": [
+      "Broccolini",
+      "Garlic bread"
+    ],
+    "recipe": [
+      "Roast broccolini with oil and garlic at 400°F 15 min.",
+      "Brush salmon with soy sauce, honey, lemon. Bake 400°F 12–14 min.",
+      "Broil garlic bread until golden. Serve together."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 46,
+      "carb": 32,
+      "fat": 24,
+      "satFat": 6,
+      "fibre": 4,
+      "sodium": 620,
+      "sugar": 6
+    },
+    "health": "balanced",
+    "cfg": true
+  },
+  {
+    "id": 44,
+    "name": "Teriyaki Salmon with Rice",
+    "cat": "fish",
+    "crockpot": false,
+    "fridge": [
+      "Salmon fillets",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Soy sauce",
+      "Honey",
+      "Mirin",
+      "Garlic",
+      "Ginger",
+      "Sesame seeds",
+      "Cornstarch"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Mix teriyaki sauce. Marinate salmon 20–30 min.",
+      "Sear salmon in butter, baste with sauce, cook 3–4 min per side.",
+      "Serve over rice with sesame seeds and veg on side."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 46,
+      "carb": 52,
+      "fat": 18,
+      "satFat": 4,
+      "fibre": 2,
+      "sodium": 880,
+      "sugar": 14
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 45,
+    "name": "Fish Tacos with Lime Crema",
+    "cat": "fish",
+    "crockpot": false,
+    "fridge": [
+      "White fish fillets (cod or tilapia)",
+      "Sour cream"
+    ],
+    "pantry": [
+      "Corn tortillas",
+      "Flour",
+      "Oil",
+      "Cumin",
+      "Paprika",
+      "Lime",
+      "Garlic powder",
+      "Coleslaw mix"
+    ],
+    "sides": [
+      "Lime wedges",
+      "Salsa"
+    ],
+    "recipe": [
+      "Season fish with cumin, paprika, garlic powder. Pan fry in oil 3–4 min per side.",
+      "Make lime crema: sour cream + lime juice + salt.",
+      "Warm tortillas. Build tacos: fish, coleslaw, lime crema."
+    ],
+    "macros": {
+      "cal": 480,
+      "pro": 36,
+      "carb": 44,
+      "fat": 16,
+      "satFat": 4,
+      "fibre": 4,
+      "sodium": 560,
+      "sugar": 3
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 46,
+    "name": "Fish & Chips",
+    "cat": "fish",
+    "crockpot": false,
+    "fridge": [
+      "White fish fillets (cod or tilapia)",
+      "Eggs",
+      "Butter"
+    ],
+    "pantry": [
+      "Flour",
+      "Breadcrumbs",
+      "Potatoes",
+      "Oil",
+      "Malt vinegar",
+      "Tartar sauce",
+      "Baking powder"
+    ],
+    "sides": [
+      "Tartar sauce",
+      "Malt vinegar"
+    ],
+    "recipe": [
+      "Cut potatoes into chips. Parboil 5 min, drain and dry. Fry at 325°F 5 min, then 375°F 4 min.",
+      "Dip fish in seasoned flour, then egg batter. Fry at 375°F 4–5 min.",
+      "Season immediately with salt. Serve with tartar sauce and malt vinegar."
+    ],
+    "macros": {
+      "cal": 680,
+      "pro": 40,
+      "carb": 64,
+      "fat": 28,
+      "satFat": 5,
+      "fibre": 4,
+      "sodium": 780,
+      "sugar": 2
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 47,
+    "name": "Grilled Cheese & Soup",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Cheese slices",
+      "Butter",
+      "Milk"
+    ],
+    "pantry": [
+      "Bread",
+      "Canned soup"
+    ],
+    "sides": [
+      "Tomato soup"
+    ],
+    "recipe": [
+      "Heat soup. Add splash of milk if cream-based.",
+      "Butter one side of each bread slice. Layer cheese inside.",
+      "Cook medium-low 3–4 min until golden. Flip, cook 3 more min. Cut diagonally."
+    ],
+    "macros": {
+      "cal": 480,
+      "pro": 20,
+      "carb": 44,
+      "fat": 24,
+      "satFat": 12,
+      "fibre": 2,
+      "sodium": 880,
+      "sugar": 8
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 48,
+    "name": "DIY Pizza",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Mozzarella",
+      "Pepperoni",
+      "Butter"
+    ],
+    "pantry": [
+      "Pizza kit",
+      "Pizza sauce",
+      "Toppings of choice",
+      "Olive oil",
+      "Italian seasoning"
+    ],
+    "sides": [],
+    "recipe": [
+      "Prepare dough per kit instructions. Preheat oven to 425°F.",
+      "Stretch dough, brush crust with olive oil. Spread sauce thinly.",
+      "Add mozzarella, pepperoni, toppings. Bake 12–15 min until golden."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 28,
+      "carb": 58,
+      "fat": 22,
+      "satFat": 9,
+      "fibre": 3,
+      "sodium": 940,
+      "sugar": 6
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 49,
+    "name": "Fancy Ramen",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Butter"
+    ],
+    "pantry": [
+      "Ramen noodles",
+      "Broth",
+      "Soy sauce",
+      "Miso paste",
+      "Garlic",
+      "Ginger",
+      "Green onion",
+      "Sesame oil",
+      "Chili oil"
+    ],
+    "sides": [
+      "Soft boiled eggs",
+      "Nori"
+    ],
+    "recipe": [
+      "Soft boil eggs exactly 6.5 min. Transfer to ice water. Peel and halve.",
+      "Simmer broth with miso, soy, garlic, ginger. Add butter and sesame oil.",
+      "Cook noodles separately. Build bowls: noodles, broth, egg, green onion, nori, chili oil."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 24,
+      "carb": 58,
+      "fat": 20,
+      "satFat": 6,
+      "fibre": 3,
+      "sodium": 1240,
+      "sugar": 4
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 50,
+    "name": "Mac & Cheese",
+    "cat": "comfort",
+    "crockpot": true,
+    "fridge": [
+      "Milk",
+      "Butter",
+      "Cheddar cheese"
+    ],
+    "pantry": [
+      "Macaroni",
+      "Flour",
+      "Breadcrumbs",
+      "Mustard powder",
+      "Garlic powder"
+    ],
+    "sides": [
+      "Side salad"
+    ],
+    "recipe": [
+      "Cook macaroni al dente. Make béchamel: melt butter, add flour, whisk in milk until thick.",
+      "Stir in cheddar, mustard powder, garlic powder. Combine with pasta.",
+      "Pour into dish, top with breadcrumbs. Bake 375°F 25 min until golden."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 26,
+      "carb": 58,
+      "fat": 28,
+      "satFat": 16,
+      "fibre": 2,
+      "sodium": 680,
+      "sugar": 6
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 51,
+    "name": "Steak Frite",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Steak",
+      "Butter"
+    ],
+    "pantry": [
+      "Potatoes or frozen fries",
+      "Garlic",
+      "Fresh herbs",
+      "Olive oil",
+      "Flaky sea salt"
+    ],
+    "sides": [
+      "Frites"
+    ],
+    "recipe": [
+      "Rest steak 30–45 min. Pat dry, season aggressively.",
+      "Heat cast iron until smoking. Sear 3–4 min. Flip. Add butter, garlic, herbs. Baste continuously 3 more min.",
+      "Rest minimum 5 min. Double-fry frites. Season with flaky salt immediately."
+    ],
+    "macros": {
+      "cal": 680,
+      "pro": 50,
+      "carb": 36,
+      "fat": 36,
+      "satFat": 14,
+      "fibre": 3,
+      "sodium": 520,
+      "sugar": 1
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 52,
+    "name": "BBQ",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Meat of choice",
+      "Butter"
+    ],
+    "pantry": [
+      "BBQ sauce",
+      "Dry rub or seasoning",
+      "Oil",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [
+      "Coleslaw",
+      "Corn on the cob"
+    ],
+    "recipe": [
+      "Remove meat from fridge 30 min before. Season with dry rub.",
+      "Grill over medium-high, turning as needed.",
+      "Baste with BBQ sauce final 5 min only. Rest before serving."
+    ],
+    "macros": {
+      "cal": 620,
+      "pro": 46,
+      "carb": 24,
+      "fat": 34,
+      "satFat": 11,
+      "fibre": 2,
+      "sodium": 640,
+      "sugar": 12
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 53,
+    "name": "Bacon Hash",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Bacon",
+      "Eggs",
+      "Butter"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Peppers",
+      "Onion",
+      "Garlic",
+      "Paprika",
+      "Oil"
+    ],
+    "sides": [
+      "Fried eggs",
+      "Toast"
+    ],
+    "recipe": [
+      "Parboil diced potatoes 5–6 min. Drain and dry.",
+      "Cook bacon crisp. Reserve fat. Cook potatoes in fat over high heat — don't stir, let crust form.",
+      "Add peppers, onion, garlic. Make wells, crack eggs in. Cover until whites set."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 28,
+      "carb": 38,
+      "fat": 34,
+      "satFat": 11,
+      "fibre": 4,
+      "sodium": 940,
+      "sugar": 3
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 54,
+    "name": "Pancakes & Bacon",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Milk",
+      "Butter",
+      "Bacon"
+    ],
+    "pantry": [
+      "Flour",
+      "Baking powder",
+      "Sugar",
+      "Maple syrup",
+      "Vanilla extract"
+    ],
+    "sides": [
+      "Maple syrup",
+      "Butter"
+    ],
+    "recipe": [
+      "Mix dry: flour, baking powder, sugar. Mix wet: egg, milk, butter, vanilla. Combine — lumps are fine.",
+      "Rest batter 5 min. Cook bacon crisp in separate pan.",
+      "Cook ¼ cup batter per pancake on medium heat 2–3 min, flip, 1–2 more min."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 22,
+      "carb": 64,
+      "fat": 26,
+      "satFat": 10,
+      "fibre": 2,
+      "sodium": 780,
+      "sugar": 18
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 55,
+    "name": "McMuffins",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Cheese slices",
+      "Bacon or sausage",
+      "Butter"
+    ],
+    "pantry": [
+      "English muffins",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [],
+    "recipe": [
+      "Cook bacon crisp or sausage into patties.",
+      "Fry egg in buttered ring mold — season with salt and pepper.",
+      "Toast and butter English muffin. Layer: muffin, egg, cheese, meat. Rest 1 min to melt."
+    ],
+    "macros": {
+      "cal": 480,
+      "pro": 28,
+      "carb": 34,
+      "fat": 26,
+      "satFat": 10,
+      "fibre": 2,
+      "sodium": 820,
+      "sugar": 3
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 56,
+    "name": "French Onion Soup",
+    "cat": "comfort",
+    "crockpot": true,
+    "fridge": [
+      "Gruyère cheese",
+      "Butter"
+    ],
+    "pantry": [
+      "Onions",
+      "Beef broth",
+      "Baguette",
+      "Dry white wine",
+      "Thyme",
+      "Bay leaf",
+      "Flour",
+      "Olive oil",
+      "Sugar"
+    ],
+    "sides": [],
+    "recipe": [
+      "Caramelize sliced onions in butter and oil over medium-low 45–60 min. Add sugar to help.",
+      "Add wine 2 min, then broth, thyme, bay. Simmer 20 min.",
+      "Ladle into oven-safe bowls, top with baguette and Gruyère. Broil until bubbling and golden."
+    ],
+    "macros": {
+      "cal": 480,
+      "pro": 22,
+      "carb": 44,
+      "fat": 22,
+      "satFat": 10,
+      "fibre": 4,
+      "sodium": 920,
+      "sugar": 10
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 57,
+    "name": "Shakshuka with Crusty Bread",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Feta cheese"
+    ],
+    "pantry": [
+      "Canned tomatoes",
+      "Peppers",
+      "Onion",
+      "Garlic",
+      "Cumin",
+      "Paprika",
+      "Chili flakes",
+      "Olive oil",
+      "Crusty bread"
+    ],
+    "sides": [
+      "Crusty bread"
+    ],
+    "recipe": [
+      "Cook onion and peppers 8 min. Add garlic and spices 2 min.",
+      "Add crushed tomatoes, simmer 10 min. Make wells, crack eggs in. Season eggs.",
+      "Cover and cook on low until whites set, yolks runny. Top with feta."
+    ],
+    "macros": {
+      "cal": 420,
+      "pro": 22,
+      "carb": 38,
+      "fat": 20,
+      "satFat": 5,
+      "fibre": 7,
+      "sodium": 720,
+      "sugar": 8
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 58,
+    "name": "Baked Potato Bar",
+    "cat": "comfort",
+    "crockpot": true,
+    "fridge": [
+      "Butter",
+      "Sour cream",
+      "Shredded cheese",
+      "Bacon"
+    ],
+    "pantry": [
+      "Large potatoes",
+      "Olive oil",
+      "Salt"
+    ],
+    "sides": [],
+    "recipe": [
+      "Scrub potatoes, prick all over, rub with oil and coat in salt.",
+      "Bake directly on oven rack at 400°F 55–65 min.",
+      "Cook bacon crisp, crumble. Set out all toppings. Everyone builds their own."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 18,
+      "carb": 62,
+      "fat": 22,
+      "satFat": 9,
+      "fibre": 6,
+      "sodium": 580,
+      "sugar": 3
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 59,
+    "name": "Quesadillas",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Shredded cheese",
+      "Sour cream",
+      "Butter"
+    ],
+    "pantry": [
+      "Large flour tortillas",
+      "Salsa",
+      "Choice of filling"
+    ],
+    "sides": [
+      "Salsa",
+      "Sour cream",
+      "Guacamole"
+    ],
+    "recipe": [
+      "Prepare filling (cooked chicken, seasoned beef, or plain cheese).",
+      "Fill half a tortilla with cheese and filling. Fold.",
+      "Cook in buttered pan 3 min until golden. Flip 2–3 more min. Cheese should be fully melted."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 28,
+      "carb": 44,
+      "fat": 28,
+      "satFat": 13,
+      "fibre": 3,
+      "sodium": 780,
+      "sugar": 3
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 60,
+    "name": "Chicken Noodle Soup",
+    "cat": "comfort",
+    "crockpot": true,
+    "fridge": [
+      "Chicken breasts or thighs",
+      "Butter"
+    ],
+    "pantry": [
+      "Egg noodles",
+      "Chicken broth",
+      "Carrots",
+      "Celery",
+      "Onion",
+      "Garlic",
+      "Thyme",
+      "Bay leaf",
+      "Crusty bread"
+    ],
+    "sides": [
+      "Crusty bread"
+    ],
+    "recipe": [
+      "Simmer chicken with onion, garlic, carrots, celery, thyme and bay leaf in broth 25–30 min.",
+      "Remove chicken, shred. Return to pot. Add egg noodles and cook 8–10 min.",
+      "Season with salt, pepper and fresh parsley."
+    ],
+    "macros": {
+      "cal": 440,
+      "pro": 38,
+      "carb": 42,
+      "fat": 10,
+      "satFat": 3,
+      "fibre": 5,
+      "sodium": 740,
+      "sugar": 4
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 61,
+    "name": "Tomato Bisque with Grilled Cheese",
+    "cat": "comfort",
+    "crockpot": true,
+    "fridge": [
+      "Heavy cream",
+      "Butter",
+      "Cheese slices"
+    ],
+    "pantry": [
+      "Canned whole tomatoes",
+      "Onion",
+      "Garlic",
+      "Chicken broth",
+      "Basil",
+      "Sugar",
+      "Bread",
+      "Olive oil"
+    ],
+    "sides": [
+      "Grilled cheese"
+    ],
+    "recipe": [
+      "Roast canned tomatoes, onion and garlic at 400°F 25 min. Blend smooth with broth and basil.",
+      "Simmer in pot 10 min. Stir in cream and butter. Season.",
+      "Make classic grilled cheese. Serve soup with grilled cheese for dipping."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 18,
+      "carb": 46,
+      "fat": 30,
+      "satFat": 16,
+      "fibre": 4,
+      "sodium": 880,
+      "sugar": 10
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 62,
+    "name": "French Toast",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Milk",
+      "Butter"
+    ],
+    "pantry": [
+      "Thick bread (brioche or Texas toast)",
+      "Vanilla extract",
+      "Cinnamon",
+      "Sugar",
+      "Maple syrup",
+      "Icing sugar",
+      "Bacon or sausage (choose one)"
+    ],
+    "sides": [
+      "Maple syrup",
+      "Fresh fruit optional"
+    ],
+    "recipe": [
+      "Whisk eggs, milk, vanilla, cinnamon and sugar together.",
+      "Dip bread slices 20–30 sec per side. Cook in buttered pan medium heat 3–4 min per side until deep golden.",
+      "Dust with icing sugar. Protein swap: bacon crisp OR sausage patties — choose per night."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 22,
+      "carb": 58,
+      "fat": 24,
+      "satFat": 9,
+      "fibre": 2,
+      "sodium": 580,
+      "sugar": 20
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 63,
+    "name": "Omelette Bar",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Butter",
+      "Shredded cheese",
+      "Sour cream"
+    ],
+    "pantry": [
+      "Salt",
+      "Pepper",
+      "Bacon or sausage (choose one)",
+      "Onion",
+      "Peppers"
+    ],
+    "sides": [
+      "Toast",
+      "Hash browns"
+    ],
+    "recipe": [
+      "Cook bacon crisp OR sausage through. Set aside with veg fillings.",
+      "Per omelette: whisk 2–3 eggs, season. Heat butter in non-stick pan over medium-high.",
+      "Pour eggs, stir gently while shaking pan. When almost set, add fillings to one half. Fold and slide onto plate.",
+      "Each person builds their own."
+    ],
+    "macros": {
+      "cal": 480,
+      "pro": 34,
+      "carb": 8,
+      "fat": 34,
+      "satFat": 13,
+      "fibre": 1,
+      "sodium": 680,
+      "sugar": 2
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 64,
+    "name": "Crepes",
+    "cat": "comfort",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Milk",
+      "Butter"
+    ],
+    "pantry": [
+      "Flour",
+      "Salt",
+      "Sugar",
+      "Vanilla extract",
+      "Maple syrup",
+      "Icing sugar",
+      "Jam",
+      "Bacon or sausage (choose one)"
+    ],
+    "sides": [
+      "Maple syrup",
+      "Jam",
+      "Icing sugar"
+    ],
+    "recipe": [
+      "Blend flour, eggs, milk, melted butter, sugar, vanilla, salt until smooth. Rest 30 min.",
+      "Cook in lightly buttered pan: pour ¼ cup batter, swirl thin, cook 60–90 sec until edges lift. Flip, 30 sec more.",
+      "Serve with maple syrup, jam and icing sugar. Protein swap: bacon OR sausage alongside."
+    ],
+    "macros": {
+      "cal": 460,
+      "pro": 18,
+      "carb": 52,
+      "fat": 20,
+      "satFat": 9,
+      "fibre": 1,
+      "sodium": 480,
+      "sugar": 18
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 65,
+    "name": "Crockpot Bolognese",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Ground beef",
+      "Parmesan",
+      "Milk"
+    ],
+    "pantry": [
+      "Spaghetti",
+      "Pasta sauce",
+      "Onion",
+      "Garlic",
+      "Italian seasoning",
+      "Tomato paste",
+      "Red wine optional"
+    ],
+    "sides": [
+      "Garlic bread",
+      "Side salad"
+    ],
+    "recipe": [
+      "Brown beef with onion and garlic. Add tomato paste 2 min.",
+      "Transfer to crockpot with pasta sauce, seasoning and milk. Cook low 6–8 hrs.",
+      "Cook spaghetti fresh to serve. Top with Parmesan."
+    ],
+    "macros": {
+      "cal": 590,
+      "pro": 40,
+      "carb": 58,
+      "fat": 18,
+      "satFat": 6,
+      "fibre": 5,
+      "sodium": 780,
+      "sugar": 9
+    },
+    "health": "balanced",
+    "cfg": true
+  },
+  {
+    "id": 66,
+    "name": "Crockpot Butter Chicken & Rice",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Chicken thighs",
+      "Heavy cream",
+      "Butter"
+    ],
+    "pantry": [
+      "Basmati rice",
+      "Butter chicken sauce",
+      "Canned tomatoes",
+      "Garlic",
+      "Ginger",
+      "Onion",
+      "Garam masala",
+      "Coconut milk"
+    ],
+    "sides": [
+      "Naan bread",
+      "Mango chutney"
+    ],
+    "recipe": [
+      "Place chicken, sauce, tomatoes, onion, garlic, ginger and spices in crockpot. Cook low 6 hrs.",
+      "Stir in cream and butter in last 30 min.",
+      "Cook basmati in half coconut milk, half water. Serve with naan."
+    ],
+    "macros": {
+      "cal": 700,
+      "pro": 46,
+      "carb": 64,
+      "fat": 28,
+      "satFat": 14,
+      "fibre": 3,
+      "sodium": 860,
+      "sugar": 10
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 67,
+    "name": "Crockpot Pulled Pork Sliders",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Pork shoulder",
+      "Butter"
+    ],
+    "pantry": [
+      "Slider buns",
+      "BBQ sauce",
+      "Brown sugar",
+      "Garlic powder",
+      "Onion powder",
+      "Smoked paprika",
+      "Apple cider vinegar",
+      "Chicken broth"
+    ],
+    "sides": [
+      "Coleslaw",
+      "Pickles"
+    ],
+    "recipe": [
+      "Rub pork with dry spice mix. Sear all sides.",
+      "Cook low 8–10 hrs with vinegar and broth. Shred, toss with BBQ sauce.",
+      "Serve on toasted slider buns with coleslaw and pickles."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 38,
+      "carb": 50,
+      "fat": 22,
+      "satFat": 7,
+      "fibre": 2,
+      "sodium": 940,
+      "sugar": 18
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 68,
+    "name": "Crockpot Honey Garlic Chicken",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Chicken thighs",
+      "Butter"
+    ],
+    "pantry": [
+      "Rice",
+      "Honey",
+      "Soy sauce",
+      "Garlic",
+      "Chicken broth",
+      "Cornstarch",
+      "Sesame seeds",
+      "Ginger"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Season chicken. Whisk honey, soy, garlic, ginger, broth. Pour over chicken in crockpot.",
+      "Cook low 4–6 hrs. Remove chicken, thicken sauce with cornstarch slurry on high 15 min.",
+      "Return chicken. Serve over rice with sesame seeds."
+    ],
+    "macros": {
+      "cal": 580,
+      "pro": 42,
+      "carb": 58,
+      "fat": 16,
+      "satFat": 5,
+      "fibre": 2,
+      "sodium": 700,
+      "sugar": 14
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 69,
+    "name": "Crockpot Beef Stroganoff",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Beef stew meat",
+      "Sour cream",
+      "Butter"
+    ],
+    "pantry": [
+      "Egg noodles",
+      "Beef broth",
+      "Mushrooms",
+      "Onion",
+      "Garlic",
+      "Worcestershire sauce",
+      "Dijon mustard",
+      "Flour",
+      "Cornstarch"
+    ],
+    "sides": [
+      "Side salad"
+    ],
+    "recipe": [
+      "Season beef in flour. Place in crockpot with mushrooms, onion, garlic, broth, Worcestershire and Dijon.",
+      "Cook low 7–8 hrs. Thicken with cornstarch slurry in last 30 min.",
+      "Remove from heat, stir in sour cream. Serve over egg noodles."
+    ],
+    "macros": {
+      "cal": 640,
+      "pro": 46,
+      "carb": 54,
+      "fat": 26,
+      "satFat": 10,
+      "fibre": 3,
+      "sodium": 800,
+      "sugar": 5
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 70,
+    "name": "Crockpot Meatballs & Marinara",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Ground beef",
+      "Ground pork",
+      "Eggs",
+      "Parmesan"
+    ],
+    "pantry": [
+      "Spaghetti",
+      "Pasta sauce",
+      "Breadcrumbs",
+      "Garlic",
+      "Onion",
+      "Italian seasoning",
+      "Milk"
+    ],
+    "sides": [
+      "Garlic bread"
+    ],
+    "recipe": [
+      "Mix meatballs from beef, pork, egg, breadcrumbs, Parmesan, garlic, seasoning. Brown lightly.",
+      "Place in crockpot covered with pasta sauce. Cook low 6 hrs.",
+      "Cook spaghetti fresh. Serve with garlic bread."
+    ],
+    "macros": {
+      "cal": 660,
+      "pro": 46,
+      "carb": 58,
+      "fat": 24,
+      "satFat": 9,
+      "fibre": 5,
+      "sodium": 960,
+      "sugar": 9
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 71,
+    "name": "Crockpot Cottage Pie",
+    "cat": "crockpot",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef",
+      "Butter",
+      "Milk"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Beef broth",
+      "Carrots",
+      "Onion",
+      "Garlic",
+      "Tomato paste",
+      "Worcestershire",
+      "Flour",
+      "Thyme"
+    ],
+    "sides": [],
+    "recipe": [
+      "Brown beef with onion, garlic, carrots. Add flour, tomato paste, Worcestershire, broth, thyme.",
+      "Place in crockpot, cook low 6 hrs.",
+      "Spread with fresh mashed potato, bake 400°F 20–25 min until golden."
+    ],
+    "macros": {
+      "cal": 600,
+      "pro": 38,
+      "carb": 52,
+      "fat": 24,
+      "satFat": 9,
+      "fibre": 6,
+      "sodium": 680,
+      "sugar": 6
+    },
+    "health": "balanced",
+    "cfg": true
+  },
+  {
+    "id": 72,
+    "name": "Crockpot Chili with Cornbread",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Ground beef",
+      "Shredded cheese",
+      "Sour cream"
+    ],
+    "pantry": [
+      "Canned kidney beans",
+      "Canned tomatoes",
+      "Onion",
+      "Garlic",
+      "Beef broth",
+      "Chili powder",
+      "Cumin",
+      "Paprika",
+      "Cornbread mix"
+    ],
+    "sides": [
+      "Cornbread",
+      "Sour cream",
+      "Shredded cheese"
+    ],
+    "recipe": [
+      "Brown beef, drain. Add all to crockpot with tomatoes, broth and spices.",
+      "Cook low 6–8 hrs. Add kidney beans in last hour.",
+      "Make cornbread per package. Top chili with sour cream and shredded cheese."
+    ],
+    "macros": {
+      "cal": 620,
+      "pro": 42,
+      "carb": 58,
+      "fat": 22,
+      "satFat": 8,
+      "fibre": 11,
+      "sodium": 980,
+      "sugar": 8
+    },
+    "health": "light",
+    "cfg": false
+  },
+  {
+    "id": 73,
+    "name": "Crockpot French Onion Chicken",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Chicken breasts",
+      "Gruyère or Swiss cheese",
+      "Butter"
+    ],
+    "pantry": [
+      "Onions",
+      "Beef broth",
+      "Dry white wine",
+      "Thyme",
+      "Garlic",
+      "Flour",
+      "Olive oil",
+      "Sugar"
+    ],
+    "sides": [
+      "Egg noodles or crusty bread"
+    ],
+    "recipe": [
+      "Caramelize onions in butter 45 min. Season chicken.",
+      "Place chicken in crockpot with onions, wine, broth, garlic, thyme. Cook low 6 hrs.",
+      "Thicken sauce in last 30 min. Top chicken with Gruyère, broil until melted."
+    ],
+    "macros": {
+      "cal": 560,
+      "pro": 50,
+      "carb": 28,
+      "fat": 24,
+      "satFat": 10,
+      "fibre": 3,
+      "sodium": 800,
+      "sugar": 9
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 74,
+    "name": "Crockpot Mac & Cheese",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Cheddar cheese",
+      "Milk",
+      "Butter",
+      "Cream cheese"
+    ],
+    "pantry": [
+      "Elbow macaroni",
+      "Evaporated milk",
+      "Mustard powder",
+      "Garlic powder",
+      "Salt",
+      "Pepper"
+    ],
+    "sides": [
+      "Side salad"
+    ],
+    "recipe": [
+      "Place uncooked macaroni, milk, evaporated milk, butter, cream cheese and seasonings in crockpot.",
+      "Cook low 2–3 hrs, stirring every 45 min.",
+      "Stir in shredded cheddar in last 30 min until melted and creamy."
+    ],
+    "macros": {
+      "cal": 600,
+      "pro": 24,
+      "carb": 58,
+      "fat": 32,
+      "satFat": 18,
+      "fibre": 2,
+      "sodium": 720,
+      "sugar": 8
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 75,
+    "name": "Crockpot BBQ Beef Brisket",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Beef brisket",
+      "Butter"
+    ],
+    "pantry": [
+      "BBQ sauce",
+      "Beef broth",
+      "Brown sugar",
+      "Garlic",
+      "Onion",
+      "Smoked paprika",
+      "Mustard powder",
+      "Burger buns"
+    ],
+    "sides": [
+      "Coleslaw",
+      "Pickles"
+    ],
+    "recipe": [
+      "Rub brisket with brown sugar, paprika, mustard, salt, pepper. Sear all sides.",
+      "Cook in crockpot with broth, garlic and onion low 8–10 hrs.",
+      "Slice against grain or shred. Toss in BBQ sauce. Serve on buns with coleslaw."
+    ],
+    "macros": {
+      "cal": 680,
+      "pro": 52,
+      "carb": 48,
+      "fat": 28,
+      "satFat": 10,
+      "fibre": 2,
+      "sodium": 940,
+      "sugar": 18
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 76,
+    "name": "Crockpot Potato Soup",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Bacon",
+      "Sour cream",
+      "Shredded cheese",
+      "Butter",
+      "Milk"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Chicken broth",
+      "Onion",
+      "Garlic",
+      "Flour",
+      "Green onion"
+    ],
+    "sides": [
+      "Crusty bread"
+    ],
+    "recipe": [
+      "Dice potatoes and onion. Place in crockpot with broth and garlic.",
+      "Cook low 6–8 hrs. Mash some potato to thicken.",
+      "Stir in butter, milk, sour cream. Top with bacon, cheese and green onion."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 20,
+      "carb": 54,
+      "fat": 26,
+      "satFat": 11,
+      "fibre": 5,
+      "sodium": 840,
+      "sugar": 5
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 77,
+    "name": "Crockpot Chicken & Rice",
+    "cat": "crockpot",
+    "crockpot": true,
+    "fridge": [
+      "Chicken thighs",
+      "Butter"
+    ],
+    "pantry": [
+      "Long grain rice",
+      "Chicken broth",
+      "Onion",
+      "Garlic",
+      "Onion powder",
+      "Garlic powder",
+      "Thyme"
+    ],
+    "sides": [
+      "Steamed veg"
+    ],
+    "recipe": [
+      "Place chicken, broth, onion, garlic and seasonings in crockpot. Cook low 5–6 hrs.",
+      "Remove chicken. Stir in rinsed rice. Return chicken on top.",
+      "Cook high 30–45 min until rice is done. Fluff and serve."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 42,
+      "carb": 52,
+      "fat": 16,
+      "satFat": 5,
+      "fibre": 2,
+      "sodium": 620,
+      "sugar": 3
+    },
+    "health": "light",
+    "cfg": true
+  },
+  {
+    "id": 78,
+    "name": "Camping – Burgers & Dogs",
+    "cat": "camping",
+    "crockpot": false,
+    "fridge": [
+      "Ground beef patties",
+      "Hot dogs",
+      "Cheese slices"
+    ],
+    "pantry": [
+      "Burger buns",
+      "Hot dog buns",
+      "Condiments",
+      "Chips"
+    ],
+    "sides": [
+      "Chips",
+      "Condiments"
+    ],
+    "recipe": [
+      "Get fire or camp grill hot.",
+      "Grill patties 4 min per side, add cheese last minute. Grill hot dogs turning until charred.",
+      "Toast buns. Serve with chips and condiments."
+    ],
+    "macros": {
+      "cal": 680,
+      "pro": 40,
+      "carb": 54,
+      "fat": 32,
+      "satFat": 13,
+      "fibre": 2,
+      "sodium": 1040,
+      "sugar": 6
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 79,
+    "name": "Camping – Soup & Fire Pies",
+    "cat": "camping",
+    "crockpot": false,
+    "fridge": [
+      "Butter",
+      "Cheese slices",
+      "Sandwich meat"
+    ],
+    "pantry": [
+      "Canned soup",
+      "Bread"
+    ],
+    "sides": [],
+    "recipe": [
+      "Heat soup on camp stove.",
+      "Butter bread outside, layer cheese and meat inside. Lock in pie iron.",
+      "Cook over coals 3 min per side until golden."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 26,
+      "carb": 46,
+      "fat": 26,
+      "satFat": 11,
+      "fibre": 2,
+      "sodium": 1020,
+      "sugar": 5
+    },
+    "health": "indulgent",
+    "cfg": false
+  },
+  {
+    "id": 80,
+    "name": "Camping – Bacon Egg Brunch Hash",
+    "cat": "camping",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Bacon",
+      "Butter"
+    ],
+    "pantry": [
+      "Potatoes",
+      "Peppers",
+      "Onion",
+      "Paprika",
+      "Oil"
+    ],
+    "sides": [
+      "Toast"
+    ],
+    "recipe": [
+      "Par-cook diced potatoes in foil over coals 15–20 min.",
+      "Cook bacon crisp in cast iron. Add potatoes to fat — let get crispy.",
+      "Add peppers and onion 4–5 min. Make wells, scramble eggs in."
+    ],
+    "macros": {
+      "cal": 540,
+      "pro": 28,
+      "carb": 40,
+      "fat": 32,
+      "satFat": 10,
+      "fibre": 4,
+      "sodium": 820,
+      "sugar": 3
+    },
+    "health": "balanced",
+    "cfg": false
+  },
+  {
+    "id": 81,
+    "name": "Camping – Pancakes & Bacon",
+    "cat": "camping",
+    "crockpot": false,
+    "fridge": [
+      "Eggs",
+      "Milk",
+      "Butter",
+      "Bacon"
+    ],
+    "pantry": [
+      "Pancake mix",
+      "Maple syrup"
+    ],
+    "sides": [
+      "Maple syrup"
+    ],
+    "recipe": [
+      "Mix pancake batter per package.",
+      "Cook on buttered camp griddle over camp stove, 2 min per side.",
+      "Fry bacon in separate pan. Serve stacked with maple syrup."
+    ],
+    "macros": {
+      "cal": 520,
+      "pro": 20,
+      "carb": 58,
+      "fat": 22,
+      "satFat": 8,
+      "fibre": 2,
+      "sodium": 740,
+      "sugar": 20
+    },
+    "health": "indulgent",
+    "cfg": false
+  }
+]
