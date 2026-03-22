@@ -136,12 +136,7 @@
     <div style="height:8px"></div>
     <button class="btn btn-ghost btn-sm" style="font-size:13px;color:var(--ink4)" onclick="goTo('screen-settings')">⚙ Settings</button>
   </div>
-  <div class="tabbar">
-    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg on">🏠</div><div class="tab-lbl on">Picks</div></div>
-    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg">≡</div><div class="tab-lbl">Meals</div></div>
-    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg">☑</div><div class="tab-lbl">List</div></div>
-    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg">📅</div><div class="tab-lbl">Plan</div></div>
-  </div>
+
 </div>
 
 <!-- SCREEN 1: MEAL PICKER -->
@@ -156,16 +151,11 @@
   <div class="chip-row" id="meals-filter-chips">
     <!-- Populated dynamically by renderFilterChips() -->
   </div>
-  <div class="scroll-body" id="meals-scroll" style="padding-bottom:80px"><div id="meals-list"></div></div>
+  <div class="scroll-body" id="meals-scroll" style="padding-bottom:90px"><div id="meals-list"></div></div>
   <div class="cta-float hidden" id="meals-cta">
     <button class="cta-btn" onclick="goTo('screen-list')">Build Shopping List <span class="cta-badge" id="meals-cta-count">0</span></button>
   </div>
-  <div class="tabbar">
-    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg">🏠</div><div class="tab-lbl">Picks</div></div>
-    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg on">≡</div><div class="tab-lbl on">Meals</div></div>
-    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg">☑</div><div class="tab-lbl">List</div></div>
-    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg">📅</div><div class="tab-lbl">Plan</div></div>
-  </div>
+
 </div>
 
 <!-- SCREEN 2: SHOPPING LIST -->
@@ -173,18 +163,13 @@
   <div class="safe-top"></div>
   <div class="nav-bar"><span class="nav-back" onclick="goBack()">← Meals</span><span class="nav-title">Shopping List</span><span class="nav-action"></span></div>
   <div style="padding:0 16px 8px"><span class="t-sec">Tap items to check off as you shop</span></div>
-  <div class="scroll-body" style="padding-bottom:80px">
+  <div class="scroll-body" style="padding-bottom:90px">
     <div id="shopping-list-body"></div>
     <div style="height:8px"></div>
     <button class="btn btn-dark btn-sm" onclick="shareShoppingList()">Share List</button>
     <button class="btn btn-primary btn-sm" onclick="goTo('screen-plan')">Set Meal Plan →</button>
   </div>
-  <div class="tabbar">
-    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg">🏠</div><div class="tab-lbl">Picks</div></div>
-    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg">≡</div><div class="tab-lbl">Meals</div></div>
-    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg on">☑</div><div class="tab-lbl on">List</div></div>
-    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg">📅</div><div class="tab-lbl">Plan</div></div>
-  </div>
+
 </div>
 
 <!-- SCREEN 3: MEAL PLAN -->
@@ -195,7 +180,7 @@
     <span class="nav-action t-link-sm" onclick="changeWeek()" style="min-width:auto">This week</span>
     <button onclick="stepWeek(1)" style="background:none;border:none;font-size:22px;color:var(--blue);padding:8px 10px;cursor:pointer">›</button>
   </div></div>
-  <div class="scroll-body" style="padding-bottom:80px">
+  <div class="scroll-body" style="padding-bottom:90px">
     <div class="week-picker mb-8"><div class="week-picker-icon">📆</div><div><div class="week-picker-label" id="plan-week-label">Week of —</div><div style="font-size:12px;color:var(--ink4);margin-top:1px">Tap Change week to adjust</div></div></div>
     <div class="bal-card mb-8" style="padding:12px 16px">
       <div class="bal-nums-row" style="margin-bottom:8px">
@@ -209,12 +194,7 @@
     <div class="preview-card mb-8"><div class="preview-header"><div class="preview-header-label">Family App Preview</div><div class="preview-header-title" id="plan-preview-title">Week of —</div></div><div id="plan-preview-rows"></div></div>
     <button class="btn btn-green" onclick="sendPlan()">Send Plan to Family</button>
   </div>
-  <div class="tabbar">
-    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg">🏠</div><div class="tab-lbl">Picks</div></div>
-    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg">≡</div><div class="tab-lbl">Meals</div></div>
-    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg">☑</div><div class="tab-lbl">List</div></div>
-    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg on">📅</div><div class="tab-lbl on">Plan</div></div>
-  </div>
+
 </div>
 
 <!-- SCREEN 4: SETTINGS -->
@@ -539,6 +519,26 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+
+  <!-- SHARED TAB BAR — single instance outside all screens -->
+  <div class="tabbar" id="main-tabbar" style="position:fixed;bottom:0;left:0;right:0;z-index:50">
+    <div class="tab" onclick="goTo('screen-home')" id="tab-home">
+      <div class="tab-icon-bg on" id="tib-home">🏠</div>
+      <div class="tab-lbl on" id="tlb-home">Picks</div>
+    </div>
+    <div class="tab" onclick="goTo('screen-meals')" id="tab-meals">
+      <div class="tab-icon-bg" id="tib-meals">≡</div>
+      <div class="tab-lbl" id="tlb-meals">Meals</div>
+    </div>
+    <div class="tab" onclick="goTo('screen-list')" id="tab-list">
+      <div class="tab-icon-bg" id="tib-list">☑</div>
+      <div class="tab-lbl" id="tlb-list">List</div>
+    </div>
+    <div class="tab" onclick="goTo('screen-plan')" id="tab-plan">
+      <div class="tab-icon-bg" id="tib-plan">📅</div>
+      <div class="tab-lbl" id="tlb-plan">Plan</div>
+    </div>
+  </div>
 </div>
 
 <script type="module">
@@ -616,6 +616,22 @@ async function boot() {
 // ── Screen registry — all navigable screens ──────────────────────────────────
 const ALL_SCREENS = ['screen-home','screen-meals','screen-list','screen-plan','screen-settings'];
 
+// ── Shared tab bar updater ───────────────────────────────────────────────────
+const TAB_IDS = {
+  'screen-home':  'home',
+  'screen-meals': 'meals',
+  'screen-list':  'list',
+  'screen-plan':  'plan',
+};
+
+function updateTabBar(activeScreenId) {
+  Object.entries(TAB_IDS).forEach(([screen, key]) => {
+    const isActive = screen === activeScreenId;
+    document.getElementById('tib-' + key)?.classList.toggle('on', isActive);
+    document.getElementById('tlb-' + key)?.classList.toggle('on', isActive);
+  });
+}
+
 function setScreen(id, state) {
   // state: 'active' | 'behind' | 'gone'
   const el = document.getElementById(id);
@@ -640,26 +656,8 @@ function goTo(id) {
   setScreen(id, 'active');
   screenStack.push(id);
 
-  // Update tab highlights — only update the ONE tabbar on screen-home
-  // (each screen has its own tabbar but we only care about the active one)
-  const activeTabbar = document.getElementById('screen-' + id.replace('screen-',''))
-    ?.querySelector('.tabbar') || document.querySelectorAll('.tabbar')[0];
-
-  document.querySelectorAll('.tabbar .tab-icon-bg').forEach(t => t.classList.remove('on'));
-  document.querySelectorAll('.tabbar .tab-lbl').forEach(t => t.classList.remove('on'));
-
-  const tabMap = {'screen-home':0,'screen-meals':1,'screen-list':2,'screen-plan':3};
-  const tabIdx = tabMap[id];
-  if (tabIdx !== undefined) {
-    // Update ALL tabbars so whichever is visible shows the right highlight
-    document.querySelectorAll('.tabbar').forEach(tb => {
-      const tabs = tb.querySelectorAll('.tab');
-      if (tabs[tabIdx]) {
-        tabs[tabIdx].querySelector('.tab-icon-bg')?.classList.add('on');
-        tabs[tabIdx].querySelector('.tab-lbl')?.classList.add('on');
-      }
-    });
-  }
+  // Update shared tabbar highlight
+  updateTabBar(id);
 
   if (id === 'screen-meals') renderMeals();
   if (id === 'screen-list')  renderShoppingList();
@@ -672,20 +670,7 @@ function goBack() {
   const prev = screenStack[screenStack.length - 1];
   setScreen(cur,  'gone');
   setScreen(prev, 'active');
-  // Update tab highlights for previous screen
-  const tabMap = {'screen-home':0,'screen-meals':1,'screen-list':2,'screen-plan':3};
-  const tabIdx = tabMap[prev];
-  if (tabIdx !== undefined) {
-    document.querySelectorAll('.tabbar').forEach(tb => {
-      tb.querySelectorAll('.tab-icon-bg').forEach(t => t.classList.remove('on'));
-      tb.querySelectorAll('.tab-lbl').forEach(t => t.classList.remove('on'));
-      const tabs = tb.querySelectorAll('.tab');
-      if (tabs[tabIdx]) {
-        tabs[tabIdx].querySelector('.tab-icon-bg')?.classList.add('on');
-        tabs[tabIdx].querySelector('.tab-lbl')?.classList.add('on');
-      }
-    });
-  }
+  updateTabBar(prev);
 }
 
 // ── Sheets ────────────────────────────────────────────────────────────────────
