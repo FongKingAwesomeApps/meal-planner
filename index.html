@@ -125,16 +125,16 @@
     </div>
     <div class="flex-row px-16 mb-8 mt-8" style="gap:0">
       <span class="t-label flex-1">This week</span>
-      <span class="t-link-sm" onclick="goTo('screen-plan')">See plan</span>
+      <span class="t-link-sm" onclick="if(window.goTo)goTo('screen-plan')">See plan</span>
     </div>
     <div class="inset-list" id="home-meal-list">
       <div class="inset-row"><div class="skeleton" style="width:34px;height:34px;border-radius:10px"></div><div style="flex:1;margin-left:10px"><div class="skeleton" style="width:60%;height:14px;margin-bottom:6px;border-radius:4px"></div><div class="skeleton" style="width:30%;height:11px;border-radius:4px"></div></div></div>
       <div class="inset-row"><div class="skeleton" style="width:34px;height:34px;border-radius:10px"></div><div style="flex:1;margin-left:10px"><div class="skeleton" style="width:70%;height:14px;margin-bottom:6px;border-radius:4px"></div><div class="skeleton" style="width:25%;height:11px;border-radius:4px"></div></div></div>
     </div>
     <div style="height:8px"></div>
-    <button class="btn btn-ghost btn-sm" onclick="goTo('screen-meals')">Select Meals →</button>
+    <button class="btn btn-ghost btn-sm" onclick="if(window.goTo)goTo('screen-meals')">Select Meals →</button>
     <div style="height:8px"></div>
-    <button class="btn btn-ghost btn-sm" style="font-size:13px;color:var(--ink4)" onclick="goTo('screen-settings')">⚙ Settings</button>
+    <button class="btn btn-ghost btn-sm" style="font-size:13px;color:var(--ink4)" onclick="if(window.goTo)goTo('screen-settings')">⚙ Settings</button>
   </div>
 
 </div>
@@ -156,7 +156,7 @@
   </div>
   <div class="scroll-body" id="meals-scroll" style="padding-bottom:90px"><div id="meals-list"></div></div>
   <div class="cta-float hidden" id="meals-cta">
-    <button class="cta-btn" onclick="goTo('screen-list')">Build Shopping List <span class="cta-badge" id="meals-cta-count">0</span></button>
+    <button class="cta-btn" onclick="if(window.goTo)goTo('screen-list')">Build Shopping List <span class="cta-badge" id="meals-cta-count">0</span></button>
   </div>
 
 </div>
@@ -170,7 +170,7 @@
     <div id="shopping-list-body"></div>
     <div style="height:8px"></div>
     <button class="btn btn-dark btn-sm" onclick="shareShoppingList()">Share List</button>
-    <button class="btn btn-primary btn-sm" onclick="goTo('screen-plan')">Set Meal Plan →</button>
+    <button class="btn btn-primary btn-sm" onclick="if(window.goTo)goTo('screen-plan')">Set Meal Plan →</button>
   </div>
 
 </div>
@@ -442,7 +442,7 @@
         <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-coord-url">—</div>
         <div style="display:flex;gap:8px;width:100%">
           <button onclick="copyCoordURL()" style="flex:1;background:var(--bg2);color:var(--ink);border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>
-          <button onclick="showAddToHomeInstructions()" style="flex:2;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">📲 Save to Home Screen</button>
+          <button onclick="if(window.showAddToHomeInstructions)showAddToHomeInstructions()" style="flex:2;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">📲 Save to Home Screen</button>
         </div>
       </div>
     </div>
@@ -1517,6 +1517,12 @@ function showSyncSheet() {
   if (settingsEl) settingsEl.textContent = fid !== '—' ? 'ID: ' + fid : 'Not set up yet';
 
   openSheet('sheet-sync');
+}
+
+function showAddToHomeInstructions() {
+  const el = document.getElementById('add-home-instructions');
+  if (el) el.classList.toggle('hidden');
+  copyCoordURL();
 }
 
 function copyCoordURL() {
