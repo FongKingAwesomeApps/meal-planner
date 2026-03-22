@@ -306,6 +306,35 @@
     <!-- Step 2: Review fields — hidden until AI generates -->
     <div id="add-review-fields" class="hidden">
       <div class="divider mb-8"></div>
+
+      <!-- AI macro summary — shown after generation -->
+      <div id="ai-macro-card" class="hidden" style="margin:0 16px 12px;background:var(--bg);border-radius:var(--r12);overflow:hidden">
+        <div style="padding:8px 12px 4px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink4)">Estimated nutrition per serving</div>
+        <div style="display:flex;border-top:1px solid var(--sep)">
+          <div style="flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--sep)">
+            <div style="font-size:16px;font-weight:700;color:var(--ink)" id="mac-cal">—</div>
+            <div style="font-size:9px;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Cal</div>
+          </div>
+          <div style="flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--sep)">
+            <div style="font-size:16px;font-weight:700;color:var(--ink)" id="mac-pro">—</div>
+            <div style="font-size:9px;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Protein</div>
+          </div>
+          <div style="flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--sep)">
+            <div style="font-size:16px;font-weight:700;color:var(--ink)" id="mac-carb">—</div>
+            <div style="font-size:9px;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Carbs</div>
+          </div>
+          <div style="flex:1;padding:10px 6px;text-align:center;border-right:1px solid var(--sep)">
+            <div style="font-size:16px;font-weight:700;color:var(--ink)" id="mac-fat">—</div>
+            <div style="font-size:9px;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Fat</div>
+          </div>
+          <div style="flex:1;padding:10px 6px;text-align:center">
+            <div style="font-size:16px;font-weight:700;color:var(--ink)" id="mac-sod">—</div>
+            <div style="font-size:9px;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Sodium</div>
+          </div>
+        </div>
+        <div style="padding:6px 12px 8px;font-size:11px;color:var(--ink5);border-top:1px solid var(--sep)">Claude's estimates — adjust health rating below if needed</div>
+      </div>
+
       <label class="form-label">Fridge ingredients <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line, format: qty · name)</span></label>
       <textarea class="form-input form-textarea" id="add-fridge" placeholder="1 lb · Chicken thighs&#10;1 can · Coconut milk"></textarea>
       <div class="form-spacer"></div>
@@ -517,6 +546,7 @@ let activeRating = 'auto';
 let screenStack  = ['screen-home'];
 let pendingPicks = null;
 let checkedItems = new Set();
+let _lastGeneratedMacros = null;  // stores macros from last AI generation
 let weekOffset   = 0;  // 0 = current week, 1 = next week, -1 = last week
 
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -1237,6 +1267,22 @@ async function aiGenerateMeal() {
     if (!res.ok) throw new Error('Worker returned ' + res.status);
     const parsed = await res.json();
 
+    // Store macros for saveNewMeal to use
+    _lastGeneratedMacros = parsed.macros || null;
+
+    // Show macro card in review section
+    if (parsed.macros) {
+      const m = parsed.macros;
+      const fmt = (v, unit) => v ? v + unit : '—';
+      const setMac = (id, v, u) => { const el = document.getElementById(id); if (el) el.textContent = fmt(v, u); };
+      setMac('mac-cal',  m.cal,    '');
+      setMac('mac-pro',  m.pro,    'g');
+      setMac('mac-carb', m.carb,   'g');
+      setMac('mac-fat',  m.fat,    'g');
+      setMac('mac-sod',  m.sodium, 'mg');
+      document.getElementById('ai-macro-card')?.classList.remove('hidden');
+    }
+
     if (parsed.fridge) document.getElementById('add-fridge').value =
       parsed.fridge.map(i => typeof i==='string' ? i : i.qty + ' · ' + i.name).join('\n');
     if (parsed.pantry) document.getElementById('add-pantry').value =
@@ -1278,11 +1324,13 @@ function saveNewMeal() {
     recipe:  document.getElementById('add-recipe').value.split('\n').filter(Boolean).map(s => ({step:s,time:''})),
     health:  activeRating === 'auto' ? 'balanced' : activeRating,
     custom:  true,
-    macros:  {cal:0,pro:0,carb:0,fat:0,satFat:0,fibre:0,sodium:0,sugar:0}
+    macros:  _lastGeneratedMacros || {cal:0,pro:0,carb:0,fat:0,satFat:0,fibre:0,sodium:0,sugar:0}
   };
   const customs = Store.getCustomMeals();
   customs.push(meal);
   Store.saveCustomMeals(customs);
+  // Reload meals library so new meal is immediately searchable
+  Meals.loadMeals(customs).catch(()=>{});
   // Reset form
   ['add-name','add-fridge','add-pantry','add-recipe'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
@@ -1296,6 +1344,8 @@ function saveNewMeal() {
   const status = document.getElementById('ai-status');
   if (status) status.textContent = '';
   // Reset category to default
+  _lastGeneratedMacros = null;
+  document.getElementById('ai-macro-card')?.classList.add('hidden');
   const catSel = document.getElementById('add-cat');
   if (catSel) catSel.value = 'comfort';
   document.getElementById('new-cat-wrap')?.classList.add('hidden');
