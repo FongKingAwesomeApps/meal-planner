@@ -1049,7 +1049,7 @@ function renderHomeMealList() {
     el.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No meals planned</div><div class="empty-sub">Tap Select Meals to start</div></div>`;
     return;
   }
-  el.innerHTML=entries.map(e=>`<div class="inset-row">
+  el.innerHTML=entries.map(e=>`<div class="inset-row" onclick="openRecipe(${e.meal.id})" style="cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,.04)">
     <div class="meal-icon" style="background:${rBg(e.meal.health)}">${CAT_EMOJI[e.meal.cat]||'🍽'}</div>
     <div style="flex:1;min-width:0"><div class="meal-name">${e.meal.name}</div><div class="meal-day">${e.day}</div></div>
     ${rPill(e.meal.health)}
