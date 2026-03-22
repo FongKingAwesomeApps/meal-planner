@@ -556,6 +556,10 @@ async function boot() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
   }
+  // Initialise all screens — everything gone except home
+  ALL_SCREENS.forEach(s => setScreen(s, 'gone'));
+  setScreen('screen-home', 'active');
+
   await Sync.init();  // reads ?fid= from URL, pulls shared state
   if (!Sync.isConnected()) {
     document.getElementById('first-run-card')?.classList.remove('hidden');
@@ -572,41 +576,64 @@ async function boot() {
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
-function setScreen(id, cls) {
+// ── Screen registry — all navigable screens ──────────────────────────────────
+const ALL_SCREENS = ['screen-home','screen-meals','screen-list','screen-plan','screen-settings'];
+
+function setScreen(id, state) {
+  // state: 'active' | 'behind' | 'gone'
   const el = document.getElementById(id);
   if (!el) return;
-  el.classList.remove('active','behind');
-  if (cls) el.classList.add(cls);
+  el.classList.remove('active','behind','gone');
+  el.classList.add(state || 'gone');
 }
 
 function goTo(id) {
-  const cur = screenStack[screenStack.length-1];
+  const cur = screenStack[screenStack.length - 1];
   if (cur === id) return;
+
+  // Move current screen to behind (slide left)
   setScreen(cur, 'behind');
+
+  // Hide all other screens instantly (no animation) except current and target
+  ALL_SCREENS.forEach(s => {
+    if (s !== cur && s !== id) setScreen(s, 'gone');
+  });
+
+  // Bring target in
   setScreen(id, 'active');
   screenStack.push(id);
-  // update tab bar highlights
-  document.querySelectorAll('.tab-icon-bg').forEach(t => t.classList.remove('on'));
-  document.querySelectorAll('.tab-lbl').forEach(t => t.classList.remove('on'));
+
+  // Update tab highlights — only update the ONE tabbar on screen-home
+  // (each screen has its own tabbar but we only care about the active one)
+  const activeTabbar = document.getElementById('screen-' + id.replace('screen-',''))
+    ?.querySelector('.tabbar') || document.querySelectorAll('.tabbar')[0];
+
+  document.querySelectorAll('.tabbar .tab-icon-bg').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.tabbar .tab-lbl').forEach(t => t.classList.remove('on'));
+
   const tabMap = {'screen-home':0,'screen-meals':1,'screen-list':2,'screen-plan':3};
   const tabIdx = tabMap[id];
   if (tabIdx !== undefined) {
-    const tabs = document.querySelectorAll('.tabbar')[0]?.querySelectorAll('.tab');
-    if (tabs?.[tabIdx]) {
-      tabs[tabIdx].querySelector('.tab-icon-bg')?.classList.add('on');
-      tabs[tabIdx].querySelector('.tab-lbl')?.classList.add('on');
-    }
+    // Update ALL tabbars so whichever is visible shows the right highlight
+    document.querySelectorAll('.tabbar').forEach(tb => {
+      const tabs = tb.querySelectorAll('.tab');
+      if (tabs[tabIdx]) {
+        tabs[tabIdx].querySelector('.tab-icon-bg')?.classList.add('on');
+        tabs[tabIdx].querySelector('.tab-lbl')?.classList.add('on');
+      }
+    });
   }
-  if (id==='screen-meals') renderMeals();
-  if (id==='screen-list')  renderShoppingList();
-  if (id==='screen-plan')  renderPlan();
+
+  if (id === 'screen-meals') renderMeals();
+  if (id === 'screen-list')  renderShoppingList();
+  if (id === 'screen-plan')  renderPlan();
 }
 
 function goBack() {
   if (screenStack.length < 2) return;
   const cur  = screenStack.pop();
   const prev = screenStack[screenStack.length - 1];
-  setScreen(cur, null);   // off-screen right (default transform)
+  setScreen(cur, 'gone');    // instant — no animation back
   setScreen(prev, 'active');
 }
 
@@ -1060,27 +1087,18 @@ async function aiGenerateMeal() {
   if (status) status.textContent = 'Asking Claude for ingredients and method…';
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    // Route through Worker — API key is stored as a Worker secret
+    const workerURL = 'https://meal-planner-api.davekingca.workers.dev/ai/recipe';
+    const res = await fetch(workerURL, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1500,
-        messages: [{role:'user', content:
-          'Generate a complete recipe for a family meal planning app. Respond ONLY with valid JSON, no markdown, no explanation.\n\n' +
-          'Meal name: ' + name + '\n' +
-          'Category: ' + (document.getElementById('add-cat')?.value || 'any') + '\n\n' +
-          'Return this exact JSON structure:\n' +
-          '{"fridge":[{"name":"ingredient","qty":"amount"}],"pantry":[{"name":"ingredient","qty":"amount"}],"sides":["side"],"recipe":[{"step":"Instruction with timing.","time":"X min"}],"health":"light|balanced|indulgent","macros":{"cal":0,"pro":0,"carb":0,"fat":0,"satFat":0,"fibre":0,"sodium":0,"sugar":0}}\n\n' +
-          'Rules: quantities must be specific (1 lb, 3 tbsp, 2 cups). Steps must include cook times. Serves 4. ' +
-          'light=high protein/fibre low sodium. balanced=moderate everything. indulgent=rich/fried/heavy. ' +
-          'Return ONLY the JSON object.'
-        }]
+        name,
+        category: document.getElementById('add-cat')?.value || 'any',
       })
     });
-    const data   = await res.json();
-    const text   = data.content?.find(c => c.type === 'text')?.text || '';
-    const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
+    if (!res.ok) throw new Error('Worker returned ' + res.status);
+    const parsed = await res.json();
 
     if (parsed.fridge) document.getElementById('add-fridge').value =
       parsed.fridge.map(i => typeof i==='string' ? i : i.qty + ' · ' + i.name).join('\n');
