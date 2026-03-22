@@ -1136,7 +1136,7 @@ function openRecipe(id) {
   document.getElementById('sheet-recipe-body').innerHTML=`
     <div class="sheet-header" style="flex-direction:column;align-items:flex-start;gap:6px">
       <div style="display:flex;align-items:flex-start;width:100%">
-        <div style="flex:1"><div class="t-label" style="margin-bottom:8px">${Meals.CAT_LABELS[m.cat]||m.cat}</div><div class="sheet-title">${m.name}${}</div></div>
+        <div style="flex:1"><div class="t-label" style="margin-bottom:8px">${Meals.CAT_LABELS[m.cat]||m.cat}</div><div class="sheet-title">${m.name}</div></div>
         <button class="sheet-close" onclick="closeSheet()">✕</button>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${rPill(m.health)}${m.crockpot?'<span style="background:#fef3e8;color:#d4631a;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600">Crockpot friendly</span>':''}</div>
