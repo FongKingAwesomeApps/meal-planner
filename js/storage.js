@@ -26,8 +26,12 @@ const KEYS = {
 
 const DEFAULT_FAMILY = [
   {
-    name: 'Dave', role: 'Coordinator', type: 'open', colour: '#007aff',
-    limits: { total: 7, maxIndulgent: 2, minLight: 2 }
+    name: 'Dave', role: 'Coordinator', type: 'decision', colour: '#007aff',
+    limits: { total: 5, maxIndulgent: 2, minLight: 1 }
+  },
+  {
+    name: 'Jenn', role: 'Household', type: 'decision', colour: '#ff2d55',
+    limits: { total: 5, maxIndulgent: 2, minLight: 1 }
   },
   {
     name: 'Seth', role: 'Household', type: 'decision', colour: '#34c759',
