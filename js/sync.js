@@ -203,9 +203,10 @@ async function subscribePush(name, role = 'coordinator') {
 }
 
 async function getVapidPublicKey() {
-  // Fetch the VAPID public key from the server
   const res  = await fetch(`${_apiBase}/vapid-public-key`);
+  if (!res.ok) throw new Error('Could not fetch VAPID key');
   const data = await res.json();
+  if (!data.key) throw new Error('No VAPID key in response');
   return urlBase64ToUint8Array(data.key);
 }
 
