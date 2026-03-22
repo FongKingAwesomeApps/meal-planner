@@ -139,6 +139,7 @@
   <div class="search-wrap"><span class="search-icon">⌕</span><input class="search-input" id="meals-search" placeholder="Search meals…" oninput="renderMeals()"></div>
   <div class="chip-row" id="meals-filter-chips">
     <div class="chip chip-active" data-f="all" onclick="setFilter('all')">All</div>
+    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a">❤️ Favourites</div>
     <div class="chip chip-l" data-f="light" onclick="setFilter('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
     <div class="chip chip-b" data-f="balanced" onclick="setFilter('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
     <div class="chip chip-i" data-f="indulgent" onclick="setFilter('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
@@ -185,7 +186,11 @@
 <!-- SCREEN 3: MEAL PLAN -->
 <div id="screen-plan" class="screen">
   <div class="safe-top"></div>
-  <div class="nav-bar"><span class="nav-back" onclick="goBack()">← List</span><span class="nav-title">Meal Plan</span><span class="nav-action t-link-sm" onclick="showToast('Week navigation coming soon')">Change week</span></div>
+  <div class="nav-bar"><span class="nav-back" onclick="goBack()">← List</span><span class="nav-title">Meal Plan</span><div style="display:flex;align-items:center;gap:0">
+    <button onclick="stepWeek(-1)" style="background:none;border:none;font-size:22px;color:var(--blue);padding:8px 10px;cursor:pointer">‹</button>
+    <span class="nav-action t-link-sm" onclick="changeWeek()" style="min-width:auto">This week</span>
+    <button onclick="stepWeek(1)" style="background:none;border:none;font-size:22px;color:var(--blue);padding:8px 10px;cursor:pointer">›</button>
+  </div></div>
   <div class="scroll-body" style="padding-bottom:80px">
     <div class="week-picker mb-8"><div class="week-picker-icon">📆</div><div><div class="week-picker-label" id="plan-week-label">Week of —</div><div style="font-size:12px;color:var(--ink4);margin-top:1px">Tap Change week to adjust</div></div></div>
     <div class="bal-card mb-8" style="padding:12px 16px">
@@ -225,6 +230,11 @@
       <div class="settings-row" onclick="openSheet('sheet-backup')"><div class="settings-icon" style="background:#e8f0ff">💾</div><div class="settings-label">Backup &amp; Restore</div><div class="settings-chev">›</div></div>
       <div class="settings-row" onclick="showToast('Download coming soon')"><div class="settings-icon" style="background:#f0e8ff">📥</div><div class="settings-label">Download Offline Copy</div><div class="settings-chev">›</div></div>
     </div>
+    <div class="t-label px-16 mb-8">Family</div>
+    <div class="settings-group mb-8">
+      <div class="settings-row" onclick="shareFamilyURL()"><div class="settings-icon" style="background:#e3f9e9">👨‍👩‍👧‍👦</div><div class="settings-label">Share Family App Link</div><div class="settings-chev">›</div></div>
+      <div class="settings-row" onclick="copyFamilyURL()"><div class="settings-icon" style="background:#e8f0ff">🔗</div><div class="settings-label">Copy Family App URL</div><div class="settings-chev">›</div></div>
+    </div>
     <div class="t-label px-16 mb-8">Support</div>
     <div class="settings-group mb-8">
       <div class="settings-row" onclick="openSheet('sheet-faq')"><div class="settings-icon" style="background:#fff3e0">❓</div><div class="settings-label">Help &amp; FAQ</div><div class="settings-chev">›</div></div>
@@ -258,39 +268,49 @@
   <div class="sheet-header"><div class="sheet-title">Add Meal</div><button class="sheet-close" onclick="closeSheet()">✕</button></div>
   <div class="sheet-scroll">
     <div class="form-spacer"></div>
+    <!-- Step 1: Name + Generate -->
     <label class="form-label">Meal name</label>
-    <input class="form-input" id="add-name" placeholder="e.g. Thai Green Curry">
+    <input class="form-input" id="add-name" placeholder="e.g. Thai Green Curry" oninput="onAddNameInput()">
     <div class="form-spacer"></div>
-    <label class="form-label">Category</label>
-    <select class="form-input" id="add-cat">
-      <option value="comfort">Comfort &amp; Casual</option><option value="pasta">Pasta &amp; Italian</option>
-      <option value="chicken">Chicken</option><option value="pork">Pork</option><option value="beef">Beef</option>
-      <option value="fish">Fish &amp; Seafood</option><option value="crockpot">Crockpot &amp; Slow Cook</option><option value="camping">Camping</option>
-    </select>
-    <div class="form-spacer"></div>
-    <div style="display:flex;align-items:center;gap:10px;padding:0 16px"><span style="font-size:14px;color:var(--ink);flex:1">🫕 Crockpot / slow cooker</span><input type="checkbox" id="add-crockpot" style="width:20px;height:20px;accent-color:var(--blue)"></div>
-    <div class="form-spacer"></div>
-    <label class="form-label">Fridge ingredients <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line)</span></label>
-    <textarea class="form-input form-textarea" id="add-fridge" placeholder="Chicken thighs&#10;Coconut milk"></textarea>
-    <div class="form-spacer"></div>
-    <label class="form-label">Pantry ingredients <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line)</span></label>
-    <textarea class="form-input form-textarea" id="add-pantry" placeholder="Curry paste&#10;Fish sauce"></textarea>
-    <div class="form-spacer"></div>
-    <label class="form-label">Recipe steps <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line)</span></label>
-    <textarea class="form-input form-textarea" id="add-recipe" placeholder="Fry curry paste 2 min.&#10;Add coconut milk, simmer 15 min."></textarea>
-    <div class="form-spacer"></div>
-    <label class="form-label">Health rating</label>
-    <div class="rating-pick">
-      <div class="rating-opt ro-auto ro-selected" id="ro-auto" onclick="selectRating('auto')">Auto</div>
-      <div class="rating-opt ro-l" id="ro-light" onclick="selectRating('light')">Light</div>
-      <div class="rating-opt ro-b" id="ro-balanced" onclick="selectRating('balanced')">Balanced</div>
-      <div class="rating-opt ro-i" id="ro-indulgent" onclick="selectRating('indulgent')">Indulgent</div>
+    <div style="display:flex;gap:8px;padding:0 16px">
+      <select class="form-input" id="add-cat" style="flex:1;margin:0">
+        <option value="comfort">Comfort</option><option value="pasta">Pasta</option>
+        <option value="chicken">Chicken</option><option value="pork">Pork</option>
+        <option value="beef">Beef</option><option value="fish">Fish</option>
+        <option value="crockpot">Crockpot</option><option value="camping">Camping</option>
+      </select>
+      <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:var(--r12);padding:0 12px;flex-shrink:0">
+        <span style="font-size:18px">🫕</span>
+        <input type="checkbox" id="add-crockpot" style="width:18px;height:18px;accent-color:var(--blue)">
+      </div>
     </div>
     <div class="form-spacer"></div>
-    <button class="ai-btn" onclick="aiGenerateMeal()">✨ Generate with AI</button>
-    <div class="form-spacer"></div>
-    <button class="btn btn-primary" onclick="saveNewMeal()">Save to Library</button>
-    <div style="height:32px"></div>
+    <button class="ai-btn" id="ai-generate-btn" onclick="aiGenerateMeal()" disabled style="opacity:.4">✨ Generate with AI</button>
+    <div id="ai-status" style="text-align:center;font-size:12px;color:var(--ink4);padding:8px 16px;min-height:24px"></div>
+
+    <!-- Step 2: Review fields — hidden until AI generates -->
+    <div id="add-review-fields" class="hidden">
+      <div class="divider mb-8"></div>
+      <label class="form-label">Fridge ingredients <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line, format: qty · name)</span></label>
+      <textarea class="form-input form-textarea" id="add-fridge" placeholder="1 lb · Chicken thighs&#10;1 can · Coconut milk"></textarea>
+      <div class="form-spacer"></div>
+      <label class="form-label">Pantry ingredients</label>
+      <textarea class="form-input form-textarea" id="add-pantry" placeholder="2 tbsp · Curry paste&#10;1 tbsp · Fish sauce"></textarea>
+      <div class="form-spacer"></div>
+      <label class="form-label">Recipe steps <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line, include time)</span></label>
+      <textarea class="form-input form-textarea" id="add-recipe" style="min-height:120px" placeholder="Fry curry paste 2 min.&#10;Add coconut milk, simmer 15 min."></textarea>
+      <div class="form-spacer"></div>
+      <label class="form-label">Health rating</label>
+      <div class="rating-pick">
+        <div class="rating-opt ro-auto ro-selected" id="ro-auto" onclick="selectRating('auto')">Auto</div>
+        <div class="rating-opt ro-l" id="ro-light" onclick="selectRating('light')">Light</div>
+        <div class="rating-opt ro-b" id="ro-balanced" onclick="selectRating('balanced')">Balanced</div>
+        <div class="rating-opt ro-i" id="ro-indulgent" onclick="selectRating('indulgent')">Indulgent</div>
+      </div>
+      <div class="form-spacer"></div>
+      <button class="btn btn-primary" onclick="saveNewMeal()">Save to Library</button>
+      <div style="height:32px"></div>
+    </div>
   </div>
 </div>
 
@@ -343,6 +363,7 @@ let activeRating = 'auto';
 let screenStack  = ['screen-home'];
 let pendingPicks = null;
 let checkedItems = new Set();
+let weekOffset   = 0;  // 0 = current week, 1 = next week, -1 = last week
 
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const CAT_EMOJI = {pasta:'🍝',chicken:'🍗',pork:'🥩',beef:'🥩',fish:'🐟',comfort:'🍲',crockpot:'🫕',camping:'⛺'};
@@ -358,6 +379,13 @@ G.selectRating=selectRating; G.saveNewMeal=saveNewMeal; G.aiGenerateMeal=aiGener
 G.createBackupUI=createBackupUI; G.applyRestoreUI=applyRestoreUI;
 G.approvePickMeal=approvePickMeal; G.skipPickMeal=skipPickMeal; G.approveAllPicks=approveAllPicks;
 G.showToast=showToast;
+G.changeWeek=changeWeek;
+G.toggleFav=toggleFav;
+G.getFavourites=getFavourites;
+G.onAddNameInput=onAddNameInput;
+G.stepWeek=stepWeek;
+G.shareFamilyURL=shareFamilyURL;
+G.copyFamilyURL=copyFamilyURL;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 async function boot() {
@@ -374,27 +402,42 @@ async function boot() {
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
+function setScreen(id, cls) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('active','behind');
+  if (cls) el.classList.add(cls);
+}
+
 function goTo(id) {
   const cur = screenStack[screenStack.length-1];
-  if (cur===id) return;
-  document.getElementById(cur)?.classList.replace('active','behind');
-  const next = document.getElementById(id);
-  next?.classList.remove('behind');
-  next?.classList.add('active');
+  if (cur === id) return;
+  setScreen(cur, 'behind');
+  setScreen(id, 'active');
   screenStack.push(id);
+  // update tab bar highlights
+  document.querySelectorAll('.tab-icon-bg').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.tab-lbl').forEach(t => t.classList.remove('on'));
+  const tabMap = {'screen-home':0,'screen-meals':1,'screen-list':2,'screen-plan':3};
+  const tabIdx = tabMap[id];
+  if (tabIdx !== undefined) {
+    const tabs = document.querySelectorAll('.tabbar')[0]?.querySelectorAll('.tab');
+    if (tabs?.[tabIdx]) {
+      tabs[tabIdx].querySelector('.tab-icon-bg')?.classList.add('on');
+      tabs[tabIdx].querySelector('.tab-lbl')?.classList.add('on');
+    }
+  }
   if (id==='screen-meals') renderMeals();
   if (id==='screen-list')  renderShoppingList();
   if (id==='screen-plan')  renderPlan();
 }
 
 function goBack() {
-  if (screenStack.length<2) return;
+  if (screenStack.length < 2) return;
   const cur  = screenStack.pop();
-  const prev = screenStack[screenStack.length-1];
-  document.getElementById(cur)?.classList.replace('active','hidden-screen');
-  document.getElementById(cur)?.classList.remove('behind','active');
-  document.getElementById(prev)?.classList.remove('behind');
-  document.getElementById(prev)?.classList.add('active');
+  const prev = screenStack[screenStack.length - 1];
+  setScreen(cur, null);   // off-screen right (default transform)
+  setScreen(prev, 'active');
 }
 
 // ── Sheets ────────────────────────────────────────────────────────────────────
@@ -435,10 +478,13 @@ function updateGreeting() {
 }
 
 function weekRange() {
-  const now=new Date(), sun=new Date(now), sat=new Date(now);
-  sun.setDate(now.getDate()-now.getDay());
-  sat.setDate(sun.getDate()+6);
-  return {sun,sat};
+  const now = new Date();
+  const sun = new Date(now);
+  sun.setDate(now.getDate() - now.getDay() + (weekOffset * 7));
+  sun.setHours(0,0,0,0);
+  const sat = new Date(sun);
+  sat.setDate(sun.getDate() + 6);
+  return {sun, sat};
 }
 
 // ── Balance card ──────────────────────────────────────────────────────────────
@@ -565,7 +611,9 @@ function renderMeals() {
   if(!Meals.isLoaded())return;
   const q=(document.getElementById('meals-search')?.value||'').toLowerCase();
   const f=activeFilter;
+  const favs = Store.getFavourites();
   let filtered=Meals.allMeals().filter(m=>{
+    if(f==='fav'&&!favs.has(m.id))return false;
     if(f==='crockpot'&&!m.crockpot)return false;
     if(['pasta','chicken','pork','beef','fish','comfort','camping'].includes(f)&&m.cat!==f)return false;
     if(['light','balanced','indulgent'].includes(f)&&m.health!==f)return false;
@@ -585,7 +633,9 @@ function renderMeals() {
         <div class="pill-inner">
           <div class="pill-check${sel?' on':''}">${sel?'✓':''}</div>
           <div class="pill-name">${m.crockpot?'🫕 ':''}${m.name}</div>
-          <div class="pill-meta">${rPill(m.health,true)}<button class="pill-recipe-btn" onclick="event.stopPropagation();openRecipe(${m.id})">Recipe</button></div>
+          <div class="pill-meta">
+            <button class="pill-fav-btn" onclick="event.stopPropagation();toggleFav(${m.id})" style="background:none;border:none;font-size:18px;padding:2px 4px;cursor:pointer;line-height:1">${getFavourites().has(m.id)?'❤️':'🤍'}</button>
+            ${rPill(m.health,true)}<button class="pill-recipe-btn" onclick="event.stopPropagation();openRecipe(${m.id})">Recipe</button></div>
         </div>
         ${sel?`<div class="pax-row"><span class="pax-label">Guests</span>
           <button class="pax-btn pax-minus" onclick="event.stopPropagation();changePax(${m.id},-1)">-</button>
@@ -598,6 +648,16 @@ function renderMeals() {
   if(!html)html=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">No meals found</div><div class="empty-sub">Try a different search or filter</div></div>`;
   document.getElementById('meals-list').innerHTML=html;
   updateMealsCTA();
+}
+
+function toggleFav(id) {
+  const isFav = Store.toggleFavourite(id);
+  showToast(isFav ? '❤️ Added to favourites' : 'Removed from favourites');
+  renderMeals();
+}
+
+function getFavourites() {
+  return Store.getFavourites();
 }
 
 function toggleMeal(id) {
@@ -747,6 +807,23 @@ function changePlanPax(key,d) {
   Store.saveWeekPlan(weekPlan);
   const el=document.getElementById(`pp-${key}`); if(el)el.textContent=weekPlan[key].pax;
 }
+function stepWeek(delta) {
+  weekOffset += delta;
+  updateGreeting();
+  renderPlan();
+  renderHomeBalance();
+  renderHomeMealList();
+}
+
+function changeWeek() {
+  weekOffset = 0;
+  updateGreeting();
+  renderPlan();
+  renderHomeBalance();
+  renderHomeMealList();
+  showToast('Back to current week');
+}
+
 function sendPlan() {
   const {sun}=weekRange();
   const lines=['📅 MEAL PLAN\n'];
@@ -785,42 +862,100 @@ function selectRating(r) {
   });
 }
 async function aiGenerateMeal() {
-  const name=document.getElementById('add-name').value.trim();
-  if(!name){showToast('Enter a meal name first');return;}
-  showToast('Generating…');
+  const name = document.getElementById('add-name').value.trim();
+  if (!name) { showToast('Enter a meal name first'); return; }
+
+  const btn    = document.getElementById('ai-generate-btn');
+  const status = document.getElementById('ai-status');
+  const fields = document.getElementById('add-review-fields');
+
+  if (btn) { btn.disabled = true; btn.textContent = '✨ Generating…'; }
+  if (status) status.textContent = 'Asking Claude for ingredients and method…';
+
   try {
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Generate a structured recipe for a family meal planning app. Respond ONLY with valid JSON, no markdown.\n\nMeal: ${name}\n\nReturn:\n{"fridge":["..."],"pantry":["..."],"sides":["..."],"recipe":["Step 1.","Step 2."],"health":"light|balanced|indulgent","macros":{"cal":0,"pro":0,"carb":0,"fat":0,"sodium":0}}\n\nHealth: light=lower sodium/fat, higher fibre/protein. balanced=moderate. indulgent=higher sat fat/sodium/sugar.`}]})
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        messages: [{role:'user', content:
+          'Generate a complete recipe for a family meal planning app. Respond ONLY with valid JSON, no markdown, no explanation.\n\n' +
+          'Meal name: ' + name + '\n' +
+          'Category: ' + (document.getElementById('add-cat')?.value || 'any') + '\n\n' +
+          'Return this exact JSON structure:\n' +
+          '{"fridge":[{"name":"ingredient","qty":"amount"}],"pantry":[{"name":"ingredient","qty":"amount"}],"sides":["side"],"recipe":[{"step":"Instruction with timing.","time":"X min"}],"health":"light|balanced|indulgent","macros":{"cal":0,"pro":0,"carb":0,"fat":0,"satFat":0,"fibre":0,"sodium":0,"sugar":0}}\n\n' +
+          'Rules: quantities must be specific (1 lb, 3 tbsp, 2 cups). Steps must include cook times. Serves 4. ' +
+          'light=high protein/fibre low sodium. balanced=moderate everything. indulgent=rich/fried/heavy. ' +
+          'Return ONLY the JSON object.'
+        }]
+      })
     });
-    const data=await res.json();
-    const text=data.content?.find(c=>c.type==='text')?.text||'';
-    const parsed=JSON.parse(text.replace(/```json|```/g,'').trim());
-    if(parsed.fridge)document.getElementById('add-fridge').value=parsed.fridge.join('\n');
-    if(parsed.pantry)document.getElementById('add-pantry').value=parsed.pantry.join('\n');
-    if(parsed.recipe)document.getElementById('add-recipe').value=parsed.recipe.join('\n');
-    if(parsed.health)selectRating(parsed.health);
-    showToast('✓ Generated — review and save');
-  } catch(e){ showToast('AI failed — fill in manually'); }
+    const data   = await res.json();
+    const text   = data.content?.find(c => c.type === 'text')?.text || '';
+    const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
+
+    if (parsed.fridge) document.getElementById('add-fridge').value =
+      parsed.fridge.map(i => typeof i==='string' ? i : i.qty + ' · ' + i.name).join('\n');
+    if (parsed.pantry) document.getElementById('add-pantry').value =
+      parsed.pantry.map(i => typeof i==='string' ? i : i.qty + ' · ' + i.name).join('\n');
+    if (parsed.recipe) document.getElementById('add-recipe').value =
+      parsed.recipe.map(s => typeof s==='string' ? s : s.step + (s.time ? ' (' + s.time + ')' : '')).join('\n');
+    if (parsed.health) selectRating(parsed.health);
+
+    if (fields) fields.classList.remove('hidden');
+    if (status) status.textContent = '✓ Review below — edit anything, then save';
+    if (btn) { btn.textContent = '✨ Regenerate'; btn.disabled = false; btn.style.opacity = '1'; }
+
+  } catch(e) {
+    if (status) status.textContent = 'Generation failed — fill in below manually';
+    if (fields) fields.classList.remove('hidden');
+    if (btn) { btn.textContent = '✨ Try again'; btn.disabled = false; btn.style.opacity = '1'; }
+  }
 }
+
+function parseIngredientLines(text) {
+  return text.split('\n').filter(Boolean).map(line => {
+    const sep = line.indexOf(' · ');
+    if (sep > -1) return { qty: line.slice(0, sep).trim(), name: line.slice(sep + 3).trim() };
+    return { name: line.trim(), qty: '' };
+  });
+}
+
 function saveNewMeal() {
-  const name=document.getElementById('add-name').value.trim();
-  if(!name){showToast('Enter a meal name');return;}
-  const meal={
-    id:Meals.newMealId(), name,
-    cat:document.getElementById('add-cat').value,
+  const name = document.getElementById('add-name').value.trim();
+  if (!name) { showToast('Enter a meal name'); return; }
+  const meal = {
+    id:      Meals.newMealId(),
+    name,
+    cat:     document.getElementById('add-cat').value,
     crockpot:document.getElementById('add-crockpot').checked,
-    fridge:document.getElementById('add-fridge').value.split('\n').filter(Boolean),
-    pantry:document.getElementById('add-pantry').value.split('\n').filter(Boolean),
-    sides:[],
-    recipe:document.getElementById('add-recipe').value.split('\n').filter(Boolean),
-    health:activeRating==='auto'?'balanced':activeRating,
-    custom:true, macros:{cal:0,pro:0,carb:0,fat:0,sodium:0}
+    fridge:  parseIngredientLines(document.getElementById('add-fridge').value),
+    pantry:  parseIngredientLines(document.getElementById('add-pantry').value),
+    sides:   [],
+    recipe:  document.getElementById('add-recipe').value.split('\n').filter(Boolean).map(s => ({step:s,time:''})),
+    health:  activeRating === 'auto' ? 'balanced' : activeRating,
+    custom:  true,
+    macros:  {cal:0,pro:0,carb:0,fat:0,satFat:0,fibre:0,sodium:0,sugar:0}
   };
-  const customs=Store.getCustomMeals(); customs.push(meal); Store.saveCustomMeals(customs);
-  ['add-name','add-fridge','add-pantry','add-recipe'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('add-crockpot').checked=false; selectRating('auto');
-  closeSheet(); showToast(`✓ "${meal.name}" added`);
+  const customs = Store.getCustomMeals();
+  customs.push(meal);
+  Store.saveCustomMeals(customs);
+  // Reset form
+  ['add-name','add-fridge','add-pantry','add-recipe'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const crockpot = document.getElementById('add-crockpot');
+  if (crockpot) crockpot.checked = false;
+  const fields = document.getElementById('add-review-fields');
+  if (fields) fields.classList.add('hidden');
+  const btn = document.getElementById('ai-generate-btn');
+  if (btn) { btn.textContent = '✨ Generate with AI'; btn.disabled = true; btn.style.opacity = '.4'; }
+  const status = document.getElementById('ai-status');
+  if (status) status.textContent = '';
+  selectRating('auto');
+  closeSheet();
+  showToast('✓ "' + meal.name + '" added to library');
 }
 
 // ── Backup / Restore ──────────────────────────────────────────────────────────
@@ -848,6 +983,20 @@ function rPill(h,sm=false){
 }
 function rBg(h){return{light:'var(--light-tint)',balanced:'var(--balanced-tint)',indulgent:'var(--indulgent-tint)'}[h]||'var(--bg)';}
 function rColor(h){return{light:'var(--light)',balanced:'var(--balanced)',indulgent:'var(--indulgent)'}[h]||'var(--sep)';}
+
+function shareFamilyURL() {
+  const url = window.location.origin + '/meal-planner/family.html';
+  if (navigator.share) {
+    navigator.share({ title: 'Meal Picker — pick your meals for the week', url });
+  } else {
+    navigator.clipboard?.writeText(url).then(() => showToast('Family app URL copied'));
+  }
+}
+
+function copyFamilyURL() {
+  const url = window.location.origin + '/meal-planner/family.html';
+  navigator.clipboard?.writeText(url).then(() => showToast('Copied: ' + url));
+}
 
 boot();
 </script>
