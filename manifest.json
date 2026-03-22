@@ -1,7 +1,7 @@
 {
   "name": "Meal Planner",
   "short_name": "Meals",
-  "description": "Family meal planning — weekly picks, shopping lists, nutrition balance",
+  "description": "Family meal planning \u2014 weekly picks, shopping lists, nutrition balance",
   "start_url": "/meal-planner/",
   "scope": "/meal-planner/",
   "display": "standalone",
@@ -13,7 +13,7 @@
       "src": "icon-180.png",
       "sizes": "180x180",
       "type": "image/png",
-      "purpose": "apple touch icon"
+      "purpose": "any"
     },
     {
       "src": "icon-192.png",
