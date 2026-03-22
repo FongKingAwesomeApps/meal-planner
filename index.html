@@ -283,10 +283,10 @@
     <!-- New category input — shown when ＋ New category selected -->
     <div id="new-cat-wrap" class="hidden" style="padding:8px 16px 0">
       <input class="form-input" id="new-cat-input"
-        placeholder="e.g. korean, mexican, soup, baking…"
+        placeholder="e.g. Korean, Mexican, Soup…"
         style="margin:0;width:100%"
         oninput="onNewCatInput()">
-      <div style="font-size:11px;color:var(--ink4);margin-top:5px;padding:0 2px">Lowercase, one word — becomes a filter chip automatically</div>
+      <div style="font-size:11px;color:var(--ink4);margin-top:5px;padding:0 2px">e.g. Korean, Mexican, Baking — becomes a filter chip automatically</div>
     </div>
     <div class="form-spacer"></div>
     <button class="ai-btn" id="ai-generate-btn" onclick="aiGenerateMeal()" disabled style="opacity:.4">✨ Generate with AI</button>
@@ -433,10 +433,23 @@
     </div>
     <div class="t-label px-16 mb-8">Coordinator link (you)</div>
     <div class="inset-list mb-8">
-      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:6px">
+      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:8px">
         <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-coord-url">—</div>
-        <button onclick="copyCoordURL()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy</button>
+        <div style="display:flex;gap:8px;width:100%">
+          <button onclick="copyCoordURL()" style="flex:1;background:var(--bg2);color:var(--ink);border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>
+          <button onclick="showAddToHomeInstructions()" style="flex:2;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">📲 Save to Home Screen</button>
+        </div>
       </div>
+    </div>
+    <!-- Add to home screen instructions — shown inline -->
+    <div id="add-home-instructions" class="hidden" style="margin:0 16px 12px;background:#e8f0ff;border-radius:var(--r12);padding:14px">
+      <div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:8px">Add to Home Screen</div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.7">
+        1. Tap the <strong>Share button</strong> at the bottom of Safari (the box with an arrow)<br>
+        2. Scroll down and tap <strong>"Add to Home Screen"</strong><br>
+        3. Tap <strong>Add</strong> — done
+      </div>
+      <div style="font-size:12px;color:var(--ink4);margin-top:8px">Make sure your coordinator link (with ?fid= in it) is in the address bar first.</div>
     </div>
     <div class="t-label px-16 mb-8">Family app link (Seth, Jared etc)</div>
     <div class="inset-list mb-8">
@@ -585,6 +598,7 @@ G.shareFamilyURL=shareFamilyURL;
 G.setupFamilySync=setupFamilySync;
 G.showSyncSheet=showSyncSheet;
 G.copyCoordURL=copyCoordURL;
+G.showAddToHomeInstructions=showAddToHomeInstructions;
 G.copyFamilyURLFromSheet=copyFamilyURLFromSheet;
 G.regenerateFamilyId=regenerateFamilyId;
 G.openMemberEdit=openMemberEdit;
@@ -594,10 +608,15 @@ G.copyFamilyURL=copyFamilyURL;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 async function boot() {
-  // Service worker temporarily disabled during testing
-  // if ('serviceWorker' in navigator) {
-  //   navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
-  // }
+  // Register service worker for offline support
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/meal-planner/sw.js')
+      .then(reg => {
+        // Check for updates every time app loads
+        reg.update();
+      })
+      .catch(() => {});
+  }
   await Sync.init();  // reads ?fid= from URL, pulls shared state
   if (!Sync.isConnected()) {
     document.getElementById('first-run-card')?.classList.remove('hidden');
@@ -1143,7 +1162,9 @@ function getAllCategories() {
 
 // Get display label for any category
 function getCatLabel(cat) {
-  return CAT_LABELS_MAP[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+  if (CAT_LABELS_MAP[cat]) return CAT_LABELS_MAP[cat];
+  // Custom category — capitalise each word, replace hyphens with spaces
+  return cat.replace(/-/g,' ').replace(/\w/g, c => c.toUpperCase());
 }
 
 // Render filter chips dynamically including any custom categories
@@ -1228,11 +1249,8 @@ function onCatChange() {
 
 // Validate new category input
 function onNewCatInput() {
-  const raw   = document.getElementById('new-cat-input')?.value || '';
-  // Auto-clean: lowercase, letters and numbers only, no spaces
-  const clean = raw.toLowerCase().replace(/[^a-z0-9]/g,'');
-  const input = document.getElementById('new-cat-input');
-  if (input && raw !== clean) input.value = clean;
+  // Allow any text — just trim leading/trailing spaces on save
+  // No auto-cleaning while typing so user can capitalise freely
 }
 
 // Get the effective category value from the form
@@ -1240,7 +1258,9 @@ function getEffectiveCat() {
   const sel = document.getElementById('add-cat')?.value;
   if (sel === '__new__') {
     const custom = document.getElementById('new-cat-input')?.value.trim();
-    return custom || 'comfort'; // fallback if empty
+    if (!custom) return 'comfort';
+    // Store as lowercase key, display label preserves capitalisation
+    return custom.toLowerCase().replace(/\s+/g,'-');
   }
   return sel || 'comfort';
 }
