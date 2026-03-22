@@ -1,6 +1,6 @@
 // ── Meal Planner Service Worker ──────────────────────────────────────────────
 // Version: bump this string to force all clients to update
-const CACHE_VERSION = 'meal-planner-v1';
+const CACHE_VERSION = 'meal-planner-v2';
 
 // Files to cache on install — app shell only
 // meals.json is fetched and cached at runtime
@@ -9,13 +9,13 @@ const SHELL_FILES = [
   '/meal-planner/index.html',
   '/meal-planner/family.html',
   '/meal-planner/css/design-system.css',
-  '/meal-planner/js/app.js',
-  '/meal-planner/js/family.js',
   '/meal-planner/js/meals.js',
   '/meal-planner/js/storage.js',
   '/meal-planner/js/picks-url.js',
+  '/meal-planner/js/sync.js',
   '/meal-planner/manifest.json',
-  '/meal-planner/icon-180.png'
+  '/meal-planner/icon-180.png',
+  '/meal-planner/icon-192.png',
 ];
 
 // ── Install: cache the app shell ─────────────────────────────────────────────
