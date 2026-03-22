@@ -594,9 +594,10 @@ G.copyFamilyURL=copyFamilyURL;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 async function boot() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
-  }
+  // Service worker temporarily disabled during testing
+  // if ('serviceWorker' in navigator) {
+  //   navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
+  // }
   await Sync.init();  // reads ?fid= from URL, pulls shared state
   if (!Sync.isConnected()) {
     document.getElementById('first-run-card')?.classList.remove('hidden');
