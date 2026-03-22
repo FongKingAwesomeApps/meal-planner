@@ -236,10 +236,21 @@
       <div class="settings-row" onclick="openSheet('sheet-backup')"><div class="settings-icon" style="background:#e8f0ff">💾</div><div class="settings-label">Backup &amp; Restore</div><div class="settings-chev">›</div></div>
       <div class="settings-row" onclick="showToast('Download coming soon')"><div class="settings-icon" style="background:#f0e8ff">📥</div><div class="settings-label">Download Offline Copy</div><div class="settings-chev">›</div></div>
     </div>
-    <div class="t-label px-16 mb-8">Family</div>
+    <div class="t-label px-16 mb-8">Family sync</div>
     <div class="settings-group mb-8">
-      <div class="settings-row" onclick="shareFamilyURL()"><div class="settings-icon" style="background:#e3f9e9">👨‍👩‍👧‍👦</div><div class="settings-label">Share Family App Link</div><div class="settings-chev">›</div></div>
-      <div class="settings-row" onclick="copyFamilyURL()"><div class="settings-icon" style="background:#e8f0ff">🔗</div><div class="settings-label">Copy Family App URL</div><div class="settings-chev">›</div></div>
+      <div class="settings-row" onclick="showSyncSheet()">
+        <div class="settings-icon" style="background:#e8f0ff">🔗</div>
+        <div class="settings-label">
+          <div>Family Links &amp; Sync</div>
+          <div style="font-size:11px;color:var(--ink4);margin-top:1px" id="settings-fid-display">Loading…</div>
+        </div>
+        <div class="settings-chev">›</div>
+      </div>
+      <div class="settings-row" onclick="shareFamilyURL()">
+        <div class="settings-icon" style="background:#e3f9e9">👨‍👩‍👧‍👦</div>
+        <div class="settings-label">Share Family App Link</div>
+        <div class="settings-chev">›</div>
+      </div>
     </div>
     <div class="t-label px-16 mb-8">Support</div>
     <div class="settings-group mb-8">
@@ -383,16 +394,109 @@
   </div>
 </div>
 
+<!-- SHEET: SYNC -->
+<div class="sheet" id="sheet-sync">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">Family Links &amp; Sync</div>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-scroll" style="padding-bottom:40px">
+    <div style="padding:8px 16px 12px">
+      <p class="t-sec" style="line-height:1.6">Your family ID ties everyone together. Anyone with the right link sees the same meal plan in real time.</p>
+    </div>
+    <div class="t-label px-16 mb-8">Your family ID</div>
+    <div class="inset-list mb-8">
+      <div class="inset-row">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--ink);font-family:monospace" id="sync-fid-display">—</div>
+          <div style="font-size:11px;color:var(--ink4);margin-top:2px">This ID is unique to your family</div>
+        </div>
+        <button onclick="regenerateFamilyId()" style="background:none;border:none;font-size:12px;color:var(--indulgent);font-weight:600;cursor:pointer;padding:4px 0">Reset</button>
+      </div>
+    </div>
+    <div class="t-label px-16 mb-8">Coordinator link (you)</div>
+    <div class="inset-list mb-8">
+      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-coord-url">—</div>
+        <button onclick="copyCoordURL()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy</button>
+      </div>
+    </div>
+    <div class="t-label px-16 mb-8">Family app link (Seth, Jared etc)</div>
+    <div class="inset-list mb-8">
+      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-family-url">—</div>
+        <div style="display:flex;gap:8px;width:100%">
+          <button onclick="copyFamilyURLFromSheet()" style="flex:1;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy</button>
+          <button onclick="shareFamilyURL()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Share</button>
+        </div>
+      </div>
+    </div>
+    <div style="padding:0 16px">
+      <p class="t-sec" style="line-height:1.6;font-size:12px">
+        <strong style="color:var(--ink)">Bookmark your coordinator link</strong> — it has your family ID in it. If you open the app without the link you'll see a different empty state.<br><br>
+        <strong style="color:var(--ink)">Send the family link to everyone</strong> once. They bookmark it or add it to their home screen. That's all the setup they need.
+      </p>
+    </div>
+    <div style="height:24px"></div>
+  </div>
+</div>
+
 <!-- SHEET: FAQ -->
 <div class="sheet" id="sheet-faq">
   <div class="sheet-handle"></div>
   <div class="sheet-header"><div class="sheet-title">Help &amp; FAQ</div><button class="sheet-close" onclick="closeSheet()">✕</button></div>
-  <div class="sheet-scroll" style="padding:0 16px 40px">
-    <details style="margin:8px 0 12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">How do family picks work?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">Seth and Jared open the family app, pick their favourite meals, and tap Send. A link opens the coordinator with their picks ready to approve — no copy-pasting.</p></details>
-    <details style="margin-bottom:12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">What do Light, Balanced, Indulgent mean?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">These are nutritional categories based on sodium, saturated fat, fibre, protein, and sugar. Aim for 3–4 Light, 2–3 Balanced, and 1–2 Indulgent per week. Nothing is off-limits — it's about the week's balance overall.</p></details>
-    <details style="margin-bottom:12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">How do I add a new meal?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">Settings → Add Meal to Library. Enter the name and tap ✨ Generate with AI — ingredients, steps, and a health rating fill in automatically. Review and save.</p></details>
-    <details style="margin-bottom:12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">Does it work offline?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">Yes. Once opened once, the service worker caches everything. You can plan meals, build shopping lists, and view recipes with no connection.</p></details>
-    <details><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">How do I install it on my home screen?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">In Safari, tap the Share button then "Add to Home Screen". Launches full-screen like a native app.</p></details>
+  <div class="sheet-scroll" style="padding:0 16px 48px">
+
+    <div style="margin-top:12px;margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4)">Getting started</div>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How does this app work? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">There are two apps. This coordinator is for whoever plans the meals — it's where you select meals, build the shopping list, assign meals to each day of the week, and approve picks from the family. The family app is a simpler version that Seth, Jared and guests use to pick their favourite meals for the week.</p></details>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How do I set up sync so everyone sees the same plan? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Go to Settings → Family Links &amp; Sync. Copy the coordinator link and bookmark it — that's your permanent link. Copy the family app link and send it to Seth, Jared and anyone else who picks meals. Anyone who opens those links is automatically connected to the same family data.</p></details>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How do I add this to my home screen? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">On iPhone: open your coordinator link in Safari, tap the Share button (the box with an arrow pointing up), then tap "Add to Home Screen". Give it a name and tap Add. It'll launch full-screen like a native app. Make sure you use your coordinator link (with ?fid= in it) not just the base URL.</p></details>
+
+    <div style="margin-top:12px;margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4)">Meal ratings</div>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">What do Light, Balanced, and Indulgent mean? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Every meal is rated based on five nutritional factors: sodium, saturated fat, fibre, protein, and sugar. <span style="color:var(--light);font-weight:600">Light</span> meals hit most targets — lower sodium and fat, higher fibre and protein. <span style="color:var(--balanced);font-weight:600">Balanced</span> meals are satisfying family dinners that are moderate on everything. <span style="color:var(--indulgent);font-weight:600">Indulgent</span> meals are the treats — higher fat, sodium, or sugar. Nothing is banned, it's about the week's overall balance.</p></details>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">What's the ideal weekly balance? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Aim for 3–4 Light meals, 2–3 Balanced, and 1–2 Indulgent per week. The balance bar on the home screen updates as you plan — green means you're in a good range, orange means you might want to swap something out. These are guidelines, not rules.</p></details>
+
+    <div style="margin-top:12px;margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4)">Family picks</div>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How do Seth and Jared send their picks? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">They open the family app link on their phone, tap their name, and pick their meals. Each person has a weekly allowance — for example, 3 picks with a maximum of 1 Indulgent meal. Once they've made their picks and hit the minimum Light requirement, they tap Send. Their picks arrive on your coordinator immediately (if sync is set up) or via a shared link.</p></details>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Why are some meals greyed out in the family app? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Greyed-out meals with a 🔒 are locked because selecting them would exceed the person's weekly allowance. For example, if Seth has already picked his one Indulgent meal for the week, all remaining Indulgent meals lock automatically. He'd need to deselect one to swap it.</p></details>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How do I change someone's pick limits? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Go to Settings → tap Edit next to the person's name. Use the + and - buttons to set how many total picks they get per week, the maximum number of Indulgent picks allowed, and the minimum Light picks required before they can send. Changes take effect immediately.</p></details>
+
+    <div style="margin-top:12px;margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4)">Meals &amp; recipes</div>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How do I add a new meal? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Settings → Add Meal to Library. Type the meal name, pick a category, and tap ✨ Generate with AI. Claude will fill in the ingredients with quantities, step-by-step instructions with cook times, and a health rating. Review everything, edit anything that looks off, and tap Save. The meal appears in the picker immediately.</p></details>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How do the kids suggest meals? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">In the family app, there's a Suggest tab (💡). They can either type a description ("that Korean chicken thing from Connor's") or paste a link from YouTube, AllRecipes, or anywhere else. It gets sent to the coordinator where you can review it and tap "Build with AI" to turn it into a proper recipe entry.</p></details>
+
+    <div style="margin-top:12px;margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4)">Shopping &amp; planning</div>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How does the shopping list work? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Select your meals in the Meals tab, then tap Build Shopping List. Every ingredient from every selected meal is combined and sorted into Fridge and Pantry sections, with quantities shown. If the same ingredient appears in multiple meals the count shows (×2, ×3). Tap any item to check it off as you shop. Tap Share List to send it to yourself via iMessage or Notes.</p></details>
+
+    <details style="margin-bottom:2px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Does the app work without internet? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Yes. After the first load, the service worker caches the entire app. You can browse meals, view recipes, build shopping lists, and manage the plan with no connection. Any changes you make while offline will sync to the server next time you're online.</p></details>
+
+    <details><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">How do I back up my data? <span style="color:var(--ink5);font-size:18px;font-weight:300">+</span></summary>
+    <p class="t-sec" style="padding:0 0 12px;line-height:1.7">Settings → Backup &amp; Restore → Create Backup. This generates a code that contains your family member settings and any custom meals you've added. Save it in Notes or email it to yourself. To restore on a new device, paste the code into the Restore field and tap Restore.</p></details>
+
   </div>
 </div>
 
@@ -438,6 +542,10 @@ G.onAddNameInput=onAddNameInput;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
 G.setupFamilySync=setupFamilySync;
+G.showSyncSheet=showSyncSheet;
+G.copyCoordURL=copyCoordURL;
+G.copyFamilyURLFromSheet=copyFamilyURLFromSheet;
+G.regenerateFamilyId=regenerateFamilyId;
 G.openMemberEdit=openMemberEdit;
 G.adjustLimit=adjustLimit;
 G.saveMemberEdit=saveMemberEdit;
@@ -904,6 +1012,11 @@ function sendPlan() {
 
 // ── Settings ──────────────────────────────────────────────────────────────────
 function renderSettings() {
+  // Update fid display
+  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || 'Not set up';
+  const fidEl = document.getElementById('settings-fid-display');
+  if (fidEl) fidEl.textContent = 'ID: ' + fid;
+
   const family = Store.getFamily();
   document.getElementById('settings-members').innerHTML = family.map(m => {
     const lim = m.limits || {};
@@ -1140,6 +1253,42 @@ function renderSuggestionBadge() {
     if (count === 0) badge.remove();
     else badge.querySelector('div > div').textContent = count + ' meal suggestion' + (count>1?'s':'');
   }
+}
+
+function showSyncSheet() {
+  const fid      = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || '—';
+  const coordURL = Sync.getCoordinatorURL();
+  const famURL   = Sync.getFamilyAppURL();
+
+  const fidEl    = document.getElementById('sync-fid-display');
+  const coordEl  = document.getElementById('sync-coord-url');
+  const famEl    = document.getElementById('sync-family-url');
+  const settingsEl = document.getElementById('settings-fid-display');
+
+  if (fidEl)    fidEl.textContent    = fid;
+  if (coordEl)  coordEl.textContent  = coordURL;
+  if (famEl)    famEl.textContent    = famURL;
+  if (settingsEl) settingsEl.textContent = fid !== '—' ? 'ID: ' + fid : 'Not set up yet';
+
+  openSheet('sheet-sync');
+}
+
+function copyCoordURL() {
+  const url = Sync.getCoordinatorURL();
+  navigator.clipboard?.writeText(url).then(() => showToast('Coordinator link copied'));
+}
+
+function copyFamilyURLFromSheet() {
+  const url = Sync.getFamilyAppURL();
+  navigator.clipboard?.writeText(url).then(() => showToast('Family link copied'));
+}
+
+function regenerateFamilyId() {
+  if (!confirm('This will create a new family ID. Everyone will need new links. Are you sure?')) return;
+  const id = Sync.generateFamilyId();
+  Sync.setFamilyId(id);
+  showSyncSheet(); // refresh the sheet with new values
+  showToast('New family ID generated');
 }
 
 function setupFamilySync() {
