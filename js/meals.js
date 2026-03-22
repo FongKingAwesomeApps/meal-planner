@@ -106,8 +106,9 @@ function getMealsByCategory() {
 }
 
 // Generate a unique ID for a new custom meal
+// Start at 10001 (well above built-in range of 1-81)
 function newMealId() {
-  let id = Date.now() % 1000000;
+  let id = 10001;
   while (_meals.find(m => m.id === id)) id++;
   return id;
 }
