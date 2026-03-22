@@ -227,6 +227,7 @@ input, select, textarea { font-family: inherit; }
 .recipe-ing-row + .recipe-ing-row { border-top: 1px solid var(--sep); }
 .recipe-ing-qty  { font-size: 12px; font-weight: 700; color: var(--ink3); width: 56px; flex-shrink: 0; }
 .recipe-ing-name { font-size: 14px; color: var(--ink); }
+.recipe-ing-qty  { font-size: 13px; font-weight: 600; color: var(--ink3); width: 80px; flex-shrink: 0; }
 .recipe-step     { display: flex; gap: 10px; padding: 10px 20px; }
 .recipe-step + .recipe-step { border-top: 1px solid var(--sep); }
 .step-num        { font-size: 13px; font-weight: 700; color: var(--blue); width: 18px; flex-shrink: 0; padding-top: 1px; }
