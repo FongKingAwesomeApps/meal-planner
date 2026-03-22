@@ -630,10 +630,10 @@ function openRecipe(id) {
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${rPill(m.health)}${m.crockpot?'<span style="background:#fef3e8;color:#d4631a;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600">Crockpot friendly</span>':''}</div>
     </div>
-    ${m.fridge?.length?`<div class="recipe-section">Fridge</div>${m.fridge.map(i=>`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`).join('')}`:''}
-    ${m.pantry?.length?`<div class="recipe-section">Pantry</div>${m.pantry.map(i=>`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`).join('')}`:''}
+    ${m.fridge?.length?`<div class="recipe-section">Fridge</div>${m.fridge.map(i=>typeof i==='string'?`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`:`<div class="recipe-ing-row"><span class="recipe-ing-qty">${i.qty||''}</span><span class="recipe-ing-name">${i.name}</span></div>`).join('')}`:''}
+    ${m.pantry?.length?`<div class="recipe-section">Pantry</div>${m.pantry.map(i=>typeof i==='string'?`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`:`<div class="recipe-ing-row"><span class="recipe-ing-qty">${i.qty||''}</span><span class="recipe-ing-name">${i.name}</span></div>`).join('')}`:''}
     ${m.sides?.length?`<div class="recipe-section">Sides</div><div style="padding:8px 20px;font-size:14px;color:var(--ink4)">${m.sides.join(' · ')}</div>`:''}
-    ${m.recipe?.length?`<div class="recipe-section">Method</div>${m.recipe.map((s,i)=>`<div class="recipe-step"><div class="step-num">${i+1}</div><div class="step-body"><div class="step-text">${s}</div></div></div>`).join('')}`:''}
+    ${m.recipe?.length?`<div class="recipe-section">Method</div>${m.recipe.map((s,i)=>{const step=typeof s==='string'?s:s.step;const time=typeof s==='object'?s.time:null;return`<div class="recipe-step"><div class="step-num">${i+1}</div><div class="step-body"><div class="step-text">${step}</div>${time?`<div class="step-time">${time}</div>`:''}</div></div>`;}).join('')}`:''}
     <div class="macro-strip">
       <div class="macro-cell"><div class="macro-val">${mac.cal||'—'}</div><div class="macro-lbl">Cal</div></div>
       <div class="macro-cell"><div class="macro-val">${mac.pro||'—'}g</div><div class="macro-lbl">Protein</div></div>
@@ -656,18 +656,18 @@ function renderShoppingList() {
   const fridge={},pantry={};
   ids.forEach(id=>{
     const m=Meals.getMeal(id); if(!m)return;
-    (m.fridge||[]).forEach(i=>{fridge[i]=(fridge[i]||0)+1;});
-    (m.pantry||[]).forEach(i=>{pantry[i]=(pantry[i]||0)+1;});
+    (m.fridge||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!fridge[k]){fridge[k]={count:0,qty:q}}fridge[k].count++;});
+    (m.pantry||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!pantry[k]){pantry[k]={count:0,qty:q}}pantry[k].count++;});
   });
   const sec=(title,items)=>{
     if(!Object.keys(items).length)return'';
-    const rows=Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([n,c])=>{
+    const rows=Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([n,data])=>{const c=data.count;const qty=data.qty||'';
       const key=n.toLowerCase().replace(/\W+/g,'_');
       const done=checkedItems.has(key);
       return`<div class="shop-row${done?' done':''}" onclick="toggleShopItem('${key}',this)">
         <div class="shop-check">${done?'✓':''}</div>
         <span class="shop-name">${n}</span>
-        ${c>1?`<span class="shop-qty">×${c}</span>`:''}
+        ${qty?`<span class="shop-qty">${qty}</span>`:(c>1?`<span class="shop-qty">×${c}</span>`:'')}
       </div>`;
     }).join('');
     return`<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
@@ -683,7 +683,7 @@ function shareShoppingList() {
   const ids=Object.keys(selected).map(Number);
   const lines=['🛒 SHOPPING LIST\n'];
   const f={},p={};
-  ids.forEach(id=>{const m=Meals.getMeal(id);if(!m)return;(m.fridge||[]).forEach(i=>f[i]=true);(m.pantry||[]).forEach(i=>p[i]=true);});
+  ids.forEach(id=>{const m=Meals.getMeal(id);if(!m)return;(m.fridge||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;f[k]=true;});(m.pantry||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;p[k]=true;});});
   if(Object.keys(f).length){lines.push('── Fridge ──');Object.keys(f).sort().forEach(i=>lines.push(`• ${i}`));}
   if(Object.keys(p).length){lines.push('\n── Pantry ──');Object.keys(p).sort().forEach(i=>lines.push(`• ${i}`));}
   const text=lines.join('\n');
