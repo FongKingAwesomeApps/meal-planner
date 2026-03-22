@@ -63,6 +63,7 @@
 .btn-skip{flex:1;background:var(--surface);color:var(--ink4);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;cursor:pointer}
 .backup-output{background:var(--bg);border:none;border-radius:var(--r12);padding:12px;font-size:11px;font-family:monospace;color:var(--ink3);width:calc(100% - 32px);margin:0 16px;min-height:80px;resize:none;line-height:1.5}
 .version-tag{text-align:center;font-size:11px;color:var(--ink6);padding:16px 0 8px}
+.colour-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;transition:transform .15s;border:3px solid transparent}.colour-swatch.selected{border-color:var(--ink);transform:scale(1.15)}
 .skeleton{background:var(--bg2);border-radius:var(--r8);animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .empty-state{text-align:center;padding:40px 32px}
@@ -219,7 +220,7 @@
   <div class="scroll-body">
     <div class="t-label px-16 mb-8">Family members</div>
     <div class="settings-group mb-8" id="settings-members"></div>
-    <button class="btn btn-ghost btn-sm mb-16" onclick="showToast('Add member coming soon')">+ Add Family Member</button>
+    <button class="btn btn-ghost btn-sm mb-16" onclick="openAddMember()">+ Add Family Member</button>
     
     <div class="t-label px-16 mb-8">Data</div>
     <div class="settings-group mb-8">
@@ -538,6 +539,72 @@
   </div>
 </div>
 
+<!-- SHEET: ADD MEMBER -->
+<div class="sheet" id="sheet-add-member">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">Add Family Member</div>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-scroll" style="padding-bottom:40px">
+    <div class="form-spacer"></div>
+    <label class="form-label">Name</label>
+    <input class="form-input" id="new-member-name" type="text" placeholder="e.g. Sophie" autocapitalize="words" autocorrect="off">
+    <div class="form-spacer"></div>
+    <label class="form-label">Role</label>
+    <select class="form-input" id="new-member-role">
+      <option value="Household">Household — lives here, picks meals weekly</option>
+      <option value="Guest">Guest — visits occasionally</option>
+    </select>
+    <div class="form-spacer"></div>
+    <label class="form-label">Colour</label>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;padding:0 16px 12px" id="colour-picker">
+      <div class="colour-swatch selected" data-colour="#007aff" style="background:#007aff" onclick="selectMemberColour('#007aff')"></div>
+      <div class="colour-swatch" data-colour="#34c759" style="background:#34c759" onclick="selectMemberColour('#34c759')"></div>
+      <div class="colour-swatch" data-colour="#ff9500" style="background:#ff9500" onclick="selectMemberColour('#ff9500')"></div>
+      <div class="colour-swatch" data-colour="#ff2d55" style="background:#ff2d55" onclick="selectMemberColour('#ff2d55')"></div>
+      <div class="colour-swatch" data-colour="#af52de" style="background:#af52de" onclick="selectMemberColour('#af52de')"></div>
+      <div class="colour-swatch" data-colour="#5856d6" style="background:#5856d6" onclick="selectMemberColour('#5856d6')"></div>
+      <div class="colour-swatch" data-colour="#ff6b35" style="background:#ff6b35" onclick="selectMemberColour('#ff6b35')"></div>
+      <div class="colour-swatch" data-colour="#8e8e93" style="background:#8e8e93" onclick="selectMemberColour('#8e8e93')"></div>
+    </div>
+    <div id="new-member-guest-section" class="hidden">
+      <label class="form-label">Plus-one name <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(optional — shown as "Is NAME coming?")</span></label>
+      <input class="form-input" id="new-member-partner" placeholder="e.g. Taylor">
+      <div class="form-spacer"></div>
+    </div>
+    <label class="form-label">Pick limits</label>
+    <div style="display:flex;gap:12px;padding:0 16px 12px">
+      <div style="flex:1;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total picks</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button onclick="adjustNewMemberLimit('total',-1)" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--bg2);font-size:18px;cursor:pointer">-</button>
+          <div style="flex:1;text-align:center;font-size:22px;font-weight:700;color:var(--ink)" id="new-limit-total">3</div>
+          <button onclick="adjustNewMemberLimit('total',1)" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--blue);color:#fff;font-size:18px;cursor:pointer">+</button>
+        </div>
+      </div>
+      <div style="flex:1;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:var(--indulgent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Max Indulgent</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button onclick="adjustNewMemberLimit('maxIndulgent',-1)" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--bg2);font-size:18px;cursor:pointer">-</button>
+          <div style="flex:1;text-align:center;font-size:22px;font-weight:700;color:var(--indulgent)" id="new-limit-maxIndulgent">1</div>
+          <button onclick="adjustNewMemberLimit('maxIndulgent',1)" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--blue);color:#fff;font-size:18px;cursor:pointer">+</button>
+        </div>
+      </div>
+      <div style="flex:1;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Min Light</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button onclick="adjustNewMemberLimit('minLight',-1)" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--bg2);font-size:18px;cursor:pointer">-</button>
+          <div style="flex:1;text-align:center;font-size:22px;font-weight:700;color:var(--green)" id="new-limit-minLight">1</div>
+          <button onclick="adjustNewMemberLimit('minLight',1)" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--blue);color:#fff;font-size:18px;cursor:pointer">+</button>
+        </div>
+      </div>
+    </div>
+    <div style="height:8px"></div>
+    <button class="btn btn-primary" onclick="saveNewMember()">Add Member</button>
+  </div>
+</div>
+
 <!-- SHEET: MEMBER EDIT -->
 <div class="sheet" id="sheet-member-edit">
   <div class="sheet-handle"></div>
@@ -736,7 +803,9 @@ import { parsePicksFromURL, clearPicksFromURL } from './js/picks-url.js';
 // ── State ─────────────────────────────────────────────────────────────────────
 let selected     = Store.getSelected();
 let weekPlan     = Store.getWeekPlan();
-let activeFilter = 'all';
+let activeFilter = 'all';  // kept for compatibility
+let activeHealthFilter = '';  // '' = any health
+let activeCatFilter = '';     // '' = any category
 let activeRating = 'auto';
 let screenStack  = ['screen-home'];
 let pendingPicks = null;
@@ -779,6 +848,10 @@ G.copyCoordURL=copyCoordURL;
 G.showAddToHomeInstructions=showAddToHomeInstructions;
 G.togglePushNotifications=togglePushNotifications;
 G.confirmClearMeals=confirmClearMeals;
+G.openAddMember=openAddMember;
+G.selectMemberColour=selectMemberColour;
+G.adjustNewMemberLimit=adjustNewMemberLimit;
+G.saveNewMember=saveNewMember;
 G.confirmClearPlan=confirmClearPlan;
 G.confirmStartFresh=confirmStartFresh;
 G.copyFamilyURLFromSheet=copyFamilyURLFromSheet;
@@ -1037,19 +1110,46 @@ function approveAllPicks() {
 
 // ── Meal picker ───────────────────────────────────────────────────────────────
 function setFilter(f) {
-  activeFilter=f;
+  const isHealth = ['light','balanced','indulgent'].includes(f);
+  const isCat    = f !== 'all' && f !== 'fav' && !isHealth;
+  const isFav    = f === 'fav';
+  const isAll    = f === 'all';
+
+  if (isAll) {
+    // Clear all filters
+    activeHealthFilter = '';
+    activeCatFilter    = '';
+    activeFilter       = 'all';
+  } else if (isFav) {
+    activeFilter = 'fav';
+  } else if (isHealth) {
+    // Toggle health filter — tap again to clear
+    activeHealthFilter = activeHealthFilter === f ? '' : f;
+    activeFilter = activeHealthFilter || activeCatFilter || 'all';
+  } else if (isCat) {
+    // Toggle category filter — tap again to clear
+    activeCatFilter = activeCatFilter === f ? '' : f;
+    activeFilter = activeHealthFilter || activeCatFilter || 'all';
+  }
+
+  // Update chip visuals
   document.querySelectorAll('#meals-filter-chips .chip').forEach(c=>{
     const cf=c.dataset.f;
     c.className='chip';
     c.style.background=''; c.style.color=''; c.style.border='';
-    if(cf===f){
+
+    const isActiveHealth = cf === activeHealthFilter;
+    const isActiveCat    = cf === activeCatFilter;
+    const isActiveFav    = cf === 'fav' && activeFilter === 'fav';
+    const isActiveAll    = cf === 'all' && activeFilter === 'all' && !activeHealthFilter && !activeCatFilter;
+
+    if (isActiveHealth || isActiveCat || isActiveFav || isActiveAll) {
       c.classList.add('chip-active');
     } else {
       const ratingCls={light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf];
       if(ratingCls) c.classList.add(ratingCls);
       else if(cf==='fav'){c.style.background='#ffeae9';c.style.color='#a0201a';}
       else if(cf!=='all'&&!BUILTIN_CATS.includes(cf)){
-        // Custom category chip
         c.style.border='1px solid var(--blue)';c.style.color='var(--blue)';c.style.background='var(--blue-tint)';
         c.classList.add('chip-cat');
       } else {
@@ -1067,10 +1167,15 @@ function renderMeals() {
   const f=activeFilter;
   const favs = Store.getFavourites();
   let filtered=Meals.allMeals().filter(m=>{
-    if(f==='fav'&&!favs.has(m.id))return false;
-    if(f==='crockpot'&&!m.crockpot)return false;
-    if(['light','balanced','indulgent'].includes(f)&&m.health!==f)return false;
-    if(f!=='all'&&f!=='fav'&&f!=='crockpot'&&!['light','balanced','indulgent'].includes(f)&&m.cat!==f)return false;
+    // Fav filter (exclusive)
+    if(activeFilter==='fav'&&!favs.has(m.id))return false;
+    if(activeFilter==='fav')return !q||m.name.toLowerCase().includes(q);
+    // Health filter
+    if(activeHealthFilter&&m.health!==activeHealthFilter)return false;
+    // Category filter (crockpot is special)
+    if(activeCatFilter==='crockpot'&&!m.crockpot)return false;
+    else if(activeCatFilter&&activeCatFilter!=='crockpot'&&m.cat!==activeCatFilter)return false;
+    // Search
     if(q&&!m.name.toLowerCase().includes(q))return false;
     return true;
   });
@@ -1250,6 +1355,12 @@ function renderPlan() {
     const key=date.toLocaleDateString('en-CA');
     const day=DAYS[d],ds=date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     const entry=weekPlan[key]||{};
+    // Clean up orphaned meal IDs (custom meals that no longer exist)
+    if (entry?.mealId && !Meals.getMeal(entry.mealId)) {
+      delete weekPlan[key];
+      Store.saveWeekPlan(weekPlan);
+      entry = {};
+    }
     const meal=entry.mealId?Meals.getMeal(entry.mealId):null;
     const pax=entry.pax||4;
     const accent=meal?rColor(meal.health):'var(--sep)';
@@ -1259,6 +1370,7 @@ function renderPlan() {
       <div class="plan-day-col"><div class="plan-day-name">${day.slice(0,3)}</div><div class="plan-day-date">${ds}</div></div>
       <div class="plan-meal-col" style="flex:1">
         <select class="plan-select" onchange="setPlanMeal('${key}',this.value)">${selOpts}</select>
+        ${meal?`<div onclick="openRecipe(${meal.id})" style="font-size:11px;color:var(--blue);margin-top:3px;cursor:pointer;padding-left:2px">View recipe ›</div>`:''}
       </div>
       ${meal?`<div class="plan-right">
         <div class="plan-pax-ctrl">
@@ -2043,6 +2155,81 @@ async function togglePushNotifications() {
 
 
 // ── Reset functions ────────────────────────────────────────────────────────────
+
+// ── Add family member ─────────────────────────────────────────────────────────
+let _newMemberColour  = '#007aff';
+let _newMemberLimits  = { total: 3, maxIndulgent: 1, minLight: 1 };
+
+function openAddMember() {
+  // Reset form
+  document.getElementById('new-member-name').value    = '';
+  document.getElementById('new-member-role').value    = 'Household';
+  document.getElementById('new-member-partner').value = '';
+  document.getElementById('new-member-guest-section')?.classList.add('hidden');
+  _newMemberColour = '#007aff';
+  _newMemberLimits = { total: 3, maxIndulgent: 1, minLight: 1 };
+  document.getElementById('new-limit-total').textContent        = '3';
+  document.getElementById('new-limit-maxIndulgent').textContent = '1';
+  document.getElementById('new-limit-minLight').textContent     = '1';
+  // Reset colour swatches
+  document.querySelectorAll('.colour-swatch').forEach(s => {
+    s.classList.toggle('selected', s.dataset.colour === _newMemberColour);
+  });
+  // Show/hide guest section on role change
+  document.getElementById('new-member-role').onchange = () => {
+    const isGuest = document.getElementById('new-member-role').value === 'Guest';
+    document.getElementById('new-member-guest-section')?.classList.toggle('hidden', !isGuest);
+  };
+  openSheet('sheet-add-member');
+}
+
+function selectMemberColour(colour) {
+  _newMemberColour = colour;
+  document.querySelectorAll('.colour-swatch').forEach(s => {
+    s.classList.toggle('selected', s.dataset.colour === colour);
+  });
+}
+
+function adjustNewMemberLimit(key, delta) {
+  const mins = { total: 1, maxIndulgent: 0, minLight: 0 };
+  const maxs = { total: 7, maxIndulgent: 4, minLight: 4 };
+  _newMemberLimits[key] = Math.max(mins[key], Math.min(maxs[key], (_newMemberLimits[key]||0) + delta));
+  document.getElementById('new-limit-' + key).textContent = _newMemberLimits[key];
+}
+
+function saveNewMember() {
+  const name = document.getElementById('new-member-name')?.value.trim();
+  if (!name) { showToast('Enter a name'); return; }
+
+  const family = Store.getFamily();
+  if (family.find(m => m.name.toLowerCase() === name.toLowerCase())) {
+    showToast(name + ' is already in the family');
+    return;
+  }
+
+  const role    = document.getElementById('new-member-role')?.value || 'Household';
+  const partner = role === 'Guest'
+    ? (document.getElementById('new-member-partner')?.value.trim() || '')
+    : undefined;
+
+  const member = {
+    name,
+    role,
+    type:    'decision',
+    colour:  _newMemberColour,
+    limits:  { ..._newMemberLimits },
+    ...(partner !== undefined ? { partner } : {}),
+  };
+
+  family.push(member);
+  Store.saveFamily(family);
+  Sync.pushFamily(family).catch(()=>{});
+
+  closeSheet();
+  renderSettings();
+  showToast(name + ' added ✓');
+}
+
 function confirmClearMeals() {
   const count = Object.keys(selected).length;
   if (!count) { showToast('No meals selected'); return; }
