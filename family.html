@@ -516,7 +516,7 @@ function renderPlanTab() {
     const ds    = date.toLocaleDateString('en-US', {month:'short', day:'numeric'});
     const accent = meal ? rColor(meal.health) : 'var(--sep)';
 
-    html += `<div class="plan-day-card">
+    html += `<div class="plan-day-card"${meal?' onclick="fOR('+meal.id+')" style="cursor:pointer"':''}>
       <div class="plan-day-row">
         <div class="plan-day-accent" style="background:${accent}"></div>
         <div class="plan-day-name">${DAYS[d].slice(0,3)}</div>
