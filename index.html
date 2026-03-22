@@ -242,6 +242,19 @@
         <div class="settings-chev">›</div>
       </div>
     </div>
+    <div class="t-label px-16 mb-8">Notifications</div>
+    <div class="settings-group mb-8">
+      <div class="settings-row" id="notif-row" onclick="togglePushNotifications()">
+        <div class="settings-icon" style="background:#fff0f5">🔔</div>
+        <div class="settings-label">
+          <div>Picks &amp; Suggestions</div>
+          <div style="font-size:11px;color:var(--ink4);margin-top:1px" id="notif-status">Loading…</div>
+        </div>
+        <div id="notif-toggle" style="width:51px;height:31px;border-radius:16px;background:var(--bg2);position:relative;transition:background .2s;cursor:pointer;flex-shrink:0">
+          <div id="notif-thumb" style="position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s"></div>
+        </div>
+      </div>
+    </div>
     <div class="t-label px-16 mb-8">Support</div>
     <div class="settings-group mb-8">
       <div class="settings-row" onclick="openSheet('sheet-faq')"><div class="settings-icon" style="background:#fff3e0">❓</div><div class="settings-label">Help &amp; FAQ</div><div class="settings-chev">›</div></div>
@@ -731,6 +744,7 @@ G.setupFamilySync=setupFamilySync;
 G.showSyncSheet=showSyncSheet;
 G.copyCoordURL=copyCoordURL;
 G.showAddToHomeInstructions=showAddToHomeInstructions;
+G.togglePushNotifications=togglePushNotifications;
 G.copyFamilyURLFromSheet=copyFamilyURLFromSheet;
 G.regenerateFamilyId=regenerateFamilyId;
 G.openMemberEdit=openMemberEdit;
@@ -1279,6 +1293,7 @@ function sendPlan() {
 
 // ── Settings ──────────────────────────────────────────────────────────────────
 function renderSettings() {
+  initNotifStatus();
   // Update fid display
   const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || 'Not set up';
   const fidEl = document.getElementById('settings-fid-display');
@@ -1901,6 +1916,91 @@ function showSyncSheet() {
   if (settingsEl) settingsEl.textContent = fid !== '—' ? 'ID: ' + fid : 'Not set up yet';
 
   openSheet('sheet-sync');
+}
+
+
+// ── Push notifications ─────────────────────────────────────────────────────────
+let _pushSubscription = null;
+
+async function initNotifStatus() {
+  const statusEl = document.getElementById('notif-status');
+  const toggle   = document.getElementById('notif-toggle');
+  const thumb    = document.getElementById('notif-thumb');
+
+  if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+    if (statusEl) statusEl.textContent = 'Not supported on this device';
+    const row = document.getElementById('notif-row');
+    if (row) row.style.opacity = '.5';
+    return;
+  }
+
+  if (Notification.permission === 'denied') {
+    if (statusEl) statusEl.textContent = 'Blocked — enable in Safari Settings';
+    return;
+  }
+
+  // Check if already subscribed
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    _pushSubscription = sub;
+    setNotifToggle(!!sub);
+    if (statusEl) statusEl.textContent = sub
+      ? 'On — you\'ll get notified when picks arrive'
+      : 'Off — tap to enable';
+  } catch(e) {
+    if (statusEl) statusEl.textContent = 'Tap to enable notifications';
+  }
+}
+
+function setNotifToggle(on) {
+  const toggle = document.getElementById('notif-toggle');
+  const thumb  = document.getElementById('notif-thumb');
+  if (toggle) toggle.style.background = on ? 'var(--green)' : 'var(--bg2)';
+  if (thumb)  thumb.style.transform   = on ? 'translateX(20px)' : 'translateX(0)';
+}
+
+async function togglePushNotifications() {
+  if (!Sync.isConnected()) {
+    showToast('Set up family sync first');
+    return;
+  }
+  if (!('Notification' in window)) {
+    showToast('Notifications not supported here');
+    return;
+  }
+  if (Notification.permission === 'denied') {
+    showToast('Enable notifications in Safari Settings → Websites');
+    return;
+  }
+
+  if (_pushSubscription) {
+    // Unsubscribe
+    await _pushSubscription.unsubscribe();
+    _pushSubscription = null;
+    setNotifToggle(false);
+    document.getElementById('notif-status').textContent = 'Off';
+    showToast('Notifications disabled');
+  } else {
+    // Subscribe
+    try {
+      const result = await Sync.subscribePush(
+        Store.getCoordinator()?.name || 'Coordinator',
+        'coordinator'
+      );
+      if (result.ok) {
+        const reg = await navigator.serviceWorker.ready;
+        _pushSubscription = await reg.pushManager.getSubscription();
+        setNotifToggle(true);
+        document.getElementById('notif-status').textContent = 'On — you\'ll get notified when picks arrive';
+        showToast('Notifications enabled ✓');
+      } else {
+        showToast('Could not enable: ' + (result.reason || 'unknown'));
+      }
+    } catch(e) {
+      showToast('Permission denied');
+    }
+  }
 }
 
 function showAddToHomeInstructions() {
