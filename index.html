@@ -661,8 +661,22 @@ function goBack() {
   if (screenStack.length < 2) return;
   const cur  = screenStack.pop();
   const prev = screenStack[screenStack.length - 1];
-  setScreen(cur, 'gone');    // instant — no animation back
+  setScreen(cur,  'gone');
   setScreen(prev, 'active');
+  // Update tab highlights for previous screen
+  const tabMap = {'screen-home':0,'screen-meals':1,'screen-list':2,'screen-plan':3};
+  const tabIdx = tabMap[prev];
+  if (tabIdx !== undefined) {
+    document.querySelectorAll('.tabbar').forEach(tb => {
+      tb.querySelectorAll('.tab-icon-bg').forEach(t => t.classList.remove('on'));
+      tb.querySelectorAll('.tab-lbl').forEach(t => t.classList.remove('on'));
+      const tabs = tb.querySelectorAll('.tab');
+      if (tabs[tabIdx]) {
+        tabs[tabIdx].querySelector('.tab-icon-bg')?.classList.add('on');
+        tabs[tabIdx].querySelector('.tab-lbl')?.classList.add('on');
+      }
+    });
+  }
 }
 
 // ── Sheets ────────────────────────────────────────────────────────────────────
