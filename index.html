@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Meal Planner">
+<meta name="theme-color" content="#f2f2f7">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<title>Meal Coordinator</title>
+<link rel="stylesheet" href="css/design-system.css">
+<style>
+#app{position:fixed;inset:0;overflow:hidden}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px;flex-shrink:0}
+.nav-back{font-size:15px;font-weight:500;color:var(--blue);padding:8px 0;min-width:60px;cursor:pointer}
+.nav-title{font-size:17px;font-weight:600;color:var(--ink)}
+.nav-action{font-size:15px;font-weight:500;color:var(--blue);text-align:right;min-width:60px;cursor:pointer}
+.greeting{padding:8px 16px 16px}
+.greeting-sub{font-size:13px;color:var(--ink4);margin-bottom:3px}
+.greeting-title{font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.5px;line-height:1.05}
+.alert-card{background:var(--surface);border-radius:var(--r16);margin:0 16px;padding:14px 16px}
+.alert-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.alert-avatar{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.alert-name{font-size:14px;font-weight:600;color:var(--ink)}
+.alert-sub{font-size:12px;color:var(--ink4);margin-top:2px}
+.alert-time{font-size:11px;color:var(--ink5);margin-left:auto}
+.pick-chips{display:flex;flex-wrap:wrap;gap:6px}
+.pick-chip{background:var(--bg);border-radius:20px;padding:5px 11px;font-size:12px;font-weight:500;color:var(--ink2)}
+.cat-anchor{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:10px 16px 5px}
+.week-picker{background:var(--surface);border-radius:var(--r16);margin:0 16px;padding:13px 16px;display:flex;align-items:center;gap:12px}
+.week-picker-icon{font-size:22px}
+.week-picker-label{font-size:15px;font-weight:700;color:var(--ink)}
+.week-picker-sub{font-size:12px;color:var(--ink4);margin-top:1px}
+.plan-select{width:100%;background:var(--bg);border:none;border-radius:var(--r8);padding:8px 10px;font-size:14px;color:var(--ink);font-family:inherit;margin-top:6px;-webkit-appearance:none}
+.preview-card{background:#1e3a5f;border-radius:var(--r16);margin:0 16px;overflow:hidden}
+.preview-header{background:#1a5298;padding:12px 16px}
+.preview-header-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:2px}
+.preview-header-title{font-size:15px;font-weight:700;color:#fff}
+.preview-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.preview-row:last-child{border:none}
+.preview-day{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#6a9fd8;width:28px;flex-shrink:0}
+.preview-meal{flex:1;font-size:13px;color:#f0ede8}
+.preview-pax{background:rgba(45,186,107,.2);color:#2dba6b;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700}
+.sheet-title{font-size:20px;font-weight:700;color:var(--ink)}
+.sheet-sub{font-size:13px;color:var(--ink4);margin-top:3px}
+.approve-card{background:var(--bg);border-radius:var(--r14);margin:0 16px 8px;overflow:hidden}
+.approve-card-header{padding:12px 14px 8px;display:flex;align-items:flex-start;gap:10px}
+.approve-card-name{font-size:15px;font-weight:600;color:var(--ink);flex:1}
+.approve-card-from{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--ink4);margin-bottom:3px}
+.approve-btns{display:flex;gap:6px;padding:0 14px 12px}
+.btn-approve{flex:2;background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.btn-skip{flex:1;background:var(--surface);color:var(--ink4);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;cursor:pointer}
+.backup-output{background:var(--bg);border:none;border-radius:var(--r12);padding:12px;font-size:11px;font-family:monospace;color:var(--ink3);width:calc(100% - 32px);margin:0 16px;min-height:80px;resize:none;line-height:1.5}
+.version-tag{text-align:center;font-size:11px;color:var(--ink6);padding:16px 0 8px}
+.skeleton{background:var(--bg2);border-radius:var(--r8);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.empty-state{text-align:center;padding:40px 32px}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty-title{font-size:17px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.empty-sub{font-size:14px;color:var(--ink4);line-height:1.5}
+.meal-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.meal-name{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meal-day{font-size:11px;color:var(--ink4);margin-top:2px}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- SCREEN 0: HOME -->
+<div id="screen-home" class="screen active">
+  <div class="safe-top"></div>
+  <div class="scroll-body" id="home-scroll">
+    <div class="greeting">
+      <div class="greeting-sub" id="home-greeting-sub">Good morning</div>
+      <div class="greeting-title">Week of<br><span id="home-week-label">—</span></div>
+    </div>
+    <div class="bal-card mb-8">
+      <div class="bal-header">
+        <span class="t-label">Weekly balance</span>
+        <span class="t-link-sm" id="home-bal-week-range">—</span>
+      </div>
+      <div class="bal-nums-row">
+        <div class="bal-item"><div class="bal-num bal-num-l" id="home-bal-l">0</div><div class="bal-name">Light</div><div class="bal-target">aim 3–4</div></div>
+        <div class="bal-item"><div class="bal-num bal-num-b" id="home-bal-b">0</div><div class="bal-name">Balanced</div><div class="bal-target">aim 2–3</div></div>
+        <div class="bal-item"><div class="bal-num bal-num-i" id="home-bal-i">0</div><div class="bal-name">Indulgent</div><div class="bal-target">aim 1–2</div></div>
+      </div>
+      <div class="bal-track" id="home-bal-track">
+        <div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div>
+        <div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div>
+        <div class="bal-seg bal-seg-e"></div>
+      </div>
+      <div class="bal-status">
+        <div class="bal-status-dot" id="home-bal-dot" style="background:var(--ink5)"></div>
+        <div class="t-sec" id="home-bal-msg">No meals planned yet</div>
+      </div>
+    </div>
+    <div id="home-picks-area" class="hidden">
+      <div class="alert-card mb-8">
+        <div class="alert-top">
+          <div class="alert-avatar" id="home-picks-avatar" style="background:var(--green)">?</div>
+          <div><div class="alert-name" id="home-picks-name">Picks arrived</div><div class="alert-sub" id="home-picks-sub">Tap to review</div></div>
+          <div class="alert-time" id="home-picks-time"></div>
+        </div>
+        <div class="pick-chips" id="home-picks-chips"></div>
+      </div>
+      <button class="btn btn-primary btn-sm mb-8" onclick="openSheet('sheet-approve')">Review &amp; Approve Picks</button>
+    </div>
+    <div class="flex-row px-16 mb-8 mt-8" style="gap:0">
+      <span class="t-label flex-1">This week</span>
+      <span class="t-link-sm" onclick="goTo('screen-plan')">See plan</span>
+    </div>
+    <div class="inset-list" id="home-meal-list">
+      <div class="inset-row"><div class="skeleton" style="width:34px;height:34px;border-radius:10px"></div><div style="flex:1;margin-left:10px"><div class="skeleton" style="width:60%;height:14px;margin-bottom:6px;border-radius:4px"></div><div class="skeleton" style="width:30%;height:11px;border-radius:4px"></div></div></div>
+      <div class="inset-row"><div class="skeleton" style="width:34px;height:34px;border-radius:10px"></div><div style="flex:1;margin-left:10px"><div class="skeleton" style="width:70%;height:14px;margin-bottom:6px;border-radius:4px"></div><div class="skeleton" style="width:25%;height:11px;border-radius:4px"></div></div></div>
+    </div>
+    <div style="height:8px"></div>
+    <button class="btn btn-ghost btn-sm" onclick="goTo('screen-meals')">Select Meals →</button>
+    <div style="height:8px"></div>
+    <button class="btn btn-ghost btn-sm" style="font-size:13px;color:var(--ink4)" onclick="goTo('screen-settings')">⚙ Settings</button>
+  </div>
+  <div class="tabbar">
+    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg on">🏠</div><div class="tab-lbl on">Picks</div></div>
+    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg">≡</div><div class="tab-lbl">Meals</div></div>
+    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg">☑</div><div class="tab-lbl">List</div></div>
+    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg">📅</div><div class="tab-lbl">Plan</div></div>
+  </div>
+</div>
+
+<!-- SCREEN 1: MEAL PICKER -->
+<div id="screen-meals" class="screen">
+  <div class="safe-top"></div>
+  <div class="nav-bar">
+    <span class="nav-back" onclick="goBack()">← Picks</span>
+    <span class="nav-title">Select Meals</span>
+    <span class="nav-action" id="meals-selected-count">0 selected</span>
+  </div>
+  <div class="search-wrap"><span class="search-icon">⌕</span><input class="search-input" id="meals-search" placeholder="Search meals…" oninput="renderMeals()"></div>
+  <div class="chip-row" id="meals-filter-chips">
+    <div class="chip chip-active" data-f="all" onclick="setFilter('all')">All</div>
+    <div class="chip chip-l" data-f="light" onclick="setFilter('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
+    <div class="chip chip-b" data-f="balanced" onclick="setFilter('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
+    <div class="chip chip-i" data-f="indulgent" onclick="setFilter('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
+    <div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">🫕 Crockpot</div>
+    <div class="chip chip-cat" data-f="pasta" onclick="setFilter('pasta')">Pasta</div>
+    <div class="chip chip-cat" data-f="chicken" onclick="setFilter('chicken')">Chicken</div>
+    <div class="chip chip-cat" data-f="pork" onclick="setFilter('pork')">Pork</div>
+    <div class="chip chip-cat" data-f="beef" onclick="setFilter('beef')">Beef</div>
+    <div class="chip chip-cat" data-f="fish" onclick="setFilter('fish')">Fish</div>
+    <div class="chip chip-cat" data-f="comfort" onclick="setFilter('comfort')">Comfort</div>
+    <div class="chip chip-cat" data-f="camping" onclick="setFilter('camping')">Camping</div>
+  </div>
+  <div class="scroll-body" id="meals-scroll" style="padding-bottom:80px"><div id="meals-list"></div></div>
+  <div class="cta-float hidden" id="meals-cta">
+    <button class="cta-btn" onclick="goTo('screen-list')">Build Shopping List <span class="cta-badge" id="meals-cta-count">0</span></button>
+  </div>
+  <div class="tabbar">
+    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg">🏠</div><div class="tab-lbl">Picks</div></div>
+    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg on">≡</div><div class="tab-lbl on">Meals</div></div>
+    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg">☑</div><div class="tab-lbl">List</div></div>
+    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg">📅</div><div class="tab-lbl">Plan</div></div>
+  </div>
+</div>
+
+<!-- SCREEN 2: SHOPPING LIST -->
+<div id="screen-list" class="screen">
+  <div class="safe-top"></div>
+  <div class="nav-bar"><span class="nav-back" onclick="goBack()">← Meals</span><span class="nav-title">Shopping List</span><span class="nav-action"></span></div>
+  <div style="padding:0 16px 8px"><span class="t-sec">Tap items to check off as you shop</span></div>
+  <div class="scroll-body" style="padding-bottom:80px">
+    <div id="shopping-list-body"></div>
+    <div style="height:8px"></div>
+    <button class="btn btn-dark btn-sm" onclick="shareShoppingList()">Share List</button>
+    <button class="btn btn-primary btn-sm" onclick="goTo('screen-plan')">Set Meal Plan →</button>
+  </div>
+  <div class="tabbar">
+    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg">🏠</div><div class="tab-lbl">Picks</div></div>
+    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg">≡</div><div class="tab-lbl">Meals</div></div>
+    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg on">☑</div><div class="tab-lbl on">List</div></div>
+    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg">📅</div><div class="tab-lbl">Plan</div></div>
+  </div>
+</div>
+
+<!-- SCREEN 3: MEAL PLAN -->
+<div id="screen-plan" class="screen">
+  <div class="safe-top"></div>
+  <div class="nav-bar"><span class="nav-back" onclick="goBack()">← List</span><span class="nav-title">Meal Plan</span><span class="nav-action t-link-sm" onclick="showToast('Week navigation coming soon')">Change week</span></div>
+  <div class="scroll-body" style="padding-bottom:80px">
+    <div class="week-picker mb-8"><div class="week-picker-icon">📆</div><div><div class="week-picker-label" id="plan-week-label">Week of —</div><div style="font-size:12px;color:var(--ink4);margin-top:1px">Tap Change week to adjust</div></div></div>
+    <div class="bal-card mb-8" style="padding:12px 16px">
+      <div class="bal-nums-row" style="margin-bottom:8px">
+        <div class="bal-item"><div class="bal-num bal-num-l" style="font-size:22px" id="plan-bal-l">0</div><div class="bal-name">Light</div></div>
+        <div class="bal-item"><div class="bal-num bal-num-b" style="font-size:22px" id="plan-bal-b">0</div><div class="bal-name">Balanced</div></div>
+        <div class="bal-item"><div class="bal-num bal-num-i" style="font-size:22px" id="plan-bal-i">0</div><div class="bal-name">Indulgent</div></div>
+      </div>
+      <div class="bal-track" id="plan-bal-track"><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div><div class="bal-seg bal-seg-e"></div></div>
+    </div>
+    <div class="inset-list mb-8" id="plan-days"></div>
+    <div class="preview-card mb-8"><div class="preview-header"><div class="preview-header-label">Family App Preview</div><div class="preview-header-title" id="plan-preview-title">Week of —</div></div><div id="plan-preview-rows"></div></div>
+    <button class="btn btn-green" onclick="sendPlan()">Send Plan to Family</button>
+  </div>
+  <div class="tabbar">
+    <div class="tab" onclick="goTo('screen-home')"><div class="tab-icon-bg">🏠</div><div class="tab-lbl">Picks</div></div>
+    <div class="tab" onclick="goTo('screen-meals')"><div class="tab-icon-bg">≡</div><div class="tab-lbl">Meals</div></div>
+    <div class="tab" onclick="goTo('screen-list')"><div class="tab-icon-bg">☑</div><div class="tab-lbl">List</div></div>
+    <div class="tab" onclick="goTo('screen-plan')"><div class="tab-icon-bg on">📅</div><div class="tab-lbl on">Plan</div></div>
+  </div>
+</div>
+
+<!-- SCREEN 4: SETTINGS -->
+<div id="screen-settings" class="screen">
+  <div class="safe-top"></div>
+  <div class="nav-bar"><span class="nav-back" onclick="goBack()"></span><span class="nav-title">Settings</span><span class="nav-action" onclick="goBack()">Done</span></div>
+  <div class="scroll-body">
+    <div class="t-label px-16 mb-8">Family members</div>
+    <div class="settings-group mb-8" id="settings-members"></div>
+    <button class="btn btn-ghost btn-sm mb-16" onclick="showToast('Add member coming soon')">+ Add Family Member</button>
+    <div class="t-label px-16 mb-8">Meal library</div>
+    <div class="settings-group mb-8">
+      <div class="settings-row" onclick="openSheet('sheet-add-meal')"><div class="settings-icon" style="background:#e3f9e9">✦</div><div class="settings-label">Add Meal to Library</div><div class="settings-chev">›</div></div>
+    </div>
+    <div class="t-label px-16 mb-8">Data</div>
+    <div class="settings-group mb-8">
+      <div class="settings-row" onclick="openSheet('sheet-backup')"><div class="settings-icon" style="background:#e8f0ff">💾</div><div class="settings-label">Backup &amp; Restore</div><div class="settings-chev">›</div></div>
+      <div class="settings-row" onclick="showToast('Download coming soon')"><div class="settings-icon" style="background:#f0e8ff">📥</div><div class="settings-label">Download Offline Copy</div><div class="settings-chev">›</div></div>
+    </div>
+    <div class="t-label px-16 mb-8">Support</div>
+    <div class="settings-group mb-8">
+      <div class="settings-row" onclick="openSheet('sheet-faq')"><div class="settings-icon" style="background:#fff3e0">❓</div><div class="settings-label">Help &amp; FAQ</div><div class="settings-chev">›</div></div>
+    </div>
+    <div class="version-tag">Meal Coordinator · Beta 1.0</div>
+  </div>
+</div>
+
+<!-- SHEET SCRIM -->
+<div class="sheet-scrim" id="sheet-scrim" onclick="closeSheet()"></div>
+
+<!-- SHEET: RECIPE -->
+<div class="sheet" id="sheet-recipe">
+  <div class="sheet-handle"></div>
+  <div class="sheet-scroll" id="sheet-recipe-body"></div>
+</div>
+
+<!-- SHEET: APPROVE PICKS -->
+<div class="sheet" id="sheet-approve">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div><div class="sheet-title" id="approve-sheet-title">Picks</div><div class="sheet-sub">Review and approve meals for this week</div></div>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-scroll" id="approve-sheet-body"></div>
+</div>
+
+<!-- SHEET: ADD MEAL -->
+<div class="sheet" id="sheet-add-meal">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header"><div class="sheet-title">Add Meal</div><button class="sheet-close" onclick="closeSheet()">✕</button></div>
+  <div class="sheet-scroll">
+    <div class="form-spacer"></div>
+    <label class="form-label">Meal name</label>
+    <input class="form-input" id="add-name" placeholder="e.g. Thai Green Curry">
+    <div class="form-spacer"></div>
+    <label class="form-label">Category</label>
+    <select class="form-input" id="add-cat">
+      <option value="comfort">Comfort &amp; Casual</option><option value="pasta">Pasta &amp; Italian</option>
+      <option value="chicken">Chicken</option><option value="pork">Pork</option><option value="beef">Beef</option>
+      <option value="fish">Fish &amp; Seafood</option><option value="crockpot">Crockpot &amp; Slow Cook</option><option value="camping">Camping</option>
+    </select>
+    <div class="form-spacer"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:0 16px"><span style="font-size:14px;color:var(--ink);flex:1">🫕 Crockpot / slow cooker</span><input type="checkbox" id="add-crockpot" style="width:20px;height:20px;accent-color:var(--blue)"></div>
+    <div class="form-spacer"></div>
+    <label class="form-label">Fridge ingredients <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line)</span></label>
+    <textarea class="form-input form-textarea" id="add-fridge" placeholder="Chicken thighs&#10;Coconut milk"></textarea>
+    <div class="form-spacer"></div>
+    <label class="form-label">Pantry ingredients <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line)</span></label>
+    <textarea class="form-input form-textarea" id="add-pantry" placeholder="Curry paste&#10;Fish sauce"></textarea>
+    <div class="form-spacer"></div>
+    <label class="form-label">Recipe steps <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(one per line)</span></label>
+    <textarea class="form-input form-textarea" id="add-recipe" placeholder="Fry curry paste 2 min.&#10;Add coconut milk, simmer 15 min."></textarea>
+    <div class="form-spacer"></div>
+    <label class="form-label">Health rating</label>
+    <div class="rating-pick">
+      <div class="rating-opt ro-auto ro-selected" id="ro-auto" onclick="selectRating('auto')">Auto</div>
+      <div class="rating-opt ro-l" id="ro-light" onclick="selectRating('light')">Light</div>
+      <div class="rating-opt ro-b" id="ro-balanced" onclick="selectRating('balanced')">Balanced</div>
+      <div class="rating-opt ro-i" id="ro-indulgent" onclick="selectRating('indulgent')">Indulgent</div>
+    </div>
+    <div class="form-spacer"></div>
+    <button class="ai-btn" onclick="aiGenerateMeal()">✨ Generate with AI</button>
+    <div class="form-spacer"></div>
+    <button class="btn btn-primary" onclick="saveNewMeal()">Save to Library</button>
+    <div style="height:32px"></div>
+  </div>
+</div>
+
+<!-- SHEET: BACKUP -->
+<div class="sheet" id="sheet-backup">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header"><div class="sheet-title">Backup &amp; Restore</div><button class="sheet-close" onclick="closeSheet()">✕</button></div>
+  <div class="sheet-scroll">
+    <div style="padding:0 16px 12px"><p class="t-sec" style="line-height:1.6">Creates a backup of your family members and custom meals. Email it to yourself or save it in Notes.</p></div>
+    <button class="btn btn-primary btn-sm mb-8" onclick="createBackupUI()">Create Backup</button>
+    <textarea class="backup-output" id="backup-output" readonly placeholder="Tap Create Backup…"></textarea>
+    <div style="height:16px"></div>
+    <div class="t-label px-16 mb-8">Restore from backup</div>
+    <textarea class="backup-output" id="restore-input" placeholder="Paste your backup string here…"></textarea>
+    <div style="height:8px"></div>
+    <button class="btn btn-dark btn-sm" onclick="applyRestoreUI()">Restore</button>
+    <div id="restore-result" style="padding:8px 16px;font-size:13px;color:var(--ink4)"></div>
+    <div style="height:32px"></div>
+  </div>
+</div>
+
+<!-- SHEET: FAQ -->
+<div class="sheet" id="sheet-faq">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header"><div class="sheet-title">Help &amp; FAQ</div><button class="sheet-close" onclick="closeSheet()">✕</button></div>
+  <div class="sheet-scroll" style="padding:0 16px 40px">
+    <details style="margin:8px 0 12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">How do family picks work?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">Seth and Jared open the family app, pick their favourite meals, and tap Send. A link opens the coordinator with their picks ready to approve — no copy-pasting.</p></details>
+    <details style="margin-bottom:12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">What do Light, Balanced, Indulgent mean?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">These are nutritional categories based on sodium, saturated fat, fibre, protein, and sugar. Aim for 3–4 Light, 2–3 Balanced, and 1–2 Indulgent per week. Nothing is off-limits — it's about the week's balance overall.</p></details>
+    <details style="margin-bottom:12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">How do I add a new meal?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">Settings → Add Meal to Library. Enter the name and tap ✨ Generate with AI — ingredients, steps, and a health rating fill in automatically. Review and save.</p></details>
+    <details style="margin-bottom:12px"><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">Does it work offline?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">Yes. Once opened once, the service worker caches everything. You can plan meals, build shopping lists, and view recipes with no connection.</p></details>
+    <details><summary style="font-size:15px;font-weight:600;color:var(--ink);padding:12px 0;cursor:pointer">How do I install it on my home screen?</summary><p class="t-sec" style="padding:8px 0 4px;line-height:1.6">In Safari, tap the Share button then "Add to Home Screen". Launches full-screen like a native app.</p></details>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+</div>
+
+<script type="module">
+import * as Store from './js/storage.js';
+import * as Meals from './js/meals.js';
+import { parsePicksFromURL, clearPicksFromURL } from './js/picks-url.js';
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let selected     = Store.getSelected();
+let weekPlan     = Store.getWeekPlan();
+let activeFilter = 'all';
+let activeRating = 'auto';
+let screenStack  = ['screen-home'];
+let pendingPicks = null;
+let checkedItems = new Set();
+
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const CAT_EMOJI = {pasta:'🍝',chicken:'🍗',pork:'🥩',beef:'🥩',fish:'🐟',comfort:'🍲',crockpot:'🫕',camping:'⛺'};
+
+// ── Expose globals ────────────────────────────────────────────────────────────
+const G = window;
+G.goTo=goTo; G.goBack=goBack; G.openSheet=openSheet; G.closeSheet=closeSheet;
+G.setFilter=setFilter; G.toggleMeal=toggleMeal; G.changePax=changePax;
+G.openRecipe=openRecipe; G.toggleShopItem=toggleShopItem;
+G.shareShoppingList=shareShoppingList; G.setPlanMeal=setPlanMeal;
+G.changePlanPax=changePlanPax; G.sendPlan=sendPlan;
+G.selectRating=selectRating; G.saveNewMeal=saveNewMeal; G.aiGenerateMeal=aiGenerateMeal;
+G.createBackupUI=createBackupUI; G.applyRestoreUI=applyRestoreUI;
+G.approvePickMeal=approvePickMeal; G.skipPickMeal=skipPickMeal; G.approveAllPicks=approveAllPicks;
+G.showToast=showToast;
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+async function boot() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
+  }
+  await Meals.loadMeals(Store.getCustomMeals());
+  const incoming = parsePicksFromURL();
+  if (incoming) { pendingPicks = incoming; clearPicksFromURL(); showPendingPicks(); }
+  updateGreeting();
+  renderHomeBalance();
+  renderHomeMealList();
+  renderSettings();
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function goTo(id) {
+  const cur = screenStack[screenStack.length-1];
+  if (cur===id) return;
+  document.getElementById(cur)?.classList.replace('active','behind');
+  const next = document.getElementById(id);
+  next?.classList.remove('behind');
+  next?.classList.add('active');
+  screenStack.push(id);
+  if (id==='screen-meals') renderMeals();
+  if (id==='screen-list')  renderShoppingList();
+  if (id==='screen-plan')  renderPlan();
+}
+
+function goBack() {
+  if (screenStack.length<2) return;
+  const cur  = screenStack.pop();
+  const prev = screenStack[screenStack.length-1];
+  document.getElementById(cur)?.classList.replace('active','hidden-screen');
+  document.getElementById(cur)?.classList.remove('behind','active');
+  document.getElementById(prev)?.classList.remove('behind');
+  document.getElementById(prev)?.classList.add('active');
+}
+
+// ── Sheets ────────────────────────────────────────────────────────────────────
+let activeSheet = null;
+function openSheet(id) {
+  if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
+  activeSheet = id;
+  document.getElementById('sheet-scrim')?.classList.add('visible');
+  document.getElementById(id)?.classList.add('open');
+  if (id==='sheet-approve') renderApproveSheet();
+}
+function closeSheet() {
+  if (!activeSheet) return;
+  document.getElementById(activeSheet)?.classList.remove('open');
+  document.getElementById('sheet-scrim')?.classList.remove('visible');
+  activeSheet = null;
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+// ── Greeting / week ───────────────────────────────────────────────────────────
+function updateGreeting() {
+  const h = new Date().getHours();
+  const greet = h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  const coord = Store.getFamily().find(m=>m.role==='Coordinator') || Store.getFamily()[0];
+  document.getElementById('home-greeting-sub').textContent = `${greet}, ${coord?.name||''}`;
+  const {sun, sat} = weekRange();
+  const fmt = d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  document.getElementById('home-week-label').textContent = `${fmt(sun)} – ${fmt(sat)}`;
+  document.getElementById('home-bal-week-range').textContent = `${fmt(sun)}–${fmt(sat)}`;
+  document.getElementById('plan-week-label').textContent = `${fmt(sun)} – ${fmt(sat)}`;
+  document.getElementById('plan-preview-title').textContent = `Week of ${fmt(sun)}`;
+}
+
+function weekRange() {
+  const now=new Date(), sun=new Date(now), sat=new Date(now);
+  sun.setDate(now.getDate()-now.getDay());
+  sat.setDate(sun.getDate()+6);
+  return {sun,sat};
+}
+
+// ── Balance card ──────────────────────────────────────────────────────────────
+function renderHomeBalance() {
+  weekPlan = Store.getWeekPlan();
+  const counts={light:0,balanced:0,indulgent:0};
+  Object.values(weekPlan).filter(v=>v?.mealId).forEach(v=>{
+    const m=Meals.getMeal(v.mealId);
+    if(m) counts[m.health]=(counts[m.health]||0)+1;
+  });
+  document.getElementById('home-bal-l').textContent=counts.light;
+  document.getElementById('home-bal-b').textContent=counts.balanced;
+  document.getElementById('home-bal-i').textContent=counts.indulgent;
+  if(document.getElementById('plan-bal-l')){
+    document.getElementById('plan-bal-l').textContent=counts.light;
+    document.getElementById('plan-bal-b').textContent=counts.balanced;
+    document.getElementById('plan-bal-i').textContent=counts.indulgent;
+  }
+  updateBalTrack('home-bal-track',counts);
+  updateBalTrack('plan-bal-track',counts);
+  const total=Object.values(weekPlan).filter(v=>v?.mealId).length;
+  const dot=document.getElementById('home-bal-dot'), msg=document.getElementById('home-bal-msg');
+  if(!total){dot.style.background='var(--ink5)';msg.textContent='No meals planned yet';}
+  else if(counts.light>=3&&counts.indulgent<=2){dot.style.background='var(--green)';msg.textContent='Good balance this week';}
+  else if(counts.indulgent>2){dot.style.background='var(--indulgent)';msg.textContent=`${counts.indulgent} indulgent — consider a swap`;}
+  else{dot.style.background='var(--balanced)';msg.textContent='Room for more Light meals';}
+}
+
+function updateBalTrack(id,counts) {
+  const el=document.getElementById(id); if(!el)return;
+  const segs=[];
+  for(let i=0;i<counts.light;i++)segs.push('bal-seg-l');
+  for(let i=0;i<counts.balanced;i++)segs.push('bal-seg-b');
+  for(let i=0;i<counts.indulgent;i++)segs.push('bal-seg-i');
+  while(segs.length<7)segs.push('bal-seg-e');
+  el.innerHTML=segs.map(c=>`<div class="bal-seg ${c}"></div>`).join('');
+}
+
+// ── Home meal list ────────────────────────────────────────────────────────────
+function renderHomeMealList() {
+  weekPlan=Store.getWeekPlan();
+  const el=document.getElementById('home-meal-list');
+  const entries=Object.entries(weekPlan).filter(([,v])=>v?.mealId)
+    .map(([day,v])=>({day,meal:Meals.getMeal(v.mealId)})).filter(e=>e.meal).slice(0,5);
+  if(!entries.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No meals planned</div><div class="empty-sub">Tap Select Meals to start</div></div>`;
+    return;
+  }
+  el.innerHTML=entries.map(e=>`<div class="inset-row">
+    <div class="meal-icon" style="background:${rBg(e.meal.health)}">${CAT_EMOJI[e.meal.cat]||'🍽'}</div>
+    <div style="flex:1;min-width:0"><div class="meal-name">${e.meal.name}</div><div class="meal-day">${e.day}</div></div>
+    ${rPill(e.meal.health)}
+  </div>`).join('');
+}
+
+// ── Pending picks ─────────────────────────────────────────────────────────────
+function showPendingPicks() {
+  if(!pendingPicks)return;
+  document.getElementById('home-picks-area').classList.remove('hidden');
+  document.getElementById('home-picks-avatar').textContent=pendingPicks.name[0].toUpperCase();
+  document.getElementById('home-picks-name').textContent=`${pendingPicks.name}'s picks`;
+  document.getElementById('home-picks-sub').textContent=`${pendingPicks.mealIds.length} meals · tap to review`;
+  document.getElementById('home-picks-chips').innerHTML=pendingPicks.mealIds.map(id=>{
+    const m=Meals.getMeal(id);
+    return `<span class="pick-chip">${m?m.name:`Meal ${id}`}</span>`;
+  }).join('');
+}
+
+function renderApproveSheet() {
+  if(!pendingPicks){
+    document.getElementById('approve-sheet-body').innerHTML='<div class="empty-state"><div class="empty-icon">✓</div><div class="empty-title">No pending picks</div></div>';
+    return;
+  }
+  document.getElementById('approve-sheet-title').textContent=`${pendingPicks.name}'s Picks`;
+  const cards=pendingPicks.mealIds.map((id,i)=>{
+    const m=Meals.getMeal(id); if(!m)return'';
+    return`<div class="approve-card" id="apc-${i}">
+      <div class="approve-card-header"><div><div class="approve-card-from">${pendingPicks.name} suggested</div><div class="approve-card-name">${m.name}</div></div>${rPill(m.health)}</div>
+      <div class="approve-btns"><button class="btn-approve" onclick="approvePickMeal(${i},${id})">✓ Add to week</button><button class="btn-skip" onclick="skipPickMeal(${i})">Skip</button></div>
+    </div>`;
+  }).join('');
+  document.getElementById('approve-sheet-body').innerHTML=cards+`
+    <div style="display:flex;gap:8px;padding:8px 16px 40px">
+      <button style="flex:1;background:var(--bg2);color:var(--ink4);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;cursor:pointer" onclick="closeSheet()">Done</button>
+      <button style="flex:2;background:var(--green);color:#fff;border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer" onclick="approveAllPicks()">Approve All</button>
+    </div>`;
+}
+
+function approvePickMeal(i,id) {
+  const c=document.getElementById(`apc-${i}`);
+  if(c){c.style.opacity='.4';c.style.pointerEvents='none';}
+  selected[id]={pax:4}; Store.saveSelected(selected); showToast('Added to your meals');
+}
+function skipPickMeal(i) {
+  const c=document.getElementById(`apc-${i}`);
+  if(c){c.style.opacity='.3';c.style.pointerEvents='none';}
+}
+function approveAllPicks() {
+  if(!pendingPicks)return;
+  pendingPicks.mealIds.forEach((id,i)=>{selected[id]={pax:4};skipPickMeal(i);});
+  Store.saveSelected(selected);
+  showToast(`All ${pendingPicks.mealIds.length} meals added`);
+  setTimeout(closeSheet,600);
+  pendingPicks=null;
+  document.getElementById('home-picks-area').classList.add('hidden');
+}
+
+// ── Meal picker ───────────────────────────────────────────────────────────────
+function setFilter(f) {
+  activeFilter=f;
+  document.querySelectorAll('#meals-filter-chips .chip').forEach(c=>{
+    const cf=c.dataset.f;
+    c.className='chip';
+    if(cf===f){c.classList.add('chip-active');}
+    else{
+      const cls={light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf]||'chip-cat';
+      c.classList.add(cls);
+    }
+  });
+  renderMeals();
+}
+
+function renderMeals() {
+  if(!Meals.isLoaded())return;
+  const q=(document.getElementById('meals-search')?.value||'').toLowerCase();
+  const f=activeFilter;
+  let filtered=Meals.allMeals().filter(m=>{
+    if(f==='crockpot'&&!m.crockpot)return false;
+    if(['pasta','chicken','pork','beef','fish','comfort','camping'].includes(f)&&m.cat!==f)return false;
+    if(['light','balanced','indulgent'].includes(f)&&m.health!==f)return false;
+    if(q&&!m.name.toLowerCase().includes(q))return false;
+    return true;
+  });
+  const groups={};
+  filtered.forEach(m=>{const k=m.cat;if(!groups[k])groups[k]=[];groups[k].push(m);});
+  let html='';
+  Meals.CAT_ORDER.forEach(cat=>{
+    if(!groups[cat]?.length)return;
+    html+=`<div class="cat-anchor">${Meals.CAT_LABELS[cat]||cat}</div>`;
+    groups[cat].forEach(m=>{
+      const sel=!!selected[m.id], pax=selected[m.id]?.pax||4;
+      html+=`<div class="pill-wrap"><div class="pill${sel?' pill-sel':''}" onclick="toggleMeal(${m.id})">
+        <div class="pill-bar"></div>
+        <div class="pill-inner">
+          <div class="pill-check${sel?' on':''}">${sel?'✓':''}</div>
+          <div class="pill-name">${m.crockpot?'🫕 ':''}${m.name}</div>
+          <div class="pill-meta">${rPill(m.health,true)}<button class="pill-recipe-btn" onclick="event.stopPropagation();openRecipe(${m.id})">Recipe</button></div>
+        </div>
+        ${sel?`<div class="pax-row"><span class="pax-label">Guests</span>
+          <button class="pax-btn pax-minus" onclick="event.stopPropagation();changePax(${m.id},-1)">-</button>
+          <span class="pax-num" id="pn-${m.id}">${pax}</span>
+          <button class="pax-btn pax-plus" onclick="event.stopPropagation();changePax(${m.id},1)">+</button>
+        </div>`:''}
+      </div></div>`;
+    });
+  });
+  if(!html)html=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">No meals found</div><div class="empty-sub">Try a different search or filter</div></div>`;
+  document.getElementById('meals-list').innerHTML=html;
+  updateMealsCTA();
+}
+
+function toggleMeal(id) {
+  if(selected[id])delete selected[id]; else selected[id]={pax:4};
+  Store.saveSelected(selected); renderMeals(); renderHomeBalance();
+}
+function changePax(id,d) {
+  if(!selected[id])return;
+  selected[id].pax=Math.max(1,Math.min(20,(selected[id].pax||4)+d));
+  Store.saveSelected(selected);
+  const el=document.getElementById(`pn-${id}`);
+  if(el)el.textContent=selected[id].pax;
+}
+function updateMealsCTA() {
+  const n=Object.keys(selected).length;
+  document.getElementById('meals-cta').classList.toggle('hidden',n===0);
+  document.getElementById('meals-cta-count').textContent=n;
+  document.getElementById('meals-selected-count').textContent=`${n} selected`;
+}
+
+// ── Recipe sheet ──────────────────────────────────────────────────────────────
+function openRecipe(id) {
+  const m=Meals.getMeal(id); if(!m)return;
+  const mac=m.macros||{};
+  document.getElementById('sheet-recipe-body').innerHTML=`
+    <div class="sheet-header" style="flex-direction:column;align-items:flex-start;gap:6px">
+      <div style="display:flex;align-items:flex-start;width:100%">
+        <div style="flex:1"><div class="t-label" style="margin-bottom:8px">${Meals.CAT_LABELS[m.cat]||m.cat}</div><div class="sheet-title">${m.name}${m.crockpot?' 🫕':''}</div></div>
+        <button class="sheet-close" onclick="closeSheet()">✕</button>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${rPill(m.health)}${m.crockpot?'<span style="background:#fef3e8;color:#d4631a;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600">Crockpot friendly</span>':''}</div>
+    </div>
+    ${m.fridge?.length?`<div class="recipe-section">Fridge</div>${m.fridge.map(i=>`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`).join('')}`:''}
+    ${m.pantry?.length?`<div class="recipe-section">Pantry</div>${m.pantry.map(i=>`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`).join('')}`:''}
+    ${m.sides?.length?`<div class="recipe-section">Sides</div><div style="padding:8px 20px;font-size:14px;color:var(--ink4)">${m.sides.join(' · ')}</div>`:''}
+    ${m.recipe?.length?`<div class="recipe-section">Method</div>${m.recipe.map((s,i)=>`<div class="recipe-step"><div class="step-num">${i+1}</div><div class="step-body"><div class="step-text">${s}</div></div></div>`).join('')}`:''}
+    <div class="macro-strip">
+      <div class="macro-cell"><div class="macro-val">${mac.cal||'—'}</div><div class="macro-lbl">Cal</div></div>
+      <div class="macro-cell"><div class="macro-val">${mac.pro||'—'}g</div><div class="macro-lbl">Protein</div></div>
+      <div class="macro-cell"><div class="macro-val">${mac.carb||'—'}g</div><div class="macro-lbl">Carbs</div></div>
+      <div class="macro-cell"><div class="macro-val">${mac.fat||'—'}g</div><div class="macro-lbl">Fat</div></div>
+      <div class="macro-cell"><div class="macro-val">${mac.sodium||'—'}</div><div class="macro-lbl">Sodium</div></div>
+    </div>
+    <div style="padding:12px 20px 40px"><button style="width:100%;background:var(--ink);color:#fff;border:none;border-radius:var(--r14);padding:14px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer" onclick="closeSheet()">Done</button></div>`;
+  openSheet('sheet-recipe');
+}
+
+// ── Shopping list ─────────────────────────────────────────────────────────────
+function renderShoppingList() {
+  const body=document.getElementById('shopping-list-body');
+  const ids=Object.keys(selected).map(Number);
+  if(!ids.length){
+    body.innerHTML=`<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">No meals selected</div><div class="empty-sub">Go to Meals and select what you'd like to cook</div></div>`;
+    return;
+  }
+  const fridge={},pantry={};
+  ids.forEach(id=>{
+    const m=Meals.getMeal(id); if(!m)return;
+    (m.fridge||[]).forEach(i=>{fridge[i]=(fridge[i]||0)+1;});
+    (m.pantry||[]).forEach(i=>{pantry[i]=(pantry[i]||0)+1;});
+  });
+  const sec=(title,items)=>{
+    if(!Object.keys(items).length)return'';
+    const rows=Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([n,c])=>{
+      const key=n.toLowerCase().replace(/\W+/g,'_');
+      const done=checkedItems.has(key);
+      return`<div class="shop-row${done?' done':''}" onclick="toggleShopItem('${key}',this)">
+        <div class="shop-check">${done?'✓':''}</div>
+        <span class="shop-name">${n}</span>
+        ${c>1?`<span class="shop-qty">×${c}</span>`:''}
+      </div>`;
+    }).join('');
+    return`<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
+  };
+  body.innerHTML=sec('Dairy & Refrigerated',fridge)+sec('Pantry & Dry Goods',pantry);
+}
+function toggleShopItem(key,row) {
+  checkedItems.has(key)?checkedItems.delete(key):checkedItems.add(key);
+  row.classList.toggle('done',checkedItems.has(key));
+  row.querySelector('.shop-check').textContent=checkedItems.has(key)?'✓':'';
+}
+function shareShoppingList() {
+  const ids=Object.keys(selected).map(Number);
+  const lines=['🛒 SHOPPING LIST\n'];
+  const f={},p={};
+  ids.forEach(id=>{const m=Meals.getMeal(id);if(!m)return;(m.fridge||[]).forEach(i=>f[i]=true);(m.pantry||[]).forEach(i=>p[i]=true);});
+  if(Object.keys(f).length){lines.push('── Fridge ──');Object.keys(f).sort().forEach(i=>lines.push(`• ${i}`));}
+  if(Object.keys(p).length){lines.push('\n── Pantry ──');Object.keys(p).sort().forEach(i=>lines.push(`• ${i}`));}
+  const text=lines.join('\n');
+  if(navigator.share)navigator.share({title:'Shopping List',text});
+  else navigator.clipboard?.writeText(text).then(()=>showToast('List copied'));
+}
+
+// ── Meal plan ─────────────────────────────────────────────────────────────────
+function renderPlan() {
+  weekPlan=Store.getWeekPlan();
+  const {sun}=weekRange();
+  const opts=[{id:'',name:'— Not assigned —'},...Object.keys(selected).map(id=>({id:Number(id),name:Meals.getMeal(Number(id))?.name||`Meal ${id}`}))];
+  const optHtml=opts.map(o=>`<option value="${o.id}">${o.name}</option>`).join('');
+  let rows='';
+  for(let d=0;d<7;d++){
+    const date=new Date(sun);date.setDate(sun.getDate()+d);
+    const key=date.toLocaleDateString('en-CA');
+    const day=DAYS[d],ds=date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const entry=weekPlan[key]||{};
+    const meal=entry.mealId?Meals.getMeal(entry.mealId):null;
+    const pax=entry.pax||4;
+    const accent=meal?rColor(meal.health):'var(--sep)';
+    const selOpts=optHtml.replace(`value="${entry.mealId||''}"`,`value="${entry.mealId||''}" selected`);
+    rows+=`<div class="plan-row">
+      <div class="plan-accent" style="background:${accent}"></div>
+      <div class="plan-day-col"><div class="plan-day-name">${day.slice(0,3)}</div><div class="plan-day-date">${ds}</div></div>
+      <div class="plan-meal-col" style="flex:1">
+        <select class="plan-select" onchange="setPlanMeal('${key}',this.value)">${selOpts}</select>
+      </div>
+      ${meal?`<div class="plan-right">
+        <div class="plan-pax-ctrl">
+          <button class="plan-pax-btn" onclick="changePlanPax('${key}',-1)">-</button>
+          <span class="pax-num" style="font-size:13px" id="pp-${key}">${pax}</span>
+          <button class="plan-pax-btn" onclick="changePlanPax('${key}',1)">+</button>
+        </div>
+        ${rPill(meal.health,true)}
+      </div>`:''}
+    </div>`;
+  }
+  document.getElementById('plan-days').innerHTML=rows;
+
+  let prev='';
+  for(let d=0;d<7;d++){
+    const date=new Date(sun);date.setDate(sun.getDate()+d);
+    const key=date.toLocaleDateString('en-CA');
+    const entry=weekPlan[key]; if(!entry?.mealId)continue;
+    const meal=Meals.getMeal(entry.mealId); if(!meal)continue;
+    prev+=`<div class="preview-row"><div class="preview-day">${DAYS[d].slice(0,3)}</div><div class="preview-meal">${meal.name}</div><div class="preview-pax">${entry.pax||4}p</div></div>`;
+  }
+  document.getElementById('plan-preview-rows').innerHTML=prev||'<div style="padding:12px 16px;font-size:13px;color:rgba(255,255,255,.4)">No meals assigned yet</div>';
+  renderHomeBalance();
+}
+
+function setPlanMeal(key,val) {
+  if(!val){delete weekPlan[key];}else{weekPlan[key]={mealId:Number(val),pax:weekPlan[key]?.pax||4};}
+  Store.saveWeekPlan(weekPlan); renderPlan(); renderHomeMealList();
+}
+function changePlanPax(key,d) {
+  if(!weekPlan[key])return;
+  weekPlan[key].pax=Math.max(1,Math.min(20,(weekPlan[key].pax||4)+d));
+  Store.saveWeekPlan(weekPlan);
+  const el=document.getElementById(`pp-${key}`); if(el)el.textContent=weekPlan[key].pax;
+}
+function sendPlan() {
+  const {sun}=weekRange();
+  const lines=['📅 MEAL PLAN\n'];
+  for(let d=0;d<7;d++){
+    const date=new Date(sun);date.setDate(sun.getDate()+d);
+    const key=date.toLocaleDateString('en-CA');
+    const entry=weekPlan[key];
+    const meal=entry?.mealId?Meals.getMeal(entry.mealId):null;
+    const ds=`${DAYS[d].slice(0,3)} ${date.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+    lines.push(`${ds}: ${meal?meal.name+` (${entry.pax||4}p)`:'—'}`);
+  }
+  const text=lines.join('\n');
+  if(navigator.share)navigator.share({title:'Meal Plan',text});
+  else navigator.clipboard?.writeText(text).then(()=>showToast('Plan copied'));
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+function renderSettings() {
+  const family=Store.getFamily();
+  const colours=['#007aff','#34c759','#ff9500','#ff3b30','#8e8e93','#af52de'];
+  document.getElementById('settings-members').innerHTML=family.map((m,i)=>`
+    <div class="member-row">
+      <div class="m-avatar" style="background:${m.colour||colours[i%colours.length]}">${m.name[0]}</div>
+      <div class="m-name">${m.name}</div>
+      <span class="m-role ${m.role==='Coordinator'?'mr-coord':m.role==='Household'?'mr-house':'mr-guest'}">${m.role}</span>
+      <button class="m-edit-btn" onclick="showToast('Edit coming soon')">Edit</button>
+    </div>`).join('');
+}
+
+// ── Add Meal ──────────────────────────────────────────────────────────────────
+function selectRating(r) {
+  activeRating=r;
+  ['auto','light','balanced','indulgent'].forEach(v=>{
+    const el=document.getElementById(`ro-${v}`);
+    if(el)el.classList.toggle('ro-selected',v===r);
+  });
+}
+async function aiGenerateMeal() {
+  const name=document.getElementById('add-name').value.trim();
+  if(!name){showToast('Enter a meal name first');return;}
+  showToast('Generating…');
+  try {
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Generate a structured recipe for a family meal planning app. Respond ONLY with valid JSON, no markdown.\n\nMeal: ${name}\n\nReturn:\n{"fridge":["..."],"pantry":["..."],"sides":["..."],"recipe":["Step 1.","Step 2."],"health":"light|balanced|indulgent","macros":{"cal":0,"pro":0,"carb":0,"fat":0,"sodium":0}}\n\nHealth: light=lower sodium/fat, higher fibre/protein. balanced=moderate. indulgent=higher sat fat/sodium/sugar.`}]})
+    });
+    const data=await res.json();
+    const text=data.content?.find(c=>c.type==='text')?.text||'';
+    const parsed=JSON.parse(text.replace(/```json|```/g,'').trim());
+    if(parsed.fridge)document.getElementById('add-fridge').value=parsed.fridge.join('\n');
+    if(parsed.pantry)document.getElementById('add-pantry').value=parsed.pantry.join('\n');
+    if(parsed.recipe)document.getElementById('add-recipe').value=parsed.recipe.join('\n');
+    if(parsed.health)selectRating(parsed.health);
+    showToast('✓ Generated — review and save');
+  } catch(e){ showToast('AI failed — fill in manually'); }
+}
+function saveNewMeal() {
+  const name=document.getElementById('add-name').value.trim();
+  if(!name){showToast('Enter a meal name');return;}
+  const meal={
+    id:Meals.newMealId(), name,
+    cat:document.getElementById('add-cat').value,
+    crockpot:document.getElementById('add-crockpot').checked,
+    fridge:document.getElementById('add-fridge').value.split('\n').filter(Boolean),
+    pantry:document.getElementById('add-pantry').value.split('\n').filter(Boolean),
+    sides:[],
+    recipe:document.getElementById('add-recipe').value.split('\n').filter(Boolean),
+    health:activeRating==='auto'?'balanced':activeRating,
+    custom:true, macros:{cal:0,pro:0,carb:0,fat:0,sodium:0}
+  };
+  const customs=Store.getCustomMeals(); customs.push(meal); Store.saveCustomMeals(customs);
+  ['add-name','add-fridge','add-pantry','add-recipe'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('add-crockpot').checked=false; selectRating('auto');
+  closeSheet(); showToast(`✓ "${meal.name}" added`);
+}
+
+// ── Backup / Restore ──────────────────────────────────────────────────────────
+function createBackupUI() {
+  const b64=Store.createBackup();
+  const str=`💾 COORDINATOR BACKUP | ${new Date().toLocaleDateString('en-CA')}\n─────────────────────\n${b64}\n─────────────────────\nPaste into Settings → Restore.`;
+  document.getElementById('backup-output').value=str;
+  if(navigator.share)navigator.share({title:'Meal Planner Backup',text:str});
+  else navigator.clipboard?.writeText(str).then(()=>showToast('Backup copied'));
+}
+function applyRestoreUI() {
+  const raw=document.getElementById('restore-input').value.trim();
+  const line=raw.split('\n').find(l=>l.length>50&&!l.startsWith('💾')&&!l.startsWith('─')&&!l.startsWith('Paste'));
+  if(!line){document.getElementById('restore-result').textContent='✗ Invalid format';return;}
+  const r=Store.applyRestore(line);
+  document.getElementById('restore-result').textContent=r.ok?`✓ Restored from ${r.date}`:`✗ ${r.error}`;
+  if(r.ok){renderSettings();showToast('Restored');}
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function rPill(h,sm=false){
+  const map={light:['rp-l','rd-l','Light'],balanced:['rp-b','rd-b','Balanced'],indulgent:['rp-i','rd-i','Indulgent']};
+  const [bg,dot,label]=map[h]||map.balanced;
+  return`<span class="r-pill ${bg}" style="${sm?'font-size:10px;padding:3px 8px':''}""><span class="r-dot ${dot}"></span>${label}</span>`;
+}
+function rBg(h){return{light:'var(--light-tint)',balanced:'var(--balanced-tint)',indulgent:'var(--indulgent-tint)'}[h]||'var(--bg)';}
+function rColor(h){return{light:'var(--light)',balanced:'var(--balanced)',indulgent:'var(--indulgent)'}[h]||'var(--sep)';}
+
+boot();
+</script>
+</body>
+</html>
