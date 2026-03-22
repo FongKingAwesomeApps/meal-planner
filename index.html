@@ -259,6 +259,39 @@
     <div class="settings-group mb-8">
       <div class="settings-row" onclick="openSheet('sheet-faq')"><div class="settings-icon" style="background:#fff3e0">❓</div><div class="settings-label">Help &amp; FAQ</div><div class="settings-chev">›</div></div>
     </div>
+    <div class="t-label px-16 mb-8">Reset</div>
+    <div class="settings-group mb-8">
+      <div class="settings-row" onclick="confirmClearMeals()">
+        <div class="settings-icon" style="background:#fff0f0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--indulgent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+        </div>
+        <div class="settings-label">
+          <div>Clear Selected Meals</div>
+          <div style="font-size:11px;color:var(--ink4);margin-top:1px">Remove all meals from your current selection</div>
+        </div>
+        <div class="settings-chev">›</div>
+      </div>
+      <div class="settings-row" onclick="confirmClearPlan()">
+        <div class="settings-icon" style="background:#fff0f0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--indulgent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="4" x2="9" y2="9"/><line x1="15" y1="4" x2="15" y2="9"/><line x1="7" y1="14" x2="10" y2="14"/><line x1="7" y1="18" x2="10" y2="18"/></svg>
+        </div>
+        <div class="settings-label">
+          <div>Clear Week Plan</div>
+          <div style="font-size:11px;color:var(--ink4);margin-top:1px">Remove all meals from this week's calendar</div>
+        </div>
+        <div class="settings-chev">›</div>
+      </div>
+      <div class="settings-row" onclick="confirmStartFresh()">
+        <div class="settings-icon" style="background:#fff0f0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--indulgent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+        </div>
+        <div class="settings-label">
+          <div style="color:var(--indulgent);font-weight:500">Start Fresh This Week</div>
+          <div style="font-size:11px;color:var(--ink4);margin-top:1px">Clear selections, plan and picks — keeps your meal library</div>
+        </div>
+        <div class="settings-chev" style="color:var(--indulgent)">›</div>
+      </div>
+    </div>
     <div class="version-tag">Meal Coordinator · Beta 1.0</div>
   </div>
 </div>
@@ -745,6 +778,9 @@ G.showSyncSheet=showSyncSheet;
 G.copyCoordURL=copyCoordURL;
 G.showAddToHomeInstructions=showAddToHomeInstructions;
 G.togglePushNotifications=togglePushNotifications;
+G.confirmClearMeals=confirmClearMeals;
+G.confirmClearPlan=confirmClearPlan;
+G.confirmStartFresh=confirmStartFresh;
 G.copyFamilyURLFromSheet=copyFamilyURLFromSheet;
 G.regenerateFamilyId=regenerateFamilyId;
 G.openMemberEdit=openMemberEdit;
@@ -2003,6 +2039,55 @@ async function togglePushNotifications() {
       showToast('Permission denied');
     }
   }
+}
+
+
+// ── Reset functions ────────────────────────────────────────────────────────────
+function confirmClearMeals() {
+  const count = Object.keys(selected).length;
+  if (!count) { showToast('No meals selected'); return; }
+  if (!confirm(`Clear all ${count} selected meal${count>1?'s':''}?`)) return;
+  selected = {};
+  Store.saveSelected(selected);
+  renderMeals();
+  renderHomeBalance();
+  renderHomeMealList();
+  showToast('Meals cleared');
+}
+
+function confirmClearPlan() {
+  const count = Object.values(weekPlan).filter(v => v?.mealId).length;
+  if (!count) { showToast('Week plan is already empty'); return; }
+  if (!confirm(`Clear all ${count} meal${count>1?'s':''} from this week's plan?`)) return;
+  weekPlan = {};
+  Store.saveWeekPlan(weekPlan);
+  Sync.pushWeekPlan(weekPlan).catch(()=>{});
+  renderPlan();
+  renderHomeBalance();
+  renderHomeMealList();
+  showToast('Week plan cleared');
+}
+
+function confirmStartFresh() {
+  if (!confirm('Start fresh this week?\n\nThis will clear:\n• All selected meals\n• This week\'s plan\n• Pending picks\n\nYour meal library and family settings are kept.')) return;
+  // Clear selections
+  selected = {};
+  Store.saveSelected(selected);
+  // Clear week plan
+  weekPlan = {};
+  Store.saveWeekPlan(weekPlan);
+  Sync.pushWeekPlan(weekPlan).catch(()=>{});
+  // Clear pending picks
+  pendingPicks = null;
+  localStorage.removeItem('mp_pending_picks');
+  document.getElementById('home-picks-area')?.classList.add('hidden');
+  // Re-render everything
+  renderMeals();
+  renderHomeBalance();
+  renderHomeMealList();
+  renderPlan();
+  closeSheet();
+  showToast('Fresh start ✓');
 }
 
 function showAddToHomeInstructions() {
