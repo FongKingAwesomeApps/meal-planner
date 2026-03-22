@@ -11,7 +11,15 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png" type="image/png">
 <title>Meal Coordinator</title>
-<link rel="stylesheet" href="css/design-system.css">
+<link rel="stylesheet" href="css/design-system.css?v=4">
+<style>
+/* Screen nav — inline override, not cached separately */
+.screen{display:none!important;position:absolute;inset:0;flex-direction:column;background:var(--bg,#f2f2f7);overflow:hidden}
+.screen.active{display:flex!important;transform:translateX(0);animation:sIn .24s cubic-bezier(.4,0,.2,1)}
+.screen.behind{display:flex!important;transform:translateX(-30%)}
+.screen.gone{display:none!important}
+@keyframes sIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+</style>
 <style>
 #app{position:fixed;inset:0;overflow:hidden}
 .nav-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px;flex-shrink:0}
@@ -64,6 +72,7 @@
 .meal-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .meal-name{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .meal-day{font-size:11px;color:var(--ink4);margin-top:2px}
+.screen{display:none!important}.screen.active{display:flex!important;animation:slideIn .26s cubic-bezier(.4,0,.2,1)}.screen.behind{display:flex!important;transform:translateX(-30%)}.screen.gone{display:none!important}@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
 </style>
 </head>
 <body>
