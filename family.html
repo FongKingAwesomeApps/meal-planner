@@ -215,6 +215,7 @@
 <script type="module">
 import * as Meals from './js/meals.js';
 import * as Store from './js/storage.js';
+import * as Sync  from './js/sync.js';
 import { sharePicksURL } from './js/picks-url.js';
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -241,6 +242,7 @@ G.setPartner=setPartner;
 // ── Boot ──────────────────────────────────────────────────────────────────────
 async function boot() {
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
+  await Sync.init();
   await Meals.loadMeals(Store.getCustomMeals());
   renderNameList();
   // Check for incoming suggestions result (from coordinator pushing plan URL)
@@ -544,8 +546,21 @@ async function sendPicks() {
   const pax = partnerJoining ? [...sel].map(id => ({id, pax: 5})) : null;
   const ids  = [...sel];
 
-  const result = await sharePicksURL(myName, ids,
-    partnerJoining ? `${myMember.partner} is joining this week` : '');
+  // Try server sync first, fall back to URL share
+  let result;
+  if (Sync.isConnected()) {
+    const serverResult = await Sync.sendPicks(myName, ids,
+      partnerJoining ? `${myMember.partner} is joining this week` : '');
+    if (serverResult.method === 'server') {
+      showToast('Picks sent! 🎉');
+      sel.clear(); render();
+      return;
+    }
+    result = { method: 'url', url: serverResult.url };
+  } else {
+    result = await sharePicksURL(myName, ids,
+      partnerJoining ? `${myMember.partner} is joining this week` : '');
+  }
 
   if (result.method === 'share') {
     showToast('Picks sent! 🎉');
@@ -641,18 +656,20 @@ async function submitSuggestion() {
   };
 
   // Package into URL and share to coordinator
-  const coordURL = window.location.origin + '/meal-planner/?suggestion=' +
-    encodeURIComponent(btoa(JSON.stringify(suggestion)));
-
-  if (navigator.share) {
-    await navigator.share({
-      title: `${myName} suggested a meal`,
-      text: suggestMode === 'url' ? `Check out this recipe: ${content}` : `Meal idea: ${content}`,
-      url: coordURL,
-    });
+  if (Sync.isConnected()) {
+    const r = await Sync.sendSuggestion(myName, suggestMode, content);
+    if (r.method === 'server') {
+      // Sent directly — no link needed
+    } else {
+      // Fallback to share
+      if (navigator.share) await navigator.share({ title: `${myName} suggested a meal`, url: r.url });
+      else { await navigator.clipboard?.writeText(r.url); showToast('Link copied — send to Dave'); }
+    }
   } else {
-    await navigator.clipboard?.writeText(coordURL);
-    showToast('Link copied — send it to Dave');
+    const coordURL = window.location.origin + '/meal-planner/?suggestion=' +
+      encodeURIComponent(btoa(JSON.stringify({ from: myName, type: suggestMode, content })));
+    if (navigator.share) await navigator.share({ title: `${myName} suggested a meal`, url: coordURL });
+    else { await navigator.clipboard?.writeText(coordURL); showToast('Link copied — send to Dave'); }
   }
 
   document.getElementById('suggest-confirm').classList.remove('hidden');
