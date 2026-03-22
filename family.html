@@ -9,6 +9,7 @@
 <meta name="theme-color" content="#f2f2f7">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
 <title>Pick Your Meals</title>
 <link rel="stylesheet" href="css/design-system.css">
 <style>
@@ -254,14 +255,14 @@ async function boot() {
 function renderNameList() {
   const family = Store.getFamily();
   // Show all decision-type members (Household + Guest who can pick)
-  const pickers = family.filter(m => m.type === 'decision');
+  const pickers = family;  // show everyone — limits handle behaviour
   const el = document.getElementById('name-list');
   el.innerHTML = pickers.map(m => `
     <div class="name-card" onclick="pickName('${m.name}')">
       <div class="name-avatar" style="background:${m.colour||'#8e8e93'}">${m.name[0]}</div>
       <div class="name-info">
         <div class="name-title">${m.name}</div>
-        <div class="name-sub">${m.role}${m.partner ? ` · ${m.partner} might join` : ''}</div>
+        ${m.partner ? `<div class="name-sub">${m.partner} might join this week</div>` : ''}
       </div>
       <div class="name-chev">›</div>
     </div>`).join('');
@@ -279,7 +280,7 @@ function pickName(name) {
   document.getElementById('app-greeting-name').textContent = `Hey ${name} 👋`;
 
   // Show partner prompt if guest has a partner name set
-  if (myMember?.role === 'Guest' && myMember?.partner) {
+  if (myMember?.partner) {
     showPartnerSheet();
   } else {
     enterPicker();
