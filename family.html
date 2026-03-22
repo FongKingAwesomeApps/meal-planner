@@ -117,7 +117,7 @@
         <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
         <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
         <div class="chip chip-i" data-f="indulgent" onclick="fF('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
-        <div class="chip chip-cat" data-f="crockpot" onclick="fF('crockpot')">🫕</div>
+        <div class="chip chip-cat" data-f="crockpot" onclick="fF('crockpot')">Slow Cook</div>
         <div class="chip chip-cat" data-f="pasta" onclick="fF('pasta')">Pasta</div>
         <div class="chip chip-cat" data-f="chicken" onclick="fF('chicken')">Chicken</div>
         <div class="chip chip-cat" data-f="beef" onclick="fF('beef')">Beef</div>
@@ -235,7 +235,7 @@ let activeSheet = null;
 let suggestMode = 'text';
 let activeTab   = 'pick';
 
-const CAT_EMOJI = {pasta:'🍝',chicken:'🍗',pork:'🥩',beef:'🥩',fish:'🐟',comfort:'🍲',crockpot:'🫕',camping:'⛺'};
+const CAT_EMOJI = {pasta:'🍝',chicken:'🍗',pork:'🥩',beef:'🥩',fish:'🐟',comfort:'🍲',crockpot:'',camping:'⛺'};
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 // Expose globals
@@ -429,7 +429,7 @@ function render() {
           <div class="pill-inner">
             <div class="pill-check${isSel?' on':''}">${isSel?'✓':''}</div>
             <div style="font-size:14px;font-weight:${isSel?'500':'400'};color:${locked?'var(--ink5)':'var(--ink)'};flex:1">
-              ${m.crockpot?'🫕 ':''}${m.name}
+              ${m.name}
             </div>
             <div class="pill-meta">
               ${rp(m.health,true)}
@@ -626,7 +626,7 @@ function fOR(id) {
       <div style="display:flex;align-items:flex-start;width:100%">
         <div style="flex:1">
           <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:8px">${Meals.CAT_LABELS[m.cat]||m.cat}</div>
-          <div style="font-size:20px;font-weight:700;color:var(--ink)">${m.name}${m.crockpot?' 🫕':''}</div>
+          <div style="font-size:20px;font-weight:700;color:var(--ink)">${m.name}${}</div>
         </div>
         <button class="sheet-close" onclick="cSheet()">✕</button>
       </div>
