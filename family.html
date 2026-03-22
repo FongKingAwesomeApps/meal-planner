@@ -114,6 +114,7 @@
       <!-- Filter chips -->
       <div class="chip-row" id="fchips">
         <div class="chip chip-active" data-f="all" onclick="fF('all')">All</div>
+        <div class="chip" data-f="fav" onclick="fF('fav')" style="background:#ffeae9;color:#a0201a"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Saved</div>
         <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
         <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
         <div class="chip chip-i" data-f="indulgent" onclick="fF('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
@@ -240,7 +241,8 @@ const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satur
 
 // Expose globals
 const G = window;
-G.fF=fF; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=pickName;
+G.fF=fF;
+G.fToggleFav=fToggleFav; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=pickName;
 G.cSheet=cSheet; G.showToast=showToast; G.fTab=fTab;
 G.setSuggestMode=setSuggestMode; G.submitSuggestion=submitSuggestion;
 G.setPartner=setPartner;
@@ -392,9 +394,16 @@ function canPick(meal) {
 function fF(f) {
   ff = f;
   document.querySelectorAll('#fchips .chip').forEach(c => {
+    const cf = c.dataset.f;
     c.className = 'chip';
-    if (c.dataset.f === f) c.classList.add('chip-active');
-    else c.classList.add({light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[c.dataset.f]||'chip-cat');
+    c.style.background = ''; c.style.color = '';
+    if (cf === f) {
+      c.classList.add('chip-active');
+    } else if (cf === 'fav') {
+      c.style.background = '#ffeae9'; c.style.color = '#a0201a';
+    } else {
+      c.classList.add({light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf]||'chip-cat');
+    }
   });
   render();
 }
@@ -432,6 +441,7 @@ function render() {
               ${m.name}
             </div>
             <div class="pill-meta">
+              <button onclick="event.stopPropagation();fToggleFav(${m.id})" style="background:none;border:none;padding:3px;cursor:pointer;display:flex;align-items:center">${Store.getFavourites().has(m.id)?'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink4)"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>'}</button>
               ${rp(m.health,true)}
               <button class="pill-recipe-btn" onclick="event.stopPropagation();fOR(${m.id})">Recipe</button>
             </div>
@@ -446,6 +456,12 @@ function render() {
 
   renderLimitBar();
   updateCTA();
+}
+
+function fToggleFav(id) {
+  const isFav = Store.toggleFavourite(id);
+  showToast(isFav ? '❤️ Saved' : 'Removed from saved');
+  render();
 }
 
 function showLockReason(health) {
