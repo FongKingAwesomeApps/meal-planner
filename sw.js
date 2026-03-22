@@ -1,6 +1,6 @@
 // ── Meal Planner Service Worker ──────────────────────────────────────────────
 // Version: bump this string to force all clients to update
-const CACHE_VERSION = 'meal-planner-v2';
+const CACHE_VERSION = 'meal-planner-v3';
 
 // Files to cache on install — app shell only
 // meals.json is fetched and cached at runtime
