@@ -14,11 +14,11 @@
 <link rel="stylesheet" href="css/design-system.css?v=4">
 <style>
 /* Screen nav — inline override, not cached separately */
-.screen{display:none!important;position:absolute;inset:0;flex-direction:column;background:var(--bg,#f2f2f7);overflow:hidden}
-.screen.active{display:flex!important;transform:translateX(0);animation:sIn .24s cubic-bezier(.4,0,.2,1)}
-.screen.behind{display:flex!important;transform:translateX(-30%)}
+.screen{display:none!important;position:fixed;inset:0;flex-direction:column;background:var(--bg,#f2f2f7);overflow:hidden;z-index:1}
+.screen.active{display:flex!important;transform:translateX(0);animation:sIn .22s ease-out;z-index:2}
+.screen.behind{display:none!important}
 .screen.gone{display:none!important}
-@keyframes sIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes sIn{from{transform:translateX(30%);opacity:0}to{transform:translateX(0);opacity:1}}
 </style>
 <style>
 #app{position:fixed;inset:0;overflow:hidden}
