@@ -64,9 +64,11 @@ input, select, textarea { font-family: inherit; }
   transform: translateX(100%);
   transition: transform .28s cubic-bezier(.4,0,.2,1);
   will-change: transform;
+  visibility: hidden;
 }
-.screen.active { transform: translateX(0); }
-.screen.behind { transform: translateX(-30%); }
+.screen.active { transform: translateX(0);   visibility: visible; }
+.screen.behind { transform: translateX(-30%); visibility: visible; }
+.screen.gone   { transform: translateX(100%); visibility: hidden; transition: none; }
 
 .scroll-body {
   flex: 1;
