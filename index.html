@@ -9,6 +9,7 @@
 <meta name="theme-color" content="#f2f2f7">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
 <title>Meal Coordinator</title>
 <link rel="stylesheet" href="css/design-system.css">
 <style>
@@ -144,19 +145,7 @@
   </div>
   <div class="search-wrap"><span class="search-icon">⌕</span><input class="search-input" id="meals-search" placeholder="Search meals…" oninput="renderMeals()"></div>
   <div class="chip-row" id="meals-filter-chips">
-    <div class="chip chip-active" data-f="all" onclick="setFilter('all')">All</div>
-    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a">❤️ Favourites</div>
-    <div class="chip chip-l" data-f="light" onclick="setFilter('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
-    <div class="chip chip-b" data-f="balanced" onclick="setFilter('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
-    <div class="chip chip-i" data-f="indulgent" onclick="setFilter('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
-    <div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">🫕 Crockpot</div>
-    <div class="chip chip-cat" data-f="pasta" onclick="setFilter('pasta')">Pasta</div>
-    <div class="chip chip-cat" data-f="chicken" onclick="setFilter('chicken')">Chicken</div>
-    <div class="chip chip-cat" data-f="pork" onclick="setFilter('pork')">Pork</div>
-    <div class="chip chip-cat" data-f="beef" onclick="setFilter('beef')">Beef</div>
-    <div class="chip chip-cat" data-f="fish" onclick="setFilter('fish')">Fish</div>
-    <div class="chip chip-cat" data-f="comfort" onclick="setFilter('comfort')">Comfort</div>
-    <div class="chip chip-cat" data-f="camping" onclick="setFilter('camping')">Camping</div>
+    <!-- Populated dynamically by renderFilterChips() -->
   </div>
   <div class="scroll-body" id="meals-scroll" style="padding-bottom:80px"><div id="meals-list"></div></div>
   <div class="cta-float hidden" id="meals-cta">
@@ -290,16 +279,25 @@
     <input class="form-input" id="add-name" placeholder="e.g. Thai Green Curry" oninput="onAddNameInput()">
     <div class="form-spacer"></div>
     <div style="display:flex;gap:8px;padding:0 16px">
-      <select class="form-input" id="add-cat" style="flex:1;margin:0">
+      <select class="form-input" id="add-cat" style="flex:1;margin:0" onchange="onCatChange()">
         <option value="comfort">Comfort</option><option value="pasta">Pasta</option>
         <option value="chicken">Chicken</option><option value="pork">Pork</option>
         <option value="beef">Beef</option><option value="fish">Fish</option>
         <option value="crockpot">Crockpot</option><option value="camping">Camping</option>
+        <option value="__new__">＋ New category…</option>
       </select>
       <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:var(--r12);padding:0 12px;flex-shrink:0">
         <span style="font-size:18px">🫕</span>
         <input type="checkbox" id="add-crockpot" style="width:18px;height:18px;accent-color:var(--blue)">
       </div>
+    </div>
+    <!-- New category input — shown when ＋ New category selected -->
+    <div id="new-cat-wrap" class="hidden" style="padding:8px 16px 0">
+      <input class="form-input" id="new-cat-input"
+        placeholder="e.g. korean, mexican, soup, baking…"
+        style="margin:0;width:100%"
+        oninput="onNewCatInput()">
+      <div style="font-size:11px;color:var(--ink4);margin-top:5px;padding:0 2px">Lowercase, one word — becomes a filter chip automatically</div>
     </div>
     <div class="form-spacer"></div>
     <button class="ai-btn" id="ai-generate-btn" onclick="aiGenerateMeal()" disabled style="opacity:.4">✨ Generate with AI</button>
@@ -540,6 +538,9 @@ G.toggleFav=toggleFav;
 G.getFavourites=getFavourites;
 G.onAddNameInput=onAddNameInput;
 G.renderMeals=renderMeals;
+G.onCatChange=onCatChange;
+G.onNewCatInput=onNewCatInput;
+G.getEffectiveCat=getEffectiveCat;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
 G.setupFamilySync=setupFamilySync;
@@ -792,10 +793,20 @@ function setFilter(f) {
   document.querySelectorAll('#meals-filter-chips .chip').forEach(c=>{
     const cf=c.dataset.f;
     c.className='chip';
-    if(cf===f){c.classList.add('chip-active');}
-    else{
-      const cls={light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf]||'chip-cat';
-      c.classList.add(cls);
+    c.style.background=''; c.style.color=''; c.style.border='';
+    if(cf===f){
+      c.classList.add('chip-active');
+    } else {
+      const ratingCls={light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf];
+      if(ratingCls) c.classList.add(ratingCls);
+      else if(cf==='fav'){c.style.background='#ffeae9';c.style.color='#a0201a';}
+      else if(cf!=='all'&&!BUILTIN_CATS.includes(cf)){
+        // Custom category chip
+        c.style.border='1px solid var(--blue)';c.style.color='var(--blue)';c.style.background='var(--blue-tint)';
+        c.classList.add('chip-cat');
+      } else {
+        c.classList.add('chip-cat');
+      }
     }
   });
   renderMeals();
@@ -803,23 +814,27 @@ function setFilter(f) {
 
 function renderMeals() {
   if(!Meals.isLoaded())return;
+  renderFilterChips(); // refresh chips to pick up any new custom cats
   const q=(document.getElementById('meals-search')?.value||'').toLowerCase();
   const f=activeFilter;
   const favs = Store.getFavourites();
   let filtered=Meals.allMeals().filter(m=>{
     if(f==='fav'&&!favs.has(m.id))return false;
     if(f==='crockpot'&&!m.crockpot)return false;
-    if(['pasta','chicken','pork','beef','fish','comfort','camping'].includes(f)&&m.cat!==f)return false;
     if(['light','balanced','indulgent'].includes(f)&&m.health!==f)return false;
+    if(f!=='all'&&f!=='fav'&&f!=='crockpot'&&!['light','balanced','indulgent'].includes(f)&&m.cat!==f)return false;
     if(q&&!m.name.toLowerCase().includes(q))return false;
     return true;
   });
   const groups={};
   filtered.forEach(m=>{const k=m.cat;if(!groups[k])groups[k]=[];groups[k].push(m);});
   let html='';
-  Meals.CAT_ORDER.forEach(cat=>{
+  // Build category order: builtin first, then any custom cats
+  const { builtin: builtinOrder, custom: customCats } = getAllCategories();
+  const catRenderOrder = [...builtinOrder, ...customCats];
+  catRenderOrder.forEach(cat=>{
     if(!groups[cat]?.length)return;
-    html+=`<div class="cat-anchor">${Meals.CAT_LABELS[cat]||cat}</div>`;
+    html+=`<div class="cat-anchor">${getCatLabel(cat)}</div>`;
     groups[cat].forEach(m=>{
       const sel=!!selected[m.id], pax=selected[m.id]?.pax||4;
       html+=`<div class="pill-wrap"><div class="pill${sel?' pill-sel':''}" onclick="toggleMeal(${m.id})">
@@ -1066,6 +1081,131 @@ function selectRating(r) {
     if(el)el.classList.toggle('ro-selected',v===r);
   });
 }
+// ── Category system ───────────────────────────────────────────────────────────
+
+// Built-in categories in display order
+const BUILTIN_CATS = ['pasta','chicken','pork','beef','fish','comfort','crockpot','camping'];
+const CAT_LABELS_MAP = {
+  pasta:'Pasta & Italian', chicken:'Chicken', pork:'Pork', beef:'Beef',
+  fish:'Fish & Seafood', comfort:'Comfort & Casual', crockpot:'Crockpot & Slow Cook', camping:'Camping'
+};
+const CAT_EMOJI_MAP = {pasta:'🍝',chicken:'🍗',pork:'🥩',beef:'🥩',fish:'🐟',comfort:'🍲',crockpot:'🫕',camping:'⛺'};
+
+// Get all categories present in the meal library (builtin + custom)
+function getAllCategories() {
+  const all = Meals.allMeals();
+  const seen = new Set(BUILTIN_CATS);
+  const custom = [];
+  all.forEach(m => {
+    if (!seen.has(m.cat)) { seen.add(m.cat); custom.push(m.cat); }
+  });
+  return { builtin: BUILTIN_CATS, custom };
+}
+
+// Get display label for any category
+function getCatLabel(cat) {
+  return CAT_LABELS_MAP[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+}
+
+// Render filter chips dynamically including any custom categories
+function renderFilterChips() {
+  const { builtin, custom } = getAllCategories();
+  const el = document.getElementById('meals-filter-chips');
+  if (!el) return;
+
+  let html = `
+    <div class="chip chip-active" data-f="all" onclick="setFilter('all')">All</div>
+    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a">❤️ Faves</div>
+    <div class="chip chip-l" data-f="light" onclick="setFilter('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
+    <div class="chip chip-b" data-f="balanced" onclick="setFilter('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
+    <div class="chip chip-i" data-f="indulgent" onclick="setFilter('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
+    <div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">🫕 Crockpot</div>
+  `;
+
+  // Builtin cats (except crockpot already added above)
+  builtin.filter(c => c !== 'crockpot').forEach(cat => {
+    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
+  });
+
+  // Custom cats — slightly different style to distinguish
+  custom.forEach(cat => {
+    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')" style="border:1px solid var(--blue);color:var(--blue);background:var(--blue-tint)">${getCatLabel(cat)}</div>`;
+  });
+
+  el.innerHTML = html;
+
+  // Re-apply active state
+  el.querySelectorAll('.chip').forEach(c => {
+    if (c.dataset.f === activeFilter) {
+      c.classList.add('chip-active');
+      c.style.background = '';
+      c.style.color = '';
+      c.style.border = '';
+    }
+  });
+
+  // Also update the add-cat dropdown with any custom categories
+  refreshCatDropdown();
+}
+
+// Refresh the category dropdown to include custom categories
+function refreshCatDropdown() {
+  const sel = document.getElementById('add-cat');
+  if (!sel) return;
+  const { custom } = getAllCategories();
+  if (!custom.length) return;
+
+  // Remove existing custom options (keep builtins + __new__)
+  Array.from(sel.options).forEach(opt => {
+    if (!BUILTIN_CATS.includes(opt.value) && opt.value !== '__new__') {
+      sel.removeChild(opt);
+    }
+  });
+
+  // Add custom categories before the __new__ option
+  const newOpt = sel.querySelector('option[value="__new__"]');
+  custom.forEach(cat => {
+    const opt = document.createElement('option');
+    opt.value = cat;
+    opt.textContent = getCatLabel(cat);
+    sel.insertBefore(opt, newOpt);
+  });
+}
+
+// Handle category dropdown change
+function onCatChange() {
+  const val = document.getElementById('add-cat')?.value;
+  const wrap = document.getElementById('new-cat-wrap');
+  if (!wrap) return;
+  if (val === '__new__') {
+    wrap.classList.remove('hidden');
+    document.getElementById('new-cat-input')?.focus();
+  } else {
+    wrap.classList.add('hidden');
+  }
+  // Re-enable generate button if name is filled
+  onAddNameInput();
+}
+
+// Validate new category input
+function onNewCatInput() {
+  const raw   = document.getElementById('new-cat-input')?.value || '';
+  // Auto-clean: lowercase, letters and numbers only, no spaces
+  const clean = raw.toLowerCase().replace(/[^a-z0-9]/g,'');
+  const input = document.getElementById('new-cat-input');
+  if (input && raw !== clean) input.value = clean;
+}
+
+// Get the effective category value from the form
+function getEffectiveCat() {
+  const sel = document.getElementById('add-cat')?.value;
+  if (sel === '__new__') {
+    const custom = document.getElementById('new-cat-input')?.value.trim();
+    return custom || 'comfort'; // fallback if empty
+  }
+  return sel || 'comfort';
+}
+
 function onAddNameInput() {
   const name = document.getElementById('add-name').value.trim();
   const btn  = document.getElementById('ai-generate-btn');
@@ -1091,7 +1231,7 @@ async function aiGenerateMeal() {
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         name,
-        category: document.getElementById('add-cat')?.value || 'any',
+        category: getEffectiveCat(),
       })
     });
     if (!res.ok) throw new Error('Worker returned ' + res.status);
@@ -1130,7 +1270,7 @@ function saveNewMeal() {
   const meal = {
     id:      Meals.newMealId(),
     name,
-    cat:     document.getElementById('add-cat').value,
+    cat:     getEffectiveCat(),
     crockpot:document.getElementById('add-crockpot').checked,
     fridge:  parseIngredientLines(document.getElementById('add-fridge').value),
     pantry:  parseIngredientLines(document.getElementById('add-pantry').value),
@@ -1155,8 +1295,15 @@ function saveNewMeal() {
   if (btn) { btn.textContent = '✨ Generate with AI'; btn.disabled = true; btn.style.opacity = '.4'; }
   const status = document.getElementById('ai-status');
   if (status) status.textContent = '';
+  // Reset category to default
+  const catSel = document.getElementById('add-cat');
+  if (catSel) catSel.value = 'comfort';
+  document.getElementById('new-cat-wrap')?.classList.add('hidden');
+  const newCatInp = document.getElementById('new-cat-input');
+  if (newCatInp) newCatInp.value = '';
   selectRating('auto');
   closeSheet();
+  renderFilterChips(); // pick up the new category if one was created
   showToast('✓ "' + meal.name + '" added to library');
 }
 
