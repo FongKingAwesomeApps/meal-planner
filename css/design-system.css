@@ -68,10 +68,7 @@ input, select, textarea { font-family: inherit; }
   transform: translateX(0);
   animation: slideIn .26s cubic-bezier(.4,0,.2,1);
 }
-.screen.behind {
-  display: flex;
-  transform: translateX(-30%);
-}
+.screen.behind { display: none !important; }
 .screen.gone {
   display: none;
 }
