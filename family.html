@@ -4,190 +4,691 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meal Picks">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#f2f2f7">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <title>Pick Your Meals</title>
 <link rel="stylesheet" href="css/design-system.css">
 <style>
-#app{position:fixed;inset:0;overflow:hidden;background:#111;display:flex;flex-direction:column}
-.fsafe{height:env(safe-area-inset-top,44px);background:#111;flex-shrink:0}
-.cat-anchor{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:10px 16px 5px;background:var(--bg)}
+#app{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+.fsafe{height:env(safe-area-inset-top,44px);background:var(--bg);flex-shrink:0}
+
+/* name picker */
+.name-card{background:var(--surface);border-radius:var(--r16);padding:16px 16px 12px;display:flex;align-items:center;gap:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s}
+.name-card:active{background:var(--bg2)}
+.name-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.name-info{flex:1}
+.name-title{font-size:16px;font-weight:600;color:var(--ink)}
+.name-sub{font-size:12px;color:var(--ink4);margin-top:2px}
+.name-chev{font-size:20px;color:var(--ink5)}
+
+/* limit bar */
+.limit-bar{background:var(--surface);border-radius:var(--r16);margin:0 16px 8px;padding:14px 16px}
+.limit-row{display:flex;align-items:center;gap:8px}
+.limit-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);flex:1}
+.limit-dots{display:flex;gap:4px}
+.ldot{width:20px;height:20px;border-radius:50%;border:2px solid var(--sep);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;transition:all .2s}
+.ldot.filled-l{background:var(--light);border-color:var(--light);color:#fff}
+.ldot.filled-b{background:var(--balanced);border-color:var(--balanced);color:#fff}
+.ldot.filled-i{background:var(--indulgent);border-color:var(--indulgent);color:#fff}
+.ldot.locked{background:var(--bg2);border-color:var(--bg2)}
+.limit-msg{font-size:12px;color:var(--ink4);margin-top:8px;min-height:16px}
+.limit-msg.warn{color:var(--indulgent);font-weight:600}
+.limit-msg.good{color:var(--green);font-weight:600}
+
+/* locked pill overlay */
+.pill-locked{position:relative}
+.pill-locked::after{content:'';position:absolute;inset:0;border-radius:var(--r14);background:rgba(255,255,255,.7);pointer-events:none}
+.lock-badge{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;z-index:1;pointer-events:none}
+
+/* plan tab */
+.plan-day-card{background:var(--surface);border-radius:var(--r14);margin:0 16px 6px;overflow:hidden}
+.plan-day-row{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.plan-day-accent{width:3px;align-self:stretch;border-radius:2px;flex-shrink:0}
+.plan-day-name{font-size:12px;font-weight:700;color:var(--ink2);width:30px}
+.plan-day-meal{font-size:14px;font-weight:500;color:var(--ink);flex:1}
+.plan-day-empty{font-size:13px;color:var(--ink5);font-style:italic;flex:1}
+
+/* suggest tab */
+.suggest-mode-btn{flex:1;padding:11px;border:none;border-radius:var(--r12);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s}
+.suggest-active{background:var(--blue);color:#fff}
+.suggest-inactive{background:var(--bg2);color:var(--ink4)}
 </style>
 </head>
 <body>
 <div id="app">
   <div class="fsafe"></div>
-  <div class="family-hero" style="flex-shrink:0">
-    <div class="family-hero-sub">Pick your meals</div>
-    <div class="family-hero-name" id="hero-name">Hey there</div>
-    <div class="family-stat-row">
-      <div class="family-stat"><div class="family-stat-num" style="color:#34c759" id="stat-sel">0</div><div class="family-stat-lbl">Selected</div></div>
-      <div class="family-stat"><div class="family-stat-num" style="color:#ff9500" id="stat-total">—</div><div class="family-stat-lbl">Available</div></div>
-      <div class="family-stat"><div class="family-stat-num" style="color:#fff">Beta</div><div class="family-stat-lbl">Version</div></div>
+
+  <!-- ── NAME PICKER SCREEN ───────────────────────────────────────────────── -->
+  <div id="screen-name" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    <div style="padding:16px 16px 8px">
+      <div style="font-size:13px;color:var(--ink4);margin-bottom:4px">Family meal planner</div>
+      <div style="font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.3px">Who's picking?</div>
+    </div>
+    <div class="scroll-body" style="padding:8px 16px 32px">
+      <div id="name-list" style="display:flex;flex-direction:column;gap:8px"></div>
     </div>
   </div>
-  <div id="name-wrap" style="background:var(--bg);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px">
-    <div style="font-size:20px;font-weight:700;color:var(--ink);text-align:center">Who's picking?</div>
-    <div style="font-size:14px;color:var(--ink4);text-align:center;margin-bottom:8px">Select your name</div>
-    <div id="name-btns" style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px"></div>
-  </div>
-  <div id="picker-wrap" class="hidden" style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)">
-    <div class="chip-row" id="fchips" style="padding-top:10px">
-      <div class="chip chip-active" data-f="all" onclick="fF('all')">All</div>
-      <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
-      <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
-      <div class="chip chip-i" data-f="indulgent" onclick="fF('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
-      <div class="chip chip-cat" data-f="crockpot" onclick="fF('crockpot')">🫕</div>
-      <div class="chip chip-cat" data-f="pasta" onclick="fF('pasta')">Pasta</div>
-      <div class="chip chip-cat" data-f="chicken" onclick="fF('chicken')">Chicken</div>
-      <div class="chip chip-cat" data-f="beef" onclick="fF('beef')">Beef</div>
-      <div class="chip chip-cat" data-f="pork" onclick="fF('pork')">Pork</div>
-      <div class="chip chip-cat" data-f="fish" onclick="fF('fish')">Fish</div>
-      <div class="chip chip-cat" data-f="comfort" onclick="fF('comfort')">Comfort</div>
+
+  <!-- ── MAIN APP (shown after name selected) ─────────────────────────────── -->
+  <div id="screen-app" class="hidden" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+
+    <!-- Greeting bar -->
+    <div style="padding:12px 16px 0;flex-shrink:0">
+      <div style="font-size:13px;color:var(--ink4)" id="app-greeting-sub">Pick your meals</div>
+      <div style="font-size:24px;font-weight:700;color:var(--ink);letter-spacing:-.3px" id="app-greeting-name">Hey there</div>
     </div>
-    <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:80px" id="flist-scroll">
-      <div id="flist"></div>
+
+    <!-- Screen content area -->
+    <div id="tab-pick" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+
+      <!-- Limit bar -->
+      <div class="limit-bar mt-8">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span class="t-label">Your picks this week</span>
+          <span style="font-size:12px;color:var(--ink4)" id="limit-remaining">0 of 0 picks used</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label" style="color:var(--light)">Light</span>
+          <div class="limit-dots" id="dots-l"></div>
+        </div>
+        <div class="limit-row" style="margin-top:6px">
+          <span class="limit-label" style="color:var(--balanced)">Balanced</span>
+          <div class="limit-dots" id="dots-b"></div>
+        </div>
+        <div class="limit-row" style="margin-top:6px">
+          <span class="limit-label" style="color:var(--indulgent)">Indulgent</span>
+          <div class="limit-dots" id="dots-i"></div>
+        </div>
+        <div class="limit-msg" id="limit-msg"></div>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="chip-row" id="fchips">
+        <div class="chip chip-active" data-f="all" onclick="fF('all')">All</div>
+        <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
+        <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
+        <div class="chip chip-i" data-f="indulgent" onclick="fF('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
+        <div class="chip chip-cat" data-f="crockpot" onclick="fF('crockpot')">🫕</div>
+        <div class="chip chip-cat" data-f="pasta" onclick="fF('pasta')">Pasta</div>
+        <div class="chip chip-cat" data-f="chicken" onclick="fF('chicken')">Chicken</div>
+        <div class="chip chip-cat" data-f="beef" onclick="fF('beef')">Beef</div>
+        <div class="chip chip-cat" data-f="pork" onclick="fF('pork')">Pork</div>
+        <div class="chip chip-cat" data-f="fish" onclick="fF('fish')">Fish</div>
+        <div class="chip chip-cat" data-f="comfort" onclick="fF('comfort')">Comfort</div>
+      </div>
+
+      <!-- Meals list -->
+      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:80px" id="flist-scroll">
+        <div id="flist"></div>
+      </div>
+
+      <!-- Floating CTA -->
+      <div class="cta-float hidden" id="fcta">
+        <button class="cta-btn" onclick="sendPicks()" id="fcta-btn">
+          Send My Picks <span class="cta-badge" id="fcta-n">0</span>
+        </button>
+      </div>
     </div>
-    <div class="cta-float hidden" id="fcta">
-      <button class="cta-btn" onclick="sendPicks()">Send My Picks <span class="cta-badge" id="fcta-n">0</span></button>
+
+    <!-- PLAN TAB -->
+    <div id="tab-plan" class="hidden" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px">
+      <div style="padding:16px 16px 8px">
+        <div style="font-size:17px;font-weight:700;color:var(--ink)">This week's plan</div>
+        <div style="font-size:13px;color:var(--ink4);margin-top:2px">Set by the coordinator</div>
+      </div>
+      <div id="plan-list"></div>
+    </div>
+
+    <!-- SUGGEST TAB -->
+    <div id="tab-suggest" class="hidden" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px">
+      <div style="padding:16px 16px 8px">
+        <div style="font-size:17px;font-weight:700;color:var(--ink)">Suggest a meal</div>
+        <div style="font-size:13px;color:var(--ink4);margin-top:2px">Dave will review and add it</div>
+      </div>
+      <div style="display:flex;gap:8px;margin:0 16px 16px">
+        <button class="suggest-mode-btn suggest-active" id="smode-text" onclick="setSuggestMode('text')">✏️ Describe it</button>
+        <button class="suggest-mode-btn suggest-inactive" id="smode-url" onclick="setSuggestMode('url')">🔗 Paste a link</button>
+      </div>
+      <div id="suggest-text-area">
+        <label class="form-label">What's the meal?</label>
+        <textarea class="form-input form-textarea" id="suggest-text" style="min-height:100px" placeholder="e.g. That Thai peanut noodle thing from Connor's, or just 'Korean fried chicken'"></textarea>
+      </div>
+      <div id="suggest-url-area" class="hidden">
+        <label class="form-label">Recipe link</label>
+        <input class="form-input" id="suggest-url" placeholder="https://...">
+        <div style="padding:8px 16px;font-size:12px;color:var(--ink4)">Paste a link from YouTube, AllRecipes, TikTok — anything works</div>
+      </div>
+      <div style="height:12px"></div>
+      <button class="btn btn-primary" onclick="submitSuggestion()">Send Suggestion</button>
+      <div id="suggest-confirm" class="hidden" style="margin:16px;background:var(--light-tint);border-radius:var(--r14);padding:14px 16px">
+        <div style="font-size:14px;font-weight:600;color:var(--light-text)">✓ Suggestion sent!</div>
+        <div style="font-size:12px;color:var(--light-text);margin-top:4px">Dave will review and build it out</div>
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="tabbar" id="family-tabbar">
+      <div class="tab" onclick="fTab('pick')">
+        <div class="tab-icon-bg on" id="ftab-icon-pick">🍽</div>
+        <div class="tab-lbl on" id="ftab-lbl-pick">Pick</div>
+      </div>
+      <div class="tab" onclick="fTab('plan')">
+        <div class="tab-icon-bg" id="ftab-icon-plan">📅</div>
+        <div class="tab-lbl" id="ftab-lbl-plan">Plan</div>
+      </div>
+      <div class="tab" onclick="fTab('suggest')">
+        <div class="tab-icon-bg" id="ftab-icon-suggest">💡</div>
+        <div class="tab-lbl" id="ftab-lbl-suggest">Suggest</div>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- SCRIM + SHEETS -->
 <div class="sheet-scrim" id="ss" onclick="cSheet()"></div>
-<div class="sheet" id="sr"><div class="sheet-handle"></div><div class="sheet-scroll" id="srb"></div></div>
+
+<!-- Recipe sheet -->
+<div class="sheet" id="sr">
+  <div class="sheet-handle"></div>
+  <div class="sheet-scroll" id="srb"></div>
+</div>
+
+<!-- Partner toggle sheet -->
+<div class="sheet" id="sheet-partner">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title" id="partner-sheet-title">Bringing a guest?</div>
+    <button class="sheet-close" onclick="cSheet()">✕</button>
+  </div>
+  <div style="padding:8px 16px 32px;display:flex;flex-direction:column;gap:12px">
+    <p class="t-sec" id="partner-sheet-sub" style="line-height:1.6"></p>
+    <button class="btn btn-primary" id="partner-yes-btn" onclick="setPartner(true)">Yes, joining this week</button>
+    <button class="btn btn-ghost" onclick="setPartner(false)">No, just me</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
+
 <script type="module">
 import * as Meals from './js/meals.js';
-import { sharePicksURL } from './js/picks-url.js';
 import * as Store from './js/storage.js';
+import { sharePicksURL } from './js/picks-url.js';
 
-let name='', sel=new Set(), ff='all', as=null;
-const CE={pasta:'🍝',chicken:'🍗',pork:'🥩',beef:'🥩',fish:'🐟',comfort:'🍲',crockpot:'🫕',camping:'⛺'};
-window.fF=fF; window.fT=fT; window.fOR=fOR; window.sendPicks=sendPicks; window.pickName=pickName; window.cSheet=cSheet; window.showToast=showToast;
+// ── State ─────────────────────────────────────────────────────────────────────
+let myName      = '';
+let myMember    = null;
+let myLimits    = { total: 3, maxIndulgent: 1, minLight: 1 };
+let partnerJoining = false;
+let sel         = new Set();   // selected meal IDs
+let ff          = 'all';
+let activeSheet = null;
+let suggestMode = 'text';
+let activeTab   = 'pick';
 
-async function boot(){
-  if('serviceWorker'in navigator)navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
-  await Meals.loadMeals([]);
-  document.getElementById('stat-total').textContent=Meals.allMeals().length;
-  renderNames();
+const CAT_EMOJI = {pasta:'🍝',chicken:'🍗',pork:'🥩',beef:'🥩',fish:'🐟',comfort:'🍲',crockpot:'🫕',camping:'⛺'};
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+// Expose globals
+const G = window;
+G.fF=fF; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=pickName;
+G.cSheet=cSheet; G.showToast=showToast; G.fTab=fTab;
+G.setSuggestMode=setSuggestMode; G.submitSuggestion=submitSuggestion;
+G.setPartner=setPartner;
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+async function boot() {
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
+  await Meals.loadMeals(Store.getCustomMeals());
+  renderNameList();
+  // Check for incoming suggestions result (from coordinator pushing plan URL)
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('plan')) importPlan(params.get('plan'));
 }
 
-function renderNames(){
-  const fam=Store.getFamily().filter(m=>m.type==='decision'||m.role==='Household');
-  const cols={Seth:'#34c759',Jared:'#ff9500',Michael:'#007aff',Rachael:'#af52de'};
-  document.getElementById('name-btns').innerHTML=fam.map(m=>`
-    <button onclick="pickName('${m.name}')" style="background:var(--surface);border:none;border-radius:var(--r14);padding:15px 20px;font-size:16px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:12px;cursor:pointer;-webkit-tap-highlight-color:transparent">
-      <div style="width:38px;height:38px;border-radius:50%;background:${m.colour||cols[m.name]||'#8e8e93'};display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff">${m.name[0]}</div>
-      <span>${m.name}</span>
-    </button>`).join('');
+// ── Name picker ───────────────────────────────────────────────────────────────
+function renderNameList() {
+  const family = Store.getFamily();
+  // Show all decision-type members (Household + Guest who can pick)
+  const pickers = family.filter(m => m.type === 'decision');
+  const el = document.getElementById('name-list');
+  el.innerHTML = pickers.map(m => `
+    <div class="name-card" onclick="pickName('${m.name}')">
+      <div class="name-avatar" style="background:${m.colour||'#8e8e93'}">${m.name[0]}</div>
+      <div class="name-info">
+        <div class="name-title">${m.name}</div>
+        <div class="name-sub">${m.role}${m.partner ? ` · ${m.partner} might join` : ''}</div>
+      </div>
+      <div class="name-chev">›</div>
+    </div>`).join('');
 }
 
-function pickName(n){
-  name=n;
-  document.getElementById('hero-name').textContent=`Hey ${n} 👋`;
-  document.getElementById('name-wrap').classList.add('hidden');
-  document.getElementById('picker-wrap').classList.remove('hidden');
+function pickName(name) {
+  myName   = name;
+  myMember = Store.getMemberByName(name);
+  myLimits = myMember?.limits || { total: 3, maxIndulgent: 1, minLight: 1 };
+
+  // Update greeting
+  const coord = Store.getCoordinator();
+  document.getElementById('app-greeting-sub').textContent =
+    `Picking meals for ${coord?.name || 'the coordinator'}`;
+  document.getElementById('app-greeting-name').textContent = `Hey ${name} 👋`;
+
+  // Show partner prompt if guest has a partner name set
+  if (myMember?.role === 'Guest' && myMember?.partner) {
+    showPartnerSheet();
+  } else {
+    enterPicker();
+  }
+}
+
+function showPartnerSheet() {
+  const p = myMember.partner;
+  document.getElementById('partner-sheet-title').textContent = `Is ${p} joining this week?`;
+  document.getElementById('partner-sheet-sub').textContent =
+    `If ${p} is coming to dinner, we'll make sure there's enough food for everyone.`;
+  document.getElementById('partner-yes-btn').textContent = `Yes, ${p} is joining`;
+  openSheet('sheet-partner');
+}
+
+function setPartner(joining) {
+  partnerJoining = joining;
+  cSheet();
+  enterPicker();
+}
+
+function enterPicker() {
+  document.getElementById('screen-name').classList.add('hidden');
+  document.getElementById('screen-app').classList.remove('hidden');
   render();
+  renderPlanTab();
 }
 
-function fF(f){
-  ff=f;
-  document.querySelectorAll('#fchips .chip').forEach(c=>{
-    c.className='chip';
-    if(c.dataset.f===f)c.classList.add('chip-active');
+// ── Limit dots ────────────────────────────────────────────────────────────────
+function renderLimitBar() {
+  const counts = { light: 0, balanced: 0, indulgent: 0 };
+  sel.forEach(id => {
+    const m = Meals.getMeal(id);
+    if (m) counts[m.health] = (counts[m.health] || 0) + 1;
+  });
+
+  const total = sel.size;
+  const lim   = myLimits;
+
+  // Remaining counter
+  document.getElementById('limit-remaining').textContent =
+    `${total} of ${lim.total} picks used`;
+
+  // Draw dot rows
+  const drawDots = (elId, rating, used, max) => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    let html = '';
+    for (let i = 0; i < max; i++) {
+      const filled = i < used;
+      const cls = filled ? `filled-${rating[0]}` : 'empty';
+      html += `<div class="ldot ${cls}">${filled ? '✓' : ''}</div>`;
+    }
+    // If max is 0, show a dash
+    if (max === 0) html = '<span style="font-size:11px;color:var(--ink5)">no limit</span>';
+    el.innerHTML = html;
+  };
+
+  // Calculate per-rating max dots to show
+  // Light: minLight required = show minLight dots minimum
+  const lightMax = Math.max(lim.minLight || 0, counts.light);
+  const balMax   = Math.max(1, counts.balanced);
+  const indMax   = lim.maxIndulgent || 1;
+
+  drawDots('dots-l', 'light',     counts.light,    lightMax);
+  drawDots('dots-b', 'balanced',  counts.balanced,  balMax);
+  drawDots('dots-i', 'indulgent', counts.indulgent, indMax);
+
+  // Message
+  const msg = document.getElementById('limit-msg');
+  if (total === 0) {
+    msg.textContent = `Pick up to ${lim.total} meals`;
+    msg.className = 'limit-msg';
+  } else if (counts.indulgent >= lim.maxIndulgent && lim.maxIndulgent > 0) {
+    msg.textContent = `Max ${lim.maxIndulgent} Indulgent meal${lim.maxIndulgent>1?'s':''} reached`;
+    msg.className = 'limit-msg warn';
+  } else if (total >= lim.total) {
+    msg.textContent = counts.light >= (lim.minLight||0)
+      ? '✓ All picks selected — ready to send'
+      : `Need at least ${lim.minLight} Light meal${(lim.minLight||0)>1?'s':''}`;
+    msg.className = counts.light >= (lim.minLight||0) ? 'limit-msg good' : 'limit-msg warn';
+  } else {
+    const remaining = lim.total - total;
+    msg.textContent = `${remaining} pick${remaining>1?'s':''} remaining`;
+    msg.className = 'limit-msg';
+  }
+}
+
+// ── Is a meal pickable? ───────────────────────────────────────────────────────
+function canPick(meal) {
+  if (sel.has(meal.id)) return true; // already selected — can deselect
+  const counts = { light: 0, balanced: 0, indulgent: 0 };
+  sel.forEach(id => { const m = Meals.getMeal(id); if (m) counts[m.health]++; });
+
+  if (sel.size >= myLimits.total) return false;
+  if (meal.health === 'indulgent' && counts.indulgent >= (myLimits.maxIndulgent || 1)) return false;
+  return true;
+}
+
+// ── Filter ────────────────────────────────────────────────────────────────────
+function fF(f) {
+  ff = f;
+  document.querySelectorAll('#fchips .chip').forEach(c => {
+    c.className = 'chip';
+    if (c.dataset.f === f) c.classList.add('chip-active');
     else c.classList.add({light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[c.dataset.f]||'chip-cat');
   });
   render();
 }
 
-function render(){
-  const f=ff;
-  const filtered=Meals.allMeals().filter(m=>{
-    if(f==='crockpot'&&!m.crockpot)return false;
-    if(['pasta','chicken','pork','beef','fish','comfort','camping'].includes(f)&&m.cat!==f)return false;
-    if(['light','balanced','indulgent'].includes(f)&&m.health!==f)return false;
+// ── Render meal pills ─────────────────────────────────────────────────────────
+function render() {
+  const filtered = Meals.allMeals().filter(m => {
+    if (ff === 'crockpot' && !m.crockpot) return false;
+    if (['pasta','chicken','pork','beef','fish','comfort','camping'].includes(ff) && m.cat !== ff) return false;
+    if (['light','balanced','indulgent'].includes(ff) && m.health !== ff) return false;
     return true;
   });
-  const g={};filtered.forEach(m=>{if(!g[m.cat])g[m.cat]=[];g[m.cat].push(m);});
-  let h='';
-  Meals.CAT_ORDER.forEach(cat=>{
-    if(!g[cat]?.length)return;
-    h+=`<div class="cat-anchor">${Meals.CAT_LABELS[cat]||cat}</div>`;
-    g[cat].forEach(m=>{
-      const s=sel.has(m.id);
-      h+=`<div class="pill-wrap"><div class="pill${s?' pill-sel':''}" onclick="fT(${m.id})">
-        <div class="pill-bar"></div>
-        <div class="pill-inner">
-          <div class="pill-check${s?' on':''}">${s?'✓':''}</div>
-          <div style="font-size:14px;font-weight:${s?'500':'400'};color:var(--ink);flex:1">${m.crockpot?'🫕 ':''}${m.name}</div>
-          <div class="pill-meta">${rp(m.health,true)}<button class="pill-recipe-btn" onclick="event.stopPropagation();fOR(${m.id})">Recipe</button></div>
+
+  const groups = {};
+  filtered.forEach(m => { if (!groups[m.cat]) groups[m.cat]=[]; groups[m.cat].push(m); });
+
+  let html = '';
+  Meals.CAT_ORDER.forEach(cat => {
+    if (!groups[cat]?.length) return;
+    html += `<div class="cat-anchor">${Meals.CAT_LABELS[cat]||cat}</div>`;
+    groups[cat].forEach(m => {
+      const isSel   = sel.has(m.id);
+      const pickable = canPick(m);
+      const locked   = !isSel && !pickable;
+
+      html += `<div class="pill-wrap">
+        <div class="pill${isSel?' pill-sel':''}${locked?' pill-locked':''}"
+             onclick="${locked?'showLockReason('+JSON.stringify(m.health)+')':'fT('+m.id+')'}"
+             style="${locked?'cursor:not-allowed':''}">
+          <div class="pill-bar"></div>
+          ${locked ? `<div class="lock-badge">🔒</div>` : ''}
+          <div class="pill-inner">
+            <div class="pill-check${isSel?' on':''}">${isSel?'✓':''}</div>
+            <div style="font-size:14px;font-weight:${isSel?'500':'400'};color:${locked?'var(--ink5)':'var(--ink)'};flex:1">
+              ${m.crockpot?'🫕 ':''}${m.name}
+            </div>
+            <div class="pill-meta">
+              ${rp(m.health,true)}
+              <button class="pill-recipe-btn" onclick="event.stopPropagation();fOR(${m.id})">Recipe</button>
+            </div>
+          </div>
         </div>
-      </div></div>`;
+      </div>`;
     });
   });
-  document.getElementById('flist').innerHTML=h||'<div style="text-align:center;padding:40px;color:var(--ink4)">No meals here</div>';
-  const n=sel.size;
-  document.getElementById('stat-sel').textContent=n;
-  document.getElementById('fcta').classList.toggle('hidden',n===0);
-  document.getElementById('fcta-n').textContent=n;
+
+  document.getElementById('flist').innerHTML = html ||
+    '<div style="text-align:center;padding:40px 16px;color:var(--ink4)">No meals in this category</div>';
+
+  renderLimitBar();
+  updateCTA();
 }
 
-function fT(id){sel.has(id)?sel.delete(id):sel.add(id);render();}
-
-async function sendPicks(){
-  if(!name){showToast('Select your name first');return;}
-  if(!sel.size){showToast('Select at least one meal');return;}
-  const r=await sharePicksURL(name,[...sel]);
-  if(r.method==='clipboard')showToast('Link copied — send to Jenn');
-  else if(r.method==='manual'){setTimeout(()=>prompt('Copy this link:',r.url),300);}
+function showLockReason(health) {
+  const lim = myLimits;
+  if (sel.size >= lim.total) {
+    showToast(`You've used all ${lim.total} picks — deselect one to swap`);
+  } else if (health === 'indulgent') {
+    showToast(`Max ${lim.maxIndulgent} Indulgent pick${lim.maxIndulgent>1?'s':''} per week`);
+  }
 }
 
-function fOR(id){
-  const m=Meals.getMeal(id);if(!m)return;
-  const mac=m.macros||{};
-  document.getElementById('srb').innerHTML=`
+function fT(id) {
+  const m = Meals.getMeal(id);
+  if (!m) return;
+  if (sel.has(id)) {
+    sel.delete(id);
+  } else {
+    if (!canPick(m)) { showLockReason(m.health); return; }
+    sel.add(id);
+  }
+  render();
+}
+
+function updateCTA() {
+  const n = sel.size;
+  document.getElementById('fcta').classList.toggle('hidden', n === 0);
+  document.getElementById('fcta-n').textContent = n;
+
+  // Validate send button
+  const btn = document.getElementById('fcta-btn');
+  const lim = myLimits;
+  const counts = { light: 0, balanced: 0, indulgent: 0 };
+  sel.forEach(id => { const m = Meals.getMeal(id); if (m) counts[m.health]++; });
+  const meetsMin = counts.light >= (lim.minLight || 0);
+  btn.style.opacity = meetsMin ? '1' : '.6';
+  btn.title = meetsMin ? '' : `Include at least ${lim.minLight} Light meal`;
+}
+
+// ── Plan tab ──────────────────────────────────────────────────────────────────
+function renderPlanTab() {
+  const plan = Store.getWeekPlan();
+  const now  = new Date();
+  const sun  = new Date(now); sun.setDate(now.getDate() - now.getDay()); sun.setHours(0,0,0,0);
+  const el   = document.getElementById('plan-list');
+  let html   = '';
+
+  for (let d = 0; d < 7; d++) {
+    const date = new Date(sun); date.setDate(sun.getDate() + d);
+    const key  = date.toLocaleDateString('en-CA');
+    const entry = plan[key];
+    const meal  = entry?.mealId ? Meals.getMeal(entry.mealId) : null;
+    const ds    = date.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+    const accent = meal ? rColor(meal.health) : 'var(--sep)';
+
+    html += `<div class="plan-day-card">
+      <div class="plan-day-row">
+        <div class="plan-day-accent" style="background:${accent}"></div>
+        <div class="plan-day-name">${DAYS[d].slice(0,3)}</div>
+        <div style="flex:1;min-width:0">
+          ${meal
+            ? `<div class="plan-day-meal">${meal.name}</div>
+               <div style="font-size:11px;color:var(--ink4);margin-top:2px">${ds} · ${entry?.pax||4} people</div>`
+            : `<div class="plan-day-empty">Not set yet</div>
+               <div style="font-size:11px;color:var(--ink5);margin-top:2px">${ds}</div>`}
+        </div>
+        ${meal ? rp(meal.health, true) : ''}
+      </div>
+    </div>`;
+  }
+
+  el.innerHTML = html || '<div style="padding:32px;text-align:center;color:var(--ink4)">No plan set yet</div>';
+}
+
+function importPlan(encoded) {
+  try {
+    const decoded = JSON.parse(atob(encoded));
+    Store.saveWeekPlan(decoded);
+  } catch(e) { /* ignore bad data */ }
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function fTab(tab) {
+  activeTab = tab;
+  ['pick','plan','suggest'].forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+    document.getElementById(`ftab-icon-${t}`).classList.toggle('on', t === tab);
+    document.getElementById(`ftab-lbl-${t}`).classList.toggle('on', t === tab);
+  });
+  if (tab === 'plan') renderPlanTab();
+}
+
+// ── Send picks ────────────────────────────────────────────────────────────────
+async function sendPicks() {
+  if (!myName) { showToast('Select your name first'); return; }
+  if (!sel.size) { showToast('Select at least one meal'); return; }
+
+  const lim    = myLimits;
+  const counts = { light:0, balanced:0, indulgent:0 };
+  sel.forEach(id => { const m = Meals.getMeal(id); if (m) counts[m.health]++; });
+
+  if (counts.light < (lim.minLight || 0)) {
+    showToast(`Add at least ${lim.minLight} Light meal before sending`);
+    return;
+  }
+
+  // Add +1 pax note if partner joining
+  const pax = partnerJoining ? [...sel].map(id => ({id, pax: 5})) : null;
+  const ids  = [...sel];
+
+  const result = await sharePicksURL(myName, ids,
+    partnerJoining ? `${myMember.partner} is joining this week` : '');
+
+  if (result.method === 'share') {
+    showToast('Picks sent! 🎉');
+  } else if (result.method === 'clipboard') {
+    showToast('Link copied — send it to the coordinator');
+  } else {
+    // Manual fallback — show URL
+    const url = result.url;
+    const box = document.createElement('div');
+    box.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;display:flex;align-items:center;justify-content:center;padding:24px';
+    box.innerHTML = `<div style="background:#fff;border-radius:16px;padding:24px;width:100%;max-width:360px">
+      <div style="font-size:17px;font-weight:700;margin-bottom:8px">Send this link</div>
+      <div style="font-size:12px;color:#636366;margin-bottom:12px">Copy and send to the coordinator</div>
+      <input readonly value="${url}" style="width:100%;border:1px solid #e5e5ea;border-radius:10px;padding:10px;font-size:12px;margin-bottom:12px">
+      <button onclick="this.closest('div[style]').remove();navigator.clipboard?.writeText('${url}')" style="width:100%;background:#007aff;color:#fff;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:600">Copy Link</button>
+    </div>`;
+    document.body.appendChild(box);
+  }
+}
+
+// ── Recipe sheet ──────────────────────────────────────────────────────────────
+function fOR(id) {
+  const m = Meals.getMeal(id); if (!m) return;
+  const mac = m.macros || {};
+
+  const renderIngs = arr =>
+    (arr||[]).map(i => {
+      if (typeof i === 'string') return `<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`;
+      return `<div class="recipe-ing-row"><span class="recipe-ing-qty">${i.qty||''}</span><span class="recipe-ing-name">${i.name}</span></div>`;
+    }).join('');
+
+  const renderSteps = arr =>
+    (arr||[]).map((s, i) => {
+      const step = typeof s === 'string' ? s : s.step;
+      const time = typeof s === 'object' ? s.time : null;
+      return `<div class="recipe-step">
+        <div class="step-num">${i+1}</div>
+        <div class="step-body">
+          <div class="step-text">${step}</div>
+          ${time ? `<div class="step-time">${time}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+
+  document.getElementById('srb').innerHTML = `
     <div class="sheet-header" style="flex-direction:column;align-items:flex-start;gap:6px">
       <div style="display:flex;align-items:flex-start;width:100%">
-        <div style="flex:1"><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:8px">${Meals.CAT_LABELS[m.cat]||m.cat}</div><div style="font-size:20px;font-weight:700;color:var(--ink)">${m.name}${m.crockpot?' 🫕':''}</div></div>
+        <div style="flex:1">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:8px">${Meals.CAT_LABELS[m.cat]||m.cat}</div>
+          <div style="font-size:20px;font-weight:700;color:var(--ink)">${m.name}${m.crockpot?' 🫕':''}</div>
+        </div>
         <button class="sheet-close" onclick="cSheet()">✕</button>
       </div>
       <div style="display:flex;gap:6px">${rp(m.health)}</div>
     </div>
-    ${m.fridge?.length?`<div class="recipe-section">Fridge</div>${m.fridge.map(i=>`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`).join('')}`:''}
-    ${m.pantry?.length?`<div class="recipe-section">Pantry</div>${m.pantry.map(i=>`<div class="recipe-ing-row"><span class="recipe-ing-name">${i}</span></div>`).join('')}`:''}
-    ${m.recipe?.length?`<div class="recipe-section">Method</div>${m.recipe.map((s,i)=>`<div class="recipe-step"><div class="step-num">${i+1}</div><div class="step-body"><div class="step-text">${s}</div></div></div>`).join('')}`:''}
+    ${m.fridge?.length ? `<div class="recipe-section">Fridge</div>${renderIngs(m.fridge)}` : ''}
+    ${m.pantry?.length ? `<div class="recipe-section">Pantry</div>${renderIngs(m.pantry)}` : ''}
+    ${m.sides?.length  ? `<div class="recipe-section">Sides</div><div style="padding:8px 20px;font-size:14px;color:var(--ink4)">${m.sides.join(' · ')}</div>` : ''}
+    ${m.recipe?.length ? `<div class="recipe-section">Method</div>${renderSteps(m.recipe)}` : ''}
     <div class="macro-strip">
       <div class="macro-cell"><div class="macro-val">${mac.cal||'—'}</div><div class="macro-lbl">Cal</div></div>
       <div class="macro-cell"><div class="macro-val">${mac.pro||'—'}g</div><div class="macro-lbl">Protein</div></div>
       <div class="macro-cell"><div class="macro-val">${mac.fat||'—'}g</div><div class="macro-lbl">Fat</div></div>
       <div class="macro-cell"><div class="macro-val">${mac.sodium||'—'}</div><div class="macro-lbl">Sodium</div></div>
     </div>
-    <div style="padding:12px 20px 40px"><button style="width:100%;background:var(--ink);color:#fff;border:none;border-radius:var(--r14);padding:14px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer" onclick="cSheet()">Done</button></div>`;
-  as='sr';
-  document.getElementById('ss').classList.add('visible');
-  document.getElementById('sr').classList.add('open');
+    <div style="padding:12px 20px 40px">
+      <button style="width:100%;background:var(--ink);color:#fff;border:none;border-radius:var(--r14);padding:14px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer" onclick="cSheet()">Done</button>
+    </div>`;
+
+  openSheet('sr');
 }
 
-function cSheet(){
-  if(!as)return;
-  document.getElementById(as)?.classList.remove('open');
+// ── Suggest ───────────────────────────────────────────────────────────────────
+function setSuggestMode(mode) {
+  suggestMode = mode;
+  document.getElementById('suggest-text-area').classList.toggle('hidden', mode !== 'text');
+  document.getElementById('suggest-url-area').classList.toggle('hidden', mode !== 'url');
+  document.getElementById('smode-text').className = `suggest-mode-btn ${mode==='text'?'suggest-active':'suggest-inactive'}`;
+  document.getElementById('smode-url').className  = `suggest-mode-btn ${mode==='url'?'suggest-active':'suggest-inactive'}`;
+}
+
+async function submitSuggestion() {
+  const text = document.getElementById('suggest-text').value.trim();
+  const url  = document.getElementById('suggest-url').value.trim();
+  const content = suggestMode === 'url' ? url : text;
+
+  if (!content) { showToast('Add a description or link first'); return; }
+
+  const suggestion = {
+    from: myName,
+    type: suggestMode,
+    content,
+  };
+
+  // Package into URL and share to coordinator
+  const coordURL = window.location.origin + '/meal-planner/?suggestion=' +
+    encodeURIComponent(btoa(JSON.stringify(suggestion)));
+
+  if (navigator.share) {
+    await navigator.share({
+      title: `${myName} suggested a meal`,
+      text: suggestMode === 'url' ? `Check out this recipe: ${content}` : `Meal idea: ${content}`,
+      url: coordURL,
+    });
+  } else {
+    await navigator.clipboard?.writeText(coordURL);
+    showToast('Link copied — send it to Dave');
+  }
+
+  document.getElementById('suggest-confirm').classList.remove('hidden');
+  if (suggestMode === 'text') document.getElementById('suggest-text').value = '';
+  if (suggestMode === 'url')  document.getElementById('suggest-url').value  = '';
+}
+
+// ── Sheets ────────────────────────────────────────────────────────────────────
+function openSheet(id) {
+  if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
+  activeSheet = id;
+  document.getElementById('ss')?.classList.add('visible');
+  document.getElementById(id)?.classList.add('open');
+}
+function cSheet() {
+  if (!activeSheet) return;
+  document.getElementById(activeSheet)?.classList.remove('open');
   document.getElementById('ss')?.classList.remove('visible');
-  as=null;
+  activeSheet = null;
 }
 
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
 }
 
-function rp(h,sm=false){
-  const m={light:['rp-l','rd-l','Light'],balanced:['rp-b','rd-b','Balanced'],indulgent:['rp-i','rd-i','Indulgent']};
-  const [bg,dot,lbl]=m[h]||m.balanced;
-  return`<span class="r-pill ${bg}" style="${sm?'font-size:10px;padding:3px 8px':''}"><span class="r-dot ${dot}"></span>${lbl}</span>`;
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function rp(h, sm=false) {
+  const map={light:['rp-l','rd-l','Light'],balanced:['rp-b','rd-b','Balanced'],indulgent:['rp-i','rd-i','Indulgent']};
+  const [bg,dot,lbl]=map[h]||map.balanced;
+  return `<span class="r-pill ${bg}" style="${sm?'font-size:10px;padding:3px 8px':''}"><span class="r-dot ${dot}"></span>${lbl}</span>`;
+}
+function rColor(h) {
+  return {light:'var(--light)',balanced:'var(--balanced)',indulgent:'var(--indulgent)'}[h]||'var(--sep)';
 }
 
 boot();
