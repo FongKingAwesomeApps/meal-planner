@@ -143,9 +143,12 @@
 <div id="screen-meals" class="screen gone">
   <div class="safe-top"></div>
   <div class="nav-bar">
-    <span class="nav-back" onclick="goBack()">← Picks</span>
+    <span class="nav-back" onclick="goBack()">← Home</span>
     <span class="nav-title">Select Meals</span>
-    <span class="nav-action" id="meals-selected-count">0 selected</span>
+    <span class="nav-action" style="display:flex;align-items:center;gap:8px">
+      <span id="meals-selected-count" style="font-size:13px;font-weight:600;color:var(--blue)">0 selected</span>
+      <button onclick="openSheet('sheet-add-meal')" style="width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">+</button>
+    </span>
   </div>
   <div class="search-wrap"><span class="search-icon">⌕</span><input class="search-input" id="meals-search" placeholder="Search meals…" oninput="renderMeals()"></div>
   <div class="chip-row" id="meals-filter-chips">
@@ -205,10 +208,7 @@
     <div class="t-label px-16 mb-8">Family members</div>
     <div class="settings-group mb-8" id="settings-members"></div>
     <button class="btn btn-ghost btn-sm mb-16" onclick="showToast('Add member coming soon')">+ Add Family Member</button>
-    <div class="t-label px-16 mb-8">Meal library</div>
-    <div class="settings-group mb-8">
-      <div class="settings-row" onclick="openSheet('sheet-add-meal')"><div class="settings-icon" style="background:#e3f9e9">✦</div><div class="settings-label">Add Meal to Library</div><div class="settings-chev">›</div></div>
-    </div>
+    
     <div class="t-label px-16 mb-8">Data</div>
     <div class="settings-group mb-8">
       <div class="settings-row" onclick="openSheet('sheet-backup')"><div class="settings-icon" style="background:#e8f0ff">💾</div><div class="settings-label">Backup &amp; Restore</div><div class="settings-chev">›</div></div>
@@ -265,7 +265,7 @@
     <div class="form-spacer"></div>
     <!-- Step 1: Name + Generate -->
     <label class="form-label">Meal name</label>
-    <input class="form-input" id="add-name" placeholder="e.g. Thai Green Curry" oninput="onAddNameInput()">
+    <input class="form-input" id="add-name" type="text" placeholder="e.g. Thai Green Curry" autocapitalize="words" autocorrect="off" autocomplete="off" oninput="onAddNameInput()">
     <div class="form-spacer"></div>
     <div style="display:flex;gap:8px;padding:0 16px">
       <select class="form-input" id="add-cat" style="flex:1;margin:0" onchange="onCatChange()">
@@ -283,8 +283,13 @@
     <!-- New category input — shown when ＋ New category selected -->
     <div id="new-cat-wrap" class="hidden" style="padding:8px 16px 0">
       <input class="form-input" id="new-cat-input"
+        type="text"
         placeholder="e.g. Korean, Mexican, Soup…"
         style="margin:0;width:100%"
+        autocapitalize="on"
+        autocorrect="off"
+        autocomplete="off"
+        spellcheck="false"
         oninput="onNewCatInput()">
       <div style="font-size:11px;color:var(--ink4);margin-top:5px;padding:0 2px">e.g. Korean, Mexican, Baking — becomes a filter chip automatically</div>
     </div>
@@ -537,7 +542,7 @@
   <div class="tabbar" id="main-tabbar" style="position:fixed;bottom:0;left:0;right:0;z-index:50">
     <div class="tab" onclick="goTo('screen-home')" id="tab-home">
       <div class="tab-icon-bg on" id="tib-home">🏠</div>
-      <div class="tab-lbl on" id="tlb-home">Picks</div>
+      <div class="tab-lbl on" id="tlb-home">Home</div>
     </div>
     <div class="tab" onclick="goTo('screen-meals')" id="tab-meals">
       <div class="tab-icon-bg" id="tib-meals">≡</div>
