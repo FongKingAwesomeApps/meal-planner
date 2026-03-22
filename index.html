@@ -135,7 +135,7 @@
 </div>
 
 <!-- SCREEN 1: MEAL PICKER -->
-<div id="screen-meals" class="screen">
+<div id="screen-meals" class="screen gone">
   <div class="safe-top"></div>
   <div class="nav-bar">
     <span class="nav-back" onclick="goBack()">← Picks</span>
@@ -171,7 +171,7 @@
 </div>
 
 <!-- SCREEN 2: SHOPPING LIST -->
-<div id="screen-list" class="screen">
+<div id="screen-list" class="screen gone">
   <div class="safe-top"></div>
   <div class="nav-bar"><span class="nav-back" onclick="goBack()">← Meals</span><span class="nav-title">Shopping List</span><span class="nav-action"></span></div>
   <div style="padding:0 16px 8px"><span class="t-sec">Tap items to check off as you shop</span></div>
@@ -190,7 +190,7 @@
 </div>
 
 <!-- SCREEN 3: MEAL PLAN -->
-<div id="screen-plan" class="screen">
+<div id="screen-plan" class="screen gone">
   <div class="safe-top"></div>
   <div class="nav-bar"><span class="nav-back" onclick="goBack()">← List</span><span class="nav-title">Meal Plan</span><div style="display:flex;align-items:center;gap:0">
     <button onclick="stepWeek(-1)" style="background:none;border:none;font-size:22px;color:var(--blue);padding:8px 10px;cursor:pointer">‹</button>
@@ -220,7 +220,7 @@
 </div>
 
 <!-- SCREEN 4: SETTINGS -->
-<div id="screen-settings" class="screen">
+<div id="screen-settings" class="screen gone">
   <div class="safe-top"></div>
   <div class="nav-bar"><span class="nav-back" onclick="goBack()"></span><span class="nav-title">Settings</span><span class="nav-action" onclick="goBack()">Done</span></div>
   <div class="scroll-body">
@@ -539,6 +539,7 @@ G.changeWeek=changeWeek;
 G.toggleFav=toggleFav;
 G.getFavourites=getFavourites;
 G.onAddNameInput=onAddNameInput;
+G.renderMeals=renderMeals;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
 G.setupFamilySync=setupFamilySync;
@@ -556,10 +557,6 @@ async function boot() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
   }
-  // Initialise all screens — everything gone except home
-  ALL_SCREENS.forEach(s => setScreen(s, 'gone'));
-  setScreen('screen-home', 'active');
-
   await Sync.init();  // reads ?fid= from URL, pulls shared state
   if (!Sync.isConnected()) {
     document.getElementById('first-run-card')?.classList.remove('hidden');
