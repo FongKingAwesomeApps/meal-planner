@@ -72,6 +72,12 @@
 <div id="screen-home" class="screen active">
   <div class="safe-top"></div>
   <div class="scroll-body" id="home-scroll">
+    <!-- First-run setup card — shown only when no family ID is set -->
+    <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:16px">
+      <div style="font-size:15px;font-weight:700;color:#8a4a00;margin-bottom:6px">👋 Set up family sync</div>
+      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:12px">Share a link with your family so everyone sees the same meal plan in real time.</div>
+      <button onclick="setupFamilySync()" style="background:#ff9500;color:#fff;border:none;border-radius:var(--r12);padding:11px 16px;font-family:inherit;font-size:14px;font-weight:600;width:100%;cursor:pointer">Generate Family Link</button>
+    </div>
     <div class="greeting">
       <div class="greeting-sub" id="home-greeting-sub">Good morning</div>
       <div class="greeting-title">Week of<br><span id="home-week-label">—</span></div>
@@ -397,6 +403,7 @@
 
 <script type="module">
 import * as Store from './js/storage.js';
+import * as Sync  from './js/sync.js';
 import * as Meals from './js/meals.js';
 import { parsePicksFromURL, clearPicksFromURL } from './js/picks-url.js';
 
@@ -430,6 +437,7 @@ G.getFavourites=getFavourites;
 G.onAddNameInput=onAddNameInput;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
+G.setupFamilySync=setupFamilySync;
 G.openMemberEdit=openMemberEdit;
 G.adjustLimit=adjustLimit;
 G.saveMemberEdit=saveMemberEdit;
@@ -439,6 +447,10 @@ G.copyFamilyURL=copyFamilyURL;
 async function boot() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/meal-planner/sw.js').catch(()=>{});
+  }
+  await Sync.init();  // reads ?fid= from URL, pulls shared state
+  if (!Sync.isConnected()) {
+    document.getElementById('first-run-card')?.classList.remove('hidden');
   }
   await Meals.loadMeals(Store.getCustomMeals());
   const incoming = parsePicksFromURL();
@@ -849,7 +861,7 @@ function renderPlan() {
 
 function setPlanMeal(key,val) {
   if(!val){delete weekPlan[key];}else{weekPlan[key]={mealId:Number(val),pax:weekPlan[key]?.pax||4};}
-  Store.saveWeekPlan(weekPlan); renderPlan(); renderHomeMealList();
+  Store.saveWeekPlan(weekPlan); Sync.pushWeekPlan(weekPlan).catch(()=>{}); renderPlan(); renderHomeMealList();
 }
 function changePlanPax(key,d) {
   if(!weekPlan[key])return;
@@ -1130,8 +1142,24 @@ function renderSuggestionBadge() {
   }
 }
 
+function setupFamilySync() {
+  const id = Sync.generateFamilyId();
+  Sync.setFamilyId(id);
+  const coordURL  = Sync.getCoordinatorURL();
+  const familyURL = Sync.getFamilyAppURL();
+  document.getElementById('first-run-card').classList.add('hidden');
+  // Share both URLs
+  const msg = 'Meal Planner family links:\n\nCoordinator (you):\n' + coordURL + '\n\nFamily app (Seth, Jared etc):\n' + familyURL;
+  if (navigator.share) {
+    navigator.share({ title: 'Meal Planner Links', text: msg });
+  } else {
+    navigator.clipboard?.writeText(msg).then(() => showToast('Links copied to clipboard'));
+  }
+  showToast('Family sync set up! ID: ' + id);
+}
+
 function shareFamilyURL() {
-  const url = window.location.origin + '/meal-planner/family.html';
+  const url = Sync.getFamilyAppURL();
   if (navigator.share) {
     navigator.share({ title: 'Meal Picker — pick your meals for the week', url });
   } else {
@@ -1140,7 +1168,7 @@ function shareFamilyURL() {
 }
 
 function copyFamilyURL() {
-  const url = window.location.origin + '/meal-planner/family.html';
+  const url = Sync.getFamilyAppURL();
   navigator.clipboard?.writeText(url).then(() => showToast('Copied: ' + url));
 }
 
