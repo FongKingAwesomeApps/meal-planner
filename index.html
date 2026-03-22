@@ -332,6 +332,51 @@
   </div>
 </div>
 
+<!-- SHEET: MEMBER EDIT -->
+<div class="sheet" id="sheet-member-edit">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title" id="member-edit-title">Edit Member</div>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-scroll" style="padding-bottom:40px">
+    <div class="form-spacer"></div>
+    <div style="padding:0 16px 12px">
+      <div style="background:var(--bg);border-radius:var(--r12);padding:12px 14px">
+        <div style="font-size:13px;color:var(--ink4);line-height:1.5">
+          Set how many meals this person can pick each week, and the maximum number of Indulgent meals allowed.
+          These limits are enforced in the family app — they can't send picks that exceed them.
+        </div>
+      </div>
+    </div>
+    <label class="form-label">Picks per week</label>
+    <div style="display:flex;align-items:center;gap:12px;padding:0 16px 12px">
+      <button onclick="adjustLimit('total',-1)" style="width:40px;height:40px;border-radius:50%;border:none;background:var(--bg2);font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">-</button>
+      <div style="flex:1;text-align:center;font-size:28px;font-weight:700;color:var(--ink)" id="edit-total">3</div>
+      <button onclick="adjustLimit('total',1)" style="width:40px;height:40px;border-radius:50%;border:none;background:var(--blue);color:#fff;font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+    </div>
+    <label class="form-label">Max Indulgent picks</label>
+    <div style="display:flex;align-items:center;gap:12px;padding:0 16px 12px">
+      <button onclick="adjustLimit('maxIndulgent',-1)" style="width:40px;height:40px;border-radius:50%;border:none;background:var(--bg2);font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">-</button>
+      <div style="flex:1;text-align:center;font-size:28px;font-weight:700;color:var(--indulgent)" id="edit-maxIndulgent">1</div>
+      <button onclick="adjustLimit('maxIndulgent',1)" style="width:40px;height:40px;border-radius:50%;border:none;background:var(--blue);color:#fff;font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+    </div>
+    <label class="form-label">Minimum Light picks required</label>
+    <div style="display:flex;align-items:center;gap:12px;padding:0 16px 12px">
+      <button onclick="adjustLimit('minLight',-1)" style="width:40px;height:40px;border-radius:50%;border:none;background:var(--bg2);font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">-</button>
+      <div style="flex:1;text-align:center;font-size:28px;font-weight:700;color:var(--green)" id="edit-minLight">1</div>
+      <button onclick="adjustLimit('minLight',1)" style="width:40px;height:40px;border-radius:50%;border:none;background:var(--blue);color:#fff;font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+    </div>
+    <div id="member-edit-partner-section" class="hidden">
+      <label class="form-label">Plus-one name <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(shown as "Is NAME coming?")</span></label>
+      <input class="form-input" id="edit-partner" placeholder="e.g. Taylor">
+      <div class="form-spacer"></div>
+    </div>
+    <div style="height:8px"></div>
+    <button class="btn btn-primary" onclick="saveMemberEdit()">Save</button>
+  </div>
+</div>
+
 <!-- SHEET: FAQ -->
 <div class="sheet" id="sheet-faq">
   <div class="sheet-handle"></div>
@@ -385,6 +430,9 @@ G.getFavourites=getFavourites;
 G.onAddNameInput=onAddNameInput;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
+G.openMemberEdit=openMemberEdit;
+G.adjustLimit=adjustLimit;
+G.saveMemberEdit=saveMemberEdit;
 G.copyFamilyURL=copyFamilyURL;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
@@ -395,6 +443,8 @@ async function boot() {
   await Meals.loadMeals(Store.getCustomMeals());
   const incoming = parsePicksFromURL();
   if (incoming) { pendingPicks = incoming; clearPicksFromURL(); showPendingPicks(); }
+  checkForSuggestion();
+  renderSuggestionBadge();
   updateGreeting();
   renderHomeBalance();
   renderHomeMealList();
@@ -467,8 +517,8 @@ function showToast(msg) {
 function updateGreeting() {
   const h = new Date().getHours();
   const greet = h<12?'Good morning':h<17?'Good afternoon':'Good evening';
-  const coord = Store.getFamily().find(m=>m.role==='Coordinator') || Store.getFamily()[0];
-  document.getElementById('home-greeting-sub').textContent = `${greet}, ${coord?.name||''}`;
+  const coord = Store.getCoordinator();
+  document.getElementById('home-greeting-sub').textContent = `${greet}, ${coord?.name||'there'}`;
   const {sun, sat} = weekRange();
   const fmt = d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
   document.getElementById('home-week-label').textContent = `${fmt(sun)} – ${fmt(sat)}`;
@@ -842,15 +892,21 @@ function sendPlan() {
 
 // ── Settings ──────────────────────────────────────────────────────────────────
 function renderSettings() {
-  const family=Store.getFamily();
-  const colours=['#007aff','#34c759','#ff9500','#ff3b30','#8e8e93','#af52de'];
-  document.getElementById('settings-members').innerHTML=family.map((m,i)=>`
-    <div class="member-row">
-      <div class="m-avatar" style="background:${m.colour||colours[i%colours.length]}">${m.name[0]}</div>
-      <div class="m-name">${m.name}</div>
-      <span class="m-role ${m.role==='Coordinator'?'mr-coord':m.role==='Household'?'mr-house':'mr-guest'}">${m.role}</span>
-      <button class="m-edit-btn" onclick="showToast('Edit coming soon')">Edit</button>
-    </div>`).join('');
+  const family = Store.getFamily();
+  document.getElementById('settings-members').innerHTML = family.map(m => {
+    const lim = m.limits || {};
+    const sub = m.role === 'Coordinator'
+      ? 'Coordinator'
+      : `${lim.total||3} picks · max ${lim.maxIndulgent||1} Indulgent · min ${lim.minLight||1} Light${m.partner?' · +1: '+m.partner:''}`;
+    return `<div class="member-row">
+      <div class="m-avatar" style="background:${m.colour||'#8e8e93'}">${m.name[0]}</div>
+      <div class="m-name" style="flex:1">
+        <div style="font-size:15px;font-weight:500;color:var(--ink)">${m.name}</div>
+        <div style="font-size:11px;color:var(--ink4);margin-top:1px">${sub}</div>
+      </div>
+      <button class="m-edit-btn" onclick="openMemberEdit('${m.name}')">Edit</button>
+    </div>`;
+  }).join('');
 }
 
 // ── Add Meal ──────────────────────────────────────────────────────────────────
@@ -861,6 +917,12 @@ function selectRating(r) {
     if(el)el.classList.toggle('ro-selected',v===r);
   });
 }
+function onAddNameInput() {
+  const name = document.getElementById('add-name').value.trim();
+  const btn  = document.getElementById('ai-generate-btn');
+  if (btn) { btn.disabled = name.length < 2; btn.style.opacity = name.length < 2 ? '.4' : '1'; }
+}
+
 async function aiGenerateMeal() {
   const name = document.getElementById('add-name').value.trim();
   if (!name) { showToast('Enter a meal name first'); return; }
@@ -983,6 +1045,90 @@ function rPill(h,sm=false){
 }
 function rBg(h){return{light:'var(--light-tint)',balanced:'var(--balanced-tint)',indulgent:'var(--indulgent-tint)'}[h]||'var(--bg)';}
 function rColor(h){return{light:'var(--light)',balanced:'var(--balanced)',indulgent:'var(--indulgent)'}[h]||'var(--sep)';}
+
+// ── Member edit ───────────────────────────────────────────────────────────────
+let editingMember = null;
+let editingLimits = {};
+
+function openMemberEdit(name) {
+  editingMember = name;
+  const m = Store.getMemberByName(name);
+  if (!m) return;
+  editingLimits = { ...(m.limits || { total:3, maxIndulgent:1, minLight:1 }) };
+
+  document.getElementById('member-edit-title').textContent = name + "'s Limits";
+  document.getElementById('edit-total').textContent        = editingLimits.total;
+  document.getElementById('edit-maxIndulgent').textContent  = editingLimits.maxIndulgent;
+  document.getElementById('edit-minLight').textContent     = editingLimits.minLight;
+
+  // Show partner field only for guests
+  const partnerSection = document.getElementById('member-edit-partner-section');
+  if (m.role === 'Guest') {
+    partnerSection.classList.remove('hidden');
+    document.getElementById('edit-partner').value = m.partner || '';
+  } else {
+    partnerSection.classList.add('hidden');
+  }
+  openSheet('sheet-member-edit');
+}
+
+function adjustLimit(key, delta) {
+  const mins = { total:1, maxIndulgent:0, minLight:0 };
+  const maxs = { total:7, maxIndulgent:4, minLight:4 };
+  editingLimits[key] = Math.max(mins[key], Math.min(maxs[key], (editingLimits[key]||0) + delta));
+  document.getElementById('edit-' + key).textContent = editingLimits[key];
+}
+
+function saveMemberEdit() {
+  if (!editingMember) return;
+  const m = Store.getMemberByName(editingMember);
+  const updates = { limits: { ...editingLimits } };
+  if (m?.role === 'Guest') {
+    updates.partner = document.getElementById('edit-partner').value.trim();
+  }
+  Store.updateMember(editingMember, updates);
+  closeSheet();
+  renderSettings();
+  showToast(editingMember + "'s limits saved");
+}
+
+// ── Suggestion handler ─────────────────────────────────────────────────────────
+function checkForSuggestion() {
+  const params = new URLSearchParams(window.location.search);
+  const raw    = params.get('suggestion');
+  if (!raw) return;
+  try {
+    const s = JSON.parse(atob(raw));
+    Store.addSuggestion(s);
+    // Clean URL
+    const url = new URL(window.location.href);
+    url.searchParams.delete('suggestion');
+    window.history.replaceState({}, '', url.toString());
+    renderSuggestionBadge();
+    showToast(s.from + ' sent a meal suggestion!');
+  } catch(e) { /* ignore */ }
+}
+
+function renderSuggestionBadge() {
+  const count = Store.getSuggestions().filter(s => s.status === 'pending').length;
+  // Show badge on home screen if any pending
+  let badge = document.getElementById('suggestion-badge');
+  if (!badge && count > 0) {
+    // Add badge near the "This week" header
+    const header = document.getElementById('home-meal-list');
+    if (header) {
+      badge = document.createElement('div');
+      badge.id = 'suggestion-badge';
+      badge.style.cssText = 'margin:8px 16px;background:var(--balanced-tint);border-radius:var(--r14);padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:10px';
+      badge.innerHTML = '<span style="font-size:20px">💡</span><div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--balanced-text)">' + count + ' meal suggestion' + (count>1?'s':'') + '</div><div style="font-size:12px;color:var(--balanced-text);margin-top:1px">Tap to review and build out</div></div><span style="color:var(--balanced);font-size:18px">›</span>';
+      badge.onclick = () => openSheet('sheet-suggestions');
+      header.parentNode.insertBefore(badge, header);
+    }
+  } else if (badge) {
+    if (count === 0) badge.remove();
+    else badge.querySelector('div > div').textContent = count + ' meal suggestion' + (count>1?'s':'');
+  }
+}
 
 function shareFamilyURL() {
   const url = window.location.origin + '/meal-planner/family.html';
