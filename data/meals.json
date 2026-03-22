@@ -5,27 +5,70 @@
     "cat": "pasta",
     "crockpot": true,
     "fridge": [
-      "Ground beef",
-      "Parmesan",
-      "Milk"
+      {
+        "name": "Ground beef",
+        "qty": "1 lb"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      },
+      {
+        "name": "Whole milk",
+        "qty": "¼ cup"
+      }
     ],
     "pantry": [
-      "Spaghetti",
-      "Pasta sauce",
-      "Onion",
-      "Garlic",
-      "Olive oil",
-      "Italian seasoning"
+      {
+        "name": "Spaghetti",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Pasta sauce",
+        "qty": "1 jar (24 oz)"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 medium, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "1 tsp"
+      }
     ],
     "sides": [
       "Garlic bread",
       "Side salad"
     ],
     "recipe": [
-      "Heat olive oil over medium-high. Sauté onion 5 min, add garlic 1 min.",
-      "Brown beef, drain fat. Add pasta sauce and seasoning, simmer 20 min.",
-      "Cook spaghetti in salted water until al dente.",
-      "Toss pasta with sauce. Finish with Parmesan."
+      {
+        "step": "Heat olive oil in a large pan over medium-high. Add onion, cook until soft — 5 min. Add garlic, cook 1 min.",
+        "time": "6 min"
+      },
+      {
+        "step": "Add ground beef. Break up with a spoon and cook until no pink remains — 8 min. Drain excess fat.",
+        "time": "8 min"
+      },
+      {
+        "step": "Pour in pasta sauce and milk. Add Italian seasoning. Stir and simmer on low, partially covered — 20 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Meanwhile, cook spaghetti in heavily salted boiling water until al dente — 9 min. Reserve ½ cup pasta water before draining.",
+        "time": "9 min"
+      },
+      {
+        "step": "Toss pasta with sauce. If too thick, add a splash of pasta water. Plate and top with Parmesan.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -46,26 +89,66 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Heavy cream",
-      "Parmesan",
-      "Butter"
+      {
+        "name": "Chicken breasts",
+        "qty": "2 large (about 1.5 lb)"
+      },
+      {
+        "name": "Heavy cream",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "1 cup, freshly grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp, divided"
+      }
     ],
     "pantry": [
-      "Fettuccine",
-      "Garlic",
-      "Olive oil",
-      "Nutmeg"
+      {
+        "name": "Fettuccine",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Nutmeg",
+        "qty": "pinch"
+      }
     ],
     "sides": [
       "Garlic bread",
       "Steamed broccoli"
     ],
     "recipe": [
-      "Cook fettuccine al dente. Reserve 1 cup pasta water.",
-      "Season and sear chicken in butter 4–5 min per side. Rest and slice.",
-      "Melt butter, add garlic, pour in cream. Whisk in Parmesan until smooth.",
-      "Toss pasta in sauce with chicken. Adjust with pasta water."
+      {
+        "step": "Cook fettuccine in heavily salted boiling water until al dente — 10 min. Reserve 1 cup pasta water. Drain and set aside.",
+        "time": "10 min"
+      },
+      {
+        "step": "Season chicken with salt and pepper. Melt 2 tbsp butter in a large pan over medium-high. Cook chicken 5 min per side until golden and cooked through. Transfer to a board, rest 5 min, then slice.",
+        "time": "15 min"
+      },
+      {
+        "step": "In the same pan over medium, melt remaining 2 tbsp butter. Add garlic, cook 1 min. Pour in cream, bring to a gentle simmer.",
+        "time": "3 min"
+      },
+      {
+        "step": "Add Parmesan and nutmeg. Stir until sauce thickens — 3 min. Season with salt and pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "Add pasta to the sauce. Toss to coat, adding pasta water a splash at a time to reach a silky consistency. Top with chicken.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 720,
@@ -86,25 +169,70 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Italian sausage",
-      "Parmesan"
+      {
+        "name": "Italian sausage",
+        "qty": "1 lb, casings removed"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      }
     ],
     "pantry": [
-      "Pasta",
-      "Canned tomatoes",
-      "Olives",
-      "Zucchini",
-      "Garlic",
-      "Olive oil",
-      "Chili flakes"
+      {
+        "name": "Rigatoni or penne",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Canned diced tomatoes",
+        "qty": "1 can (28 oz)"
+      },
+      {
+        "name": "Zucchini",
+        "qty": "1 medium, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Chili flakes",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Black olives",
+        "qty": "½ cup, sliced (optional)"
+      }
     ],
     "sides": [
-      "Garlic bread"
+      "Garlic bread",
+      "Green salad"
     ],
     "recipe": [
-      "Brown sausage, remove and slice.",
-      "Sauté zucchini, garlic, chili flakes. Add olives and tomatoes, simmer 15 min.",
-      "Return sausage. Toss with cooked pasta. Finish with Parmesan."
+      {
+        "step": "Cook pasta in heavily salted boiling water until al dente — 10 min. Reserve ½ cup pasta water. Drain.",
+        "time": "10 min"
+      },
+      {
+        "step": "In a large pan over medium-high, cook sausage, breaking it up — 8 min until browned. Transfer to a plate.",
+        "time": "8 min"
+      },
+      {
+        "step": "Add olive oil to the same pan. Cook zucchini until golden — 4 min. Add garlic and chili flakes — 1 min.",
+        "time": "5 min"
+      },
+      {
+        "step": "Add tomatoes and olives. Simmer 15 min, breaking up tomatoes. Return sausage for the last 5 min.",
+        "time": "15 min"
+      },
+      {
+        "step": "Toss pasta with sauce. Add pasta water as needed. Finish with Parmesan.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 640,
@@ -125,24 +253,66 @@
     "cat": "pasta",
     "crockpot": true,
     "fridge": [
-      "Ground beef",
-      "Cheese tortellini",
-      "Parmesan"
+      {
+        "name": "Ground beef",
+        "qty": "1 lb"
+      },
+      {
+        "name": "Cheese tortellini",
+        "qty": "20 oz (fresh or refrigerated)"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      }
     ],
     "pantry": [
-      "Pasta sauce",
-      "Garlic",
-      "Onion",
-      "Olive oil",
-      "Italian seasoning"
+      {
+        "name": "Pasta sauce",
+        "qty": "1 jar (24 oz)"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 medium, diced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "1 tsp"
+      }
     ],
     "sides": [
       "Garlic bread",
-      "Side salad"
+      "Caesar salad"
     ],
     "recipe": [
-      "Brown beef with onion and garlic. Add pasta sauce, simmer 15 min.",
-      "Cook tortellini per package. Combine and finish with Parmesan."
+      {
+        "step": "Heat olive oil in a large pan over medium-high. Cook onion 5 min until soft. Add garlic 1 min.",
+        "time": "6 min"
+      },
+      {
+        "step": "Add ground beef. Break up and cook until browned — 8 min. Drain fat.",
+        "time": "8 min"
+      },
+      {
+        "step": "Add pasta sauce and Italian seasoning. Simmer 15 min on medium-low.",
+        "time": "15 min"
+      },
+      {
+        "step": "Cook tortellini in salted boiling water per package (usually 3 min). Drain.",
+        "time": "3 min"
+      },
+      {
+        "step": "Combine tortellini with sauce. Plate and top generously with Parmesan.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 610,
@@ -163,23 +333,54 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Cheese tortellini",
-      "Parmesan",
-      "Butter"
+      {
+        "name": "Cheese tortellini",
+        "qty": "20 oz (fresh or refrigerated)"
+      },
+      {
+        "name": "Butter",
+        "qty": "6 tbsp"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "¾ cup, freshly grated"
+      }
     ],
     "pantry": [
-      "Garlic",
-      "Olive oil",
-      "Salt",
-      "Pepper"
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Salt",
+        "qty": "for pasta water"
+      },
+      {
+        "name": "Black pepper",
+        "qty": "freshly cracked, generous amount"
+      }
     ],
     "sides": [
-      "Garlic bread"
+      "Garlic bread",
+      "Side salad"
     ],
     "recipe": [
-      "Cook tortellini in salted water. Reserve ¼ cup pasta water.",
-      "Melt butter with garlic 1–2 min. Toss tortellini in garlic butter.",
-      "Finish generously with Parmesan."
+      {
+        "step": "Cook tortellini in heavily salted boiling water per package — about 3 min. Reserve ¼ cup pasta water before draining.",
+        "time": "3 min"
+      },
+      {
+        "step": "In a large pan over medium, melt butter. Add garlic and cook until fragrant and just starting to turn golden — 2 min. Don't let it burn.",
+        "time": "2 min"
+      },
+      {
+        "step": "Add drained tortellini to the pan. Toss to coat in garlic butter — 1 min.",
+        "time": "1 min"
+      },
+      {
+        "step": "Add Parmesan and a splash of pasta water. Toss until cheesy and glossy. Crack lots of black pepper over the top.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -200,25 +401,69 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Burrata",
-      "Butter"
+      {
+        "name": "Burrata",
+        "qty": "2 balls (8 oz total)"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Pasta",
-      "Cherry tomatoes",
-      "Basil",
-      "Olive oil",
-      "Garlic",
-      "Chili flakes"
+      {
+        "name": "Spaghetti or linguine",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Cherry tomatoes",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, sliced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Fresh basil",
+        "qty": "large handful"
+      },
+      {
+        "name": "Chili flakes",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Garlic bread",
-      "Side salad"
+      "Crusty bread"
     ],
     "recipe": [
-      "Roast cherry tomatoes with olive oil, salt, pepper at 400°F 20 min.",
-      "Cook pasta, toss with roasted tomatoes, butter and basil.",
-      "Top each bowl with burrata. Break at table."
+      {
+        "step": "Preheat oven to 400°F. Toss cherry tomatoes with 2 tbsp olive oil, salt and pepper on a baking sheet. Roast until burst and caramelized — 20 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Cook pasta in heavily salted boiling water until al dente. Reserve ½ cup pasta water. Drain.",
+        "time": "10 min"
+      },
+      {
+        "step": "In a large pan over medium, heat remaining olive oil. Add garlic and chili flakes, cook until garlic is golden — 2 min.",
+        "time": "2 min"
+      },
+      {
+        "step": "Add roasted tomatoes and pasta. Toss together, adding pasta water as needed. Stir in butter and most of the basil.",
+        "time": "2 min"
+      },
+      {
+        "step": "Divide into bowls. Place a ball of burrata on top of each. Break it open at the table. Finish with basil and a drizzle of olive oil.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 590,
@@ -239,23 +484,69 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Mozzarella",
-      "Ricotta",
-      "Parmesan",
-      "Pepperoni"
+      {
+        "name": "Ricotta",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Mozzarella",
+        "qty": "3 cups, shredded"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      },
+      {
+        "name": "Egg",
+        "qty": "1"
+      },
+      {
+        "name": "Pepperoni",
+        "qty": "4 oz"
+      }
     ],
     "pantry": [
-      "Lasagna noodles",
-      "Pizza kit",
-      "Pizza sauce",
-      "Italian seasoning"
+      {
+        "name": "Lasagna noodles",
+        "qty": "12 noodles"
+      },
+      {
+        "name": "Pizza kit",
+        "qty": "1 kit (for kids)"
+      },
+      {
+        "name": "Pizza sauce",
+        "qty": "1 jar (24 oz)"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "2 tsp"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Green salad"
+    ],
     "recipe": [
-      "Cook lasagna noodles al dente. Mix ricotta with Parmesan and seasoning.",
-      "Layer: sauce, noodles, ricotta, mozzarella, pepperoni. Repeat twice.",
-      "Bake 375°F 35 min covered, 10 min uncovered. Rest 10 min.",
-      "Prepare pizza kit alongside per instructions."
+      {
+        "step": "Preheat oven to 375°F. Cook lasagna noodles in salted boiling water until al dente — 9 min. Drain and lay flat on an oiled baking sheet.",
+        "time": "9 min"
+      },
+      {
+        "step": "Mix ricotta with egg, Parmesan and 1 tsp Italian seasoning in a bowl. Season with salt and pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "In a 9×13 baking dish: spread a thin layer of pizza sauce, then noodles, ricotta mixture, mozzarella, pepperoni. Repeat twice, finishing with sauce and mozzarella.",
+        "time": "8 min"
+      },
+      {
+        "step": "Cover with foil. Bake 35 min. Remove foil, bake until bubbly and golden — 10 min more. Rest 10 min before cutting.",
+        "time": "45 min"
+      },
+      {
+        "step": "Prepare pizza kit per instructions alongside lasagna.",
+        "time": "15 min"
+      }
     ],
     "macros": {
       "cal": 680,
@@ -276,26 +567,74 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Italian sausage",
-      "Ricotta",
-      "Mozzarella",
-      "Parmesan"
+      {
+        "name": "Italian sausage",
+        "qty": "1 lb, casings removed"
+      },
+      {
+        "name": "Ricotta",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Mozzarella",
+        "qty": "2 cups, shredded"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      },
+      {
+        "name": "Egg",
+        "qty": "1"
+      }
     ],
     "pantry": [
-      "Ziti pasta",
-      "Pasta sauce",
-      "Garlic",
-      "Olive oil",
-      "Italian seasoning"
+      {
+        "name": "Ziti or penne",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Pasta sauce",
+        "qty": "1 jar (24 oz)"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "1 tsp"
+      }
     ],
     "sides": [
       "Garlic bread",
-      "Side salad"
+      "Green salad"
     ],
     "recipe": [
-      "Cook ziti al dente. Brown sausage, add pasta sauce, simmer 10 min.",
-      "Mix pasta with sauce, ricotta, half the mozzarella. Pour into 9x13 dish.",
-      "Top with remaining mozzarella and Parmesan. Bake 375°F 25–30 min."
+      {
+        "step": "Preheat oven to 375°F. Cook pasta in salted boiling water until just under al dente — 7 min. It will finish in the oven. Drain.",
+        "time": "7 min"
+      },
+      {
+        "step": "In a large pan over medium-high, brown sausage, breaking it up — 8 min. Drain fat. Add garlic 1 min. Add pasta sauce, simmer 10 min.",
+        "time": "19 min"
+      },
+      {
+        "step": "Mix ricotta, egg and half the Parmesan in a bowl. Season with salt and pepper.",
+        "time": "2 min"
+      },
+      {
+        "step": "In a 9×13 dish: mix pasta with meat sauce. Dollop ricotta mixture throughout. Top with mozzarella and remaining Parmesan.",
+        "time": "5 min"
+      },
+      {
+        "step": "Bake until bubbling and golden on top — 25–30 min. Rest 5 min before serving.",
+        "time": "30 min"
+      }
     ],
     "macros": {
       "cal": 660,
@@ -316,23 +655,58 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Potato gnocchi",
-      "Butter",
-      "Parmesan"
+      {
+        "name": "Potato gnocchi",
+        "qty": "2 lb (two 1 lb packages)"
+      },
+      {
+        "name": "Butter",
+        "qty": "6 tbsp"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "¾ cup, freshly grated"
+      }
     ],
     "pantry": [
-      "Garlic",
-      "Fresh sage",
-      "Salt",
-      "Pepper"
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Fresh sage",
+        "qty": "8 leaves"
+      },
+      {
+        "name": "Salt and black pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Side salad"
+      "Green salad",
+      "Crusty bread"
     ],
     "recipe": [
-      "Cook gnocchi in salted water until they float, 2–3 min. Drain.",
-      "Cook butter over medium heat, swirling, until golden brown and nutty, 4–5 min.",
-      "Add sage and garlic 30 sec. Toss gnocchi. Serve with Parmesan."
+      {
+        "step": "Cook gnocchi in a large pot of salted boiling water until they float to the surface — 2–3 min. Do in two batches if needed. Drain well.",
+        "time": "3 min"
+      },
+      {
+        "step": "In a wide pan over medium, melt butter. Swirl constantly as it melts. Continue cooking until it turns golden and smells nutty — 4–5 min. Watch closely, it can burn quickly.",
+        "time": "5 min"
+      },
+      {
+        "step": "Add sage leaves — they'll crisp in 30 sec. Add garlic — cook 30 sec.",
+        "time": "1 min"
+      },
+      {
+        "step": "Add drained gnocchi to the pan. Toss to coat. Season with salt and lots of black pepper.",
+        "time": "1 min"
+      },
+      {
+        "step": "Plate and finish generously with Parmesan.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 490,
@@ -353,26 +727,77 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Heavy cream",
-      "Parmesan",
-      "Butter"
+      {
+        "name": "Chicken breasts",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Heavy cream",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "¾ cup, grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Pasta",
-      "Sun-dried tomatoes",
-      "Garlic",
-      "Italian seasoning",
-      "Olive oil",
-      "Chicken broth"
+      {
+        "name": "Pasta (penne or rigatoni)",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Sun-dried tomatoes",
+        "qty": "½ cup, drained and chopped"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Baby spinach",
+        "qty": "2 cups (optional)"
+      }
     ],
     "sides": [
       "Garlic bread"
     ],
     "recipe": [
-      "Sear chicken in olive oil, slice. Sauté garlic in same pan.",
-      "Add sun-dried tomatoes, then cream and broth. Stir in Parmesan.",
-      "Return chicken. Toss with cooked pasta."
+      {
+        "step": "Cook pasta in salted boiling water until al dente. Reserve ½ cup pasta water. Drain.",
+        "time": "10 min"
+      },
+      {
+        "step": "Season chicken with Italian seasoning, salt and pepper. Sear in olive oil over medium-high — 5 min per side until golden and cooked through. Transfer to board, rest 5 min, slice.",
+        "time": "15 min"
+      },
+      {
+        "step": "In the same pan, add butter and garlic. Cook 1 min. Add sun-dried tomatoes, cook 2 min.",
+        "time": "3 min"
+      },
+      {
+        "step": "Pour in broth and cream. Bring to a simmer, cook until slightly thickened — 3 min. Add Parmesan, stir until melted.",
+        "time": "4 min"
+      },
+      {
+        "step": "Add pasta (and spinach if using) to the sauce. Toss to combine. Top with sliced chicken.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 730,
@@ -393,24 +818,70 @@
     "cat": "pasta",
     "crockpot": false,
     "fridge": [
-      "Italian sausage",
-      "Parmesan"
+      {
+        "name": "Italian sausage",
+        "qty": "1 lb, casings removed"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      }
     ],
     "pantry": [
-      "Penne",
-      "Canned tomatoes",
-      "Garlic",
-      "Olive oil",
-      "Chili flakes",
-      "Basil"
+      {
+        "name": "Penne",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Canned crushed tomatoes",
+        "qty": "1 can (28 oz)"
+      },
+      {
+        "name": "Garlic",
+        "qty": "5 cloves, minced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Chili flakes",
+        "qty": "1 tsp (more to taste)"
+      },
+      {
+        "name": "Fresh basil",
+        "qty": "handful"
+      },
+      {
+        "name": "Salt",
+        "qty": "for pasta water"
+      }
     ],
     "sides": [
-      "Garlic bread"
+      "Garlic bread",
+      "Green salad"
     ],
     "recipe": [
-      "Brown sausage, remove. Fry garlic and chili flakes in oil.",
-      "Add tomatoes, simmer 15 min. Return sausage 5 min.",
-      "Toss with penne. Finish with basil and Parmesan."
+      {
+        "step": "Cook penne in heavily salted boiling water until al dente. Reserve ½ cup pasta water. Drain.",
+        "time": "11 min"
+      },
+      {
+        "step": "In a large pan over medium-high, cook sausage, breaking it up — 8 min until well browned. Transfer to a plate.",
+        "time": "8 min"
+      },
+      {
+        "step": "In the same pan over medium, add olive oil. Add garlic and chili flakes — cook until garlic is golden, not burnt — 2 min.",
+        "time": "2 min"
+      },
+      {
+        "step": "Add crushed tomatoes. Season with salt. Simmer until thickened — 15 min.",
+        "time": "15 min"
+      },
+      {
+        "step": "Return sausage to the sauce — 5 min. Toss with penne, adding pasta water as needed. Finish with basil and Parmesan.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 620,
@@ -431,25 +902,73 @@
     "cat": "chicken",
     "crockpot": true,
     "fridge": [
-      "Chicken thighs",
-      "Butter"
+      {
+        "name": "Chicken thighs, bone-in skin-on",
+        "qty": "8 pieces (about 3 lb)"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Mixed veg",
-      "Chicken broth",
-      "Garlic",
-      "Olive oil",
-      "Seasoning"
+      {
+        "name": "Long-grain white rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "2½ cups"
+      },
+      {
+        "name": "Frozen mixed vegetables",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Steamed broccoli or green beans"
     ],
     "recipe": [
-      "Season chicken thighs, sear skin-down 4–5 min until golden. Flip 3 min. Remove.",
-      "Sauté garlic in drippings. Add rice, stir to coat. Pour in broth.",
-      "Nestle chicken on top. Bring to boil, cover, cook 18–20 min on low.",
-      "Steam veg separately. Serve on side."
+      {
+        "step": "Season chicken thighs well with paprika, garlic powder, salt and pepper. Heat olive oil in a large oven-safe pan or Dutch oven over medium-high.",
+        "time": "2 min"
+      },
+      {
+        "step": "Sear chicken skin-side down until deep golden — 5 min. Flip, cook 3 min. Remove to a plate.",
+        "time": "8 min"
+      },
+      {
+        "step": "Pour off most of the fat, leaving about 1 tbsp. Add garlic, cook 1 min. Add rice and stir to coat in the fat — 1 min.",
+        "time": "2 min"
+      },
+      {
+        "step": "Pour in broth. Bring to a boil. Nestle chicken on top, skin-side up. Cover tightly, reduce to low. Cook until rice is tender and chicken is cooked through — 20 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Microwave frozen veg with butter and a splash of water, covered, for 4 min. Serve alongside.",
+        "time": "4 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -470,30 +989,82 @@
     "cat": "chicken",
     "crockpot": true,
     "fridge": [
-      "Chicken thighs",
-      "Yogurt",
-      "Butter",
-      "Heavy cream"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb, cut into chunks"
+      },
+      {
+        "name": "Plain yogurt",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Heavy cream",
+        "qty": "½ cup"
+      }
     ],
     "pantry": [
-      "Basmati rice",
-      "Coconut milk",
-      "Butter chicken sauce",
-      "Garlic",
-      "Ginger",
-      "Onion",
-      "Canned tomatoes",
-      "Garam masala"
+      {
+        "name": "Basmati rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Coconut milk",
+        "qty": "1 can (14 oz)"
+      },
+      {
+        "name": "Butter chicken sauce (jarred)",
+        "qty": "1 jar (about 14 oz)"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Fresh ginger",
+        "qty": "1 tbsp, grated"
+      },
+      {
+        "name": "Garam masala",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Salt",
+        "qty": "1 tsp"
+      }
     ],
     "sides": [
       "Naan bread",
       "Mango chutney"
     ],
     "recipe": [
-      "Marinate chicken in yogurt, garlic, ginger, garam masala 30+ min.",
-      "Sauté onion in butter. Add chicken, brown all sides.",
-      "Add butter chicken sauce, tomatoes, simmer covered 25 min. Stir in cream last 5 min.",
-      "Cook basmati in half coconut milk, half water."
+      {
+        "step": "Marinate chicken in yogurt, garlic, ginger, garam masala and salt for at least 30 min (overnight is better). Mix well to coat every piece.",
+        "time": "30 min"
+      },
+      {
+        "step": "Melt butter in a large pan over medium-high. Add onion, cook until golden — 8 min.",
+        "time": "8 min"
+      },
+      {
+        "step": "Add marinated chicken. Cook until browned on all sides — 6 min. Don't worry about cooking through yet.",
+        "time": "6 min"
+      },
+      {
+        "step": "Pour in butter chicken sauce. Reduce to medium-low. Cover and simmer until chicken is fully cooked and sauce is thick — 20 min. Stir in cream for the last 3 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Cook basmati rice using half coconut milk and half water (total liquid = 2¼ cups for 1½ cups rice). Bring to boil, cover, simmer 15 min on lowest heat. Rest 5 min off heat.",
+        "time": "20 min"
+      }
     ],
     "macros": {
       "cal": 690,
@@ -514,24 +1085,70 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Butter"
+      {
+        "name": "Chicken breasts",
+        "qty": "1.5 lb, sliced thin"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Rice noodles",
-      "Mixed veg",
-      "Lemon",
-      "Soy sauce",
-      "Garlic",
-      "Sesame oil"
+      {
+        "name": "Rice noodles (flat, medium width)",
+        "qty": "8 oz"
+      },
+      {
+        "name": "Frozen stir-fry vegetables",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Lemon",
+        "qty": "1, juice and zest"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Sesame oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Sesame seeds",
+      "Sliced green onion"
     ],
     "recipe": [
-      "Soak rice noodles per package. Slice chicken thin, season, cook in butter 3–4 min per side.",
-      "Sauté garlic. Add veg 3–4 min. Add noodles, soy, lemon juice, sesame oil.",
-      "Return chicken, toss to combine."
+      {
+        "step": "Soak rice noodles in warm water until pliable — 10 min. Drain and set aside. (Or follow package instructions.)",
+        "time": "10 min"
+      },
+      {
+        "step": "Season chicken with salt and pepper. Melt butter in a large pan over medium-high. Cook chicken in a single layer — 3 min per side until golden and cooked through. Transfer to a plate.",
+        "time": "7 min"
+      },
+      {
+        "step": "Add garlic to the same pan — 1 min. Add frozen veg, stir-fry until hot and starting to char — 4 min.",
+        "time": "5 min"
+      },
+      {
+        "step": "Add noodles, soy sauce, lemon juice and zest. Toss everything together — 2 min. Drizzle sesame oil.",
+        "time": "2 min"
+      },
+      {
+        "step": "Slice chicken and lay on top. Finish with sesame seeds and green onion if using.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -552,25 +1169,74 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Butter"
+      {
+        "name": "Chicken breasts",
+        "qty": "1.5 lb, sliced thin"
+      },
+      {
+        "name": "Butter",
+        "qty": "1 tbsp"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Mixed veg",
-      "Soy sauce",
-      "Garlic",
-      "Ginger",
-      "Sesame oil",
-      "Cornstarch"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Frozen stir-fry vegetables",
+        "qty": "3 cups"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Oyster sauce",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Fresh ginger",
+        "qty": "1 tsp, grated"
+      },
+      {
+        "name": "Sesame oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "1 tbsp"
+      }
     ],
     "sides": [
-      "Spring rolls"
+      "Sesame seeds",
+      "Sriracha"
     ],
     "recipe": [
-      "Cook rice. Toss sliced chicken in cornstarch, season.",
-      "Heat sesame oil in wok until smoking. Stir-fry chicken 3–4 min. Remove.",
-      "Add garlic, ginger, veg 3–4 min. Return chicken, add soy sauce. Serve over rice."
+      {
+        "step": "Cook rice: rinse, add to pot with 2¼ cups water. Bring to boil, cover, cook on lowest heat 15 min. Rest 5 min off heat.",
+        "time": "20 min"
+      },
+      {
+        "step": "Toss chicken slices with cornstarch, salt and pepper.",
+        "time": "2 min"
+      },
+      {
+        "step": "Heat sesame oil and butter in a wok or large pan over high heat until smoking. Add chicken — stir-fry until cooked through and golden — 4 min. Remove to a plate.",
+        "time": "4 min"
+      },
+      {
+        "step": "Add garlic and ginger to the hot pan — 30 sec. Add vegetables, stir-fry over high heat until tender-crisp — 4 min.",
+        "time": "5 min"
+      },
+      {
+        "step": "Return chicken. Add soy sauce and oyster sauce. Toss together — 1 min. Serve over rice.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 530,
@@ -591,29 +1257,74 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Sour cream",
-      "Shredded cheese"
+      {
+        "name": "Chicken breasts",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Shredded cheese (cheddar or Mexican blend)",
+        "qty": "1 cup"
+      }
     ],
     "pantry": [
-      "Tortillas",
-      "Peppers",
-      "Onion",
-      "Fajita seasoning",
-      "Olive oil",
-      "Salsa",
-      "Lime"
+      {
+        "name": "Flour tortillas (medium)",
+        "qty": "8"
+      },
+      {
+        "name": "Bell peppers (mixed colours)",
+        "qty": "3, sliced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, sliced"
+      },
+      {
+        "name": "Fajita seasoning",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Salsa",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Lime",
+        "qty": "1, cut into wedges"
+      }
     ],
     "sides": [
       "Guacamole",
-      "Sour cream",
-      "Salsa"
+      "Rice"
     ],
     "recipe": [
-      "Toss sliced chicken in fajita seasoning and olive oil.",
-      "Cook in hot cast iron 3–4 min per side until charred. Rest and slice.",
-      "Cook peppers and onion in same pan over high heat 5–6 min.",
-      "Serve family style with warm tortillas and all toppings."
+      {
+        "step": "Slice chicken into thin strips. Toss with fajita seasoning and 1 tbsp olive oil. Let sit 10 min while you prep the veg.",
+        "time": "10 min"
+      },
+      {
+        "step": "Heat a cast iron or heavy pan over high heat until very hot. Add 1 tbsp olive oil. Cook chicken strips in a single layer — 3 min per side until charred and cooked through. Transfer to a plate.",
+        "time": "7 min"
+      },
+      {
+        "step": "Add remaining oil to the hot pan. Add peppers and onion. Cook over high heat, stirring occasionally, until softened and slightly charred — 6 min. Season with salt.",
+        "time": "6 min"
+      },
+      {
+        "step": "Warm tortillas directly over a gas burner 10 sec per side, or wrap in a damp paper towel and microwave 45 sec.",
+        "time": "2 min"
+      },
+      {
+        "step": "Serve everything family-style — chicken, peppers, tortillas, sour cream, cheese, salsa, and lime wedges on the table.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -634,29 +1345,86 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken thighs",
-      "Yogurt",
-      "Feta cheese"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb"
+      },
+      {
+        "name": "Plain yogurt",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Feta cheese",
+        "qty": "4 oz, crumbled"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Olives",
-      "Cherry tomatoes",
-      "Cucumber",
-      "Lemon",
-      "Olive oil",
-      "Oregano",
-      "Garlic"
+      {
+        "name": "Basmati or long-grain rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Kalamata olives",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Cherry tomatoes",
+        "qty": "1 cup, halved"
+      },
+      {
+        "name": "Cucumber",
+        "qty": "half, diced"
+      },
+      {
+        "name": "Lemon",
+        "qty": "1, juice and zest"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Dried oregano",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Pita bread",
+        "qty": "4 pieces"
+      }
     ],
     "sides": [
       "Tzatziki",
-      "Pita bread"
+      "Hummus"
     ],
     "recipe": [
-      "Marinate chicken in yogurt, lemon, oregano, garlic 30+ min. Roast 400°F 25 min.",
-      "Cook rice in salted broth.",
-      "Arrange sliced chicken over rice with tomatoes, olives, cucumber. Crumble feta over top.",
-      "Serve with tzatziki and warm pita."
+      {
+        "step": "Marinate chicken in yogurt, lemon juice, oregano, garlic, salt and pepper for at least 30 min.",
+        "time": "30 min"
+      },
+      {
+        "step": "Preheat oven to 400°F. Heat olive oil in an oven-safe pan over medium-high. Sear chicken 3 min per side until golden. Transfer to oven. Roast until cooked through — 20 min.",
+        "time": "26 min"
+      },
+      {
+        "step": "Meanwhile, cook rice in chicken broth — bring to boil, cover, simmer on low 15 min. Rest 5 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Warm pita in the oven for the last 3 min of the chicken cooking.",
+        "time": "3 min"
+      },
+      {
+        "step": "Slice chicken. Arrange over rice with tomatoes, cucumber and olives. Crumble feta over top. Drizzle with olive oil and a squeeze of lemon.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 610,
@@ -677,25 +1445,70 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken wings",
-      "Butter"
+      {
+        "name": "Chicken wings",
+        "qty": "3 lb, split at the joint"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      }
     ],
     "pantry": [
-      "Frozen fries",
-      "Hot sauce",
-      "Garlic powder",
-      "Oil",
-      "Baking powder",
-      "Salt"
+      {
+        "name": "Frozen french fries",
+        "qty": "1 bag (28 oz)"
+      },
+      {
+        "name": "Frank's RedHot or similar",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Baking powder",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Onion powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Celery sticks and blue cheese or ranch",
+        "qty": "for serving"
+      }
     ],
     "sides": [
-      "Celery sticks",
-      "Dipping sauce"
+      "Celery and carrot sticks",
+      "Ranch or blue cheese dip"
     ],
     "recipe": [
-      "Pat wings dry. Toss with baking powder, salt, garlic powder.",
-      "Bake 250°F 30 min, then 425°F 45 min flipping halfway.",
-      "Melt butter with hot sauce. Toss wings. Bake fries per package."
+      {
+        "step": "Preheat oven to 250°F. Pat wings completely dry with paper towels — this is the key to crispy skin. Toss with baking powder, garlic powder, onion powder and salt.",
+        "time": "5 min"
+      },
+      {
+        "step": "Place wings on a rack set over a baking sheet. Bake at 250°F for 30 min — this renders the fat.",
+        "time": "30 min"
+      },
+      {
+        "step": "Increase oven to 425°F. Continue baking until deep golden and crispy, flipping once — 40–45 min.",
+        "time": "45 min"
+      },
+      {
+        "step": "While wings finish, spread fries on a separate baking sheet. Bake per package directions (usually 20–25 min at 425°F).",
+        "time": "25 min"
+      },
+      {
+        "step": "Melt butter in a small pan. Add hot sauce. Toss wings in the sauce immediately before serving.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 680,
@@ -716,24 +1529,78 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Cheese curds",
-      "Butter"
+      {
+        "name": "Chicken breasts",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Cheese curds",
+        "qty": "8 oz"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Frozen fries",
-      "Gravy mix",
-      "Roasted veg",
-      "Olive oil",
-      "Seasoning"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Frozen french fries",
+        "qty": "1 bag (28 oz)"
+      },
+      {
+        "name": "Poutine or beef gravy mix",
+        "qty": "1–2 packets"
+      },
+      {
+        "name": "Mixed vegetables for roasting",
+        "qty": "3 cups (broccoli, peppers, zucchini)"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Sriracha",
+      "Green onions"
+    ],
     "recipe": [
-      "Season and roast chicken at 400°F 25 min. Slice.",
-      "Roast veg with oil and seasoning.",
-      "Bake fries very crispy. Make gravy — keep hot.",
-      "For poutine: hot fries + cheese curds + hot gravy immediately. Build power bowls with rice and chicken."
+      {
+        "step": "Preheat oven to 425°F. Cook rice: 1½ cups rice to 2¼ cups water, bring to boil, cover, simmer 15 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Season chicken with paprika, garlic powder, salt and pepper. Spread on one baking sheet, veg on another tray with olive oil and seasoning. Roast both at 425°F — chicken 22 min, veg 20 min.",
+        "time": "22 min"
+      },
+      {
+        "step": "Add fries to a third baking sheet. Bake alongside everything at 425°F — 20–22 min until very crispy.",
+        "time": "22 min"
+      },
+      {
+        "step": "Make gravy per packet directions — keep hot on the stove.",
+        "time": "5 min"
+      },
+      {
+        "step": "For poutine: pile hot fries in a bowl, scatter cheese curds, pour hot gravy over immediately. The heat melts the curds. Serve poutine alongside power bowls of rice, chicken and veg.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 720,
@@ -754,27 +1621,74 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken thighs",
-      "Yogurt",
-      "Garlic sauce"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb"
+      },
+      {
+        "name": "Plain yogurt",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Garlic sauce (toum) or mayo",
+        "qty": "¼ cup"
+      }
     ],
     "pantry": [
-      "Basmati rice",
-      "Pita bread",
-      "Shawarma spice",
-      "Olive oil",
-      "Lemon",
-      "Onion"
+      {
+        "name": "Basmati rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Pita bread",
+        "qty": "4 pieces"
+      },
+      {
+        "name": "Shawarma spice blend",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Lemon",
+        "qty": "1, juice"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, sliced into half-moons"
+      },
+      {
+        "name": "Pickled turnips or pickles",
+        "qty": "½ cup (optional)"
+      }
     ],
     "sides": [
-      "Garlic sauce",
-      "Pickles"
+      "Hummus",
+      "Tabbouleh or chopped salad"
     ],
     "recipe": [
-      "Marinate chicken in yogurt, shawarma spice, lemon, olive oil overnight.",
-      "Grill or broil 6–7 min per side until charred. Rest, slice thin.",
-      "Cook basmati in salted water. Warm pita.",
-      "Serve chicken over rice with pita, garlic sauce and pickles."
+      {
+        "step": "Marinate chicken in yogurt, shawarma spice, lemon juice, olive oil, salt and pepper — at least 1 hour, ideally overnight.",
+        "time": "60 min"
+      },
+      {
+        "step": "Cook basmati rice in 2¼ cups salted water — bring to boil, cover, simmer 15 min on low. Rest 5 min off heat.",
+        "time": "20 min"
+      },
+      {
+        "step": "Heat a large pan or grill over high heat. Cook chicken 6–7 min per side until charred and cooked through. Cook onions in the same pan — 5 min until softened and slightly charred.",
+        "time": "15 min"
+      },
+      {
+        "step": "Rest chicken 5 min. Slice thin against the grain.",
+        "time": "5 min"
+      },
+      {
+        "step": "Warm pita in the oven at 350°F for 3 min or directly on the gas burner. Serve chicken over rice with pita, garlic sauce, pickles and onions.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 640,
@@ -795,26 +1709,73 @@
     "cat": "chicken",
     "crockpot": true,
     "fridge": [
-      "Chicken thighs",
-      "Butter"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Honey",
-      "Soy sauce",
-      "Garlic",
-      "Chicken broth",
-      "Cornstarch",
-      "Sesame seeds"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Honey",
+        "qty": "⅓ cup"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Garlic",
+        "qty": "6 cloves, minced"
+      },
+      {
+        "name": "Ketchup",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Green onions",
+        "qty": "4, sliced (for garnish)"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Steamed broccoli or bok choy"
     ],
     "recipe": [
-      "Season chicken, sear in butter 3 min per side. Mix honey, soy, garlic, broth.",
-      "Pour sauce over chicken, simmer covered 20 min.",
-      "Remove chicken, thicken sauce with cornstarch slurry. Coat chicken in sauce.",
-      "Serve over rice with sesame seeds."
+      {
+        "step": "In a bowl, whisk together honey, soy sauce, garlic and ketchup.",
+        "time": "2 min"
+      },
+      {
+        "step": "Season chicken with salt and pepper. Melt butter in a large pan over medium-high. Sear chicken — 3 min per side until golden.",
+        "time": "7 min"
+      },
+      {
+        "step": "Pour sauce over chicken. Reduce to medium-low, cover and cook until chicken is cooked through — 15 min, turning once.",
+        "time": "15 min"
+      },
+      {
+        "step": "Remove chicken. Mix cornstarch with 2 tbsp cold water, stir into the sauce in the pan. Cook on medium until thickened — 2 min. Return chicken.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook rice: 1½ cups rice with 2¼ cups water, bring to boil, cover, simmer 15 min. Rest 5 min. Serve chicken over rice, topped with green onions.",
+        "time": "20 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -835,24 +1796,77 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Butter",
-      "Milk"
+      {
+        "name": "Cooked chicken (rotisserie or leftover)",
+        "qty": "3 cups, shredded"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Milk",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Refrigerated pie crust",
+        "qty": "1 package (2 crusts)"
+      }
     ],
     "pantry": [
-      "Pie crust",
-      "Mixed veg",
-      "Chicken broth",
-      "Flour",
-      "Onion",
-      "Garlic",
-      "Thyme"
+      {
+        "name": "Frozen mixed vegetables (peas, carrots, corn)",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "All-purpose flour",
+        "qty": "⅓ cup"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 medium, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "2 cloves, minced"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Green salad"
+    ],
     "recipe": [
-      "Cook and dice chicken. Sauté onion and garlic 5 min in butter.",
-      "Add flour 2 min. Gradually whisk in broth then milk until thick.",
-      "Add chicken, veg, thyme. Pour into pie dish, top with crust. Bake 400°F 30–35 min."
+      {
+        "step": "Preheat oven to 425°F. Press one pie crust into a 9-inch pie dish.",
+        "time": "3 min"
+      },
+      {
+        "step": "Melt butter in a large pan over medium. Cook onion until soft — 5 min. Add garlic — 1 min. Sprinkle flour over and stir to coat — cook 2 min.",
+        "time": "8 min"
+      },
+      {
+        "step": "Gradually pour in broth and milk, whisking constantly until smooth. Add thyme. Simmer until thickened — 5 min.",
+        "time": "5 min"
+      },
+      {
+        "step": "Stir in chicken and frozen veg. Season generously with salt and pepper. Pour into the pie crust.",
+        "time": "2 min"
+      },
+      {
+        "step": "Top with second crust, crimp edges, cut 4–5 steam vents. Bake until crust is golden — 30–35 min. Rest 10 min before cutting.",
+        "time": "35 min"
+      }
     ],
     "macros": {
       "cal": 620,
@@ -873,28 +1887,78 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken breasts",
-      "Eggs",
-      "Butter"
+      {
+        "name": "Chicken breasts",
+        "qty": "4 (about 1.5 lb)"
+      },
+      {
+        "name": "Eggs",
+        "qty": "2"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      }
     ],
     "pantry": [
-      "Breadcrumbs",
-      "Flour",
-      "Potatoes",
-      "Oil",
-      "Lemon",
-      "Paprika",
-      "Salt",
-      "Pepper"
+      {
+        "name": "Baby potatoes",
+        "qty": "1.5 lb, halved"
+      },
+      {
+        "name": "Panko breadcrumbs",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "All-purpose flour",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Lemon",
+        "qty": "1, cut into wedges"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Lemon wedges"
+      "Lemon wedges",
+      "Cucumber salad"
     ],
     "recipe": [
-      "Roast potato wedges at 400°F 35–40 min.",
-      "Pound chicken flat. Dredge: flour → egg → breadcrumbs.",
-      "Pan fry in butter and oil 3–4 min per side until deep golden.",
-      "Serve with potato wedges and lemon."
+      {
+        "step": "Boil potatoes in salted water until tender — 15 min. Drain, toss with olive oil, salt and pepper. Set aside.",
+        "time": "15 min"
+      },
+      {
+        "step": "Pound chicken breasts between plastic wrap to ½-inch thickness using a rolling pin or the bottom of a pan.",
+        "time": "5 min"
+      },
+      {
+        "step": "Set up three shallow bowls: flour seasoned with salt and pepper, beaten eggs, panko mixed with garlic powder and paprika.",
+        "time": "3 min"
+      },
+      {
+        "step": "Coat each chicken piece: flour → shake off excess → egg → panko. Press the breadcrumbs firmly to adhere.",
+        "time": "5 min"
+      },
+      {
+        "step": "Heat butter and olive oil in a large pan over medium-high. Fry schnitzel until golden — 3–4 min per side. Work in batches, don't crowd the pan. Serve with potatoes and lemon.",
+        "time": "10 min"
+      }
     ],
     "macros": {
       "cal": 640,
@@ -915,26 +1979,74 @@
     "cat": "chicken",
     "crockpot": false,
     "fridge": [
-      "Chicken thighs",
-      "Butter"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Soy sauce",
-      "Honey",
-      "Mirin",
-      "Garlic",
-      "Ginger",
-      "Sesame seeds",
-      "Cornstarch"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Mirin",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Garlic",
+        "qty": "2 cloves, minced"
+      },
+      {
+        "name": "Fresh ginger",
+        "qty": "1 tsp, grated"
+      },
+      {
+        "name": "Sesame oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Sesame seeds and green onions",
+        "qty": "for garnish"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Steamed edamame",
+      "Steamed broccoli"
     ],
     "recipe": [
-      "Mix soy, honey, mirin, garlic, ginger. Marinate chicken 30 min.",
-      "Cook chicken in butter 5–6 min per side. Add sauce and reduce until glazed.",
-      "Serve over rice with sesame seeds and veg on side."
+      {
+        "step": "Cook rice: rinse well, add to pot with 2¼ cups water. Bring to boil, cover, cook on lowest heat 15 min. Rest 5 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Whisk together soy sauce, mirin, sugar, garlic and ginger in a small bowl.",
+        "time": "2 min"
+      },
+      {
+        "step": "Heat sesame oil in a large pan over medium-high. Add chicken — cook 5 min per side until cooked through and golden.",
+        "time": "10 min"
+      },
+      {
+        "step": "Pour teriyaki sauce over the chicken. It will bubble up. Cook until sauce thickens and coats the chicken — 3–4 min, turning to glaze.",
+        "time": "4 min"
+      },
+      {
+        "step": "Transfer chicken to a board. Mix cornstarch with 1 tbsp water, stir into any remaining sauce and cook 1 min to thicken. Slice chicken and serve over rice. Drizzle with extra sauce and garnish.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 570,
@@ -955,27 +2067,74 @@
     "cat": "pork",
     "crockpot": true,
     "fridge": [
-      "Pork loin",
-      "Butter"
+      {
+        "name": "Pork loin roast",
+        "qty": "2 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Mixed veg",
-      "Garlic",
-      "Olive oil",
-      "Rosemary",
-      "Thyme",
-      "Dijon mustard"
+      {
+        "name": "Baby potatoes",
+        "qty": "1.5 lb, halved"
+      },
+      {
+        "name": "Carrots",
+        "qty": "4 medium, cut into chunks"
+      },
+      {
+        "name": "Garlic",
+        "qty": "5 cloves, whole"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Dried rosemary",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "generous amount"
+      }
     ],
     "sides": [
-      "Roasted potatoes",
-      "Steamed veg"
+      "Steamed green beans",
+      "Dinner rolls"
     ],
     "recipe": [
-      "Rub pork with Dijon, garlic, rosemary, thyme, salt, pepper.",
-      "Sear all sides in olive oil 2 min each.",
-      "Roast at 375°F with potatoes, butter knobs on top, until 145°F internal.",
-      "Rest 10 min before slicing."
+      {
+        "step": "Preheat oven to 375°F. Mix garlic powder, rosemary, thyme, salt and generous pepper. Pat pork loin dry and rub all over with olive oil, then the spice mix.",
+        "time": "5 min"
+      },
+      {
+        "step": "Heat an oven-safe pan over high heat. Sear the pork on all sides until deeply browned — 2 min per side, about 8 min total.",
+        "time": "8 min"
+      },
+      {
+        "step": "Toss potatoes, carrots and whole garlic cloves with olive oil, salt and pepper. Scatter around the pork in the pan.",
+        "time": "3 min"
+      },
+      {
+        "step": "Roast until a meat thermometer reads 145°F in the centre of the pork — 45–55 min. Rest on a board for 10 min before slicing.",
+        "time": "55 min"
+      },
+      {
+        "step": "While pork rests, return pan to medium-high heat. Add butter to the vegetable drippings. Toss veg to glaze.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -996,26 +2155,82 @@
     "cat": "pork",
     "crockpot": false,
     "fridge": [
-      "Pork shoulder"
+      {
+        "name": "Pork tenderloin",
+        "qty": "1.5 lb, cut into 1.5-inch cubes"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Peppers",
-      "Onion",
-      "Olive oil",
-      "Marinade",
-      "Salad greens",
-      "Lemon"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Bell peppers",
+        "qty": "2, cut into chunks"
+      },
+      {
+        "name": "Red onion",
+        "qty": "1 large, cut into chunks"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Lemon",
+        "qty": "1, juice"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Dried oregano",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Cumin",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Wooden or metal skewers",
+        "qty": "8"
+      }
     ],
     "sides": [
-      "Rice",
-      "Side salad"
+      "Mixed green salad",
+      "Pita and tzatziki"
     ],
     "recipe": [
-      "Cube pork, marinate in oil, lemon and spices 1+ hour.",
-      "Thread pork, peppers and onion onto skewers.",
-      "Grill over medium-high, turning every 3–4 min, 12–15 min total.",
-      "Serve over rice with salad on the side."
+      {
+        "step": "If using wooden skewers, soak in water 30 min to prevent burning. Marinate pork cubes in olive oil, lemon juice, garlic, oregano, cumin, paprika, salt and pepper — 20 min minimum.",
+        "time": "30 min"
+      },
+      {
+        "step": "Cook rice: 1½ cups rice with 2¼ cups salted water. Bring to boil, cover, simmer 15 min. Rest 5 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Thread pork, peppers and onion alternately onto skewers.",
+        "time": "5 min"
+      },
+      {
+        "step": "Grill or cook under broiler on high — 10–12 min total, turning every 3 min, until pork is cooked through and slightly charred.",
+        "time": "12 min"
+      },
+      {
+        "step": "Serve skewers over rice with a simple salad dressed with lemon and olive oil.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -1036,28 +2251,78 @@
     "cat": "pork",
     "crockpot": false,
     "fridge": [
-      "Pork tenderloin",
-      "Sour cream",
-      "Shredded cheese"
+      {
+        "name": "Pork shoulder or tenderloin",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Shredded cheese",
+        "qty": "1 cup"
+      }
     ],
     "pantry": [
-      "Tortillas",
-      "Salsa",
-      "Lettuce",
-      "Tomato",
-      "Lime",
-      "Taco seasoning",
-      "Olive oil"
+      {
+        "name": "Small flour or corn tortillas",
+        "qty": "12"
+      },
+      {
+        "name": "Taco seasoning",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Lime",
+        "qty": "2, cut into wedges"
+      },
+      {
+        "name": "Salsa",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Coleslaw mix",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Apple cider vinegar",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Honey",
+        "qty": "1 tsp"
+      }
     ],
     "sides": [
-      "Side salad",
-      "Sour cream",
-      "Salsa"
+      "Mexican rice",
+      "Refried beans"
     ],
     "recipe": [
-      "Rub pork with taco seasoning. Sear all sides, roast 400°F until 145°F internal.",
-      "Rest 5 min and slice thin.",
-      "Warm tortillas. Build tacos with pork, cheese, sour cream, salsa. Squeeze lime."
+      {
+        "step": "Slice pork thin or cut into small chunks. Toss with taco seasoning and olive oil.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook pork in a hot pan over medium-high, stirring occasionally, until cooked through and slightly crispy on the edges — 8–10 min.",
+        "time": "10 min"
+      },
+      {
+        "step": "Make the slaw: toss coleslaw mix with apple cider vinegar, honey, salt and a squeeze of lime.",
+        "time": "3 min"
+      },
+      {
+        "step": "Warm tortillas in a dry pan 30 sec per side, or wrap in foil and warm in oven at 300°F for 10 min.",
+        "time": "5 min"
+      },
+      {
+        "step": "Serve everything family style — pork, slaw, sour cream, cheese, salsa and lime on the table.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -1078,28 +2343,82 @@
     "cat": "pork",
     "crockpot": true,
     "fridge": [
-      "Pork shoulder",
-      "Butter"
+      {
+        "name": "Pork shoulder (bone-in or boneless)",
+        "qty": "3–4 lb"
+      },
+      {
+        "name": "Coleslaw mix",
+        "qty": "3 cups"
+      }
     ],
     "pantry": [
-      "Slider buns",
-      "BBQ sauce",
-      "Brown sugar",
-      "Garlic powder",
-      "Onion powder",
-      "Smoked paprika",
-      "Apple cider vinegar",
-      "Salt",
-      "Pepper"
+      {
+        "name": "Slider buns or brioche rolls",
+        "qty": "12"
+      },
+      {
+        "name": "BBQ sauce",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Smoked paprika",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Onion powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Cumin",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Apple cider vinegar",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Mayo",
+        "qty": "¼ cup"
+      }
     ],
     "sides": [
-      "Coleslaw",
-      "Pickles"
+      "Pickles",
+      "Chips"
     ],
     "recipe": [
-      "Mix dry rub: brown sugar, garlic powder, onion powder, paprika, salt, pepper. Coat pork.",
-      "Sear all sides. Slow cook low 8–10 hrs with vinegar until pull-apart tender.",
-      "Shred, toss with BBQ sauce. Serve on toasted slider buns with coleslaw."
+      {
+        "step": "Mix brown sugar, smoked paprika, garlic powder, onion powder, cumin and salt. Rub all over pork shoulder.",
+        "time": "5 min"
+      },
+      {
+        "step": "Place pork in slow cooker. Pour ½ cup BBQ sauce over. Cook on LOW 8–10 hours or HIGH 5–6 hours until falling apart.",
+        "time": "480 min"
+      },
+      {
+        "step": "Transfer pork to a large bowl. Discard excess liquid. Shred with two forks — it should fall apart easily. Toss with remaining BBQ sauce.",
+        "time": "5 min"
+      },
+      {
+        "step": "Make slaw: toss coleslaw mix with mayo, apple cider vinegar, a pinch of sugar, salt and pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "Toast buns cut-side down in a dry pan 1 min. Load with pulled pork and slaw.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -1120,27 +2439,81 @@
     "cat": "pork",
     "crockpot": false,
     "fridge": [
-      "Pork chops",
-      "Butter"
+      {
+        "name": "Bone-in pork chops",
+        "qty": "4 (about 1 inch thick)"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Apples",
-      "Garlic",
-      "Olive oil",
-      "Thyme",
-      "Brown sugar",
-      "Chicken broth",
-      "Dijon mustard"
+      {
+        "name": "Baby potatoes",
+        "qty": "1.5 lb, halved"
+      },
+      {
+        "name": "Apples (Gala or Fuji)",
+        "qty": "2, cored and sliced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, sliced into rings"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Dried rosemary",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Dijon mustard",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Roasted potatoes"
+      "Steamed green beans"
     ],
     "recipe": [
-      "Season pork chops, sear in butter 3–4 min per side. Remove.",
-      "Roast potato wedges at 400°F 30 min.",
-      "Sauté garlic, add sliced apples with brown sugar 3 min. Add Dijon and broth, simmer 3 min.",
-      "Return pork to pan, coat in sauce and cook through."
+      {
+        "step": "Boil potatoes in salted water until just tender — 12 min. Drain.",
+        "time": "12 min"
+      },
+      {
+        "step": "Season pork chops generously with salt, pepper, thyme and rosemary. Heat olive oil in a large oven-safe pan over high heat.",
+        "time": "2 min"
+      },
+      {
+        "step": "Sear chops — 3 min per side until deep golden. Transfer to a plate.",
+        "time": "6 min"
+      },
+      {
+        "step": "Reduce to medium. Add butter, onion and apple to the pan. Cook 5 min until softened. Stir in brown sugar and Dijon. Add broth, scraping up any browned bits.",
+        "time": "6 min"
+      },
+      {
+        "step": "Return pork chops and potatoes to the pan. Cover and cook on medium-low until chops are cooked through — 10 min. Rest 3 min.",
+        "time": "10 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -1161,29 +2534,82 @@
     "cat": "pork",
     "crockpot": false,
     "fridge": [
-      "Pork tenderloin",
-      "Eggs"
+      {
+        "name": "Pork shoulder or loin",
+        "qty": "1.5 lb, cut into 1-inch cubes"
+      },
+      {
+        "name": "Eggs",
+        "qty": "2, beaten"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Pineapple chunks",
-      "Peppers",
-      "Onion",
-      "Soy sauce",
-      "Rice vinegar",
-      "Ketchup",
-      "Brown sugar",
-      "Cornstarch",
-      "Oil",
-      "Garlic"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Pineapple chunks (canned)",
+        "qty": "1 can (14 oz), juice reserved"
+      },
+      {
+        "name": "Bell peppers",
+        "qty": "2, cut into chunks"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, cut into chunks"
+      },
+      {
+        "name": "Ketchup",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Rice vinegar",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Vegetable oil",
+        "qty": "2 cups, for frying"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Egg rolls",
+      "Steamed broccoli"
     ],
     "recipe": [
-      "Cube pork, coat in egg then cornstarch. Deep fry at 375°F until crispy.",
-      "Make sauce: ketchup, soy, vinegar, brown sugar, pineapple juice. Simmer 3 min.",
-      "Stir-fry peppers, onion, garlic. Add sauce and pineapple. Thicken. Add pork."
+      {
+        "step": "Cook rice per package. Mix ketchup, vinegar, soy sauce, brown sugar and 3 tbsp pineapple juice in a bowl. Set aside.",
+        "time": "5 min"
+      },
+      {
+        "step": "Toss pork cubes in beaten egg, then coat well in cornstarch. Shake off excess.",
+        "time": "5 min"
+      },
+      {
+        "step": "Heat 2 cups oil in a wok or deep pan to 375°F. Fry pork in batches — 3–4 min per batch until golden and crispy. Drain on paper towels.",
+        "time": "15 min"
+      },
+      {
+        "step": "Pour off all but 1 tbsp oil. Over high heat, stir-fry peppers and onion — 3 min. Add pineapple — 1 min.",
+        "time": "4 min"
+      },
+      {
+        "step": "Pour sweet and sour sauce into the pan. Bring to a simmer until slightly thickened — 2 min. Add pork and toss to coat. Serve immediately over rice.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 620,
@@ -1204,26 +2630,70 @@
     "cat": "beef",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Cheese slices",
-      "Butter"
+      {
+        "name": "Ground beef (80/20)",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "American or cheddar cheese slices",
+        "qty": "4"
+      },
+      {
+        "name": "Burger toppings (lettuce, tomato, onion)",
+        "qty": "as desired"
+      }
     ],
     "pantry": [
-      "Burger buns",
-      "Frozen fries",
-      "Lettuce",
-      "Tomato",
-      "Onion",
-      "Condiments"
+      {
+        "name": "Burger buns",
+        "qty": "4"
+      },
+      {
+        "name": "Frozen french fries",
+        "qty": "1 bag (28 oz)"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "generous amount"
+      },
+      {
+        "name": "Condiments (ketchup, mustard, mayo)",
+        "qty": "as desired"
+      }
     ],
     "sides": [
-      "Fries",
-      "Coleslaw"
+      "Coleslaw",
+      "Pickles"
     ],
     "recipe": [
-      "Form patties ¾ inch thick, press dimple in center. Season generously.",
-      "Cook over high heat 3–4 min per side. Add cheese last minute.",
-      "Toast buns in butter. Bake fries. Build burgers with toppings."
+      {
+        "step": "Preheat oven to 425°F. Spread fries on a baking sheet. Bake until golden and crispy — 20–25 min, flipping halfway.",
+        "time": "25 min"
+      },
+      {
+        "step": "Mix ground beef gently with Worcestershire, garlic powder, salt and pepper. Divide into 4 portions. Form into patties slightly wider than the buns — they'll shrink. Press a dimple in the centre of each.",
+        "time": "5 min"
+      },
+      {
+        "step": "Heat a cast iron pan or grill over high heat. Cook burgers — 3–4 min per side for medium, 4–5 min for well done. Don't press with a spatula.",
+        "time": "8 min"
+      },
+      {
+        "step": "Add cheese slice in the last minute. Cover with a lid to melt.",
+        "time": "1 min"
+      },
+      {
+        "step": "Toast buns cut-side down in the pan — 1 min. Build burgers and serve with fries.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 720,
@@ -1244,24 +2714,66 @@
     "cat": "beef",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Cheese slices",
-      "Butter"
+      {
+        "name": "Ground beef (80/20)",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "American cheese slices",
+        "qty": "8"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Burger buns",
-      "Frozen fries",
-      "Pickles",
-      "Condiments"
+      {
+        "name": "Burger buns (brioche if possible)",
+        "qty": "4"
+      },
+      {
+        "name": "Frozen french fries",
+        "qty": "1 bag (28 oz)"
+      },
+      {
+        "name": "Salt",
+        "qty": "generous amount"
+      },
+      {
+        "name": "Special sauce (mayo, ketchup, pickle relish mixed)",
+        "qty": "to taste"
+      },
+      {
+        "name": "Toppings (shredded lettuce, sliced onion, pickles)",
+        "qty": "as desired"
+      }
     ],
     "sides": [
-      "Fries",
-      "Pickles"
+      "Pickles",
+      "Milkshakes if feeling ambitious"
     ],
     "recipe": [
-      "Divide beef into loose 2oz balls — don't compress.",
-      "Heat cast iron until smoking. Add ball, immediately smash flat. Season.",
-      "Cook 1.5–2 min until edges dark. Flip, add cheese. Toast buns in butter."
+      {
+        "step": "Preheat oven to 425°F. Cook fries per package — 20–25 min until very crispy.",
+        "time": "25 min"
+      },
+      {
+        "step": "Divide beef into 8 loose balls of about 3 oz each — do not compress them. Season tops generously with salt.",
+        "time": "3 min"
+      },
+      {
+        "step": "Heat cast iron pan over HIGH heat until smoking — this is key. Add butter. Place 2 beef balls in the pan. Immediately smash each flat with a heavy spatula and some parchment paper — press hard to ¼ inch thick.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook until edges are brown and crusty — 90 sec. Flip once, add cheese, cook 60 sec more. The crust should be dark and lacey. Repeat for all patties.",
+        "time": "6 min"
+      },
+      {
+        "step": "Toast buns cut-side down in the pan — 30 sec. Stack two patties per bun. Add special sauce, pickles, onion and lettuce.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 740,
@@ -1282,26 +2794,90 @@
     "cat": "beef",
     "crockpot": true,
     "fridge": [
-      "Beef roast",
-      "Butter"
+      {
+        "name": "Chuck roast",
+        "qty": "3 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Carrots",
-      "Onion",
-      "Beef broth",
-      "Garlic",
-      "Rosemary",
-      "Thyme",
-      "Flour"
+      {
+        "name": "Baby potatoes",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Carrots",
+        "qty": "4, cut into large chunks"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, quartered"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Red wine (optional)",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Garlic",
+        "qty": "6 cloves, whole"
+      },
+      {
+        "name": "Tomato paste",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Dried rosemary",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "generous amount"
+      }
     ],
     "sides": [
-      "Roasted potatoes"
+      "Crusty bread",
+      "Horseradish sauce"
     ],
     "recipe": [
-      "Dust roast in seasoned flour. Sear all sides deeply, 3 min per side.",
-      "Roast at 325°F with veg and broth until 135°F internal.",
-      "Rest 15 min, slice against grain. Use pan juices as jus."
+      {
+        "step": "Preheat oven to 325°F. Pat chuck roast dry. Season very generously on all sides with salt and pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "Heat olive oil in a Dutch oven over high heat. Sear roast — 3–4 min per side until deeply browned all over. This step builds flavour — don't rush it.",
+        "time": "15 min"
+      },
+      {
+        "step": "Add onion and garlic to the pot. Cook 2 min. Add tomato paste, stir around the meat. Pour in broth and wine. Add thyme, rosemary and Worcestershire.",
+        "time": "5 min"
+      },
+      {
+        "step": "Cover and roast in the oven until very tender and falling apart — 2.5–3 hours. Add potatoes and carrots in the last 1 hour.",
+        "time": "180 min"
+      },
+      {
+        "step": "Remove roast to a board. Shred or slice. Taste the braising liquid and season. Serve with veg and spoonfuls of the rich braising juice.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -1322,28 +2898,90 @@
     "cat": "beef",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Sour cream",
-      "Shredded cheese"
+      {
+        "name": "Ground beef",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Evaporated milk (for sauce)",
+        "qty": "1 can (12 oz)"
+      },
+      {
+        "name": "Shredded cheese",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Tomato",
+        "qty": "2, diced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, finely diced"
+      }
     ],
     "pantry": [
-      "Pitas",
-      "Tomato",
-      "Onion",
-      "Lettuce",
-      "Donair sauce",
-      "Garlic powder",
-      "Oregano",
-      "Cayenne"
+      {
+        "name": "Large flour tortillas or pita",
+        "qty": "8"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Onion powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Oregano",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Cayenne",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "White sugar (for sauce)",
+        "qty": "½ cup"
+      },
+      {
+        "name": "White vinegar (for sauce)",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Garlic powder (for sauce)",
+        "qty": "¼ tsp"
+      }
     ],
     "sides": [
-      "Donair sauce",
-      "Diced tomato"
+      "Shredded lettuce",
+      "Banana peppers"
     ],
     "recipe": [
-      "Mix beef with garlic powder, oregano, cayenne, salt. Form into tight loaf. Bake 350°F 30–35 min.",
-      "Cool slightly, slice very thin. Crisp slices briefly in pan.",
-      "Warm pitas. Build wraps with beef, veg, cheese, donair sauce."
+      {
+        "step": "Mix ground beef with garlic powder, onion powder, oregano, cayenne, salt and pepper. Form into a tightly packed loaf shape. Bake at 375°F on a rack — 40 min until firm and cooked through.",
+        "time": "40 min"
+      },
+      {
+        "step": "Make the sauce: beat evaporated milk with an electric mixer or whisk until slightly thickened — 2 min. Gradually beat in sugar, vinegar and garlic powder. Sauce should be pourable but coat a spoon. Refrigerate until needed.",
+        "time": "5 min"
+      },
+      {
+        "step": "Rest the meat 10 min. Slice thin.",
+        "time": "10 min"
+      },
+      {
+        "step": "Warm pitas or tortillas in a dry pan 30 sec per side.",
+        "time": "5 min"
+      },
+      {
+        "step": "Set up toppings family style: meat, tomato, onion, cheese, lettuce. Drizzle donair sauce generously over everything in the wrap.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 620,
@@ -1364,27 +3002,74 @@
     "cat": "beef",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Sour cream",
-      "Shredded cheese"
+      {
+        "name": "Ground beef",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Shredded cheddar or Mexican cheese",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Tomato",
+        "qty": "2, diced"
+      }
     ],
     "pantry": [
-      "Taco shells",
-      "Salsa",
-      "Lettuce",
-      "Tomato",
-      "Taco seasoning",
-      "Lime"
+      {
+        "name": "Taco shells (hard) or small flour tortillas",
+        "qty": "12"
+      },
+      {
+        "name": "Taco seasoning",
+        "qty": "1 packet (or 2 tbsp)"
+      },
+      {
+        "name": "Salsa",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Water",
+        "qty": "⅓ cup"
+      },
+      {
+        "name": "Shredded iceberg lettuce",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Lime",
+        "qty": "1, cut into wedges"
+      },
+      {
+        "name": "Hot sauce",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Sour cream",
-      "Salsa",
-      "Guacamole"
+      "Mexican rice",
+      "Refried beans"
     ],
     "recipe": [
-      "Brown beef, drain fat. Add taco seasoning and ½ cup water, simmer 3–5 min.",
-      "Warm taco shells. Dice tomato, shred lettuce.",
-      "Build tacos with beef and toppings. Squeeze lime."
+      {
+        "step": "Brown ground beef in a pan over medium-high, breaking it up — 8 min. Drain excess fat.",
+        "time": "8 min"
+      },
+      {
+        "step": "Add taco seasoning and ⅓ cup water. Stir to combine. Simmer on medium until liquid is absorbed — 3 min.",
+        "time": "3 min"
+      },
+      {
+        "step": "Warm taco shells in oven at 350°F for 5 min, or tortillas in a dry pan 30 sec per side.",
+        "time": "5 min"
+      },
+      {
+        "step": "Set up everything family style: meat, shells, cheese, lettuce, tomato, sour cream, salsa and lime on the table.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -1405,26 +3090,83 @@
     "cat": "beef",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Sour cream",
-      "Shredded cheese"
+      {
+        "name": "Ground beef",
+        "qty": "1 lb"
+      },
+      {
+        "name": "Flank steak or chicken",
+        "qty": "1 lb, sliced thin"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Shredded cheese",
+        "qty": "1 cup"
+      }
     ],
     "pantry": [
-      "Tortillas",
-      "Peppers",
-      "Onion",
-      "Taco seasoning",
-      "Olive oil",
-      "Salsa",
-      "Lime"
+      {
+        "name": "Mixed flour and corn tortillas",
+        "qty": "12"
+      },
+      {
+        "name": "Taco seasoning",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Fajita seasoning",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Bell peppers",
+        "qty": "2, sliced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, sliced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Salsa",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Lime",
+        "qty": "2, cut into wedges"
+      }
     ],
     "sides": [
-      "Sour cream",
-      "Salsa"
+      "Rice",
+      "Guacamole",
+      "Refried beans"
     ],
     "recipe": [
-      "Brown beef with taco seasoning. Cook peppers and onion in oil over high heat until charred.",
-      "Warm tortillas. Serve family style with all toppings."
+      {
+        "step": "Brown ground beef with taco seasoning — 8 min. Drain fat, add a splash of water, simmer 3 min. Keep warm.",
+        "time": "11 min"
+      },
+      {
+        "step": "Toss sliced steak or chicken with fajita seasoning and 1 tbsp oil.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook steak/chicken in a hot pan over high heat — 3 min per side until charred. Remove to a board, rest and slice.",
+        "time": "7 min"
+      },
+      {
+        "step": "In the same pan, cook peppers and onion with olive oil over high heat — 5 min until charred and softened.",
+        "time": "5 min"
+      },
+      {
+        "step": "Warm tortillas. Serve everything DIY-style on the table.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -1445,29 +3187,97 @@
     "cat": "beef",
     "crockpot": true,
     "fridge": [
-      "Beef stew meat",
-      "Butter"
+      {
+        "name": "Beef chuck, cut into 1.5-inch cubes",
+        "qty": "2 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Carrots",
-      "Celery",
-      "Onion",
-      "Beef broth",
-      "Tomato paste",
-      "Bread",
-      "Flour",
-      "Garlic",
-      "Thyme",
-      "Worcestershire"
+      {
+        "name": "Baby potatoes",
+        "qty": "1 lb, halved"
+      },
+      {
+        "name": "Carrots",
+        "qty": "3, cut into chunks"
+      },
+      {
+        "name": "Celery",
+        "qty": "3 stalks, sliced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Tomato paste",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Flour",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Bay leaves",
+        "qty": "2"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Crusty bread or dinner rolls",
+        "qty": "1 loaf"
+      }
     ],
     "sides": [
-      "Crusty bread"
+      "Crusty bread for dipping"
     ],
     "recipe": [
-      "Dust beef in flour, brown in batches in butter.",
-      "Add all to slow cooker with veg, broth, tomato paste, Worcestershire and thyme.",
-      "Cook low 8 hrs. Serve with crusty bread."
+      {
+        "step": "Season beef with salt and pepper. Toss with flour to coat. Heat olive oil in a large pan over high heat. Brown beef in batches — don't crowd the pan — 3 min per side. You want a deep crust.",
+        "time": "15 min"
+      },
+      {
+        "step": "Transfer beef to slow cooker. Add all vegetables, garlic, broth, tomato paste, Worcestershire, thyme and bay leaves.",
+        "time": "5 min"
+      },
+      {
+        "step": "Cook on LOW 8 hours or HIGH 4–5 hours. Beef should be very tender and falling apart.",
+        "time": "480 min"
+      },
+      {
+        "step": "Remove bay leaves. Taste and adjust seasoning. For a thicker stew, mix 2 tbsp cornstarch with 2 tbsp cold water and stir in. Cook on HIGH 15 min.",
+        "time": "15 min"
+      },
+      {
+        "step": "Warm bread in oven at 350°F for 10 min. Serve stew in deep bowls with bread for dipping.",
+        "time": "10 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -1488,27 +3298,83 @@
     "cat": "beef",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Butter"
+      {
+        "name": "Ground beef",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "1 tbsp"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Soy sauce",
-      "Sesame oil",
-      "Brown sugar",
-      "Garlic",
-      "Ginger",
-      "Green onion",
-      "Sesame seeds",
-      "Chili flakes"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Sesame oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Fresh ginger",
+        "qty": "1 tbsp, grated"
+      },
+      {
+        "name": "Gochujang (Korean chili paste)",
+        "qty": "1 tbsp (optional — adjust to taste)"
+      },
+      {
+        "name": "Green onions",
+        "qty": "4, sliced"
+      },
+      {
+        "name": "Sesame seeds",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "1 tsp"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Steamed broccoli",
+      "Cucumber slices",
+      "Fried egg (optional)"
     ],
     "recipe": [
-      "Cook rice. Brown beef in sesame oil, drain most fat.",
-      "Add garlic, ginger 1 min. Add soy sauce, brown sugar, chili flakes. Simmer until glossy.",
-      "Serve over rice. Top with green onion and sesame seeds."
+      {
+        "step": "Cook rice: rinse, combine with 2¼ cups water. Bring to boil, cover, simmer 15 min on lowest heat. Rest 5 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "In a small bowl, whisk soy sauce, brown sugar, sesame oil, garlic, ginger and gochujang.",
+        "time": "2 min"
+      },
+      {
+        "step": "Heat a large pan over medium-high. Add butter and sesame oil. Cook ground beef, breaking up, until browned — 8 min. Drain excess fat.",
+        "time": "8 min"
+      },
+      {
+        "step": "Pour sauce over beef. Stir to combine. If you want a thicker sauce, mix cornstarch with 1 tbsp water and add now. Cook 2 min until glossy.",
+        "time": "2 min"
+      },
+      {
+        "step": "Serve beef over rice. Top with green onions and sesame seeds. Add a fried egg on top if desired.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -1529,27 +3395,86 @@
     "cat": "beef",
     "crockpot": true,
     "fridge": [
-      "Beef sirloin or stew meat",
-      "Sour cream",
-      "Butter"
+      {
+        "name": "Beef sirloin or chuck, sliced thin",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      }
     ],
     "pantry": [
-      "Egg noodles",
-      "Beef broth",
-      "Mushrooms",
-      "Onion",
-      "Garlic",
-      "Flour",
-      "Worcestershire sauce",
-      "Dijon mustard"
+      {
+        "name": "Egg noodles (wide)",
+        "qty": "12 oz"
+      },
+      {
+        "name": "Cremini mushrooms",
+        "qty": "10 oz, sliced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 medium, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Flour",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Dijon mustard",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Fresh parsley",
+        "qty": "for garnish"
+      }
     ],
     "sides": [
-      "Side salad"
+      "Side salad",
+      "Dinner rolls"
     ],
     "recipe": [
-      "Slice beef thin, season, sear in butter in batches. Remove.",
-      "Cook onion, mushrooms 6–8 min until golden. Add garlic, flour, then broth, Worcestershire, Dijon.",
-      "Return beef, simmer 5 min. Remove from heat, stir in sour cream. Serve over egg noodles."
+      {
+        "step": "Season beef strips with salt and pepper, toss with flour. Melt 2 tbsp butter in a large pan over high heat. Sear beef quickly in batches — 1 min per side. Just brown the outside. Transfer to plate.",
+        "time": "8 min"
+      },
+      {
+        "step": "Add remaining butter. Cook mushrooms over high heat without stirring — 4 min until golden. Add onion 3 min, garlic 1 min.",
+        "time": "8 min"
+      },
+      {
+        "step": "Pour in broth, Worcestershire and Dijon, scraping up browned bits. Bring to a simmer.",
+        "time": "3 min"
+      },
+      {
+        "step": "Return beef to pan. Simmer on medium-low until beef is tender — 15–20 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Cook egg noodles in salted boiling water — 7 min. Drain. Remove stroganoff from heat. Stir in sour cream (don't boil after adding or it will split). Season generously. Serve over noodles with parsley.",
+        "time": "10 min"
+      }
     ],
     "macros": {
       "cal": 640,
@@ -1570,27 +3495,94 @@
     "cat": "beef",
     "crockpot": true,
     "fridge": [
-      "Ground beef",
-      "Ground pork",
-      "Eggs",
-      "Parmesan"
+      {
+        "name": "Ground beef",
+        "qty": "1 lb"
+      },
+      {
+        "name": "Ground pork (or all beef)",
+        "qty": "½ lb"
+      },
+      {
+        "name": "Eggs",
+        "qty": "1"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      },
+      {
+        "name": "Milk",
+        "qty": "¼ cup"
+      }
     ],
     "pantry": [
-      "Spaghetti",
-      "Pasta sauce",
-      "Breadcrumbs",
-      "Garlic",
-      "Onion",
-      "Italian seasoning",
-      "Milk"
+      {
+        "name": "Spaghetti",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Panko breadcrumbs",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Canned crushed tomatoes",
+        "qty": "2 cans (28 oz each)"
+      },
+      {
+        "name": "Garlic",
+        "qty": "5 cloves, minced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 small, grated"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Sugar",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Fresh basil",
+        "qty": "handful"
+      }
     ],
     "sides": [
-      "Garlic bread"
+      "Garlic bread",
+      "Green salad"
     ],
     "recipe": [
-      "Soak breadcrumbs in milk. Mix with beef, pork, egg, Parmesan, grated onion, garlic, seasoning.",
-      "Form golf-ball meatballs. Brown in batches.",
-      "Simmer in pasta sauce 20–25 min. Serve over spaghetti."
+      {
+        "step": "Mix beef, pork, breadcrumbs soaked in milk, egg, onion, Parmesan, salt, pepper and 1 tsp Italian seasoning. Mix until just combined — don't overwork. Roll into golf ball-sized balls.",
+        "time": "10 min"
+      },
+      {
+        "step": "Heat olive oil in a large pan over medium-high. Brown meatballs on all sides — about 8 min. They don't need to be cooked through yet.",
+        "time": "8 min"
+      },
+      {
+        "step": "Add garlic to the pan — 1 min. Add crushed tomatoes, remaining Italian seasoning, sugar, salt and pepper. Bring to a simmer.",
+        "time": "3 min"
+      },
+      {
+        "step": "Return meatballs to the sauce. Cover and simmer on low until cooked through — 25 min.",
+        "time": "25 min"
+      },
+      {
+        "step": "Cook spaghetti in salted boiling water — 9 min. Drain. Serve meatballs and sauce over pasta. Finish with fresh basil and Parmesan.",
+        "time": "10 min"
+      }
     ],
     "macros": {
       "cal": 660,
@@ -1611,26 +3603,90 @@
     "cat": "beef",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Butter",
-      "Milk"
+      {
+        "name": "Ground beef",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Milk",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Cheddar cheese",
+        "qty": "½ cup, grated"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Beef broth",
-      "Carrots",
-      "Onion",
-      "Garlic",
-      "Tomato paste",
-      "Worcestershire",
-      "Flour",
-      "Thyme"
+      {
+        "name": "Russet potatoes",
+        "qty": "2.5 lb, peeled and cubed"
+      },
+      {
+        "name": "Frozen mixed veg (peas, carrots, corn)",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Tomato paste",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Flour",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Green salad",
+      "Crusty bread"
+    ],
     "recipe": [
-      "Brown beef, add onion, carrots, garlic. Add flour, tomato paste, Worcestershire, broth, thyme. Simmer 15 min.",
-      "Make creamy mashed potato with butter and milk.",
-      "Pour filling in dish, spread mashed potato over top. Fork surface. Bake 400°F 20–25 min until golden."
+      {
+        "step": "Boil potatoes in salted water until completely tender — 20 min. Drain. Mash with butter and milk until smooth. Season with salt and pepper. Stir in half the cheese.",
+        "time": "20 min"
+      },
+      {
+        "step": "Preheat oven to 400°F. Brown ground beef with onion in olive oil over medium-high — 10 min. Add garlic 1 min.",
+        "time": "11 min"
+      },
+      {
+        "step": "Add flour, stir to coat the meat. Add tomato paste, Worcestershire and broth. Stir until saucy — 3 min. Add frozen veg. Season well.",
+        "time": "5 min"
+      },
+      {
+        "step": "Pour meat mixture into a 9×13 baking dish. Spread mashed potatoes evenly over the top. Rough up the surface with a fork. Sprinkle remaining cheese.",
+        "time": "5 min"
+      },
+      {
+        "step": "Bake until bubbling at the edges and top is golden — 25 min.",
+        "time": "25 min"
+      }
     ],
     "macros": {
       "cal": 600,
@@ -1651,26 +3707,70 @@
     "cat": "fish",
     "crockpot": false,
     "fridge": [
-      "Salmon fillets",
-      "Butter",
-      "Lemon"
+      {
+        "name": "Salmon fillets",
+        "qty": "4 (about 6 oz each)"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Lemon",
+        "qty": "1"
+      }
     ],
     "pantry": [
-      "Baguette",
-      "Garlic",
-      "Olive oil",
-      "Dill",
-      "Salt",
-      "Pepper"
+      {
+        "name": "Baguette or thick bread",
+        "qty": "1"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves — 2 for salmon, 2 for bread"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Dried dill or parsley",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Garlic bread",
-      "Lemon wedges"
+      "Roasted asparagus or green beans",
+      "Side salad"
     ],
     "recipe": [
-      "Season salmon with dill, salt, pepper. Bake 400°F 12–15 min until it flakes.",
-      "Mix softened butter with garlic, salt. Spread on halved baguette.",
-      "Broil garlic bread 2–3 min until golden. Serve salmon with lemon wedges."
+      {
+        "step": "Preheat oven to 400°F. Pat salmon dry. Season with paprika, dill, salt and pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "For garlic bread: slice baguette, mix softened butter with 2 minced garlic cloves and parsley. Spread on bread, wrap in foil.",
+        "time": "5 min"
+      },
+      {
+        "step": "Place salmon on a baking sheet lined with foil. Drizzle with olive oil. Place garlic bread alongside. Bake both together — 12–15 min. Salmon is done when it flakes easily at the thickest part.",
+        "time": "15 min"
+      },
+      {
+        "step": "In a small pan, melt remaining butter with 2 garlic cloves over medium — 2 min until fragrant. Squeeze in lemon juice.",
+        "time": "3 min"
+      },
+      {
+        "step": "Plate salmon, spoon garlic butter over. Serve with garlic bread and chosen vegetable side.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -1691,26 +3791,69 @@
     "cat": "fish",
     "crockpot": false,
     "fridge": [
-      "Salmon fillets",
-      "Butter",
-      "Lemon"
+      {
+        "name": "Salmon fillets",
+        "qty": "4 (about 6 oz each)"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp"
+      }
     ],
     "pantry": [
-      "Broccolini",
-      "Baguette",
-      "Garlic",
-      "Olive oil",
-      "Soy sauce",
-      "Honey"
+      {
+        "name": "Broccolini or broccoli",
+        "qty": "1 lb"
+      },
+      {
+        "name": "Baguette",
+        "qty": "1"
+      },
+      {
+        "name": "Garlic",
+        "qty": "5 cloves — 2 for bread, 3 for broccolini"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Chili flakes",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Lemon",
+        "qty": "1"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Broccolini",
-      "Garlic bread"
+      "Side salad"
     ],
     "recipe": [
-      "Roast broccolini with oil and garlic at 400°F 15 min.",
-      "Brush salmon with soy sauce, honey, lemon. Bake 400°F 12–14 min.",
-      "Broil garlic bread until golden. Serve together."
+      {
+        "step": "Preheat oven to 425°F. Toss broccolini with olive oil, 3 minced garlic cloves, chili flakes, salt and pepper on a baking sheet. Roast until tender and slightly charred — 15 min.",
+        "time": "15 min"
+      },
+      {
+        "step": "Pat salmon dry. Season with salt and pepper.",
+        "time": "2 min"
+      },
+      {
+        "step": "Make garlic bread: mix butter with 2 minced garlic cloves. Spread on sliced baguette. Wrap in foil and add to the oven for the last 10 min.",
+        "time": "3 min"
+      },
+      {
+        "step": "In an oven-safe pan, heat olive oil over high. Place salmon skin-side up — cook 3 min until golden. Flip, transfer pan to the oven — 5–6 min. Salmon should flake but still be slightly pink in the centre.",
+        "time": "9 min"
+      },
+      {
+        "step": "Plate salmon with broccolini, a squeeze of lemon and garlic bread on the side.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -1731,26 +3874,74 @@
     "cat": "fish",
     "crockpot": false,
     "fridge": [
-      "Salmon fillets",
-      "Butter"
+      {
+        "name": "Salmon fillets",
+        "qty": "4 (about 6 oz each)"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Soy sauce",
-      "Honey",
-      "Mirin",
-      "Garlic",
-      "Ginger",
-      "Sesame seeds",
-      "Cornstarch"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Mirin",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Garlic",
+        "qty": "2 cloves, minced"
+      },
+      {
+        "name": "Sesame oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Sesame seeds",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Green onions",
+        "qty": "3, sliced"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Steamed edamame",
+      "Cucumber slices"
     ],
     "recipe": [
-      "Mix teriyaki sauce. Marinate salmon 20–30 min.",
-      "Sear salmon in butter, baste with sauce, cook 3–4 min per side.",
-      "Serve over rice with sesame seeds and veg on side."
+      {
+        "step": "Cook rice: rinse, combine with 2¼ cups water. Bring to boil, cover, simmer 15 min on lowest heat. Rest 5 min.",
+        "time": "20 min"
+      },
+      {
+        "step": "Whisk together soy sauce, mirin, brown sugar, garlic and sesame oil.",
+        "time": "2 min"
+      },
+      {
+        "step": "Pat salmon dry. Heat a non-stick pan over medium-high. Sear salmon flesh-side down — 3 min until golden. Flip, cook 2 min more. Skin side should be crispy.",
+        "time": "5 min"
+      },
+      {
+        "step": "Pour teriyaki sauce over salmon. Let it bubble and reduce, spooning over the fish — 2 min. Mix cornstarch with 1 tbsp water and add if you want a thicker glaze.",
+        "time": "2 min"
+      },
+      {
+        "step": "Serve over rice, topped with sesame seeds and green onions.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -1771,27 +3962,90 @@
     "cat": "fish",
     "crockpot": false,
     "fridge": [
-      "White fish fillets (cod or tilapia)",
-      "Sour cream"
+      {
+        "name": "White fish fillets (tilapia, cod, or halibut)",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Coleslaw mix",
+        "qty": "2 cups"
+      }
     ],
     "pantry": [
-      "Corn tortillas",
-      "Flour",
-      "Oil",
-      "Cumin",
-      "Paprika",
-      "Lime",
-      "Garlic powder",
-      "Coleslaw mix"
+      {
+        "name": "Small corn or flour tortillas",
+        "qty": "12"
+      },
+      {
+        "name": "Flour",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Cornmeal",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Cumin",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Lime",
+        "qty": "2"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Salsa or pico de gallo",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Hot sauce",
+        "qty": "to taste"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Lime wedges",
-      "Salsa"
+      "Rice",
+      "Black beans"
     ],
     "recipe": [
-      "Season fish with cumin, paprika, garlic powder. Pan fry in oil 3–4 min per side.",
-      "Make lime crema: sour cream + lime juice + salt.",
-      "Warm tortillas. Build tacos: fish, coleslaw, lime crema."
+      {
+        "step": "Mix sour cream with juice of 1 lime, salt and a pinch of cumin to make the crema. Toss coleslaw mix with a squeeze of lime, salt and a drizzle of olive oil. Set both aside.",
+        "time": "5 min"
+      },
+      {
+        "step": "Cut fish into strips. Mix flour, cornmeal, cumin, paprika, garlic powder, salt and pepper in a shallow bowl. Dredge fish in the coating.",
+        "time": "5 min"
+      },
+      {
+        "step": "Heat olive oil in a pan over medium-high. Fry fish in batches — 3 min per side until golden and crispy. Don't move it while it's cooking. Drain on paper towels.",
+        "time": "12 min"
+      },
+      {
+        "step": "Warm tortillas in a dry pan 30 sec per side.",
+        "time": "3 min"
+      },
+      {
+        "step": "Build tacos: fish, coleslaw, a drizzle of lime crema, salsa and a squeeze of lime.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 480,
@@ -1812,27 +4066,75 @@
     "cat": "fish",
     "crockpot": false,
     "fridge": [
-      "White fish fillets (cod or tilapia)",
-      "Eggs",
-      "Butter"
+      {
+        "name": "Cod or haddock fillets",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Beer (lager) or sparkling water",
+        "qty": "1 cup"
+      }
     ],
     "pantry": [
-      "Flour",
-      "Breadcrumbs",
-      "Potatoes",
-      "Oil",
-      "Malt vinegar",
-      "Tartar sauce",
-      "Baking powder"
+      {
+        "name": "Russet potatoes",
+        "qty": "4 large"
+      },
+      {
+        "name": "All-purpose flour",
+        "qty": "1½ cups plus extra for dredging"
+      },
+      {
+        "name": "Baking powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Vegetable oil",
+        "qty": "for frying (about 4 cups)"
+      },
+      {
+        "name": "Malt vinegar",
+        "qty": "for serving"
+      },
+      {
+        "name": "Salt",
+        "qty": "to taste"
+      },
+      {
+        "name": "Tartar sauce",
+        "qty": "for serving"
+      }
     ],
     "sides": [
-      "Tartar sauce",
-      "Malt vinegar"
+      "Mushy peas",
+      "Lemon wedges",
+      "Tartar sauce"
     ],
     "recipe": [
-      "Cut potatoes into chips. Parboil 5 min, drain and dry. Fry at 325°F 5 min, then 375°F 4 min.",
-      "Dip fish in seasoned flour, then egg batter. Fry at 375°F 4–5 min.",
-      "Season immediately with salt. Serve with tartar sauce and malt vinegar."
+      {
+        "step": "Cut potatoes into thick wedges (about ¾ inch). Soak in cold water 20 min to remove starch. Drain and pat very dry.",
+        "time": "20 min"
+      },
+      {
+        "step": "Heat oil in a deep pot to 325°F. Fry potato wedges in batches — 5–6 min until cooked through but not browned. Remove and drain. Increase oil to 375°F.",
+        "time": "15 min"
+      },
+      {
+        "step": "Mix 1 cup flour, baking powder, paprika and 1 tsp salt. Whisk in beer until smooth — batter should coat a spoon.",
+        "time": "3 min"
+      },
+      {
+        "step": "Return fries to 375°F oil — fry until deep golden and crispy — 3–4 min. Drain, season immediately with salt.",
+        "time": "8 min"
+      },
+      {
+        "step": "Dredge fish in plain flour, then dip in batter letting excess drip. Fry at 375°F — 4–5 min until batter is golden and crispy and fish flakes. Serve immediately with chips, malt vinegar and tartar sauce.",
+        "time": "10 min"
+      }
     ],
     "macros": {
       "cal": 680,
@@ -1853,21 +4155,58 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Cheese slices",
-      "Butter",
-      "Milk"
+      {
+        "name": "Sliced bread (thick-cut)",
+        "qty": "8 slices"
+      },
+      {
+        "name": "Cheddar or Gruyère cheese",
+        "qty": "8 oz, sliced or grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp, softened"
+      }
     ],
     "pantry": [
-      "Bread",
-      "Canned soup"
+      {
+        "name": "Canned tomato or butternut squash soup",
+        "qty": "2 cans (or 1 litre carton)"
+      },
+      {
+        "name": "Milk or cream",
+        "qty": "¼ cup (to enrich soup)"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Tomato soup"
+      "Apple slices",
+      "Pickle"
     ],
     "recipe": [
-      "Heat soup. Add splash of milk if cream-based.",
-      "Butter one side of each bread slice. Layer cheese inside.",
-      "Cook medium-low 3–4 min until golden. Flip, cook 3 more min. Cut diagonally."
+      {
+        "step": "Heat soup in a pot over medium, stirring occasionally — 8 min. Stir in a splash of cream or milk for richness. Season to taste. Keep warm on low.",
+        "time": "8 min"
+      },
+      {
+        "step": "Spread butter generously on one side of each slice of bread.",
+        "time": "2 min"
+      },
+      {
+        "step": "Heat a pan over medium. Place bread butter-side down. Lay cheese slices over. Top with second slice, butter-side up.",
+        "time": "1 min"
+      },
+      {
+        "step": "Cook until bottom is deep golden — 3–4 min. Flip carefully, press gently with a spatula. Cook until second side is golden and cheese is fully melted — 3 min.",
+        "time": "6 min"
+      },
+      {
+        "step": "Cut sandwiches diagonally. Serve with hot soup for dipping.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 480,
@@ -1888,22 +4227,66 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Mozzarella",
-      "Pepperoni",
-      "Butter"
+      {
+        "name": "Mozzarella",
+        "qty": "3 cups, shredded"
+      },
+      {
+        "name": "Pizza dough",
+        "qty": "1 lb (store-bought or pre-made)"
+      },
+      {
+        "name": "Toppings of choice",
+        "qty": "as desired (pepperoni, sausage, veg)"
+      }
     ],
     "pantry": [
-      "Pizza kit",
-      "Pizza sauce",
-      "Toppings of choice",
-      "Olive oil",
-      "Italian seasoning"
+      {
+        "name": "Pizza sauce",
+        "qty": "1 jar (14 oz)"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Cornmeal or flour",
+        "qty": "for dusting"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Green salad",
+      "Garlic knots"
+    ],
     "recipe": [
-      "Prepare dough per kit instructions. Preheat oven to 425°F.",
-      "Stretch dough, brush crust with olive oil. Spread sauce thinly.",
-      "Add mozzarella, pepperoni, toppings. Bake 12–15 min until golden."
+      {
+        "step": "Place a baking sheet or pizza stone in the oven. Preheat to 475°F — at least 30 min for the pan to get blazing hot.",
+        "time": "30 min"
+      },
+      {
+        "step": "Divide dough into 2–3 portions. On a floured surface, stretch each to about ¼-inch thick. Don't use a rolling pin — stretch with your hands for a lighter crust.",
+        "time": "10 min"
+      },
+      {
+        "step": "Carefully transfer dough to hot pan (use cornmeal to prevent sticking). Spread sauce to the edges, leaving a 1-inch border.",
+        "time": "3 min"
+      },
+      {
+        "step": "Scatter cheese and toppings. Drizzle with olive oil, sprinkle Italian seasoning and garlic powder.",
+        "time": "3 min"
+      },
+      {
+        "step": "Bake until crust is golden and cheese is bubbling with brown spots — 10–12 min. Set up as DIY: put all the toppings on the table and let everyone build their own.",
+        "time": "12 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -1924,28 +4307,82 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Butter"
+      {
+        "name": "Eggs",
+        "qty": "4"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Green onions",
+        "qty": "4, sliced"
+      }
     ],
     "pantry": [
-      "Ramen noodles",
-      "Broth",
-      "Soy sauce",
-      "Miso paste",
-      "Garlic",
-      "Ginger",
-      "Green onion",
-      "Sesame oil",
-      "Chili oil"
+      {
+        "name": "Ramen noodles (fresh or dried)",
+        "qty": "4 servings"
+      },
+      {
+        "name": "Good chicken or pork broth",
+        "qty": "6 cups"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Mirin",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Miso paste",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Fresh ginger",
+        "qty": "1 tbsp, grated"
+      },
+      {
+        "name": "Sesame oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Toppings: corn, nori, bamboo shoots",
+        "qty": "as desired"
+      }
     ],
     "sides": [
-      "Soft boiled eggs",
-      "Nori"
+      "Gyoza",
+      "Edamame"
     ],
     "recipe": [
-      "Soft boil eggs exactly 6.5 min. Transfer to ice water. Peel and halve.",
-      "Simmer broth with miso, soy, garlic, ginger. Add butter and sesame oil.",
-      "Cook noodles separately. Build bowls: noodles, broth, egg, green onion, nori, chili oil."
+      {
+        "step": "Soft-boil eggs: bring a pot of water to a rolling boil. Gently lower eggs in. Cook exactly 6.5 min. Transfer immediately to a bowl of ice water for 5 min. Peel carefully.",
+        "time": "12 min"
+      },
+      {
+        "step": "In a large pot, melt butter over medium. Add garlic and ginger — cook 2 min. Add miso paste, stir 1 min.",
+        "time": "3 min"
+      },
+      {
+        "step": "Pour in broth. Add soy sauce and mirin. Bring to a gentle simmer — 10 min. Taste and adjust seasoning.",
+        "time": "10 min"
+      },
+      {
+        "step": "Cook ramen noodles per package in a separate pot of boiling water — usually 3–4 min. Drain.",
+        "time": "4 min"
+      },
+      {
+        "step": "Divide noodles into bowls. Ladle hot broth over. Halve soft-boiled eggs and place on top. Add green onions, sesame oil, and any additional toppings.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -1966,24 +4403,82 @@
     "cat": "comfort",
     "crockpot": true,
     "fridge": [
-      "Milk",
-      "Butter",
-      "Cheddar cheese"
+      {
+        "name": "Sharp cheddar",
+        "qty": "3 cups, grated"
+      },
+      {
+        "name": "Gruyère or Gouda",
+        "qty": "1 cup, grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Milk",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Heavy cream",
+        "qty": "1 cup"
+      }
     ],
     "pantry": [
-      "Macaroni",
-      "Flour",
-      "Breadcrumbs",
-      "Mustard powder",
-      "Garlic powder"
+      {
+        "name": "Elbow macaroni",
+        "qty": "1 lb"
+      },
+      {
+        "name": "All-purpose flour",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Dijon mustard",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Panko breadcrumbs",
+        "qty": "½ cup (for topping)"
+      },
+      {
+        "name": "Salt and white pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Side salad"
+      "Green salad",
+      "Garlic bread"
     ],
     "recipe": [
-      "Cook macaroni al dente. Make béchamel: melt butter, add flour, whisk in milk until thick.",
-      "Stir in cheddar, mustard powder, garlic powder. Combine with pasta.",
-      "Pour into dish, top with breadcrumbs. Bake 375°F 25 min until golden."
+      {
+        "step": "Cook macaroni in salted boiling water until just al dente — 7 min. It will finish cooking in the sauce. Drain and set aside.",
+        "time": "7 min"
+      },
+      {
+        "step": "In a large pot over medium, melt butter. Add flour and cook, stirring — 2 min. It should look like wet sand.",
+        "time": "2 min"
+      },
+      {
+        "step": "Gradually whisk in milk and cream, a little at a time, until smooth. Bring to a gentle simmer, stirring constantly — 5 min until thickened.",
+        "time": "5 min"
+      },
+      {
+        "step": "Remove from heat. Add mustard, garlic powder, paprika. Stir in cheddar and Gruyère in handfuls until fully melted. Season with salt and white pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "Add macaroni to the sauce. Toss to coat. For a baked version: transfer to a baking dish, top with panko and a drizzle of butter, bake at 375°F for 20 min until golden.",
+        "time": "20 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -2004,23 +4499,66 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Steak",
-      "Butter"
+      {
+        "name": "Ribeye or NY strip steaks",
+        "qty": "4 (about 10 oz each)"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, smashed"
+      }
     ],
     "pantry": [
-      "Potatoes or frozen fries",
-      "Garlic",
-      "Fresh herbs",
-      "Olive oil",
-      "Flaky sea salt"
+      {
+        "name": "Russet potatoes",
+        "qty": "4 large, cut into thin fries"
+      },
+      {
+        "name": "Fresh thyme or rosemary",
+        "qty": "4 sprigs"
+      },
+      {
+        "name": "Vegetable oil",
+        "qty": "for frying (4 cups) or olive oil for oven fries"
+      },
+      {
+        "name": "Dijon mustard",
+        "qty": "for serving"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "very generous amount"
+      }
     ],
     "sides": [
-      "Frites"
+      "Green salad",
+      "Béarnaise or peppercorn sauce"
     ],
     "recipe": [
-      "Rest steak 30–45 min. Pat dry, season aggressively.",
-      "Heat cast iron until smoking. Sear 3–4 min. Flip. Add butter, garlic, herbs. Baste continuously 3 more min.",
-      "Rest minimum 5 min. Double-fry frites. Season with flaky salt immediately."
+      {
+        "step": "For frites: soak potato strips in cold water 30 min. Drain and pat completely dry. For oven frites: toss with oil, salt, spread on baking sheet, bake at 425°F 25 min flipping once.",
+        "time": "30 min"
+      },
+      {
+        "step": "Take steaks out of the fridge 30 min before cooking to come to room temperature. Pat completely dry. Season very generously with salt and pepper on both sides.",
+        "time": "30 min"
+      },
+      {
+        "step": "Heat a cast iron pan over HIGH heat until smoking — about 3 min. Add a thin film of oil.",
+        "time": "3 min"
+      },
+      {
+        "step": "Place steaks in pan. Don't move them. Cook 3–4 min per side for medium-rare (internal temp 130°F). In the last 2 min, add butter, garlic and thyme. Tilt the pan and baste the steaks with the foaming butter repeatedly.",
+        "time": "8 min"
+      },
+      {
+        "step": "Rest steaks on a board for 5 min — this is essential. Slice against the grain or serve whole with frites and Dijon.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 680,
@@ -2041,24 +4579,63 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Meat of choice",
-      "Butter"
+      {
+        "name": "Choice of protein (burgers, ribs, chicken, sausages)",
+        "qty": "3–4 lb total"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "BBQ sauce",
-      "Dry rub or seasoning",
-      "Oil",
-      "Salt",
-      "Pepper"
+      {
+        "name": "BBQ sauce",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Dry rub (paprika, garlic powder, salt, pepper, brown sugar)",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Corn on the cob",
+        "qty": "4 ears, husked"
+      },
+      {
+        "name": "Burger buns or hot dog buns",
+        "qty": "as needed"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      }
     ],
     "sides": [
       "Coleslaw",
-      "Corn on the cob"
+      "Potato salad",
+      "Chips"
     ],
     "recipe": [
-      "Remove meat from fridge 30 min before. Season with dry rub.",
-      "Grill over medium-high, turning as needed.",
-      "Baste with BBQ sauce final 5 min only. Rest before serving."
+      {
+        "step": "Preheat BBQ grill to medium-high — 10 min with lid closed.",
+        "time": "10 min"
+      },
+      {
+        "step": "Pat proteins dry. Apply dry rub generously and let sit at room temperature while grill heats.",
+        "time": "5 min"
+      },
+      {
+        "step": "Brush corn with butter and oil, season with salt. Grill corn, turning occasionally — 12–15 min until charred in spots.",
+        "time": "15 min"
+      },
+      {
+        "step": "Grill proteins, flipping once. Burgers: 4–5 min per side. Chicken thighs: 6–7 min per side. Sausages: 10–12 min, turning frequently. Brush with BBQ sauce in the last 3 min.",
+        "time": "15 min"
+      },
+      {
+        "step": "Rest meats 5 min before serving. Set up condiments and sides on the table.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 620,
@@ -2079,26 +4656,78 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Bacon",
-      "Eggs",
-      "Butter"
+      {
+        "name": "Bacon",
+        "qty": "8 strips, cut into lardons"
+      },
+      {
+        "name": "Eggs",
+        "qty": "6"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Peppers",
-      "Onion",
-      "Garlic",
-      "Paprika",
-      "Oil"
+      {
+        "name": "Russet or Yukon Gold potatoes",
+        "qty": "2 lb, diced ½ inch"
+      },
+      {
+        "name": "Bell pepper",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 medium, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Hot sauce",
+        "qty": "for serving"
+      }
     ],
     "sides": [
-      "Fried eggs",
-      "Toast"
+      "Toast",
+      "Orange juice"
     ],
     "recipe": [
-      "Parboil diced potatoes 5–6 min. Drain and dry.",
-      "Cook bacon crisp. Reserve fat. Cook potatoes in fat over high heat — don't stir, let crust form.",
-      "Add peppers, onion, garlic. Make wells, crack eggs in. Cover until whites set."
+      {
+        "step": "Parboil diced potatoes in salted water — 8 min. They should be just tender but not falling apart. Drain and let them steam dry.",
+        "time": "8 min"
+      },
+      {
+        "step": "In a large cast iron pan over medium, cook bacon until crispy — 6 min. Remove with a slotted spoon, leave the fat in the pan.",
+        "time": "6 min"
+      },
+      {
+        "step": "Add potatoes to the bacon fat. Press down and don't stir — let them form a crust — 5 min. Flip sections and repeat — 5 min more.",
+        "time": "10 min"
+      },
+      {
+        "step": "Add butter, pepper, onion and garlic. Cook stirring occasionally — 5 min. Return bacon.",
+        "time": "5 min"
+      },
+      {
+        "step": "Make wells in the hash and crack eggs directly in. Cover and cook until whites are just set — 3–4 min. Season and serve straight from the pan with hot sauce.",
+        "time": "4 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -2119,26 +4748,74 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Milk",
-      "Butter",
-      "Bacon"
+      {
+        "name": "Eggs",
+        "qty": "2"
+      },
+      {
+        "name": "Milk",
+        "qty": "1¼ cups"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp, melted plus extra for the pan"
+      },
+      {
+        "name": "Bacon or breakfast sausage",
+        "qty": "8 strips or 8 patties"
+      }
     ],
     "pantry": [
-      "Flour",
-      "Baking powder",
-      "Sugar",
-      "Maple syrup",
-      "Vanilla extract"
+      {
+        "name": "All-purpose flour",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Baking powder",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Sugar",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Salt",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Vanilla extract",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Maple syrup",
+        "qty": "for serving"
+      }
     ],
     "sides": [
-      "Maple syrup",
-      "Butter"
+      "Fresh fruit",
+      "Orange juice"
     ],
     "recipe": [
-      "Mix dry: flour, baking powder, sugar. Mix wet: egg, milk, butter, vanilla. Combine — lumps are fine.",
-      "Rest batter 5 min. Cook bacon crisp in separate pan.",
-      "Cook ¼ cup batter per pancake on medium heat 2–3 min, flip, 1–2 more min."
+      {
+        "step": "Cook bacon in a pan over medium — 4 min per side until crispy. Or cook sausage patties 3–4 min per side. Keep warm in a 200°F oven.",
+        "time": "8 min"
+      },
+      {
+        "step": "Mix dry ingredients in a large bowl: flour, baking powder, sugar and salt.",
+        "time": "1 min"
+      },
+      {
+        "step": "Whisk wet ingredients in another bowl: eggs, milk, melted butter and vanilla. Pour wet into dry. Stir until just combined — lumps are fine. Don't overmix. Rest 5 min.",
+        "time": "6 min"
+      },
+      {
+        "step": "Heat a non-stick pan or griddle over medium. Add a little butter. Pour ¼ cup batter per pancake. Cook until bubbles form on the surface and edges look set — 2–3 min. Flip once, cook 1 min more.",
+        "time": "15 min"
+      },
+      {
+        "step": "Serve a stack with bacon or sausage and maple syrup.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -2159,21 +4836,59 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Cheese slices",
-      "Bacon or sausage",
-      "Butter"
+      {
+        "name": "Eggs",
+        "qty": "4"
+      },
+      {
+        "name": "Cheddar or American cheese slices",
+        "qty": "4"
+      },
+      {
+        "name": "Canadian bacon or back bacon",
+        "qty": "4 slices"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp"
+      }
     ],
     "pantry": [
-      "English muffins",
-      "Salt",
-      "Pepper"
+      {
+        "name": "English muffins",
+        "qty": "4"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Hash browns",
+      "Orange juice",
+      "Coffee"
+    ],
     "recipe": [
-      "Cook bacon crisp or sausage into patties.",
-      "Fry egg in buttered ring mold — season with salt and pepper.",
-      "Toast and butter English muffin. Layer: muffin, egg, cheese, meat. Rest 1 min to melt."
+      {
+        "step": "Split and toast English muffins until golden — 3 min. Butter lightly.",
+        "time": "3 min"
+      },
+      {
+        "step": "In a large non-stick pan, melt 1 tbsp butter over medium. Add Canadian bacon — cook 2 min per side until warmed and slightly browned. Remove.",
+        "time": "4 min"
+      },
+      {
+        "step": "Add remaining butter. Crack eggs into round metal ring moulds if you have them for the classic shape (or just crack free-form into the pan). Season with salt and pepper. Cook 2–3 min until whites are set.",
+        "time": "3 min"
+      },
+      {
+        "step": "Add cheese slice to each egg. Cover with a lid 1 min to melt.",
+        "time": "1 min"
+      },
+      {
+        "step": "Layer muffin bottom → bacon → egg with cheese → muffin top. Serve immediately.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 480,
@@ -2194,25 +4909,85 @@
     "cat": "comfort",
     "crockpot": true,
     "fridge": [
-      "Gruyère cheese",
-      "Butter"
+      {
+        "name": "Gruyère cheese",
+        "qty": "2 cups, grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      }
     ],
     "pantry": [
-      "Onions",
-      "Beef broth",
-      "Baguette",
-      "Dry white wine",
-      "Thyme",
-      "Bay leaf",
-      "Flour",
-      "Olive oil",
-      "Sugar"
+      {
+        "name": "Yellow onions",
+        "qty": "4 large, sliced thin"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "6 cups"
+      },
+      {
+        "name": "Dry white wine or sherry",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Fresh thyme",
+        "qty": "4 sprigs (or 1 tsp dried)"
+      },
+      {
+        "name": "Bay leaves",
+        "qty": "2"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "All-purpose flour",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Baguette",
+        "qty": "1, sliced into rounds"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Simple green salad"
+    ],
     "recipe": [
-      "Caramelize sliced onions in butter and oil over medium-low 45–60 min. Add sugar to help.",
-      "Add wine 2 min, then broth, thyme, bay. Simmer 20 min.",
-      "Ladle into oven-safe bowls, top with baguette and Gruyère. Broil until bubbling and golden."
+      {
+        "step": "In a large heavy pot or Dutch oven, melt butter with olive oil over medium-low. Add onions and a big pinch of salt. Cook low and slow, stirring every 10 min — this takes 45–60 min to properly caramelize. They should be deep golden brown.",
+        "time": "60 min"
+      },
+      {
+        "step": "Add garlic, cook 2 min. Add flour, stir to coat — 2 min. Add wine, stir up any browned bits.",
+        "time": "4 min"
+      },
+      {
+        "step": "Add broth, thyme, bay leaves and Worcestershire. Bring to a simmer. Cook 20 min. Remove thyme and bay leaves. Season generously.",
+        "time": "20 min"
+      },
+      {
+        "step": "Toast baguette rounds under the broiler until golden — 2–3 min per side.",
+        "time": "5 min"
+      },
+      {
+        "step": "Ladle soup into oven-safe bowls. Float 2–3 baguette rounds on top. Pile Gruyère over. Broil 3–4 min until cheese is melted, golden and bubbling.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 480,
@@ -2233,27 +5008,90 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Feta cheese"
+      {
+        "name": "Eggs",
+        "qty": "6–8"
+      },
+      {
+        "name": "Feta cheese",
+        "qty": "3 oz, crumbled (optional)"
+      }
     ],
     "pantry": [
-      "Canned tomatoes",
-      "Peppers",
-      "Onion",
-      "Garlic",
-      "Cumin",
-      "Paprika",
-      "Chili flakes",
-      "Olive oil",
-      "Crusty bread"
+      {
+        "name": "Canned crushed tomatoes",
+        "qty": "2 cans (28 oz total)"
+      },
+      {
+        "name": "Bell peppers",
+        "qty": "2, diced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Cumin",
+        "qty": "1½ tsp"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Chili flakes",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Canned chickpeas",
+        "qty": "1 can (optional)"
+      },
+      {
+        "name": "Sugar",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Crusty bread or pita",
+        "qty": "1 loaf"
+      }
     ],
     "sides": [
-      "Crusty bread"
+      "Yogurt",
+      "Fresh parsley"
     ],
     "recipe": [
-      "Cook onion and peppers 8 min. Add garlic and spices 2 min.",
-      "Add crushed tomatoes, simmer 10 min. Make wells, crack eggs in. Season eggs.",
-      "Cover and cook on low until whites set, yolks runny. Top with feta."
+      {
+        "step": "Heat olive oil in a large wide pan over medium. Cook onion until soft — 8 min. Add peppers — 5 min. Add garlic, cumin, paprika and chili flakes — 2 min.",
+        "time": "15 min"
+      },
+      {
+        "step": "Pour in crushed tomatoes and chickpeas (if using). Add sugar, salt and pepper. Simmer until sauce thickens — 15 min. Taste and adjust seasoning.",
+        "time": "15 min"
+      },
+      {
+        "step": "Use the back of a spoon to make wells in the sauce. Crack an egg into each well.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cover the pan and cook on medium-low until whites are set but yolks are still runny — 5–7 min. Check often.",
+        "time": "6 min"
+      },
+      {
+        "step": "Crumble feta over the top if using. Serve straight from the pan with crusty bread for scooping.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 420,
@@ -2274,21 +5112,70 @@
     "cat": "comfort",
     "crockpot": true,
     "fridge": [
-      "Butter",
-      "Sour cream",
-      "Shredded cheese",
-      "Bacon"
+      {
+        "name": "Large russet potatoes",
+        "qty": "4–6"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Cheddar cheese",
+        "qty": "2 cups, grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Bacon",
+        "qty": "6 strips, cooked and crumbled"
+      }
     ],
     "pantry": [
-      "Large potatoes",
-      "Olive oil",
-      "Salt"
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Chives or green onions",
+        "qty": "¼ cup, sliced"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Broccoli",
+        "qty": "2 cups (for those who want it on top)"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Soup",
+      "Green salad"
+    ],
     "recipe": [
-      "Scrub potatoes, prick all over, rub with oil and coat in salt.",
-      "Bake directly on oven rack at 400°F 55–65 min.",
-      "Cook bacon crisp, crumble. Set out all toppings. Everyone builds their own."
+      {
+        "step": "Preheat oven to 400°F. Scrub potatoes clean. Prick each one 10–12 times with a fork all over.",
+        "time": "5 min"
+      },
+      {
+        "step": "Rub potatoes with olive oil and season generously with salt. Place directly on the oven rack.",
+        "time": "3 min"
+      },
+      {
+        "step": "Bake until a knife slides in with no resistance and skin is crispy — 60–75 min depending on size.",
+        "time": "70 min"
+      },
+      {
+        "step": "Steam or microwave broccoli until tender, if using.",
+        "time": "5 min"
+      },
+      {
+        "step": "Set up toppings family style: butter, sour cream, cheese, bacon, chives, broccoli. Let everyone load their own.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -2309,24 +5196,66 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Shredded cheese",
-      "Sour cream",
-      "Butter"
+      {
+        "name": "Flour tortillas (large, 10-inch)",
+        "qty": "8"
+      },
+      {
+        "name": "Shredded Mexican cheese blend or cheddar",
+        "qty": "3 cups"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Fillings of choice (cooked chicken, peppers, onion, black beans)",
+        "qty": "2 cups total"
+      }
     ],
     "pantry": [
-      "Large flour tortillas",
-      "Salsa",
-      "Choice of filling"
+      {
+        "name": "Butter or oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Salsa",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Cumin",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Salsa",
-      "Sour cream",
-      "Guacamole"
+      "Guacamole",
+      "Mexican rice"
     ],
     "recipe": [
-      "Prepare filling (cooked chicken, seasoned beef, or plain cheese).",
-      "Fill half a tortilla with cheese and filling. Fold.",
-      "Cook in buttered pan 3 min until golden. Flip 2–3 more min. Cheese should be fully melted."
+      {
+        "step": "Prepare fillings: if using chicken, cook sliced chicken breast with cumin and seasoning — 5 min per side. Sauté any peppers and onions — 5 min.",
+        "time": "10 min"
+      },
+      {
+        "step": "Heat a dry pan over medium. Place one tortilla flat. Scatter a quarter of the cheese over half the tortilla. Add a quarter of the fillings. Fold tortilla over.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook until bottom is golden — 2–3 min. Flip carefully and cook the other side — 2 min. Cheese should be fully melted.",
+        "time": "5 min"
+      },
+      {
+        "step": "Repeat with remaining tortillas. Keep finished quesadillas warm in a 200°F oven.",
+        "time": "15 min"
+      },
+      {
+        "step": "Cut each into wedges. Serve with salsa, sour cream and guacamole.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -2347,27 +5276,82 @@
     "cat": "comfort",
     "crockpot": true,
     "fridge": [
-      "Chicken breasts or thighs",
-      "Butter"
+      {
+        "name": "Cooked chicken (rotisserie or leftover)",
+        "qty": "3 cups, shredded"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Egg noodles",
-      "Chicken broth",
-      "Carrots",
-      "Celery",
-      "Onion",
-      "Garlic",
-      "Thyme",
-      "Bay leaf",
-      "Crusty bread"
+      {
+        "name": "Egg noodles (medium width)",
+        "qty": "6 oz"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "8 cups"
+      },
+      {
+        "name": "Carrots",
+        "qty": "3, sliced into coins"
+      },
+      {
+        "name": "Celery",
+        "qty": "4 stalks, sliced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Bay leaves",
+        "qty": "2"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Fresh parsley",
+        "qty": "for garnish"
+      }
     ],
     "sides": [
-      "Crusty bread"
+      "Crusty bread",
+      "Crackers"
     ],
     "recipe": [
-      "Simmer chicken with onion, garlic, carrots, celery, thyme and bay leaf in broth 25–30 min.",
-      "Remove chicken, shred. Return to pot. Add egg noodles and cook 8–10 min.",
-      "Season with salt, pepper and fresh parsley."
+      {
+        "step": "Melt butter in a large pot over medium. Cook onion until soft — 5 min. Add garlic — 1 min.",
+        "time": "6 min"
+      },
+      {
+        "step": "Add carrots, celery, thyme and bay leaves. Cook 3 min.",
+        "time": "3 min"
+      },
+      {
+        "step": "Pour in chicken broth. Bring to a boil. Reduce to a simmer and cook until vegetables are just tender — 15 min.",
+        "time": "15 min"
+      },
+      {
+        "step": "Add egg noodles and shredded chicken. Cook until noodles are tender — 7–8 min.",
+        "time": "8 min"
+      },
+      {
+        "step": "Remove bay leaves. Season generously with salt and pepper. Ladle into deep bowls and garnish with parsley.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 440,
@@ -2388,27 +5372,82 @@
     "cat": "comfort",
     "crockpot": true,
     "fridge": [
-      "Heavy cream",
-      "Butter",
-      "Cheese slices"
+      {
+        "name": "Heavy cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp — 2 for soup, 2 for sandwiches"
+      },
+      {
+        "name": "Thick-cut bread",
+        "qty": "8 slices"
+      },
+      {
+        "name": "Gruyère or cheddar",
+        "qty": "8 oz, sliced"
+      }
     ],
     "pantry": [
-      "Canned whole tomatoes",
-      "Onion",
-      "Garlic",
-      "Chicken broth",
-      "Basil",
-      "Sugar",
-      "Bread",
-      "Olive oil"
+      {
+        "name": "Canned whole San Marzano tomatoes",
+        "qty": "2 cans (28 oz each)"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "5 cloves, minced"
+      },
+      {
+        "name": "Chicken or vegetable broth",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Sugar",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Dried basil",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Grilled cheese"
+      "Apple slices",
+      "Pickles"
     ],
     "recipe": [
-      "Roast canned tomatoes, onion and garlic at 400°F 25 min. Blend smooth with broth and basil.",
-      "Simmer in pot 10 min. Stir in cream and butter. Season.",
-      "Make classic grilled cheese. Serve soup with grilled cheese for dipping."
+      {
+        "step": "In a large pot, heat olive oil and butter over medium. Cook onion until very soft — 8 min. Add garlic — 2 min.",
+        "time": "10 min"
+      },
+      {
+        "step": "Add tomatoes, broth, basil and sugar. Bring to a simmer. Cook 20 min, breaking up tomatoes with a spoon.",
+        "time": "20 min"
+      },
+      {
+        "step": "Use an immersion blender to blend smooth — or transfer carefully to a blender. Stir in heavy cream. Season generously. Keep warm on low.",
+        "time": "5 min"
+      },
+      {
+        "step": "For grilled cheese: butter both sides of bread. Heat a pan over medium. Cook sandwiches until deep golden — 3–4 min per side, pressing gently. Cheese should be fully melted.",
+        "time": "8 min"
+      },
+      {
+        "step": "Cut sandwiches in half and serve alongside the hot bisque.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -2429,27 +5468,74 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Milk",
-      "Butter"
+      {
+        "name": "Eggs",
+        "qty": "4"
+      },
+      {
+        "name": "Milk",
+        "qty": "¾ cup"
+      },
+      {
+        "name": "Thick-cut bread (brioche or Texas toast)",
+        "qty": "8 slices"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp"
+      }
     ],
     "pantry": [
-      "Thick bread (brioche or Texas toast)",
-      "Vanilla extract",
-      "Cinnamon",
-      "Sugar",
-      "Maple syrup",
-      "Icing sugar",
-      "Bacon or sausage (choose one)"
+      {
+        "name": "Maple syrup",
+        "qty": "for serving"
+      },
+      {
+        "name": "Sugar",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Cinnamon",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Vanilla extract",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Powdered sugar",
+        "qty": "for dusting"
+      },
+      {
+        "name": "Bacon or sausage (optional)",
+        "qty": "8 strips"
+      }
     ],
     "sides": [
-      "Maple syrup",
-      "Fresh fruit optional"
+      "Fresh berries",
+      "Orange juice"
     ],
     "recipe": [
-      "Whisk eggs, milk, vanilla, cinnamon and sugar together.",
-      "Dip bread slices 20–30 sec per side. Cook in buttered pan medium heat 3–4 min per side until deep golden.",
-      "Dust with icing sugar. Protein swap: bacon crisp OR sausage patties — choose per night."
+      {
+        "step": "If making bacon or sausage, cook first: bacon 4 min per side, sausage 3–4 min per side until cooked through. Keep warm in the oven.",
+        "time": "8 min"
+      },
+      {
+        "step": "Whisk eggs, milk, cinnamon, sugar and vanilla in a shallow bowl until combined.",
+        "time": "2 min"
+      },
+      {
+        "step": "Melt 1 tbsp butter in a non-stick pan over medium. Dip bread slices in the egg mixture — 15 sec per side, letting it absorb but not get soggy.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook soaked bread in the buttered pan — 2–3 min per side until golden and slightly puffed. Work in batches, adding more butter as needed.",
+        "time": "12 min"
+      },
+      {
+        "step": "Dust with powdered sugar and serve with maple syrup and fresh berries.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -2470,27 +5556,59 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Butter",
-      "Shredded cheese",
-      "Sour cream"
+      {
+        "name": "Eggs",
+        "qty": "12 (3 per person)"
+      },
+      {
+        "name": "Shredded cheese (cheddar, Swiss or Gruyère)",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Fillings: diced ham, cooked bacon, mushrooms, peppers, onion",
+        "qty": "2 cups total of desired mix"
+      }
     ],
     "pantry": [
-      "Salt",
-      "Pepper",
-      "Bacon or sausage (choose one)",
-      "Onion",
-      "Peppers"
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Chives or green onions",
+        "qty": "¼ cup, sliced"
+      }
     ],
     "sides": [
       "Toast",
-      "Hash browns"
+      "Hash browns",
+      "Orange juice"
     ],
     "recipe": [
-      "Cook bacon crisp OR sausage through. Set aside with veg fillings.",
-      "Per omelette: whisk 2–3 eggs, season. Heat butter in non-stick pan over medium-high.",
-      "Pour eggs, stir gently while shaking pan. When almost set, add fillings to one half. Fold and slide onto plate.",
-      "Each person builds their own."
+      {
+        "step": "Prepare all fillings first — dice everything into small pieces. If using mushrooms or peppers, sauté in butter 5 min. This is the prep station.",
+        "time": "10 min"
+      },
+      {
+        "step": "For each omelette: crack 3 eggs into a bowl. Add a pinch of salt and pepper. Beat with a fork until just combined — don't over-beat.",
+        "time": "2 min"
+      },
+      {
+        "step": "Melt 1 tbsp butter in a non-stick pan over medium-high until foamy. Pour in eggs. Let them set on the bottom for 30 sec, then use a spatula to push edges toward the centre while tilting the pan — 90 sec total.",
+        "time": "2 min"
+      },
+      {
+        "step": "When eggs are almost set but still slightly glossy on top, add fillings and cheese to one half. Fold the other half over.",
+        "time": "1 min"
+      },
+      {
+        "step": "Slide onto a plate. The residual heat finishes cooking the eggs. Repeat for each person. Set up all fillings on the table so people can choose.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 480,
@@ -2511,29 +5629,70 @@
     "cat": "comfort",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Milk",
-      "Butter"
+      {
+        "name": "Eggs",
+        "qty": "3"
+      },
+      {
+        "name": "Milk",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp — 2 for batter, 2 for cooking"
+      },
+      {
+        "name": "Fillings: Nutella, jam, whipped cream, sliced strawberries",
+        "qty": "as desired"
+      }
     ],
     "pantry": [
-      "Flour",
-      "Salt",
-      "Sugar",
-      "Vanilla extract",
-      "Maple syrup",
-      "Icing sugar",
-      "Jam",
-      "Bacon or sausage (choose one)"
+      {
+        "name": "All-purpose flour",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Sugar",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Salt",
+        "qty": "pinch"
+      },
+      {
+        "name": "Vanilla extract",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Maple syrup or powdered sugar",
+        "qty": "for serving"
+      }
     ],
     "sides": [
-      "Maple syrup",
-      "Jam",
-      "Icing sugar"
+      "Fresh fruit",
+      "Coffee or hot chocolate"
     ],
     "recipe": [
-      "Blend flour, eggs, milk, melted butter, sugar, vanilla, salt until smooth. Rest 30 min.",
-      "Cook in lightly buttered pan: pour ¼ cup batter, swirl thin, cook 60–90 sec until edges lift. Flip, 30 sec more.",
-      "Serve with maple syrup, jam and icing sugar. Protein swap: bacon OR sausage alongside."
+      {
+        "step": "Blend flour, eggs, milk, 2 tbsp melted butter, sugar, salt and vanilla until completely smooth — or whisk vigorously by hand. Rest the batter in the fridge 30 min (this relaxes the gluten and improves texture).",
+        "time": "30 min"
+      },
+      {
+        "step": "Heat a non-stick pan or crepe pan over medium-high. Brush with a little butter.",
+        "time": "2 min"
+      },
+      {
+        "step": "Pour about ¼ cup batter into the pan and immediately swirl to coat the bottom in a thin, even layer.",
+        "time": "1 min"
+      },
+      {
+        "step": "Cook until the edges begin to look dry and the underside is lightly golden — 90 sec. Flip, cook 30 sec more.",
+        "time": "2 min"
+      },
+      {
+        "step": "Stack on a warm plate covered with foil. Repeat with remaining batter. Set up fillings on the table and let everyone fill and fold their own.",
+        "time": "15 min"
+      }
     ],
     "macros": {
       "cal": 460,
@@ -2554,27 +5713,78 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Ground beef",
-      "Parmesan",
-      "Milk"
+      {
+        "name": "Ground beef",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "¾ cup, grated"
+      }
     ],
     "pantry": [
-      "Spaghetti",
-      "Pasta sauce",
-      "Onion",
-      "Garlic",
-      "Italian seasoning",
-      "Tomato paste",
-      "Red wine optional"
+      {
+        "name": "Spaghetti",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Canned crushed tomatoes",
+        "qty": "1 can (28 oz)"
+      },
+      {
+        "name": "Pasta sauce",
+        "qty": "1 jar (24 oz)"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Carrot",
+        "qty": "1, grated"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Whole milk",
+        "qty": "¼ cup"
+      }
     ],
     "sides": [
       "Garlic bread",
-      "Side salad"
+      "Green salad"
     ],
     "recipe": [
-      "Brown beef with onion and garlic. Add tomato paste 2 min.",
-      "Transfer to crockpot with pasta sauce, seasoning and milk. Cook low 6–8 hrs.",
-      "Cook spaghetti fresh to serve. Top with Parmesan."
+      {
+        "step": "In a pan over high heat, brown ground beef with onion — 8 min. Drain fat. Add garlic — 1 min.",
+        "time": "9 min"
+      },
+      {
+        "step": "Transfer to slow cooker. Add crushed tomatoes, pasta sauce, carrot, Italian seasoning and milk. Stir.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook on LOW 6–8 hours or HIGH 3–4 hours.",
+        "time": "360 min"
+      },
+      {
+        "step": "Cook spaghetti in salted boiling water until al dente — 9 min. Reserve ½ cup pasta water before draining.",
+        "time": "9 min"
+      },
+      {
+        "step": "Toss pasta with sauce. Add pasta water to loosen if needed. Plate and finish generously with Parmesan.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 590,
@@ -2595,28 +5805,78 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Chicken thighs",
-      "Heavy cream",
-      "Butter"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb, cut into chunks"
+      },
+      {
+        "name": "Plain yogurt",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Heavy cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Basmati rice",
-      "Butter chicken sauce",
-      "Canned tomatoes",
-      "Garlic",
-      "Ginger",
-      "Onion",
-      "Garam masala",
-      "Coconut milk"
+      {
+        "name": "Basmati rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Butter chicken sauce (jarred)",
+        "qty": "1 jar (about 14 oz)"
+      },
+      {
+        "name": "Canned diced tomatoes",
+        "qty": "1 can (14 oz)"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Garam masala",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Naan bread",
+        "qty": "4 pieces"
+      }
     ],
     "sides": [
-      "Naan bread",
-      "Mango chutney"
+      "Mango chutney",
+      "Cucumber raita"
     ],
     "recipe": [
-      "Place chicken, sauce, tomatoes, onion, garlic, ginger and spices in crockpot. Cook low 6 hrs.",
-      "Stir in cream and butter in last 30 min.",
-      "Cook basmati in half coconut milk, half water. Serve with naan."
+      {
+        "step": "In a pan over medium-high, brown chicken chunks in butter — 5 min. Not fully cooked, just browned.",
+        "time": "5 min"
+      },
+      {
+        "step": "Transfer to slow cooker with butter chicken sauce, tomatoes, onion, garlic, garam masala and yogurt. Stir.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook on LOW 6 hours or HIGH 3 hours until chicken is tender.",
+        "time": "360 min"
+      },
+      {
+        "step": "Stir in heavy cream. Cook uncovered on HIGH 15 min to thicken slightly.",
+        "time": "15 min"
+      },
+      {
+        "step": "Cook basmati rice with 2¼ cups water — bring to boil, cover, simmer 15 min. Warm naan in oven 3 min. Serve chicken over rice.",
+        "time": "20 min"
+      }
     ],
     "macros": {
       "cal": 700,
@@ -2637,27 +5897,83 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Pork shoulder",
-      "Butter"
+      {
+        "name": "Pork shoulder (bone-in or boneless)",
+        "qty": "4 lb"
+      },
+      {
+        "name": "Coleslaw mix",
+        "qty": "3 cups"
+      }
     ],
     "pantry": [
-      "Slider buns",
-      "BBQ sauce",
-      "Brown sugar",
-      "Garlic powder",
-      "Onion powder",
-      "Smoked paprika",
-      "Apple cider vinegar",
-      "Chicken broth"
+      {
+        "name": "Slider buns",
+        "qty": "12"
+      },
+      {
+        "name": "BBQ sauce",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Smoked paprika",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Onion powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Cumin",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Mayo",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Apple cider vinegar",
+        "qty": "2 tbsp"
+      }
     ],
     "sides": [
-      "Coleslaw",
-      "Pickles"
+      "Pickles",
+      "Chips",
+      "Corn on the cob"
     ],
     "recipe": [
-      "Rub pork with dry spice mix. Sear all sides.",
-      "Cook low 8–10 hrs with vinegar and broth. Shred, toss with BBQ sauce.",
-      "Serve on toasted slider buns with coleslaw and pickles."
+      {
+        "step": "Mix smoked paprika, brown sugar, garlic powder, onion powder, cumin and salt into a rub. Pat pork dry and coat all over.",
+        "time": "5 min"
+      },
+      {
+        "step": "Place in slow cooker. Pour ½ cup BBQ sauce over. Cook LOW 8–10 hours or HIGH 5–6 hours until falling apart.",
+        "time": "480 min"
+      },
+      {
+        "step": "Shred pork with two forks — it should fall apart effortlessly. Discard any bones. Mix with remaining BBQ sauce.",
+        "time": "5 min"
+      },
+      {
+        "step": "Mix slaw: toss coleslaw with mayo, apple cider vinegar, salt, pepper and a pinch of sugar.",
+        "time": "3 min"
+      },
+      {
+        "step": "Toast buns in a dry pan 1 min. Load with pulled pork and a big scoop of slaw.",
+        "time": "3 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -2678,26 +5994,66 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Chicken thighs",
-      "Butter"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb"
+      }
     ],
     "pantry": [
-      "Rice",
-      "Honey",
-      "Soy sauce",
-      "Garlic",
-      "Chicken broth",
-      "Cornstarch",
-      "Sesame seeds",
-      "Ginger"
+      {
+        "name": "Jasmine rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Honey",
+        "qty": "⅓ cup"
+      },
+      {
+        "name": "Soy sauce",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Garlic",
+        "qty": "6 cloves, minced"
+      },
+      {
+        "name": "Ketchup",
+        "qty": "3 tbsp"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Green onions",
+        "qty": "4, sliced"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Steamed broccoli",
+      "Sesame seeds"
     ],
     "recipe": [
-      "Season chicken. Whisk honey, soy, garlic, ginger, broth. Pour over chicken in crockpot.",
-      "Cook low 4–6 hrs. Remove chicken, thicken sauce with cornstarch slurry on high 15 min.",
-      "Return chicken. Serve over rice with sesame seeds."
+      {
+        "step": "Place chicken in slow cooker. Whisk together honey, soy sauce, garlic and ketchup. Pour over chicken.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook on LOW 4–5 hours or HIGH 2–3 hours until chicken is cooked through and tender.",
+        "time": "240 min"
+      },
+      {
+        "step": "Remove chicken. Mix cornstarch with 2 tbsp cold water. Stir into the cooking liquid. Turn slow cooker to HIGH, cook uncovered 15 min until thickened.",
+        "time": "15 min"
+      },
+      {
+        "step": "Return chicken. Shred or leave whole.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook rice: 1½ cups rice with 2¼ cups water. Bring to boil, cover, simmer 15 min. Serve chicken over rice topped with green onions.",
+        "time": "20 min"
+      }
     ],
     "macros": {
       "cal": 580,
@@ -2718,28 +6074,82 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Beef stew meat",
-      "Sour cream",
-      "Butter"
+      {
+        "name": "Beef stewing meat or chuck, cubed",
+        "qty": "2 lb"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Egg noodles",
-      "Beef broth",
-      "Mushrooms",
-      "Onion",
-      "Garlic",
-      "Worcestershire sauce",
-      "Dijon mustard",
-      "Flour",
-      "Cornstarch"
+      {
+        "name": "Egg noodles (wide)",
+        "qty": "12 oz"
+      },
+      {
+        "name": "Cremini mushrooms",
+        "qty": "10 oz, sliced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Dijon mustard",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Cornstarch",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Side salad"
+      "Side salad",
+      "Dinner rolls"
     ],
     "recipe": [
-      "Season beef in flour. Place in crockpot with mushrooms, onion, garlic, broth, Worcestershire and Dijon.",
-      "Cook low 7–8 hrs. Thicken with cornstarch slurry in last 30 min.",
-      "Remove from heat, stir in sour cream. Serve over egg noodles."
+      {
+        "step": "Season beef with salt and pepper. Place in slow cooker with mushrooms, onion, garlic, broth, Worcestershire and Dijon.",
+        "time": "5 min"
+      },
+      {
+        "step": "Cook on LOW 8 hours or HIGH 4–5 hours until beef is very tender.",
+        "time": "480 min"
+      },
+      {
+        "step": "Mix cornstarch with 2 tbsp cold water. Stir into the slow cooker. Cook on HIGH uncovered 20 min to thicken.",
+        "time": "20 min"
+      },
+      {
+        "step": "Cook egg noodles in salted boiling water — 7 min. Drain.",
+        "time": "7 min"
+      },
+      {
+        "step": "Remove slow cooker from heat. Stir in sour cream (do not add while it's boiling or it will curdle). Season. Serve over egg noodles.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 640,
@@ -2760,27 +6170,82 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Ground beef",
-      "Ground pork",
-      "Eggs",
-      "Parmesan"
+      {
+        "name": "Ground beef",
+        "qty": "1 lb"
+      },
+      {
+        "name": "Ground pork",
+        "qty": "½ lb"
+      },
+      {
+        "name": "Eggs",
+        "qty": "1"
+      },
+      {
+        "name": "Parmesan",
+        "qty": "½ cup, grated"
+      },
+      {
+        "name": "Milk",
+        "qty": "¼ cup"
+      }
     ],
     "pantry": [
-      "Spaghetti",
-      "Pasta sauce",
-      "Breadcrumbs",
-      "Garlic",
-      "Onion",
-      "Italian seasoning",
-      "Milk"
+      {
+        "name": "Spaghetti",
+        "qty": "¾ lb"
+      },
+      {
+        "name": "Panko breadcrumbs",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Marinara or pasta sauce",
+        "qty": "2 jars (48 oz total)"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Italian seasoning",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Fresh basil",
+        "qty": "handful for serving"
+      }
     ],
     "sides": [
-      "Garlic bread"
+      "Garlic bread",
+      "Green salad"
     ],
     "recipe": [
-      "Mix meatballs from beef, pork, egg, breadcrumbs, Parmesan, garlic, seasoning. Brown lightly.",
-      "Place in crockpot covered with pasta sauce. Cook low 6 hrs.",
-      "Cook spaghetti fresh. Serve with garlic bread."
+      {
+        "step": "Mix beef, pork, breadcrumbs (soaked in milk first), egg, garlic, Parmesan, Italian seasoning, salt and pepper. Roll into balls the size of a golf ball.",
+        "time": "10 min"
+      },
+      {
+        "step": "Optional but recommended: brown meatballs in a pan with olive oil — 6 min, turning. Builds flavour.",
+        "time": "6 min"
+      },
+      {
+        "step": "Pour one jar of marinara into the slow cooker. Add meatballs. Pour second jar over top.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook on LOW 6–7 hours or HIGH 3–4 hours.",
+        "time": "360 min"
+      },
+      {
+        "step": "Cook spaghetti in salted boiling water — 9 min. Serve meatballs and sauce over pasta. Finish with Parmesan and fresh basil.",
+        "time": "9 min"
+      }
     ],
     "macros": {
       "cal": 660,
@@ -2801,26 +6266,89 @@
     "cat": "crockpot",
     "crockpot": false,
     "fridge": [
-      "Ground beef",
-      "Butter",
-      "Milk"
+      {
+        "name": "Ground beef",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "4 tbsp"
+      },
+      {
+        "name": "Milk",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Cheddar cheese",
+        "qty": "½ cup, grated"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Beef broth",
-      "Carrots",
-      "Onion",
-      "Garlic",
-      "Tomato paste",
-      "Worcestershire",
-      "Flour",
-      "Thyme"
+      {
+        "name": "Russet potatoes",
+        "qty": "2.5 lb, peeled and cubed"
+      },
+      {
+        "name": "Frozen mixed veg",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Tomato paste",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Flour",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Green salad"
+    ],
     "recipe": [
-      "Brown beef with onion, garlic, carrots. Add flour, tomato paste, Worcestershire, broth, thyme.",
-      "Place in crockpot, cook low 6 hrs.",
-      "Spread with fresh mashed potato, bake 400°F 20–25 min until golden."
+      {
+        "step": "Boil potatoes in salted water until fully tender — 20 min. Drain, mash with butter and milk until smooth. Stir in half the cheese.",
+        "time": "20 min"
+      },
+      {
+        "step": "Preheat oven to 400°F. Brown beef and onion in a pan over medium-high — 10 min. Add garlic — 1 min.",
+        "time": "11 min"
+      },
+      {
+        "step": "Add flour, stir to coat. Add tomato paste, Worcestershire, broth and thyme. Cook until saucy — 3 min. Add frozen veg. Season well.",
+        "time": "5 min"
+      },
+      {
+        "step": "Pour filling into a 9×13 baking dish. Spread mashed potato evenly over the top. Rough up with a fork. Sprinkle remaining cheese.",
+        "time": "5 min"
+      },
+      {
+        "step": "Bake until bubbling at the edges and top is golden — 25–30 min.",
+        "time": "28 min"
+      }
     ],
     "macros": {
       "cal": 600,
@@ -2841,30 +6369,92 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Ground beef",
-      "Shredded cheese",
-      "Sour cream"
+      {
+        "name": "Ground beef",
+        "qty": "1.5 lb"
+      }
     ],
     "pantry": [
-      "Canned kidney beans",
-      "Canned tomatoes",
-      "Onion",
-      "Garlic",
-      "Beef broth",
-      "Chili powder",
-      "Cumin",
-      "Paprika",
-      "Cornbread mix"
+      {
+        "name": "Cornbread mix (1 box)",
+        "qty": "1 box"
+      },
+      {
+        "name": "Canned kidney beans",
+        "qty": "2 cans (15 oz each), drained"
+      },
+      {
+        "name": "Canned diced tomatoes",
+        "qty": "1 can (28 oz)"
+      },
+      {
+        "name": "Tomato paste",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Bell pepper",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Chili powder",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Cumin",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Smoked paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Cornbread",
       "Sour cream",
-      "Shredded cheese"
+      "Shredded cheddar",
+      "Green onions",
+      "Hot sauce"
     ],
     "recipe": [
-      "Brown beef, drain. Add all to crockpot with tomatoes, broth and spices.",
-      "Cook low 6–8 hrs. Add kidney beans in last hour.",
-      "Make cornbread per package. Top chili with sour cream and shredded cheese."
+      {
+        "step": "Brown ground beef and onion in a pan over medium-high — 8 min. Add garlic — 1 min. Drain fat.",
+        "time": "9 min"
+      },
+      {
+        "step": "Transfer to slow cooker. Add all remaining ingredients except cornbread. Stir to combine.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook on LOW 6–8 hours or HIGH 3–4 hours. Taste and adjust seasoning.",
+        "time": "360 min"
+      },
+      {
+        "step": "About 30 min before serving: prepare and bake cornbread per package directions.",
+        "time": "25 min"
+      },
+      {
+        "step": "Serve chili with toppings on the side and warm cornbread.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 620,
@@ -2885,27 +6475,78 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Chicken breasts",
-      "Gruyère or Swiss cheese",
-      "Butter"
+      {
+        "name": "Chicken thighs, bone-in",
+        "qty": "8 pieces (about 3 lb)"
+      },
+      {
+        "name": "Gruyère or Swiss cheese",
+        "qty": "1½ cups, grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Onions",
-      "Beef broth",
-      "Dry white wine",
-      "Thyme",
-      "Garlic",
-      "Flour",
-      "Olive oil",
-      "Sugar"
+      {
+        "name": "Yellow onions",
+        "qty": "4 large, sliced thin"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Dry white wine (or extra broth)",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Worcestershire sauce",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Olive oil",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Egg noodles or crusty bread",
+        "qty": "for serving"
+      }
     ],
     "sides": [
-      "Egg noodles or crusty bread"
+      "Crusty bread",
+      "Green salad"
     ],
     "recipe": [
-      "Caramelize onions in butter 45 min. Season chicken.",
-      "Place chicken in crockpot with onions, wine, broth, garlic, thyme. Cook low 6 hrs.",
-      "Thicken sauce in last 30 min. Top chicken with Gruyère, broil until melted."
+      {
+        "step": "In a large pan over medium-low, melt butter with olive oil. Cook onions very slowly until deep golden caramel — 35–40 min. Stir occasionally.",
+        "time": "40 min"
+      },
+      {
+        "step": "Add garlic — 2 min. Add wine, scrape up browned bits. Add broth, thyme and Worcestershire.",
+        "time": "3 min"
+      },
+      {
+        "step": "Season chicken with salt and pepper. Place in slow cooker. Pour onion mixture over.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook on LOW 6 hours or HIGH 3 hours until chicken is falling off the bone.",
+        "time": "360 min"
+      },
+      {
+        "step": "Transfer chicken to an oven-safe dish. Spoon onions over. Cover with Gruyère. Broil until cheese is melted and golden — 3–4 min. Serve with crusty bread to soak up the broth.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 560,
@@ -2926,26 +6567,74 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Cheddar cheese",
-      "Milk",
-      "Butter",
-      "Cream cheese"
+      {
+        "name": "Sharp cheddar",
+        "qty": "2 cups, grated"
+      },
+      {
+        "name": "Velveeta or processed cheese",
+        "qty": "8 oz, cubed"
+      },
+      {
+        "name": "Butter",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Evaporated milk",
+        "qty": "1 can (12 oz)"
+      },
+      {
+        "name": "Eggs",
+        "qty": "2, beaten"
+      }
     ],
     "pantry": [
-      "Elbow macaroni",
-      "Evaporated milk",
-      "Mustard powder",
-      "Garlic powder",
-      "Salt",
-      "Pepper"
+      {
+        "name": "Elbow macaroni",
+        "qty": "1 lb"
+      },
+      {
+        "name": "Whole milk",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Dijon mustard",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "½ tsp"
+      },
+      {
+        "name": "Salt and white pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Side salad"
+      "Green salad",
+      "Garlic bread"
     ],
     "recipe": [
-      "Place uncooked macaroni, milk, evaporated milk, butter, cream cheese and seasonings in crockpot.",
-      "Cook low 2–3 hrs, stirring every 45 min.",
-      "Stir in shredded cheddar in last 30 min until melted and creamy."
+      {
+        "step": "Cook macaroni in salted water for 3 min less than the package says — it will finish in the slow cooker. Drain.",
+        "time": "6 min"
+      },
+      {
+        "step": "In slow cooker, combine macaroni, butter, evaporated milk, whole milk, beaten eggs, mustard and garlic powder.",
+        "time": "3 min"
+      },
+      {
+        "step": "Add Velveeta and half the cheddar. Stir everything together.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook on LOW 2–3 hours, stirring every 45 min. Don't cook on HIGH or the eggs will curdle.",
+        "time": "120 min"
+      },
+      {
+        "step": "Add remaining cheddar in the last 15 min. Season with salt and white pepper. If it seems too thick, add a splash of warm milk.",
+        "time": "15 min"
+      }
     ],
     "macros": {
       "cal": 600,
@@ -2966,27 +6655,79 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Beef brisket",
-      "Butter"
+      {
+        "name": "Beef brisket (flat cut)",
+        "qty": "3–4 lb"
+      }
     ],
     "pantry": [
-      "BBQ sauce",
-      "Beef broth",
-      "Brown sugar",
-      "Garlic",
-      "Onion",
-      "Smoked paprika",
-      "Mustard powder",
-      "Burger buns"
+      {
+        "name": "BBQ sauce",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Brown sugar",
+        "qty": "2 tbsp"
+      },
+      {
+        "name": "Smoked paprika",
+        "qty": "1 tbsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Onion powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Cumin",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt",
+        "qty": "2 tsp"
+      },
+      {
+        "name": "Black pepper",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Beef broth",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Slider buns or rolls",
+        "qty": "8"
+      }
     ],
     "sides": [
       "Coleslaw",
-      "Pickles"
+      "Pickles",
+      "Chips"
     ],
     "recipe": [
-      "Rub brisket with brown sugar, paprika, mustard, salt, pepper. Sear all sides.",
-      "Cook in crockpot with broth, garlic and onion low 8–10 hrs.",
-      "Slice against grain or shred. Toss in BBQ sauce. Serve on buns with coleslaw."
+      {
+        "step": "Mix brown sugar, smoked paprika, garlic powder, onion powder, cumin, salt and pepper into a dry rub. Pat brisket dry and coat all over.",
+        "time": "5 min"
+      },
+      {
+        "step": "Optional: sear brisket in a hot pan with oil — 3 min per side for a better crust.",
+        "time": "6 min"
+      },
+      {
+        "step": "Place brisket in slow cooker. Pour broth and ½ cup BBQ sauce around the sides.",
+        "time": "2 min"
+      },
+      {
+        "step": "Cook on LOW 8–10 hours. Brisket should be very tender and easy to pull apart.",
+        "time": "480 min"
+      },
+      {
+        "step": "Slice against the grain or pull apart with forks. Toss with remaining BBQ sauce. Serve on toasted buns.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 680,
@@ -3007,27 +6748,82 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Bacon",
-      "Sour cream",
-      "Shredded cheese",
-      "Butter",
-      "Milk"
+      {
+        "name": "Bacon",
+        "qty": "6 strips"
+      },
+      {
+        "name": "Sour cream",
+        "qty": "½ cup"
+      },
+      {
+        "name": "Heavy cream",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Cheddar cheese",
+        "qty": "1½ cups, grated"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Chicken broth",
-      "Onion",
-      "Garlic",
-      "Flour",
-      "Green onion"
+      {
+        "name": "Russet potatoes",
+        "qty": "3 lb, peeled and diced"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "4 cups"
+      },
+      {
+        "name": "Onion",
+        "qty": "1 large, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "4 cloves, minced"
+      },
+      {
+        "name": "Flour",
+        "qty": "¼ cup"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      },
+      {
+        "name": "Green onions",
+        "qty": "4, sliced"
+      }
     ],
     "sides": [
-      "Crusty bread"
+      "Crusty bread",
+      "Side salad"
     ],
     "recipe": [
-      "Dice potatoes and onion. Place in crockpot with broth and garlic.",
-      "Cook low 6–8 hrs. Mash some potato to thicken.",
-      "Stir in butter, milk, sour cream. Top with bacon, cheese and green onion."
+      {
+        "step": "Cook bacon in a pan until crispy — 6 min. Drain, crumble and set aside. Reserve 2 tbsp bacon fat in the pan.",
+        "time": "6 min"
+      },
+      {
+        "step": "Cook onion in the bacon fat over medium — 5 min. Add garlic — 1 min. Add flour, stir — 2 min.",
+        "time": "8 min"
+      },
+      {
+        "step": "Transfer onion mixture to slow cooker with potatoes and broth. Season with salt and pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "Cook on LOW 6–8 hours or HIGH 3–4 hours until potatoes are very tender.",
+        "time": "360 min"
+      },
+      {
+        "step": "Use a potato masher to partially mash — leave some chunks for texture. Stir in cream, sour cream and most of the cheese. Taste and season. Serve topped with bacon, remaining cheese and green onions.",
+        "time": "5 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -3048,25 +6844,78 @@
     "cat": "crockpot",
     "crockpot": true,
     "fridge": [
-      "Chicken thighs",
-      "Butter"
+      {
+        "name": "Chicken thighs, boneless skinless",
+        "qty": "2 lb"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Long grain rice",
-      "Chicken broth",
-      "Onion",
-      "Garlic",
-      "Onion powder",
-      "Garlic powder",
-      "Thyme"
+      {
+        "name": "Long-grain white rice",
+        "qty": "1½ cups"
+      },
+      {
+        "name": "Chicken broth",
+        "qty": "3 cups"
+      },
+      {
+        "name": "Cream of chicken soup (canned)",
+        "qty": "1 can (10 oz)"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Garlic",
+        "qty": "3 cloves, minced"
+      },
+      {
+        "name": "Frozen peas",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Dried thyme",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Garlic powder",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "to taste"
+      }
     ],
     "sides": [
-      "Steamed veg"
+      "Steamed green beans",
+      "Dinner rolls"
     ],
     "recipe": [
-      "Place chicken, broth, onion, garlic and seasonings in crockpot. Cook low 5–6 hrs.",
-      "Remove chicken. Stir in rinsed rice. Return chicken on top.",
-      "Cook high 30–45 min until rice is done. Fluff and serve."
+      {
+        "step": "Season chicken with garlic powder, thyme, salt and pepper.",
+        "time": "2 min"
+      },
+      {
+        "step": "Combine broth, cream of chicken soup, onion and garlic in the slow cooker. Stir well.",
+        "time": "2 min"
+      },
+      {
+        "step": "Add chicken. Cook on LOW 5–6 hours or HIGH 2.5–3 hours.",
+        "time": "300 min"
+      },
+      {
+        "step": "Remove chicken, shred with forks. Stir in rice and return chicken. Cook on HIGH 20–30 min until rice is tender and has absorbed the liquid. Stir in frozen peas — they'll heat through in 5 min.",
+        "time": "30 min"
+      },
+      {
+        "step": "Stir in butter. Taste and adjust seasoning. Serve in deep bowls.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -3087,24 +6936,71 @@
     "cat": "camping",
     "crockpot": false,
     "fridge": [
-      "Ground beef patties",
-      "Hot dogs",
-      "Cheese slices"
+      {
+        "name": "Ground beef (80/20)",
+        "qty": "1.5 lb"
+      },
+      {
+        "name": "Hot dogs",
+        "qty": "1 package (8)"
+      },
+      {
+        "name": "Cheese slices",
+        "qty": "8"
+      },
+      {
+        "name": "Butter",
+        "qty": "2 tbsp"
+      }
     ],
     "pantry": [
-      "Burger buns",
-      "Hot dog buns",
-      "Condiments",
-      "Chips"
+      {
+        "name": "Burger buns",
+        "qty": "4"
+      },
+      {
+        "name": "Hot dog buns",
+        "qty": "8"
+      },
+      {
+        "name": "Condiments (ketchup, mustard, relish)",
+        "qty": "as desired"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "generous amount"
+      },
+      {
+        "name": "Foil",
+        "qty": "for wrapping buns"
+      }
     ],
     "sides": [
       "Chips",
-      "Condiments"
+      "Potato salad",
+      "Pickles"
     ],
     "recipe": [
-      "Get fire or camp grill hot.",
-      "Grill patties 4 min per side, add cheese last minute. Grill hot dogs turning until charred.",
-      "Toast buns. Serve with chips and condiments."
+      {
+        "step": "Get your campfire or camp stove grill going. You want medium-high heat — hold your hand 6 inches over the grate, you should be able to hold it there for about 3 seconds.",
+        "time": "10 min"
+      },
+      {
+        "step": "Form beef into 4 patties, slightly wider than the buns. Press a dimple in the centre. Season generously with salt and pepper.",
+        "time": "3 min"
+      },
+      {
+        "step": "Grill burgers 4–5 min per side, flipping once. Add cheese in the last minute. Hot dogs go alongside — grill 4–5 min turning often until blistered.",
+        "time": "10 min"
+      },
+      {
+        "step": "Wrap buns in foil with a tiny bit of butter. Set on the edge of the grill to warm — 3 min.",
+        "time": "3 min"
+      },
+      {
+        "step": "Set up the condiments station on the camp table. Load up.",
+        "time": "2 min"
+      }
     ],
     "macros": {
       "cal": 680,
@@ -3125,19 +7021,58 @@
     "cat": "camping",
     "crockpot": false,
     "fridge": [
-      "Butter",
-      "Cheese slices",
-      "Sandwich meat"
+      {
+        "name": "Canned soup (tomato, chicken noodle)",
+        "qty": "2–3 cans"
+      },
+      {
+        "name": "Pie filling (apple, cherry) or pizza fillings",
+        "qty": "1 can or assorted"
+      }
     ],
     "pantry": [
-      "Canned soup",
-      "Bread"
+      {
+        "name": "Sliced bread",
+        "qty": "1 loaf"
+      },
+      {
+        "name": "Butter",
+        "qty": "½ cup, softened"
+      },
+      {
+        "name": "Shredded cheese (for savoury pies)",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Canned diced tomatoes or salsa (for savoury)",
+        "qty": "1 can"
+      }
     ],
-    "sides": [],
+    "sides": [
+      "Trail mix",
+      "Chips"
+    ],
     "recipe": [
-      "Heat soup on camp stove.",
-      "Butter bread outside, layer cheese and meat inside. Lock in pie iron.",
-      "Cook over coals 3 min per side until golden."
+      {
+        "step": "Heat soup in a pot over the camp stove, stirring occasionally — 8 min. Season to taste.",
+        "time": "8 min"
+      },
+      {
+        "step": "Preheat your pie iron (jaffle iron) over the fire for 2 min. Butter both sides generously.",
+        "time": "2 min"
+      },
+      {
+        "step": "Build your pie: butter one side of two bread slices. Place one slice butter-side against the hot iron, add filling in the centre (don't overfill), top with second slice butter-side out.",
+        "time": "2 min"
+      },
+      {
+        "step": "Close the iron and hold over medium embers — 3–4 min per side until deep golden and sealed. Check often — they burn fast.",
+        "time": "6 min"
+      },
+      {
+        "step": "Let pies cool 1 min before opening — the filling is extremely hot. Build assembly-line style so everyone gets hot pies.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 520,
@@ -3158,24 +7093,71 @@
     "cat": "camping",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Bacon",
-      "Butter"
+      {
+        "name": "Bacon",
+        "qty": "12 strips"
+      },
+      {
+        "name": "Eggs",
+        "qty": "8"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp"
+      }
     ],
     "pantry": [
-      "Potatoes",
-      "Peppers",
-      "Onion",
-      "Paprika",
-      "Oil"
+      {
+        "name": "Baby potatoes or pre-cooked potatoes",
+        "qty": "1.5 lb, halved"
+      },
+      {
+        "name": "Bell pepper",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Onion",
+        "qty": "1, diced"
+      },
+      {
+        "name": "Paprika",
+        "qty": "1 tsp"
+      },
+      {
+        "name": "Salt and pepper",
+        "qty": "generous amount"
+      },
+      {
+        "name": "Hot sauce",
+        "qty": "for serving"
+      }
     ],
     "sides": [
-      "Toast"
+      "Toast",
+      "Orange juice",
+      "Coffee"
     ],
     "recipe": [
-      "Par-cook diced potatoes in foil over coals 15–20 min.",
-      "Cook bacon crisp in cast iron. Add potatoes to fat — let get crispy.",
-      "Add peppers and onion 4–5 min. Make wells, scramble eggs in."
+      {
+        "step": "Get camp stove or grill up to medium heat. In a large cast iron pan, cook bacon until crispy — 6 min. Remove to a plate, keep the fat.",
+        "time": "6 min"
+      },
+      {
+        "step": "Add potatoes cut-side down to the bacon fat. Don't stir — press down and let them get a crust — 6 min. Flip and repeat.",
+        "time": "12 min"
+      },
+      {
+        "step": "Add butter, pepper, onion and garlic powder. Stir and cook 4 min until softened.",
+        "time": "4 min"
+      },
+      {
+        "step": "Push everything to the edges. Crack eggs directly into the centre. Cover loosely with foil and cook until whites are just set — 4 min.",
+        "time": "4 min"
+      },
+      {
+        "step": "Crumble bacon over everything. Season with salt and pepper. Serve straight from the pan with hot sauce.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 540,
@@ -3196,22 +7178,66 @@
     "cat": "camping",
     "crockpot": false,
     "fridge": [
-      "Eggs",
-      "Milk",
-      "Butter",
-      "Bacon"
+      {
+        "name": "Eggs",
+        "qty": "2"
+      },
+      {
+        "name": "Milk",
+        "qty": "1 cup"
+      },
+      {
+        "name": "Butter",
+        "qty": "3 tbsp, melted"
+      },
+      {
+        "name": "Bacon or breakfast sausage",
+        "qty": "1 lb"
+      }
     ],
     "pantry": [
-      "Pancake mix",
-      "Maple syrup"
+      {
+        "name": "Pancake mix (just-add-water style)",
+        "qty": "2 cups"
+      },
+      {
+        "name": "Maple syrup",
+        "qty": "for serving"
+      },
+      {
+        "name": "Oil or cooking spray",
+        "qty": "for the pan"
+      },
+      {
+        "name": "Fresh berries (if available)",
+        "qty": "1 cup"
+      }
     ],
     "sides": [
-      "Maple syrup"
+      "Coffee",
+      "Orange juice"
     ],
     "recipe": [
-      "Mix pancake batter per package.",
-      "Cook on buttered camp griddle over camp stove, 2 min per side.",
-      "Fry bacon in separate pan. Serve stacked with maple syrup."
+      {
+        "step": "Get camp stove to medium heat. Cook bacon until crispy — 4 min per side — or sausage 3–4 min per side. Keep warm wrapped in foil near the fire.",
+        "time": "8 min"
+      },
+      {
+        "step": "Mix pancake batter per package — most just-add-water mixes: 1 cup mix to ¾ cup water. For fluffier: use milk and eggs. Stir until just combined — lumps are fine.",
+        "time": "3 min"
+      },
+      {
+        "step": "Lightly grease pan or griddle with oil. Pour ¼ cup batter per pancake.",
+        "time": "1 min"
+      },
+      {
+        "step": "Cook until bubbles form on the surface and edges look set — 2–3 min. Flip once, cook 1–2 min more. Adjust heat as needed — camp stoves can be uneven.",
+        "time": "12 min"
+      },
+      {
+        "step": "Serve a stack with bacon and lots of maple syrup. The messier the better.",
+        "time": "1 min"
+      }
     ],
     "macros": {
       "cal": 520,
