@@ -677,7 +677,7 @@
         <button onclick="regenerateFamilyId()" style="background:none;border:none;font-size:12px;color:var(--indulgent);font-weight:600;cursor:pointer;padding:4px 0">Reset</button>
       </div>
     </div>
-    <div class="t-label px-16 mb-8">Coordinator link (you)</div>
+    <div class="t-label px-16 mb-8">Coordinator link — add this to your home screen</div>
     <div class="inset-list mb-8">
       <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:8px">
         <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-coord-url">—</div>
@@ -699,7 +699,7 @@
         <strong style="color:var(--ink2)">Important:</strong> Open your coordinator link in Safari first (the one with ?fid= in it), then add to home screen. The app remembers your family ID after the first open, so the home screen icon will always connect to your data.
       </div>
     </div>
-    <div class="t-label px-16 mb-8">Family app link (Seth, Jared etc)</div>
+    <div class="t-label px-16 mb-8">Family app link — send this to Seth, Jared etc</div>
     <div class="inset-list mb-8">
       <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:6px">
         <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-family-url">—</div>
@@ -711,8 +711,8 @@
     </div>
     <div style="padding:0 16px">
       <p class="t-sec" style="line-height:1.6;font-size:12px">
-        <strong style="color:var(--ink)">Bookmark your coordinator link</strong> — it has your family ID in it. If you open the app without the link you'll see a different empty state.<br><br>
-        <strong style="color:var(--ink)">Send the family link to everyone</strong> once. They bookmark it or add it to their home screen. That's all the setup they need.
+        <strong style="color:var(--ink)">Add coordinator link to home screen</strong> — tap the link, it opens the app. Then tap Share → Add to Home Screen. Your family ID is preserved through the redirect.<br><br>
+        <strong style="color:var(--ink)">Send the family link to Seth and Jared</strong> — same process. They open it once, add to home screen, done.
       </p>
     </div>
     <div style="height:24px"></div>
@@ -2071,6 +2071,7 @@ function renderSuggestionBadge() {
 
 function showSyncSheet() {
   const fid      = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || '—';
+  // Home screen URL — goes through Worker redirect, iOS preserves ?fid= on redirect
   const coordURL = Sync.getCoordinatorURL();
   const famURL   = Sync.getFamilyAppURL();
 
