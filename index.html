@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meal Planner">
@@ -21,7 +21,7 @@
 @keyframes sIn{from{transform:translateX(30%);opacity:0}to{transform:translateX(0);opacity:1}}
 </style>
 <style>
-#app{position:fixed;inset:0;overflow:hidden}
+#app{position:fixed;inset:0;overflow:hidden;overscroll-behavior:none}
 .nav-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px;flex-shrink:0}
 .nav-back{font-size:15px;font-weight:500;color:var(--blue);padding:8px 0;min-width:60px;cursor:pointer}
 .nav-title{font-size:17px;font-weight:600;color:var(--ink)}
@@ -82,7 +82,7 @@
 <!-- SCREEN 0: HOME -->
 <div id="screen-home" class="screen active">
   <div class="safe-top"></div>
-  <div class="scroll-body" id="home-scroll">
+  <div class="scroll-body" id="home-scroll" style="padding-bottom:max(100px, calc(80px + env(safe-area-inset-bottom,0px)))">
     <!-- First-run setup card — shown only when no family ID is set -->
     <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:14px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
@@ -220,10 +220,10 @@
 </div>
 
 <!-- SCREEN 4: SETTINGS -->
-<div id="screen-settings" class="screen gone">
+<div id="screen-settings" class="screen gone" style="display:flex;flex-direction:column">
   <div class="safe-top"></div>
   <div class="nav-bar"><span class="nav-back" onclick="goBack()"></span><span class="nav-title">Settings</span><span class="nav-action" onclick="goBack()">Done</span></div>
-  <div class="scroll-body">
+  <div class="scroll-body" style="padding-bottom:max(100px, calc(80px + env(safe-area-inset-bottom,0px)))">
     <div class="t-label px-16 mb-8">Family members</div>
     <div class="settings-group mb-8" id="settings-members"></div>
     <button class="btn btn-ghost btn-sm mb-16" onclick="openAddMember()">+ Add Family Member</button>
