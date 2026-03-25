@@ -893,6 +893,7 @@ async function boot() {
   // Synchronous check BEFORE async init — if localStorage has a family ID,
   // suppress the first-run card immediately (no flash)
   const storedFid = new URLSearchParams(window.location.search).get('fid')
+    || new URLSearchParams(window.location.hash.replace('#','')).get('fid')
     || localStorage.getItem('mp_family_id');
   if (storedFid) {
     document.getElementById('first-run-card')?.classList.add('hidden');
