@@ -698,7 +698,7 @@ async function submitSuggestion() {
       else { await navigator.clipboard?.writeText(r.url); showToast('Link copied — send to Dave'); }
     }
   } else {
-    const coordURL = window.location.origin + '/meal-planner/?suggestion=' +
+    const coordURL = window.location.origin + '/meal-planner/#suggestion=' +
       encodeURIComponent(btoa(JSON.stringify({ from: myName, type: suggestMode, content })));
     if (navigator.share) await navigator.share({ title: `${myName} suggested a meal`, url: coordURL });
     else { await navigator.clipboard?.writeText(coordURL); showToast('Link copied — send to Dave'); }
