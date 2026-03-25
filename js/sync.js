@@ -46,13 +46,25 @@ function isConnected()  { return !!_familyId; }
 
 function getCoordinatorURL() {
   if (!_familyId) return window.location.origin + '/meal-planner/';
-  // Use hash so iOS preserves it when adding to home screen
-  return window.location.origin + '/meal-planner/#fid=' + _familyId;
+  // Use Worker redirect URL — iOS preserves this when adding to home screen
+  // Worker redirects to the app with ?fid= intact
+  return _apiBase + '/launch/' + _familyId;
 }
 
 function getFamilyAppURL() {
   if (!_familyId) return window.location.origin + '/meal-planner/family.html';
-  return window.location.origin + '/meal-planner/family.html#fid=' + _familyId;
+  return _apiBase + '/launch-family/' + _familyId;
+}
+
+// Direct app URLs (for sharing as links, not home screen)
+function getCoordinatorDirectURL() {
+  if (!_familyId) return window.location.origin + '/meal-planner/';
+  return window.location.origin + '/meal-planner/?fid=' + _familyId;
+}
+
+function getFamilyAppDirectURL() {
+  if (!_familyId) return window.location.origin + '/meal-planner/family.html';
+  return window.location.origin + '/meal-planner/family.html?fid=' + _familyId;
 }
 
 // ── Pull — fetch latest state from server ─────────────────────────────────────
@@ -249,6 +261,7 @@ function setFamilyId(id) {
 export {
   init, getFamilyId, isConnected,
   getCoordinatorURL, getFamilyAppURL,
+  getCoordinatorDirectURL, getFamilyAppDirectURL,
   pull, push,
   pushWeekPlan, pushFamily, pushCustomMeals,
   sendPicks, sendSuggestion,
