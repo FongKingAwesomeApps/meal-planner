@@ -84,10 +84,16 @@
   <div class="safe-top"></div>
   <div class="scroll-body" id="home-scroll">
     <!-- First-run setup card — shown only when no family ID is set -->
-    <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:16px">
-      <div style="font-size:15px;font-weight:700;color:#8a4a00;margin-bottom:6px">👋 Set up family sync</div>
-      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:12px">Share a link with your family so everyone sees the same meal plan in real time.</div>
-      <button onclick="setupFamilySync()" style="background:#ff9500;color:#fff;border:none;border-radius:var(--r12);padding:11px 16px;font-family:inherit;font-size:14px;font-weight:600;width:100%;cursor:pointer">Generate Family Link</button>
+    <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:14px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+        <div style="font-size:15px;font-weight:700;color:#8a4a00">👋 Set up family sync</div>
+        <button onclick="dismissFirstRun()" style="background:none;border:none;font-size:18px;color:#8a4a00;cursor:pointer;padding:0;line-height:1;margin-left:8px">✕</button>
+      </div>
+      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:12px">Go to Settings → Family Links & Sync to get your coordinator link and share the family app link.</div>
+      <div style="display:flex;gap:8px">
+        <button onclick="dismissFirstRun()" style="flex:1;background:rgba(138,74,0,.15);color:#8a4a00;border:none;border-radius:var(--r12);padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Dismiss</button>
+        <button onclick="if(window.goTo)goTo('screen-settings')" style="flex:2;background:#ff9500;color:#fff;border:none;border-radius:var(--r12);padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Go to Settings →</button>
+      </div>
     </div>
     <div class="greeting">
       <div class="greeting-sub" id="home-greeting-sub">Good morning</div>
@@ -843,6 +849,7 @@ G.getEffectiveCat=getEffectiveCat;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
 G.setupFamilySync=setupFamilySync;
+G.dismissFirstRun=dismissFirstRun;
 G.showSyncSheet=showSyncSheet;
 G.copyCoordURL=copyCoordURL;
 G.showAddToHomeInstructions=showAddToHomeInstructions;
@@ -881,7 +888,7 @@ async function boot() {
       .catch(() => {});
   }
   await Sync.init();  // reads ?fid= from URL, pulls shared state
-  if (!Sync.isConnected()) {
+  if (!Sync.isConnected() && !localStorage.getItem('mp_first_run_dismissed')) {
     document.getElementById('first-run-card')?.classList.remove('hidden');
   }
   await Meals.loadMeals(Store.getCustomMeals());
@@ -2301,20 +2308,18 @@ function regenerateFamilyId() {
   showToast('New family ID generated');
 }
 
+function dismissFirstRun() {
+  document.getElementById('first-run-card')?.classList.add('hidden');
+  // Remember dismissed so it doesn't reappear
+  localStorage.setItem('mp_first_run_dismissed', '1');
+}
+
 function setupFamilySync() {
-  const id = Sync.generateFamilyId();
-  Sync.setFamilyId(id);
-  const coordURL  = Sync.getCoordinatorURL();
-  const familyURL = Sync.getFamilyAppURL();
-  document.getElementById('first-run-card').classList.add('hidden');
-  // Share both URLs
-  const msg = 'Meal Planner family links:\n\nCoordinator (you):\n' + coordURL + '\n\nFamily app (Seth, Jared etc):\n' + familyURL;
-  if (navigator.share) {
-    navigator.share({ title: 'Meal Planner Links', text: msg });
-  } else {
-    navigator.clipboard?.writeText(msg).then(() => showToast('Links copied to clipboard'));
-  }
-  showToast('Family sync set up! ID: ' + id);
+  // Just go to Settings → Family Links & Sync
+  // Don't auto-generate — user should do this deliberately
+  dismissFirstRun();
+  if (window.goTo) goTo('screen-settings');
+  setTimeout(() => showSyncSheet(), 400);
 }
 
 function shareFamilyURL() {
