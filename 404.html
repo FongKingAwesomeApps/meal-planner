@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meal Planner</title>
+<style>
+  body { margin:0; background:#f2f2f7; display:flex; align-items:center; justify-content:center; height:100vh; font-family:-apple-system,sans-serif; }
+  .msg { text-align:center; color:#8e8e93; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="msg">Loading...</div>
+<script>
+  // Extract family ID from path
+  // Handles: /meal-planner/fam-xxxxx or /meal-planner/family/fam-xxxxx
+  const path = window.location.pathname;
+  const parts = path.split('/').filter(Boolean);
+  
+  // Find the fam- segment
+  const fidSegment = parts.find(p => p.startsWith('fam-'));
+  const isFamilyApp = parts.includes('family');
+
+  if (fidSegment) {
+    // Save to localStorage so app can read it
+    localStorage.setItem('mp_family_id', fidSegment);
+    
+    // Redirect to the correct app
+    const base = '/meal-planner/';
+    const dest = isFamilyApp 
+      ? base + 'family.html?fid=' + fidSegment
+      : base + '?fid=' + fidSegment;
+    
+    window.location.replace(dest);
+  } else {
+    // No family ID — just go to the app
+    window.location.replace('/meal-planner/');
+  }
+</script>
+</body>
+</html>
