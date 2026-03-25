@@ -46,14 +46,14 @@ function isConnected()  { return !!_familyId; }
 
 function getCoordinatorURL() {
   if (!_familyId) return window.location.origin + '/meal-planner/';
-  // Use Worker redirect URL — iOS preserves this when adding to home screen
-  // Worker redirects to the app with ?fid= intact
-  return _apiBase + '/launch/' + _familyId;
+  // Path-based URL — iOS preserves paths when adding to home screen
+  // GitHub Pages serves 404.html which seeds localStorage and redirects
+  return window.location.origin + '/meal-planner/' + _familyId;
 }
 
 function getFamilyAppURL() {
   if (!_familyId) return window.location.origin + '/meal-planner/family.html';
-  return _apiBase + '/launch-family/' + _familyId;
+  return window.location.origin + '/meal-planner/family/' + _familyId;
 }
 
 // Direct app URLs (for sharing as links, not home screen)
