@@ -695,7 +695,9 @@
         2. Scroll down and tap <strong>"Add to Home Screen"</strong><br>
         3. Tap <strong>Add</strong> — done
       </div>
-      <div style="font-size:12px;color:var(--ink4);margin-top:8px">Make sure your coordinator link (with ?fid= in it) is in the address bar first.</div>
+      <div style="font-size:12px;color:var(--ink4);margin-top:8px">
+        <strong style="color:var(--ink2)">Important:</strong> Open your coordinator link in Safari first (the one with ?fid= in it), then add to home screen. The app remembers your family ID after the first open, so the home screen icon will always connect to your data.
+      </div>
     </div>
     <div class="t-label px-16 mb-8">Family app link (Seth, Jared etc)</div>
     <div class="inset-list mb-8">
@@ -887,8 +889,17 @@ async function boot() {
       })
       .catch(() => {});
   }
+
+  // Synchronous check BEFORE async init — if localStorage has a family ID,
+  // suppress the first-run card immediately (no flash)
+  const storedFid = new URLSearchParams(window.location.search).get('fid')
+    || localStorage.getItem('mp_family_id');
+  if (storedFid) {
+    document.getElementById('first-run-card')?.classList.add('hidden');
+  }
+
   await Sync.init();  // reads ?fid= from URL, pulls shared state
-  if (!Sync.isConnected() && !localStorage.getItem('mp_first_run_dismissed')) {
+  if (!Sync.isConnected() && !localStorage.getItem('mp_first_run_dismissed') && !storedFid) {
     document.getElementById('first-run-card')?.classList.remove('hidden');
   }
   await Meals.loadMeals(Store.getCustomMeals());
