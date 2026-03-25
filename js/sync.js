@@ -26,8 +26,10 @@ const PULL_INTERVAL_MS = 30_000; // pull at most every 30 seconds
 // ── Init ──────────────────────────────────────────────────────────────────────
 // Call once on app boot. Reads familyId from URL params.
 async function init() {
+  // Read fid from query string OR hash (hash is preserved by iOS when adding to home screen)
   const params = new URLSearchParams(window.location.search);
-  _familyId = params.get('fid') || localStorage.getItem('mp_family_id') || null;
+  const hashParams = new URLSearchParams(window.location.hash.replace('#',''));
+  _familyId = params.get('fid') || hashParams.get('fid') || localStorage.getItem('mp_family_id') || null;
 
   if (_familyId) {
     // Persist so it survives navigation
@@ -44,12 +46,13 @@ function isConnected()  { return !!_familyId; }
 
 function getCoordinatorURL() {
   if (!_familyId) return window.location.origin + '/meal-planner/';
-  return window.location.origin + '/meal-planner/?fid=' + _familyId;
+  // Use hash so iOS preserves it when adding to home screen
+  return window.location.origin + '/meal-planner/#fid=' + _familyId;
 }
 
 function getFamilyAppURL() {
   if (!_familyId) return window.location.origin + '/meal-planner/family.html';
-  return window.location.origin + '/meal-planner/family.html?fid=' + _familyId;
+  return window.location.origin + '/meal-planner/family.html#fid=' + _familyId;
 }
 
 // ── Pull — fetch latest state from server ─────────────────────────────────────
@@ -236,9 +239,10 @@ function generateFamilyId() {
 function setFamilyId(id) {
   _familyId = id;
   localStorage.setItem('mp_family_id', id);
-  // Update URL without reload
+  // Write to BOTH query string and hash so it works in browser and PWA
   const url = new URL(window.location.href);
   url.searchParams.set('fid', id);
+  url.hash = 'fid=' + id;
   window.history.replaceState({}, '', url.toString());
 }
 
