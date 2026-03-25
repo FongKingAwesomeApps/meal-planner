@@ -81,7 +81,8 @@ input, select, textarea { font-family: inherit; }
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 24px;
+  overscroll-behavior-y: contain;
+  padding-bottom: max(80px, calc(60px + env(safe-area-inset-bottom, 0px)));
 }
 .scroll-body::-webkit-scrollbar { display: none; }
 
