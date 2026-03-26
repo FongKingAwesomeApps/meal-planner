@@ -1621,7 +1621,7 @@ function renderFilterChips() {
   `;
 
   // Row 2: Categories
-  let catsHtml = '<div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>';
+  let catsHtml = `<div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>`;
   builtin.filter(c => c !== 'crockpot').forEach(cat => {
     catsHtml += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
   });
