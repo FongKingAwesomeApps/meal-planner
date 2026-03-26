@@ -267,4 +267,17 @@ export {
   sendPicks, sendSuggestion,
   subscribePush,
   generateFamilyId, setFamilyId,
+  notifyFamily,
 };
+
+// Notify family members when plan is published or picks approved
+async function notifyFamily(familyId, notification) {
+  if (!familyId) return;
+  try {
+    await fetch(\`\${_apiBase}/family/\${familyId}/notify-family\`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(notification),
+    });
+  } catch(e) { console.warn('notifyFamily failed:', e.message); }
+}
