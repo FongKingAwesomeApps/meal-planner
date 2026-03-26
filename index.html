@@ -866,6 +866,7 @@ G.getFavourites=getFavourites;
 G.onAddNameInput=onAddNameInput;
 G.renderMeals=renderMeals;
 G.renderMealsBalanceBar=renderMealsBalanceBar;
+G.loadPicksFromWorker=loadPicksFromWorker;
 G.openEditMeal=openEditMeal;
 G.selectEditRating=selectEditRating;
 G.saveEditMeal=saveEditMeal;
@@ -933,8 +934,18 @@ async function boot() {
     document.getElementById('first-run-card')?.classList.remove('hidden');
   }
   await Meals.loadMeals(Store.getCustomMeals());
+
+  // Check URL for picks first, then fall back to Worker
   const incoming = parsePicksFromURL();
-  if (incoming) { pendingPicks = incoming; clearPicksFromURL(); showPendingPicks(); }
+  if (incoming) {
+    pendingPicks = incoming;
+    clearPicksFromURL();
+    showPendingPicks();
+  } else if (Sync.isConnected()) {
+    // Pull pending picks from Worker
+    loadPicksFromWorker();
+  }
+
   checkForSuggestion();
   renderSuggestionBadge();
   updateGreeting();
@@ -1105,6 +1116,71 @@ function renderHomeMealList() {
 }
 
 // ── Pending picks ─────────────────────────────────────────────────────────────
+async function loadPicksFromWorker() {
+  try {
+    const fid = Sync.getFamilyId();
+    if (!fid) return;
+    const res   = await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid);
+    const data  = await res.json();
+    const picks = (data.picks || []).filter(p => p.status === 'pending');
+    if (!picks.length) return;
+
+    // Show each person's picks — aggregate into UI
+    // Show the most recent pick set, or combine all pending
+    renderWorkerPicks(picks);
+    renderSuggestionBadge();
+
+    // Also load suggestions
+    if (data.suggestions?.length) {
+      const pending = data.suggestions.filter(s => s.status === 'pending');
+      if (pending.length) {
+        Store.saveSuggestions(pending);
+        renderSuggestionBadge();
+      }
+    }
+  } catch(e) {
+    console.warn('loadPicksFromWorker failed:', e.message);
+  }
+}
+
+function renderWorkerPicks(picks) {
+  if (!picks.length) return;
+
+  // Show picks alert on home screen
+  const area    = document.getElementById('home-picks-area');
+  const avatar  = document.getElementById('home-picks-avatar');
+  const nameEl  = document.getElementById('home-picks-name');
+  const subEl   = document.getElementById('home-picks-sub');
+  const chipsEl = document.getElementById('home-picks-chips');
+
+  if (!area) return;
+
+  // Multiple pickers — show count
+  const names     = [...new Set(picks.map(p => p.from))];
+  const allMealIds = [...new Set(picks.flatMap(p => p.mealIds))];
+
+  if (avatar) avatar.textContent = names[0][0].toUpperCase();
+  if (nameEl) nameEl.textContent = names.length > 1
+    ? `${names.length} family members sent picks`
+    : `${names[0]}'s picks`;
+  if (subEl)  subEl.textContent  = `${allMealIds.length} meals · tap to review`;
+  if (chipsEl) chipsEl.innerHTML = allMealIds.slice(0,5).map(id => {
+    const m = Meals.getMeal(id);
+    return `<span class="pick-chip">${m ? m.name : 'Meal ' + id}</span>`;
+  }).join('') + (allMealIds.length > 5 ? `<span class="pick-chip">+${allMealIds.length-5} more</span>` : '');
+
+  area.classList.remove('hidden');
+
+  // Store picks locally so approval sheet can access them
+  // Use first pending pick as pendingPicks for approve sheet
+  pendingPicks = {
+    name:    names.length > 1 ? names.join(', ') : names[0],
+    mealIds: allMealIds,
+    from:    picks,   // store full picks array for multi-person display
+    _fromWorker: true,
+  };
+}
+
 function showPendingPicks() {
   if(!pendingPicks)return;
   // Auto-approve picks from coordinator-tier members
@@ -1132,15 +1208,35 @@ function renderApproveSheet() {
     document.getElementById('approve-sheet-body').innerHTML='<div class="empty-state"><div class="empty-icon">✓</div><div class="empty-title">No pending picks</div></div>';
     return;
   }
-  document.getElementById('approve-sheet-title').textContent=`${pendingPicks.name}'s Picks`;
-  const cards=pendingPicks.mealIds.map((id,i)=>{
-    const m=Meals.getMeal(id); if(!m)return'';
-    return`<div class="approve-card" id="apc-${i}">
-      <div class="approve-card-header"><div><div class="approve-card-from">${pendingPicks.name} suggested</div><div class="approve-card-name">${m.name}</div></div>${rPill(m.health)}</div>
-      <div class="approve-btns"><button class="btn-approve" onclick="approvePickMeal(${i},${id})">✓ Add to week</button><button class="btn-skip" onclick="skipPickMeal(${i})">Skip</button></div>
-    </div>`;
-  }).join('');
-  document.getElementById('approve-sheet-body').innerHTML=cards+`
+  document.getElementById('approve-sheet-title').textContent = 'Family Picks';
+
+  // Handle worker picks (multi-person)
+  const allPicks = pendingPicks._fromWorker ? pendingPicks.from : [pendingPicks];
+  let cards = '';
+  let cardIdx = 0;
+
+  allPicks.forEach(pick => {
+    const fromName = pick.from || pendingPicks.name;
+    const member = Store.getMemberByName(fromName);
+    const colour = member?.colour || '#8e8e93';
+    if (pick.message) {
+      cards += `<div style="margin:4px 16px 0;background:var(--bg);border-radius:var(--r10);padding:8px 12px;font-size:12px;color:var(--ink4)">${fromName}: "${pick.message}"</div>`;
+    }
+    (pick.mealIds || []).forEach(id => {
+      const m = Meals.getMeal(id); if(!m) return;
+      const i = cardIdx++;
+      cards += `<div class="approve-card" id="apc-${i}">
+        <div class="approve-card-header">
+          <div style="width:28px;height:28px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">${fromName[0]}</div>
+          <div style="flex:1"><div class="approve-card-from">${fromName}</div><div class="approve-card-name">${m.name}</div></div>
+          ${rPill(m.health)}
+        </div>
+        <div class="approve-btns"><button class="btn-approve" onclick="approvePickMeal(${i},${id})">✓ Add to week</button><button class="btn-skip" onclick="skipPickMeal(${i})">Skip</button></div>
+      </div>`;
+    });
+  });
+
+  document.getElementById('approve-sheet-body').innerHTML = cards + `
     <div style="display:flex;gap:8px;padding:8px 16px 40px">
       <button style="flex:1;background:var(--bg2);color:var(--ink4);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;cursor:pointer" onclick="closeSheet()">Done</button>
       <button style="flex:2;background:var(--green);color:#fff;border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer" onclick="approveAllPicks()">Approve All</button>
