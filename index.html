@@ -1298,10 +1298,7 @@ async function approveAllPicks() {
   renderHomeBalance();
   renderHomeMealList();
 }
-function skipPickMeal(i) {
-  const c=document.getElementById(`apc-${i}`);
-  if(c){c.style.opacity='.3';c.style.pointerEvents='none';}
-}
+
 function approveAllPicks() {
   if(!pendingPicks)return;
   pendingPicks.mealIds.forEach((id,i)=>{selected[id]={pax:4};skipPickMeal(i);});
