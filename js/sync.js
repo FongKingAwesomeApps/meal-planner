@@ -274,7 +274,7 @@ export {
 async function notifyFamily(familyId, notification) {
   if (!familyId) return;
   try {
-    await fetch(\`\${_apiBase}/family/\${familyId}/notify-family\`, {
+    await fetch(`${_apiBase}/family/${familyId}/notify-family`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify(notification),
