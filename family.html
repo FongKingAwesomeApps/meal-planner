@@ -191,6 +191,87 @@
       </div>
     </div>
 
+    <!-- SETTINGS TAB -->
+    <div id="tab-settings" class="hidden" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:80px">
+      <div style="padding:16px 16px 8px">
+        <div style="font-size:17px;font-weight:700;color:var(--ink)">Settings</div>
+      </div>
+
+      <!-- Who am I -->
+      <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:0 16px 8px">Profile</div>
+      <div style="background:var(--surface);border-radius:var(--r16);margin:0 16px 16px;overflow:hidden">
+        <div style="padding:14px 16px;display:flex;align-items:center;gap:12px">
+          <div id="settings-avatar" style="width:44px;height:44px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0">?</div>
+          <div style="flex:1">
+            <div style="font-size:16px;font-weight:600;color:var(--ink)" id="settings-name">—</div>
+            <div style="font-size:12px;color:var(--ink4);margin-top:2px" id="settings-role">—</div>
+          </div>
+          <button onclick="switchUser()" style="background:var(--bg2);border:none;border-radius:10px;padding:8px 14px;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer">Switch</button>
+        </div>
+      </div>
+
+      <!-- Family connection -->
+      <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:0 16px 8px">Family Connection</div>
+      <div style="background:var(--surface);border-radius:var(--r16);margin:0 16px 16px;overflow:hidden">
+        <div style="padding:14px 16px">
+          <div style="font-size:13px;color:var(--ink4);margin-bottom:6px">Family ID</div>
+          <div style="font-size:15px;font-weight:700;color:var(--ink);font-family:monospace;margin-bottom:12px" id="settings-fid">Not connected</div>
+          <div style="font-size:13px;color:var(--ink4);margin-bottom:6px">Enter or change family code</div>
+          <div style="display:flex;gap:8px">
+            <input id="settings-fid-input" type="text" placeholder="fam-xxxxxxxx"
+              style="flex:1;padding:10px 12px;border:1.5px solid var(--sep);border-radius:10px;font-size:14px;font-family:inherit;background:var(--bg);color:var(--ink);outline:none"
+              autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false">
+            <button onclick="saveSettingsFid()" style="background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">Connect</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:0 16px 8px">Notifications</div>
+      <div style="background:var(--surface);border-radius:var(--r16);margin:0 16px 16px;overflow:hidden">
+        <div style="padding:14px 16px;display:flex;align-items:center;gap:12px" onclick="toggleFamilyNotif()">
+          <div style="width:36px;height:36px;border-radius:10px;background:#fff0f5;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff2d55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:500;color:var(--ink)">Meal plan updates</div>
+            <div style="font-size:12px;color:var(--ink4);margin-top:2px" id="family-notif-status">Tap to enable</div>
+          </div>
+          <div id="family-notif-toggle" style="width:51px;height:31px;border-radius:16px;background:var(--bg2);position:relative;transition:background .2s;cursor:pointer;flex-shrink:0">
+            <div id="family-notif-thumb" style="position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home screen setup -->
+      <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:0 16px 8px">Add to Home Screen</div>
+      <div style="background:var(--surface);border-radius:var(--r16);margin:0 16px 16px;padding:14px 16px">
+        <div style="font-size:13px;color:var(--ink2);line-height:1.7">
+          1. Tap the <strong>Share button</strong> in Safari (box with arrow)<br>
+          2. Tap <strong>"Add to Home Screen"</strong><br>
+          3. Open from home screen<br>
+          4. If asked for a code, enter your family ID above
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:0 16px 8px">Help</div>
+      <div style="background:var(--surface);border-radius:var(--r16);margin:0 16px 16px;padding:0 16px">
+        <details style="border-bottom:1px solid var(--sep)"><summary style="font-size:15px;font-weight:500;color:var(--ink);padding:14px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between">How do I pick meals? <span style="color:var(--ink5)">+</span></summary>
+        <p style="font-size:13px;color:var(--ink4);line-height:1.6;padding-bottom:12px">Tap the Pick tab, select your meals, then tap Send. The coordinator gets notified and adds them to the week plan.</p></details>
+
+        <details style="border-bottom:1px solid var(--sep)"><summary style="font-size:15px;font-weight:500;color:var(--ink);padding:14px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between">Why are some meals locked? <span style="color:var(--ink5)">+</span></summary>
+        <p style="font-size:13px;color:var(--ink4);line-height:1.6;padding-bottom:12px">You've hit your weekly limit for that meal type. For example, if you've already picked your maximum Indulgent meal, all other Indulgent meals lock. Deselect one to swap.</p></details>
+
+        <details style="border-bottom:1px solid var(--sep)"><summary style="font-size:15px;font-weight:500;color:var(--ink);padding:14px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between">How do I suggest a new meal? <span style="color:var(--ink5)">+</span></summary>
+        <p style="font-size:13px;color:var(--ink4);line-height:1.6;padding-bottom:12px">Tap the Suggest tab. You can describe a meal or paste a link from YouTube, AllRecipes, or anywhere. The coordinator reviews it and can build it into the recipe library.</p></details>
+
+        <details><summary style="font-size:15px;font-weight:500;color:var(--ink);padding:14px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between">How do I see what's for dinner? <span style="color:var(--ink5)">+</span></summary>
+        <p style="font-size:13px;color:var(--ink4);line-height:1.6;padding-bottom:12px">Tap the Plan tab to see the full week's meal plan. Tap any meal to see the recipe.</p></details>
+      </div>
+
+    </div>
+
     <!-- Tab bar -->
     <div class="tabbar" id="family-tabbar">
       <div class="tab" onclick="fTab('pick')">
@@ -204,6 +285,10 @@
       <div class="tab" onclick="fTab('suggest')">
         <div class="tab-icon-bg" id="ftab-icon-suggest"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
         <div class="tab-lbl" id="ftab-lbl-suggest">Suggest</div>
+      </div>
+      <div class="tab" onclick="fTab('settings')">
+        <div class="tab-icon-bg" id="ftab-icon-settings"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+        <div class="tab-lbl" id="ftab-lbl-settings">Settings</div>
       </div>
     </div>
   </div>
@@ -259,13 +344,83 @@ const G = window;
 G.fF=fF;
 G.connectFamilyCode=connectFamilyCode;
 G.fToggleFav=fToggleFav;
-G.toggleFamilyNotif=toggleFamilyNotif; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=pickName;
+G.toggleFamilyNotif=toggleFamilyNotif;
+G.saveSettingsFid=saveSettingsFid;
+G.switchUser=switchUser; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=pickName;
 G.cSheet=cSheet; G.showToast=showToast; G.fTab=fTab;
 G.setSuggestMode=setSuggestMode; G.submitSuggestion=submitSuggestion;
 G.setPartner=setPartner;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
-async function toggleFamilyNotif() {
+async function renderSettingsTab() {
+  // Profile
+  const member = myName ? Store.getMemberByName(myName) : null;
+  const avatarEl = document.getElementById('settings-avatar');
+  const nameEl   = document.getElementById('settings-name');
+  const roleEl   = document.getElementById('settings-role');
+  if (avatarEl && member) {
+    avatarEl.textContent = member.name[0];
+    avatarEl.style.background = member.colour || 'var(--blue)';
+  }
+  if (nameEl) nameEl.textContent = myName || 'Not selected';
+  if (roleEl) roleEl.textContent = member?.role || '—';
+
+  // Family ID
+  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || '';
+  const fidEl = document.getElementById('settings-fid');
+  if (fidEl) fidEl.textContent = fid || 'Not connected';
+  const fidInput = document.getElementById('settings-fid-input');
+  if (fidInput && fid) fidInput.value = fid;
+
+  // Notification status
+  initFamilyNotifStatus();
+}
+
+async function initFamilyNotifStatus() {
+  const statusEl = document.getElementById('family-notif-status');
+  const toggle   = document.getElementById('family-notif-toggle');
+  const thumb    = document.getElementById('family-notif-thumb');
+
+  if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+    if (statusEl) statusEl.textContent = 'Not supported on this device';
+    return;
+  }
+  if (Notification.permission === 'denied') {
+    if (statusEl) statusEl.textContent = 'Blocked — enable in Safari Settings';
+    return;
+  }
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    const on  = !!sub;
+    if (toggle) toggle.style.background = on ? 'var(--green)' : 'var(--bg2)';
+    if (thumb)  thumb.style.transform   = on ? 'translateX(20px)' : 'translateX(0)';
+    if (statusEl) statusEl.textContent  = on ? 'On — you'll be notified when the plan is set' : 'Off — tap to enable';
+  } catch(e) {
+    if (statusEl) statusEl.textContent = 'Tap to enable';
+  }
+}
+
+function saveSettingsFid() {
+  const input = document.getElementById('settings-fid-input');
+  const raw   = (input?.value || '').trim().toLowerCase();
+  const match = raw.match(/fam-[a-z0-9]+/);
+  if (!match) { showToast('Enter a valid code e.g. fam-rqrvsmp8'); return; }
+  Sync.setFamilyId(match[0]);
+  document.getElementById('settings-fid').textContent = match[0];
+  showToast('Connected ✓');
+  Sync.pull().catch(()=>{});
+}
+
+function switchUser() {
+  myName   = '';
+  myMember = null;
+  sel.clear();
+  document.getElementById('screen-app').classList.add('hidden');
+  document.getElementById('screen-name').classList.remove('hidden');
+}
+
+function toggleFamilyNotif() {
   if (!Sync.isConnected()) { showToast('Connect to family first'); return; }
   if (!('Notification' in window) || !('serviceWorker' in navigator)) {
     showToast('Notifications not supported here'); return;
@@ -274,13 +429,30 @@ async function toggleFamilyNotif() {
     showToast('Enable notifications in Safari Settings'); return;
   }
   try {
-    const result = await Sync.subscribePush(myName || 'Family', 'family');
-    if (result.ok) {
-      const btn = document.getElementById('family-notif-btn');
-      if (btn) btn.style.color = 'var(--blue)';
-      showToast("Notifications on — you'll hear when the plan is set");
+    const reg = await navigator.serviceWorker.ready;
+    const existing = await reg.pushManager.getSubscription();
+    if (existing) {
+      // Turn off
+      await existing.unsubscribe();
+      const toggle = document.getElementById('family-notif-toggle');
+      const thumb  = document.getElementById('family-notif-thumb');
+      if (toggle) toggle.style.background = 'var(--bg2)';
+      if (thumb)  thumb.style.transform   = 'translateX(0)';
+      document.getElementById('family-notif-status').textContent = 'Off — tap to enable';
+      showToast('Notifications off');
     } else {
-      showToast('Could not enable: ' + (result.reason || 'unknown'));
+      // Turn on
+      const result = await Sync.subscribePush(myName || 'Family', 'family');
+      if (result.ok) {
+        const toggle = document.getElementById('family-notif-toggle');
+        const thumb  = document.getElementById('family-notif-thumb');
+        if (toggle) toggle.style.background = 'var(--green)';
+        if (thumb)  thumb.style.transform   = 'translateX(20px)';
+        document.getElementById('family-notif-status').textContent = "On — you'll be notified when the plan is set";
+        showToast('Notifications on ✓');
+      } else {
+        showToast('Could not enable: ' + (result.reason || 'unknown'));
+      }
     }
   } catch(e) { showToast('Permission denied'); }
 }
@@ -601,11 +773,12 @@ function importPlan(encoded) {
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 function fTab(tab) {
   activeTab = tab;
-  ['pick','plan','suggest'].forEach(t => {
-    document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
-    document.getElementById(`ftab-icon-${t}`).classList.toggle('on', t === tab);
-    document.getElementById(`ftab-lbl-${t}`).classList.toggle('on', t === tab);
+  ['pick','plan','suggest','settings'].forEach(t => {
+    document.getElementById(`tab-${t}`)?.classList.toggle('hidden', t !== tab);
+    document.getElementById(`ftab-icon-${t}`)?.classList.toggle('on', t === tab);
+    document.getElementById(`ftab-lbl-${t}`)?.classList.toggle('on', t === tab);
   });
+  if (tab === 'settings') renderSettingsTab();
   if (tab === 'plan') {
     // Pull fresh plan from server before rendering
     if (Sync.isConnected()) {
