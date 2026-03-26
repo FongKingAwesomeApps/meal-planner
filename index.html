@@ -167,9 +167,10 @@
     </div>
     <div style="font-size:10px;color:var(--ink4);white-space:nowrap;min-width:60px;text-align:right" id="mbb-label">0 selected</div>
   </div>
-  <div class="chip-row" id="meals-filter-chips">
-    <!-- Populated dynamically by renderFilterChips() -->
-  </div>
+  <!-- Row 1: Health + Saved -->
+  <div class="chip-row" id="meals-filter-chips-top" style="padding-bottom:2px"></div>
+  <!-- Row 2: Categories -->
+  <div class="chip-row" id="meals-filter-chips-cats" style="padding-top:0"></div>
   <div class="scroll-body" id="meals-scroll" style="padding-bottom:90px"><div id="meals-list"></div></div>
   <div class="cta-float hidden" id="meals-cta">
     <button class="cta-btn" onclick="if(window.goTo)goTo('screen-list')">Build Shopping List <span class="cta-badge" id="meals-cta-count">0</span></button>
@@ -832,6 +833,8 @@ G.changePlanPax=changePlanPax; G.sendPlan=sendPlan;
 G.selectRating=selectRating; G.saveNewMeal=saveNewMeal; G.aiGenerateMeal=aiGenerateMeal;
 G.createBackupUI=createBackupUI; G.applyRestoreUI=applyRestoreUI;
 G.approvePickMeal=approvePickMeal; G.skipPickMeal=skipPickMeal; G.approveAllPicks=approveAllPicks;
+G.dismissAllPicks=dismissAllPicks;
+G.loadPicksFromWorker=loadPicksFromWorker;
 G.showToast=showToast;
 G.changeWeek=changeWeek;
 G.toggleFav=toggleFav;
@@ -894,6 +897,7 @@ async function boot() {
   await Meals.loadMeals(Store.getCustomMeals());
   const incoming = parsePicksFromURL();
   if (incoming) { pendingPicks = incoming; clearPicksFromURL(); showPendingPicks(); }
+  else if (Sync.isConnected()) { loadPicksFromWorker(); }
   checkForSuggestion();
   renderSuggestionBadge();
   updateGreeting();
@@ -1064,6 +1068,41 @@ function renderHomeMealList() {
 }
 
 // ── Pending picks ─────────────────────────────────────────────────────────────
+async function loadPicksFromWorker() {
+  try {
+    const fid = Sync.getFamilyId();
+    if (!fid) return;
+    const data = await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r=>r.json());
+    const picks = (data.picks||[]).filter(p => p.status === 'pending');
+    if (!picks.length) return;
+    renderWorkerPicks(picks);
+    if (data.suggestions?.length) {
+      const pending = data.suggestions.filter(s => s.status === 'pending');
+      if (pending.length) { Store.saveSuggestions(pending); renderSuggestionBadge(); }
+    }
+  } catch(e) { console.warn('loadPicksFromWorker:', e.message); }
+}
+
+function renderWorkerPicks(picks) {
+  const area    = document.getElementById('home-picks-area');
+  const avatar  = document.getElementById('home-picks-avatar');
+  const nameEl  = document.getElementById('home-picks-name');
+  const subEl   = document.getElementById('home-picks-sub');
+  const chipsEl = document.getElementById('home-picks-chips');
+  if (!area) return;
+  const names      = [...new Set(picks.map(p => p.from))];
+  const allMealIds = [...new Set(picks.flatMap(p => p.mealIds))];
+  if (avatar) avatar.textContent = names[0][0].toUpperCase();
+  if (nameEl) nameEl.textContent = names.length > 1 ? names.length + ' family members sent picks' : names[0] + "'s picks";
+  if (subEl)  subEl.textContent  = allMealIds.length + ' meals · tap to review';
+  if (chipsEl) chipsEl.innerHTML = allMealIds.slice(0,5).map(id => {
+    const m = Meals.getMeal(id);
+    return '<span class="pick-chip">' + (m ? m.name : 'Meal '+id) + '</span>';
+  }).join('') + (allMealIds.length > 5 ? '<span class="pick-chip">+' + (allMealIds.length-5) + ' more</span>' : '');
+  area.classList.remove('hidden');
+  pendingPicks = { name: names.length > 1 ? names.join(', ') : names[0], mealIds: allMealIds, from: picks, _fromWorker: true };
+}
+
 function showPendingPicks() {
   if(!pendingPicks)return;
   document.getElementById('home-picks-area').classList.remove('hidden');
@@ -1081,17 +1120,29 @@ function renderApproveSheet() {
     document.getElementById('approve-sheet-body').innerHTML='<div class="empty-state"><div class="empty-icon">✓</div><div class="empty-title">No pending picks</div></div>';
     return;
   }
-  document.getElementById('approve-sheet-title').textContent=`${pendingPicks.name}'s Picks`;
-  const cards=pendingPicks.mealIds.map((id,i)=>{
-    const m=Meals.getMeal(id); if(!m)return'';
-    return`<div class="approve-card" id="apc-${i}">
-      <div class="approve-card-header"><div><div class="approve-card-from">${pendingPicks.name} suggested</div><div class="approve-card-name">${m.name}</div></div>${rPill(m.health)}</div>
-      <div class="approve-btns"><button class="btn-approve" onclick="approvePickMeal(${i},${id})">✓ Add to week</button><button class="btn-skip" onclick="skipPickMeal(${i})">Skip</button></div>
-    </div>`;
-  }).join('');
-  document.getElementById('approve-sheet-body').innerHTML=cards+`
+  document.getElementById('approve-sheet-title').textContent = 'Family Picks';
+  const allPicks = pendingPicks._fromWorker ? pendingPicks.from : [pendingPicks];
+  let cards = '', cardIdx = 0;
+  allPicks.forEach(pick => {
+    const fromName = pick.from || pendingPicks.name;
+    const colour = Store.getMemberByName(fromName)?.colour || '#8e8e93';
+    if (pick.message) cards += `<div style="margin:4px 16px 0;background:var(--bg);border-radius:var(--r10);padding:8px 12px;font-size:12px;color:var(--ink4)">${fromName}: "${pick.message}"</div>`;
+    (pick.mealIds||[]).forEach(id => {
+      const m = Meals.getMeal(id); if (!m) return;
+      const i = cardIdx++;
+      cards += `<div class="approve-card" id="apc-${i}">
+        <div class="approve-card-header">
+          <div style="width:28px;height:28px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">${fromName[0]}</div>
+          <div style="flex:1"><div class="approve-card-from">${fromName}</div><div class="approve-card-name">${m.name}</div></div>
+          ${rPill(m.health)}
+        </div>
+        <div class="approve-btns"><button class="btn-approve" onclick="approvePickMeal(${i},${id})">✓ Add to week</button><button class="btn-skip" onclick="skipPickMeal(${i})">Skip</button></div>
+      </div>`;
+    });
+  });
+  document.getElementById('approve-sheet-body').innerHTML = cards + `
     <div style="display:flex;gap:8px;padding:8px 16px 40px">
-      <button style="flex:1;background:var(--bg2);color:var(--ink4);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;cursor:pointer" onclick="closeSheet()">Done</button>
+      <button style="flex:1;background:var(--bg2);color:var(--indulgent);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:13px;cursor:pointer" onclick="dismissAllPicks()">Dismiss All</button>
       <button style="flex:2;background:var(--green);color:#fff;border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer" onclick="approveAllPicks()">Approve All</button>
     </div>`;
 }
@@ -1101,22 +1152,49 @@ function approvePickMeal(i,id) {
   if(c){c.style.opacity='.4';c.style.pointerEvents='none';}
   selected[id]={pax:4}; Store.saveSelected(selected); showToast('Added to your meals');
 }
+function dismissAllPicks() {
+  if (!confirm('Dismiss all pending picks without adding them?')) return;
+  if (Sync.isConnected()) {
+    const fid = Sync.getFamilyId();
+    fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r=>r.json()).then(data => {
+      const updated = (data.picks||[]).map(p => ({...p, status:'dismissed'}));
+      return fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({picks: updated})
+      });
+    }).catch(()=>{});
+  }
+  pendingPicks = null;
+  document.getElementById('home-picks-area').classList.add('hidden');
+  closeSheet();
+  showToast('Picks dismissed');
+}
+
 function skipPickMeal(i) {
   const c=document.getElementById(`apc-${i}`);
   if(c){c.style.opacity='.3';c.style.pointerEvents='none';}
 }
-function approveAllPicks() {
-  if(!pendingPicks)return;
-  pendingPicks.mealIds.forEach((id,i)=>{selected[id]={pax:4};skipPickMeal(i);});
+async function approveAllPicks() {
+  if (!pendingPicks) return;
+  pendingPicks.mealIds.forEach((id,i) => { selected[id]={pax:4}; skipPickMeal(i); });
   Store.saveSelected(selected);
-  showToast(`All ${pendingPicks.mealIds.length} meals added`);
-  setTimeout(closeSheet,600);
-  pendingPicks=null;
+  if (Sync.isConnected()) {
+    try {
+      const fid  = Sync.getFamilyId();
+      const data = await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r=>r.json());
+      const updated = (data.picks||[]).map(p => ({...p, status:'approved'}));
+      await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({picks: updated})
+      });
+    } catch(e) { console.warn('approveAllPicks Worker update failed:', e.message); }
+  }
+  showToast('All ' + pendingPicks.mealIds.length + ' meals added');
+  setTimeout(closeSheet, 600);
+  pendingPicks = null;
   document.getElementById('home-picks-area').classList.add('hidden');
+  renderHomeBalance(); renderHomeMealList();
 }
-
-// ── Meal picker ───────────────────────────────────────────────────────────────
-function setFilter(f) {
   const isHealth = ['light','balanced','indulgent'].includes(f);
   const isCat    = f !== 'all' && f !== 'fav' && !isHealth;
   const isFav    = f === 'fav';
@@ -1140,7 +1218,7 @@ function setFilter(f) {
   }
 
   // Update chip visuals
-  document.querySelectorAll('#meals-filter-chips .chip').forEach(c=>{
+  document.querySelectorAll('#meals-filter-chips-top .chip, #meals-filter-chips-cats .chip').forEach(c=>{
     const cf=c.dataset.f;
     c.className='chip';
     c.style.background=''; c.style.color=''; c.style.border='';
@@ -1510,45 +1588,54 @@ function getCatLabel(cat) {
 // Render filter chips dynamically including any custom categories
 function renderFilterChips() {
   const { builtin, custom } = getAllCategories();
-  const el = document.getElementById('meals-filter-chips');
-  if (!el) return;
+  const topEl  = document.getElementById('meals-filter-chips-top');
+  const catsEl = document.getElementById('meals-filter-chips-cats');
+  if (!topEl || !catsEl) return;
 
-  let html = `
+  const bm = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>';
+
+  // Row 1: All, Saved, health ratings
+  topEl.innerHTML = `
     <div class="chip chip-active" data-f="all" onclick="setFilter('all')">All</div>
-    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Saved</div>
+    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a">${bm} Saved</div>
     <div class="chip chip-l" data-f="light" onclick="setFilter('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
     <div class="chip chip-b" data-f="balanced" onclick="setFilter('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
     <div class="chip chip-i" data-f="indulgent" onclick="setFilter('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
-    <div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>
   `;
 
-  // Builtin cats (except crockpot already added above)
+  // Row 2: Categories
+  let catsHtml = `<div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>`;
   builtin.filter(c => c !== 'crockpot').forEach(cat => {
-    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
+    catsHtml += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
   });
-
-  // Custom cats — slightly different style to distinguish
   custom.forEach(cat => {
-    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')" style="border:1px solid var(--blue);color:var(--blue);background:var(--blue-tint)">${getCatLabel(cat)}</div>`;
+    catsHtml += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')" style="border:1px solid var(--blue);color:var(--blue);background:var(--blue-tint)">${getCatLabel(cat)}</div>`;
+  });
+  catsEl.innerHTML = catsHtml;
+
+  // Apply active states across both rows
+  [topEl, catsEl].forEach(row => {
+    row.querySelectorAll('.chip').forEach(c => {
+      const cf = c.dataset.f;
+      c.className = 'chip';
+      c.style.background = ''; c.style.color = ''; c.style.border = '';
+      const isActiveHealth = cf === activeHealthFilter;
+      const isActiveCat    = cf === activeCatFilter;
+      const isActiveFav    = cf === 'fav' && activeFilter === 'fav';
+      const isActiveAll    = cf === 'all' && !activeHealthFilter && !activeCatFilter && activeFilter !== 'fav';
+      if (isActiveHealth || isActiveCat || isActiveFav || isActiveAll) {
+        c.classList.add('chip-active');
+      } else {
+        const rc = {light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf];
+        if (rc) c.classList.add(rc);
+        else if (cf === 'fav') { c.style.background='#ffeae9'; c.style.color='#a0201a'; }
+        else c.classList.add('chip-cat');
+      }
+    });
   });
 
-  el.innerHTML = html;
-
-  // Re-apply active state
-  el.querySelectorAll('.chip').forEach(c => {
-    if (c.dataset.f === activeFilter) {
-      c.classList.add('chip-active');
-      c.style.background = '';
-      c.style.color = '';
-      c.style.border = '';
-    }
-  });
-
-  // Also update the add-cat dropdown with any custom categories
   refreshCatDropdown();
 }
-
-// Refresh the category dropdown to include custom categories
 function refreshCatDropdown() {
   const sel = document.getElementById('add-cat');
   if (!sel) return;
