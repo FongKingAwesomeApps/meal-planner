@@ -420,7 +420,7 @@ function switchUser() {
   document.getElementById('screen-name').classList.remove('hidden');
 }
 
-function toggleFamilyNotif() {
+async function toggleFamilyNotif() {
   if (!Sync.isConnected()) { showToast('Connect to family first'); return; }
   if (!('Notification' in window) || !('serviceWorker' in navigator)) {
     showToast('Notifications not supported here'); return;
