@@ -69,6 +69,15 @@
 
   <!-- ── NAME PICKER SCREEN ───────────────────────────────────────────────── -->
   <div id="screen-name" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    <!-- First-run card — shown when no family ID in storage -->
+    <div id="family-first-run" class="hidden" style="margin:12px 16px;background:#fff8e6;border-radius:16px;padding:16px">
+      <div style="font-size:15px;font-weight:700;color:#8a4a00;margin-bottom:4px">👋 Enter your family code</div>
+      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:10px">Ask the coordinator for the family code — it looks like <span style="font-family:monospace;font-weight:700">fam-xxxxxxxx</span></div>
+      <input id="family-fid-input" type="text" placeholder="fam-xxxxxxxx"
+        style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid rgba(138,74,0,.3);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;color:#1c1c1e;margin-bottom:10px;outline:none"
+        autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false">
+      <button onclick="connectFamilyCode()" style="width:100%;background:#ff9500;color:#fff;border:none;border-radius:12px;padding:12px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">Connect →</button>
+    </div>
     <div style="padding:16px 16px 8px">
       <div style="font-size:13px;color:var(--ink4);margin-bottom:4px">Family meal planner</div>
       <div style="font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.3px">Who's picking?</div>
@@ -242,18 +251,38 @@ const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satur
 // Expose globals
 const G = window;
 G.fF=fF;
+G.connectFamilyCode=connectFamilyCode;
 G.fToggleFav=fToggleFav; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=pickName;
 G.cSheet=cSheet; G.showToast=showToast; G.fTab=fTab;
 G.setSuggestMode=setSuggestMode; G.submitSuggestion=submitSuggestion;
 G.setPartner=setPartner;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
+function connectFamilyCode() {
+  const input = document.getElementById('family-fid-input');
+  const raw = (input?.value || '').trim().toLowerCase();
+  const match = raw.match(/fam-[a-z0-9]+/);
+  if (!match) {
+    if (input) input.style.borderColor = '#ff3b30';
+    showToast('Enter a valid code e.g. fam-rqrvsmp8');
+    return;
+  }
+  Sync.setFamilyId(match[0]);
+  document.getElementById('family-first-run')?.classList.add('hidden');
+  showToast('Connected ✓');
+  Sync.pull().catch(()=>{});
+}
+
 async function boot() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/meal-planner/sw.js')
       .then(reg => reg.update()).catch(() => {});
   }
   await Sync.init();
+  // Show family code entry if no ID found
+  if (!Sync.isConnected()) {
+    document.getElementById('family-first-run')?.classList.remove('hidden');
+  }
   await Meals.loadMeals(Store.getCustomMeals());
   renderNameList();
   // Check for incoming suggestions result (from coordinator pushing plan URL)
