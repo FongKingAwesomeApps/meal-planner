@@ -153,7 +153,7 @@
     <span class="nav-back" onclick="goBack()">← Home</span>
     <span class="nav-title">Select Meals</span>
     <span class="nav-action" style="display:flex;align-items:center;gap:8px">
-      <span id="meals-selected-count" style="font-size:13px;font-weight:600;color:var(--blue)">0 selected</span>
+      <span id="meals-selected-count" style="font-size:13px;font-weight:600;color:var(--blue);cursor:pointer" onclick="confirmClearMeals()">0 selected ✕</span>
       <button onclick="openSheet('sheet-add-meal')" style="width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">+</button>
     </span>
   </div>
@@ -167,8 +167,13 @@
     </div>
     <div style="font-size:10px;color:var(--ink4);white-space:nowrap;min-width:60px;text-align:right" id="mbb-label">0 selected</div>
   </div>
-  <div class="chip-row" id="meals-filter-chips">
-    <!-- Populated dynamically by renderFilterChips() -->
+  <!-- Row 1: Health + Saved -->
+  <div class="chip-row" id="meals-filter-chips-top" style="padding-bottom:2px">
+    <!-- Populated by renderFilterChips() -->
+  </div>
+  <!-- Row 2: Categories -->
+  <div class="chip-row" id="meals-filter-chips-cats" style="padding-top:0">
+    <!-- Populated by renderFilterChips() -->
   </div>
   <div class="scroll-body" id="meals-scroll" style="padding-bottom:90px"><div id="meals-list"></div></div>
   <div class="cta-float hidden" id="meals-cta">
@@ -186,7 +191,7 @@
     <div id="shopping-list-body"></div>
     <div style="height:8px"></div>
     <button class="btn btn-dark btn-sm" onclick="shareShoppingList()">Share List</button>
-    <button class="btn btn-primary btn-sm" onclick="if(window.goTo)goTo('screen-plan')">Set Meal Plan →</button>
+
   </div>
 
 </div>
@@ -1102,6 +1107,16 @@ function renderHomeMealList() {
 // ── Pending picks ─────────────────────────────────────────────────────────────
 function showPendingPicks() {
   if(!pendingPicks)return;
+  // Auto-approve picks from coordinator-tier members
+  const member = Store.getMemberByName(pendingPicks.name);
+  if (member && member.role === 'Coordinator') {
+    pendingPicks.mealIds.forEach(id => { selected[id] = {pax:4}; });
+    Store.saveSelected(selected);
+    showToast(`${pendingPicks.name}'s picks added automatically`);
+    pendingPicks = null;
+    renderMeals(); renderHomeBalance(); renderHomeMealList();
+    return;
+  }
   document.getElementById('home-picks-area').classList.remove('hidden');
   document.getElementById('home-picks-avatar').textContent=pendingPicks.name[0].toUpperCase();
   document.getElementById('home-picks-name').textContent=`${pendingPicks.name}'s picks`;
@@ -1145,10 +1160,15 @@ function approveAllPicks() {
   if(!pendingPicks)return;
   pendingPicks.mealIds.forEach((id,i)=>{selected[id]={pax:4};skipPickMeal(i);});
   Store.saveSelected(selected);
+  // Mark picks as approved in Worker
+  if (Sync.isConnected()) {
+    fetch('https://meal-planner-api.davekingca.workers.dev/family/' + Sync.getFamilyId() + '/picks/clear', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:pendingPicks.name})}).catch(()=>{});
+  }
   showToast(`All ${pendingPicks.mealIds.length} meals added`);
   setTimeout(closeSheet,600);
   pendingPicks=null;
   document.getElementById('home-picks-area').classList.add('hidden');
+  localStorage.removeItem('mp_pending_picks');
 }
 
 // ── Meal picker ───────────────────────────────────────────────────────────────
@@ -1175,8 +1195,8 @@ function setFilter(f) {
     activeFilter = activeHealthFilter || activeCatFilter || 'all';
   }
 
-  // Update chip visuals
-  document.querySelectorAll('#meals-filter-chips .chip').forEach(c=>{
+  // Update chip visuals across both rows
+  document.querySelectorAll('#meals-filter-chips-top .chip, #meals-filter-chips-cats .chip').forEach(c=>{
     const cf=c.dataset.f;
     c.className='chip';
     c.style.background=''; c.style.color=''; c.style.border='';
@@ -1310,7 +1330,8 @@ function updateMealsCTA() {
   const n=Object.keys(selected).length;
   document.getElementById('meals-cta').classList.toggle('hidden',n===0);
   document.getElementById('meals-cta-count').textContent=n;
-  document.getElementById('meals-selected-count').textContent=`${n} selected`;
+  const countEl = document.getElementById('meals-selected-count');
+  if (countEl) countEl.textContent = n > 0 ? `${n} selected ✕` : '0 selected';
 }
 
 // ── Recipe sheet ──────────────────────────────────────────────────────────────
@@ -1342,33 +1363,71 @@ function openRecipe(id) {
 
 // ── Shopping list ─────────────────────────────────────────────────────────────
 function renderShoppingList() {
-  const body=document.getElementById('shopping-list-body');
-  const ids=Object.keys(selected).map(Number);
-  if(!ids.length){
-    body.innerHTML=`<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">No meals selected</div><div class="empty-sub">Go to Meals and select what you'd like to cook</div></div>`;
+  const body = document.getElementById('shopping-list-body');
+  const ids  = Object.keys(selected).map(Number);
+  if (!ids.length) {
+    body.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">No meals selected</div><div class="empty-sub">Go to Meals and select what you'd like to cook</div></div>`;
     return;
   }
-  const fridge={},pantry={};
-  ids.forEach(id=>{
-    const m=Meals.getMeal(id); if(!m)return;
-    (m.fridge||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!fridge[k]){fridge[k]={count:0,qty:q}}fridge[k].count++;});
-    (m.pantry||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!pantry[k]){pantry[k]={count:0,qty:q}}pantry[k].count++;});
+
+  // Collect ingredients — combine quantities when same item appears in multiple meals
+  const fridge = {}, pantry = {};
+
+  ids.forEach(id => {
+    const m = Meals.getMeal(id); if (!m) return;
+    const pax    = selected[id]?.pax || 4;
+    const factor = pax / 4; // scale from base 4 servings
+
+    const addItem = (store, i) => {
+      const name = typeof i === 'string' ? i : i.name;
+      const qty  = typeof i === 'object' ? i.qty || '' : '';
+      if (!name) return;
+      if (!store[name]) store[name] = { qtys: [], count: 0 };
+      store[name].count++;
+      if (qty) store[name].qtys.push(qty);
+    };
+
+    (m.fridge || []).forEach(i => addItem(fridge, i));
+    (m.pantry || []).forEach(i => addItem(pantry, i));
   });
-  const sec=(title,items)=>{
-    if(!Object.keys(items).length)return'';
-    const rows=Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([n,data])=>{const c=data.count;const qty=data.qty||'';
-      const key=n.toLowerCase().replace(/\W+/g,'_');
-      const done=checkedItems.has(key);
-      return`<div class="shop-row${done?' done':''}" onclick="toggleShopItem('${key}',this)">
-        <div class="shop-check">${done?'✓':''}</div>
-        <span class="shop-name">${n}</span>
-        ${qty?`<span class="shop-qty">${qty}</span>`:(c>1?`<span class="shop-qty">×${c}</span>`:'')}
-      </div>`;
-    }).join('');
-    return`<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
+
+  const sec = (title, items) => {
+    if (!Object.keys(items).length) return '';
+    const rows = Object.entries(items)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([name, data]) => {
+        const key  = name.toLowerCase().replace(/\W+/g, '_');
+        const done = checkedItems.has(key);
+        // Show quantity: if multiple qtys show first + count, if single show it, if none show ×count
+        const qtyDisplay = data.qtys.length > 0
+          ? data.count > 1
+            ? `${data.qtys[0]} ×${data.count}`
+            : data.qtys[0]
+          : data.count > 1
+            ? `×${data.count}`
+            : '';
+        return `<div class="shop-row${done ? ' done' : ''}" onclick="toggleShopItem('${key}', this)">
+          <div class="shop-check">${done ? '✓' : ''}</div>
+          <span class="shop-name">${name}</span>
+          ${qtyDisplay ? `<span class="shop-qty">${qtyDisplay}</span>` : ''}
+        </div>`;
+      }).join('');
+    return `<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
   };
-  body.innerHTML=sec('Dairy & Refrigerated',fridge)+sec('Pantry & Dry Goods',pantry);
+
+  // Free-text requests field
+  const savedRequests = localStorage.getItem('mp_shop_requests') || '';
+  const requestsSection = `
+    <div class="shop-section-title">Additional Items</div>
+    <div style="padding:0 16px 8px">
+      <textarea id="shop-requests" placeholder="Add anything else… e.g. birthday candles, dish soap"
+        style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid var(--sep);border-radius:var(--r12);font-family:inherit;font-size:14px;color:var(--ink);background:var(--surface);resize:none;min-height:72px;outline:none"
+        oninput="localStorage.setItem('mp_shop_requests', this.value)">${savedRequests}</textarea>
+    </div>`;
+
+  body.innerHTML = sec('Dairy & Refrigerated', fridge) + sec('Pantry & Dry Goods', pantry) + requestsSection;
 }
+
 function toggleShopItem(key,row) {
   checkedItems.has(key)?checkedItems.delete(key):checkedItems.add(key);
   row.classList.toggle('done',checkedItems.has(key));
@@ -1441,7 +1500,7 @@ function renderPlan() {
 
 function setPlanMeal(key,val) {
   if(!val){delete weekPlan[key];}else{weekPlan[key]={mealId:Number(val),pax:weekPlan[key]?.pax||4};}
-  Store.saveWeekPlan(weekPlan); Sync.pushWeekPlan(weekPlan).catch(()=>{}); renderPlan(); renderHomeMealList();
+  Store.saveWeekPlan(weekPlan); Sync.pushWeekPlan(weekPlan).then(()=>{ Sync.notifyFamily(Sync.getFamilyId(),{title:'🍽 Meal plan updated',body:'Check this week\'s plan',url:Sync.getFamilyAppURL()}).catch(()=>{}); }).catch(()=>{}); renderPlan(); renderHomeMealList();
 }
 function changePlanPax(key,d) {
   if(!weekPlan[key])return;
@@ -1546,41 +1605,55 @@ function getCatLabel(cat) {
 // Render filter chips dynamically including any custom categories
 function renderFilterChips() {
   const { builtin, custom } = getAllCategories();
-  const el = document.getElementById('meals-filter-chips');
-  if (!el) return;
+  const topEl  = document.getElementById('meals-filter-chips-top');
+  const catsEl = document.getElementById('meals-filter-chips-cats');
+  if (!topEl || !catsEl) return;
 
-  let html = `
+  const bookmarkSm = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>';
+
+  // Row 1: All, Saved, Light, Balanced, Indulgent
+  topEl.innerHTML = `
     <div class="chip chip-active" data-f="all" onclick="setFilter('all')">All</div>
-    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Saved</div>
+    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a">${bookmarkSm} Saved</div>
     <div class="chip chip-l" data-f="light" onclick="setFilter('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
     <div class="chip chip-b" data-f="balanced" onclick="setFilter('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
     <div class="chip chip-i" data-f="indulgent" onclick="setFilter('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
-    <div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>
   `;
 
-  // Builtin cats (except crockpot already added above)
+  // Row 2: Categories
+  let catsHtml = '<div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>';
   builtin.filter(c => c !== 'crockpot').forEach(cat => {
-    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
+    catsHtml += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
   });
-
-  // Custom cats — slightly different style to distinguish
   custom.forEach(cat => {
-    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')" style="border:1px solid var(--blue);color:var(--blue);background:var(--blue-tint)">${getCatLabel(cat)}</div>`;
+    catsHtml += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')" style="border:1px solid var(--blue);color:var(--blue);background:var(--blue-tint)">${getCatLabel(cat)}</div>`;
+  });
+  catsEl.innerHTML = catsHtml;
+
+  // Apply active states across both rows
+  [topEl, catsEl].forEach(row => {
+    row.querySelectorAll('.chip').forEach(c => {
+      const cf = c.dataset.f;
+      c.className = 'chip';
+      c.style.background = ''; c.style.color = ''; c.style.border = '';
+      const isActiveHealth = cf === activeHealthFilter;
+      const isActiveCat    = cf === activeCatFilter;
+      const isActiveFav    = cf === 'fav' && activeFilter === 'fav';
+      const isActiveAll    = cf === 'all' && !activeHealthFilter && !activeCatFilter && activeFilter !== 'fav';
+      if (isActiveHealth || isActiveCat || isActiveFav || isActiveAll) {
+        c.classList.add('chip-active');
+      } else {
+        const ratingCls = {light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf];
+        if (ratingCls) c.classList.add(ratingCls);
+        else if (cf === 'fav') { c.style.background='#ffeae9'; c.style.color='#a0201a'; }
+        else if (cf !== 'all' && !BUILTIN_CATS.includes(cf)) {
+          c.style.border='1px solid var(--blue)'; c.style.color='var(--blue)'; c.style.background='var(--blue-tint)';
+          c.classList.add('chip-cat');
+        } else c.classList.add('chip-cat');
+      }
+    });
   });
 
-  el.innerHTML = html;
-
-  // Re-apply active state
-  el.querySelectorAll('.chip').forEach(c => {
-    if (c.dataset.f === activeFilter) {
-      c.classList.add('chip-active');
-      c.style.background = '';
-      c.style.color = '';
-      c.style.border = '';
-    }
-  });
-
-  // Also update the add-cat dropdown with any custom categories
   refreshCatDropdown();
 }
 
@@ -2276,7 +2349,7 @@ function saveNewMember() {
 
 function confirmClearMeals() {
   const count = Object.keys(selected).length;
-  if (!count) { showToast('No meals selected'); return; }
+  if (!count) return; // silent if nothing selected
   if (!confirm(`Clear all ${count} selected meal${count>1?'s':''}?`)) return;
   selected = {};
   Store.saveSelected(selected);
