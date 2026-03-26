@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meal Planner">
@@ -21,7 +21,7 @@
 @keyframes sIn{from{transform:translateX(30%);opacity:0}to{transform:translateX(0);opacity:1}}
 </style>
 <style>
-#app{position:fixed;inset:0;overflow:hidden;overscroll-behavior:none}
+#app{position:fixed;inset:0;overflow:hidden}
 .nav-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px;flex-shrink:0}
 .nav-back{font-size:15px;font-weight:500;color:var(--blue);padding:8px 0;min-width:60px;cursor:pointer}
 .nav-title{font-size:17px;font-weight:600;color:var(--ink)}
@@ -82,17 +82,17 @@
 <!-- SCREEN 0: HOME -->
 <div id="screen-home" class="screen active">
   <div class="safe-top"></div>
-  <div class="scroll-body" id="home-scroll" style="padding-bottom:max(100px, calc(80px + env(safe-area-inset-bottom,0px)))">
+  <div class="scroll-body" id="home-scroll">
     <!-- First-run setup card — shown only when no family ID is set -->
-    <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:16px">
-      <div style="font-size:15px;font-weight:700;color:#8a4a00;margin-bottom:4px">👋 Connect to your family</div>
-      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:12px">Enter your family ID to connect. You'll find it in Settings → Family Links & Sync on the coordinator app.</div>
-      <input id="first-run-fid-input" type="text" placeholder="fam-xxxxxxxx"
-        style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid rgba(138,74,0,.3);border-radius:var(--r12);font-size:15px;font-family:inherit;background:#fff;color:var(--ink);margin-bottom:10px;outline:none"
-        autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false">
+    <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:14px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+        <div style="font-size:15px;font-weight:700;color:#8a4a00">👋 Set up family sync</div>
+        <button onclick="dismissFirstRun()" style="background:none;border:none;font-size:18px;color:#8a4a00;cursor:pointer;padding:0;line-height:1;margin-left:8px">✕</button>
+      </div>
+      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:12px">Go to Settings → Family Links & Sync to get your coordinator link and share the family app link.</div>
       <div style="display:flex;gap:8px">
-        <button onclick="dismissFirstRun()" style="flex:1;background:rgba(138,74,0,.15);color:#8a4a00;border:none;border-radius:var(--r12);padding:11px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Skip</button>
-        <button onclick="connectFamilyId()" style="flex:2;background:#ff9500;color:#fff;border:none;border-radius:var(--r12);padding:11px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">Connect →</button>
+        <button onclick="dismissFirstRun()" style="flex:1;background:rgba(138,74,0,.15);color:#8a4a00;border:none;border-radius:var(--r12);padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Dismiss</button>
+        <button onclick="if(window.goTo)goTo('screen-settings')" style="flex:2;background:#ff9500;color:#fff;border:none;border-radius:var(--r12);padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Go to Settings →</button>
       </div>
     </div>
     <div class="greeting">
@@ -153,7 +153,7 @@
     <span class="nav-back" onclick="goBack()">← Home</span>
     <span class="nav-title">Select Meals</span>
     <span class="nav-action" style="display:flex;align-items:center;gap:8px">
-      <span id="meals-selected-count" style="font-size:13px;font-weight:600;color:var(--blue);cursor:pointer" onclick="confirmClearMeals()">0 selected ✕</span>
+      <span id="meals-selected-count" style="font-size:13px;font-weight:600;color:var(--blue)">0 selected</span>
       <button onclick="openSheet('sheet-add-meal')" style="width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">+</button>
     </span>
   </div>
@@ -167,13 +167,8 @@
     </div>
     <div style="font-size:10px;color:var(--ink4);white-space:nowrap;min-width:60px;text-align:right" id="mbb-label">0 selected</div>
   </div>
-  <!-- Row 1: Health + Saved -->
-  <div class="chip-row" id="meals-filter-chips-top" style="padding-bottom:2px">
-    <!-- Populated by renderFilterChips() -->
-  </div>
-  <!-- Row 2: Categories -->
-  <div class="chip-row" id="meals-filter-chips-cats" style="padding-top:0">
-    <!-- Populated by renderFilterChips() -->
+  <div class="chip-row" id="meals-filter-chips">
+    <!-- Populated dynamically by renderFilterChips() -->
   </div>
   <div class="scroll-body" id="meals-scroll" style="padding-bottom:90px"><div id="meals-list"></div></div>
   <div class="cta-float hidden" id="meals-cta">
@@ -191,7 +186,7 @@
     <div id="shopping-list-body"></div>
     <div style="height:8px"></div>
     <button class="btn btn-dark btn-sm" onclick="shareShoppingList()">Share List</button>
-
+    <button class="btn btn-primary btn-sm" onclick="if(window.goTo)goTo('screen-plan')">Set Meal Plan →</button>
   </div>
 
 </div>
@@ -225,10 +220,10 @@
 </div>
 
 <!-- SCREEN 4: SETTINGS -->
-<div id="screen-settings" class="screen gone" style="display:flex;flex-direction:column">
+<div id="screen-settings" class="screen gone">
   <div class="safe-top"></div>
   <div class="nav-bar"><span class="nav-back" onclick="goBack()"></span><span class="nav-title">Settings</span><span class="nav-action" onclick="goBack()">Done</span></div>
-  <div class="scroll-body" style="padding-bottom:max(100px, calc(80px + env(safe-area-inset-bottom,0px)))">
+  <div class="scroll-body">
     <div class="t-label px-16 mb-8">Family members</div>
     <div class="settings-group mb-8" id="settings-members"></div>
     <button class="btn btn-ghost btn-sm mb-16" onclick="openAddMember()">+ Add Family Member</button>
@@ -668,78 +663,56 @@
     <div class="sheet-title">Family Links &amp; Sync</div>
     <button class="sheet-close" onclick="closeSheet()">✕</button>
   </div>
-  <div class="sheet-scroll" style="padding-bottom:48px">
-
-    <!-- Family ID -->
-    <div style="padding:8px 16px 4px">
-      <div class="t-label mb-8">Your family ID</div>
-      <div style="background:var(--bg);border-radius:var(--r12);padding:12px 14px;display:flex;align-items:center;gap:10px">
-        <div style="font-size:15px;font-weight:700;color:var(--ink);font-family:monospace;flex:1" id="sync-fid-display">—</div>
-        <button onclick="copyFamilyCode()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Copy Code</button>
-        <button onclick="regenerateFamilyId()" style="background:none;border:none;font-size:12px;color:var(--indulgent);font-weight:600;cursor:pointer;padding:4px 0;flex-shrink:0">Reset</button>
+  <div class="sheet-scroll" style="padding-bottom:40px">
+    <div style="padding:8px 16px 12px">
+      <p class="t-sec" style="line-height:1.6">Your family ID ties everyone together. Anyone with the right link sees the same meal plan in real time.</p>
+    </div>
+    <div class="t-label px-16 mb-8">Your family ID</div>
+    <div class="inset-list mb-8">
+      <div class="inset-row">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--ink);font-family:monospace" id="sync-fid-display">—</div>
+          <div style="font-size:11px;color:var(--ink4);margin-top:2px">This ID is unique to your family</div>
+        </div>
+        <button onclick="regenerateFamilyId()" style="background:none;border:none;font-size:12px;color:var(--indulgent);font-weight:600;cursor:pointer;padding:4px 0">Reset</button>
       </div>
     </div>
-
-    <!-- SECTION 1: Coordinator App -->
-    <div style="margin:16px 16px 0;background:var(--surface);border-radius:var(--r16);overflow:hidden">
-      <div style="padding:12px 14px 8px;background:var(--blue);color:#fff">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.8;margin-bottom:2px">1 · Coordinator App (you)</div>
-        <div style="font-size:13px;opacity:.9">For Dave &amp; Jenn — full planning access</div>
-      </div>
-      <div style="padding:12px 14px">
-        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">App Link</div>
-        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-coord-url">—</div>
-        <button onclick="copyCoordURL()" style="width:100%;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px">Copy App Link</button>
-
-        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Family Code</div>
-        <div style="font-size:15px;font-weight:700;color:var(--ink);font-family:monospace;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-coord-code">—</div>
-        <button onclick="copyFamilyCode()" style="width:100%;background:var(--bg2);color:var(--ink);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px">Copy Code</button>
-
-        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Setup Instructions</div>
-        <div style="background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:8px">
-          <div style="font-size:12px;color:var(--ink2);line-height:1.8">
-            1. Copy the App Link above<br>
-            2. Open it in Safari on your iPhone<br>
-            3. Tap Share → <strong>Add to Home Screen</strong><br>
-            4. Open the app from your home screen<br>
-            5. If asked for a family code, paste: <span style="font-family:monospace;font-weight:700" id="sync-coord-code-inline">—</span>
-          </div>
+    <div class="t-label px-16 mb-8">Coordinator link (you)</div>
+    <div class="inset-list mb-8">
+      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-coord-url">—</div>
+        <div style="display:flex;gap:8px;width:100%">
+          <button onclick="copyCoordURL()" style="flex:1;background:var(--bg2);color:var(--ink);border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>
+          <button onclick="if(window.showAddToHomeInstructions)showAddToHomeInstructions()" style="flex:2;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">📲 Save to Home Screen</button>
         </div>
-        <button onclick="copyCoordInstructions()" style="width:100%;background:var(--bg2);color:var(--ink);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Copy Instructions</button>
       </div>
     </div>
-
-    <!-- SECTION 2: Family App -->
-    <div style="margin:12px 16px 0;background:var(--surface);border-radius:var(--r16);overflow:hidden">
-      <div style="padding:12px 14px 8px;background:var(--green);color:#fff">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.8;margin-bottom:2px">2 · Family App</div>
-        <div style="font-size:13px;opacity:.9">For Seth, Jared, Michael, Rachael</div>
+    <!-- Add to home screen instructions — shown inline -->
+    <div id="add-home-instructions" class="hidden" style="margin:0 16px 12px;background:#e8f0ff;border-radius:var(--r12);padding:14px">
+      <div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:8px">Add to Home Screen</div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.7">
+        1. Tap the <strong>Share button</strong> at the bottom of Safari (the box with an arrow)<br>
+        2. Scroll down and tap <strong>"Add to Home Screen"</strong><br>
+        3. Tap <strong>Add</strong> — done
       </div>
-      <div style="padding:12px 14px">
-        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">App Link</div>
-        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-family-url">—</div>
-        <div style="display:flex;gap:8px;margin-bottom:8px">
-          <button onclick="copyFamilyURLFromSheet()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Copy Link</button>
-          <button onclick="shareFamilyURL()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;opacity:.8">Share</button>
+      <div style="font-size:12px;color:var(--ink4);margin-top:8px">Make sure your coordinator link (with ?fid= in it) is in the address bar first.</div>
+    </div>
+    <div class="t-label px-16 mb-8">Family app link (Seth, Jared etc)</div>
+    <div class="inset-list mb-8">
+      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:6px">
+        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-family-url">—</div>
+        <div style="display:flex;gap:8px;width:100%">
+          <button onclick="copyFamilyURLFromSheet()" style="flex:1;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy</button>
+          <button onclick="shareFamilyURL()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Share</button>
         </div>
-
-        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Family Code</div>
-        <div style="font-size:15px;font-weight:700;color:var(--ink);font-family:monospace;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-family-code">—</div>
-
-        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Setup Instructions</div>
-        <div style="background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:8px">
-          <div style="font-size:12px;color:var(--ink2);line-height:1.8">
-            1. Copy the App Link above and send it via iMessage<br>
-            2. Open it in Safari<br>
-            3. Tap Share → <strong>Add to Home Screen</strong><br>
-            4. Open the app from home screen<br>
-            5. If asked for a family code, enter: <span style="font-family:monospace;font-weight:700" id="sync-family-code-inline">—</span>
-          </div>
-        </div>
-        <button onclick="copyFamilyInstructions()" style="width:100%;background:var(--bg2);color:var(--ink);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Copy Instructions</button>
       </div>
     </div>
-
+    <div style="padding:0 16px">
+      <p class="t-sec" style="line-height:1.6;font-size:12px">
+        <strong style="color:var(--ink)">Bookmark your coordinator link</strong> — it has your family ID in it. If you open the app without the link you'll see a different empty state.<br><br>
+        <strong style="color:var(--ink)">Send the family link to everyone</strong> once. They bookmark it or add it to their home screen. That's all the setup they need.
+      </p>
+    </div>
     <div style="height:24px"></div>
   </div>
 </div>
@@ -859,7 +832,6 @@ G.changePlanPax=changePlanPax; G.sendPlan=sendPlan;
 G.selectRating=selectRating; G.saveNewMeal=saveNewMeal; G.aiGenerateMeal=aiGenerateMeal;
 G.createBackupUI=createBackupUI; G.applyRestoreUI=applyRestoreUI;
 G.approvePickMeal=approvePickMeal; G.skipPickMeal=skipPickMeal; G.approveAllPicks=approveAllPicks;
-G.dismissAllPicks=dismissAllPicks;
 G.showToast=showToast;
 G.changeWeek=changeWeek;
 G.toggleFav=toggleFav;
@@ -867,7 +839,6 @@ G.getFavourites=getFavourites;
 G.onAddNameInput=onAddNameInput;
 G.renderMeals=renderMeals;
 G.renderMealsBalanceBar=renderMealsBalanceBar;
-G.loadPicksFromWorker=loadPicksFromWorker;
 G.openEditMeal=openEditMeal;
 G.selectEditRating=selectEditRating;
 G.saveEditMeal=saveEditMeal;
@@ -879,12 +850,8 @@ G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
 G.setupFamilySync=setupFamilySync;
 G.dismissFirstRun=dismissFirstRun;
-G.connectFamilyId=connectFamilyId;
 G.showSyncSheet=showSyncSheet;
 G.copyCoordURL=copyCoordURL;
-G.copyFamilyCode=copyFamilyCode;
-G.copyCoordInstructions=copyCoordInstructions;
-G.copyFamilyInstructions=copyFamilyInstructions;
 G.showAddToHomeInstructions=showAddToHomeInstructions;
 G.togglePushNotifications=togglePushNotifications;
 G.confirmClearMeals=confirmClearMeals;
@@ -920,33 +887,13 @@ async function boot() {
       })
       .catch(() => {});
   }
-
-  // Synchronous check BEFORE async init — if localStorage has a family ID,
-  // suppress the first-run card immediately (no flash)
-  const storedFid = new URLSearchParams(window.location.search).get('fid')
-    || new URLSearchParams(window.location.hash.replace('#','')).get('fid')
-    || localStorage.getItem('mp_family_id');
-  if (storedFid) {
-    document.getElementById('first-run-card')?.classList.add('hidden');
-  }
-
   await Sync.init();  // reads ?fid= from URL, pulls shared state
-  if (!Sync.isConnected() && !localStorage.getItem('mp_first_run_dismissed') && !storedFid) {
+  if (!Sync.isConnected() && !localStorage.getItem('mp_first_run_dismissed')) {
     document.getElementById('first-run-card')?.classList.remove('hidden');
   }
   await Meals.loadMeals(Store.getCustomMeals());
-
-  // Check URL for picks first, then fall back to Worker
   const incoming = parsePicksFromURL();
-  if (incoming) {
-    pendingPicks = incoming;
-    clearPicksFromURL();
-    showPendingPicks();
-  } else if (Sync.isConnected()) {
-    // Pull pending picks from Worker
-    loadPicksFromWorker();
-  }
-
+  if (incoming) { pendingPicks = incoming; clearPicksFromURL(); showPendingPicks(); }
   checkForSuggestion();
   renderSuggestionBadge();
   updateGreeting();
@@ -1117,83 +1064,8 @@ function renderHomeMealList() {
 }
 
 // ── Pending picks ─────────────────────────────────────────────────────────────
-async function loadPicksFromWorker() {
-  try {
-    const fid = Sync.getFamilyId();
-    if (!fid) return;
-    const res   = await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid);
-    const data  = await res.json();
-    const picks = (data.picks || []).filter(p => p.status === 'pending');
-    if (!picks.length) return;
-
-    // Show each person's picks — aggregate into UI
-    // Show the most recent pick set, or combine all pending
-    renderWorkerPicks(picks);
-    renderSuggestionBadge();
-
-    // Also load suggestions
-    if (data.suggestions?.length) {
-      const pending = data.suggestions.filter(s => s.status === 'pending');
-      if (pending.length) {
-        Store.saveSuggestions(pending);
-        renderSuggestionBadge();
-      }
-    }
-  } catch(e) {
-    console.warn('loadPicksFromWorker failed:', e.message);
-  }
-}
-
-function renderWorkerPicks(picks) {
-  if (!picks.length) return;
-
-  // Show picks alert on home screen
-  const area    = document.getElementById('home-picks-area');
-  const avatar  = document.getElementById('home-picks-avatar');
-  const nameEl  = document.getElementById('home-picks-name');
-  const subEl   = document.getElementById('home-picks-sub');
-  const chipsEl = document.getElementById('home-picks-chips');
-
-  if (!area) return;
-
-  // Multiple pickers — show count
-  const names     = [...new Set(picks.map(p => p.from))];
-  const allMealIds = [...new Set(picks.flatMap(p => p.mealIds))];
-
-  if (avatar) avatar.textContent = names[0][0].toUpperCase();
-  if (nameEl) nameEl.textContent = names.length > 1
-    ? `${names.length} family members sent picks`
-    : `${names[0]}'s picks`;
-  if (subEl)  subEl.textContent  = `${allMealIds.length} meals · tap to review`;
-  if (chipsEl) chipsEl.innerHTML = allMealIds.slice(0,5).map(id => {
-    const m = Meals.getMeal(id);
-    return `<span class="pick-chip">${m ? m.name : 'Meal ' + id}</span>`;
-  }).join('') + (allMealIds.length > 5 ? `<span class="pick-chip">+${allMealIds.length-5} more</span>` : '');
-
-  area.classList.remove('hidden');
-
-  // Store picks locally so approval sheet can access them
-  // Use first pending pick as pendingPicks for approve sheet
-  pendingPicks = {
-    name:    names.length > 1 ? names.join(', ') : names[0],
-    mealIds: allMealIds,
-    from:    picks,   // store full picks array for multi-person display
-    _fromWorker: true,
-  };
-}
-
 function showPendingPicks() {
   if(!pendingPicks)return;
-  // Auto-approve picks from coordinator-tier members
-  const member = Store.getMemberByName(pendingPicks.name);
-  if (member && member.role === 'Coordinator') {
-    pendingPicks.mealIds.forEach(id => { selected[id] = {pax:4}; });
-    Store.saveSelected(selected);
-    showToast(`${pendingPicks.name}'s picks added automatically`);
-    pendingPicks = null;
-    renderMeals(); renderHomeBalance(); renderHomeMealList();
-    return;
-  }
   document.getElementById('home-picks-area').classList.remove('hidden');
   document.getElementById('home-picks-avatar').textContent=pendingPicks.name[0].toUpperCase();
   document.getElementById('home-picks-name').textContent=`${pendingPicks.name}'s picks`;
@@ -1209,37 +1081,17 @@ function renderApproveSheet() {
     document.getElementById('approve-sheet-body').innerHTML='<div class="empty-state"><div class="empty-icon">✓</div><div class="empty-title">No pending picks</div></div>';
     return;
   }
-  document.getElementById('approve-sheet-title').textContent = 'Family Picks';
-
-  // Handle worker picks (multi-person)
-  const allPicks = pendingPicks._fromWorker ? pendingPicks.from : [pendingPicks];
-  let cards = '';
-  let cardIdx = 0;
-
-  allPicks.forEach(pick => {
-    const fromName = pick.from || pendingPicks.name;
-    const member = Store.getMemberByName(fromName);
-    const colour = member?.colour || '#8e8e93';
-    if (pick.message) {
-      cards += `<div style="margin:4px 16px 0;background:var(--bg);border-radius:var(--r10);padding:8px 12px;font-size:12px;color:var(--ink4)">${fromName}: "${pick.message}"</div>`;
-    }
-    (pick.mealIds || []).forEach(id => {
-      const m = Meals.getMeal(id); if(!m) return;
-      const i = cardIdx++;
-      cards += `<div class="approve-card" id="apc-${i}">
-        <div class="approve-card-header">
-          <div style="width:28px;height:28px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">${fromName[0]}</div>
-          <div style="flex:1"><div class="approve-card-from">${fromName}</div><div class="approve-card-name">${m.name}</div></div>
-          ${rPill(m.health)}
-        </div>
-        <div class="approve-btns"><button class="btn-approve" onclick="approvePickMeal(${i},${id})">✓ Add to week</button><button class="btn-skip" onclick="skipPickMeal(${i})">Skip</button></div>
-      </div>`;
-    });
-  });
-
-  document.getElementById('approve-sheet-body').innerHTML = cards + `
+  document.getElementById('approve-sheet-title').textContent=`${pendingPicks.name}'s Picks`;
+  const cards=pendingPicks.mealIds.map((id,i)=>{
+    const m=Meals.getMeal(id); if(!m)return'';
+    return`<div class="approve-card" id="apc-${i}">
+      <div class="approve-card-header"><div><div class="approve-card-from">${pendingPicks.name} suggested</div><div class="approve-card-name">${m.name}</div></div>${rPill(m.health)}</div>
+      <div class="approve-btns"><button class="btn-approve" onclick="approvePickMeal(${i},${id})">✓ Add to week</button><button class="btn-skip" onclick="skipPickMeal(${i})">Skip</button></div>
+    </div>`;
+  }).join('');
+  document.getElementById('approve-sheet-body').innerHTML=cards+`
     <div style="display:flex;gap:8px;padding:8px 16px 40px">
-      <button style="flex:1;background:var(--bg2);color:var(--indulgent);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:13px;cursor:pointer" onclick="dismissAllPicks()">Dismiss All</button>
+      <button style="flex:1;background:var(--bg2);color:var(--ink4);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;cursor:pointer" onclick="closeSheet()">Done</button>
       <button style="flex:2;background:var(--green);color:#fff;border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer" onclick="approveAllPicks()">Approve All</button>
     </div>`;
 }
@@ -1249,69 +1101,18 @@ function approvePickMeal(i,id) {
   if(c){c.style.opacity='.4';c.style.pointerEvents='none';}
   selected[id]={pax:4}; Store.saveSelected(selected); showToast('Added to your meals');
 }
-function dismissAllPicks() {
-  if (!confirm('Dismiss all pending picks without adding them?')) return;
-  if (Sync.isConnected()) {
-    const fid = Sync.getFamilyId();
-    fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r=>r.json()).then(data => {
-      const updated = (data.picks||[]).map(p => ({...p, status:'dismissed'}));
-      return fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({picks: updated})
-      });
-    }).catch(()=>{});
-  }
-  pendingPicks = null;
-  document.getElementById('home-picks-area').classList.add('hidden');
-  closeSheet();
-  showToast('Picks dismissed');
-}
-
 function skipPickMeal(i) {
   const c=document.getElementById(`apc-${i}`);
   if(c){c.style.opacity='.3';c.style.pointerEvents='none';}
 }
-async function approveAllPicks() {
-  if(!pendingPicks)return;
-
-  pendingPicks.mealIds.forEach((id,i)=>{selected[id]={pax:4};skipPickMeal(i);});
-  Store.saveSelected(selected);
-
-  // Mark all picks as approved in Worker
-  if (Sync.isConnected()) {
-    try {
-      const fid = Sync.getFamilyId();
-      const data = await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r=>r.json());
-      const updatedPicks = (data.picks||[]).map(p => ({...p, status:'approved'}));
-      await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({picks: updatedPicks})
-      });
-    } catch(e) { console.warn('Could not clear picks:', e.message); }
-  }
-
-  showToast('All ' + pendingPicks.mealIds.length + ' meals added');
-  setTimeout(closeSheet, 600);
-  pendingPicks = null;
-  document.getElementById('home-picks-area').classList.add('hidden');
-  localStorage.removeItem('mp_pending_picks');
-  renderHomeBalance();
-  renderHomeMealList();
-}
-
 function approveAllPicks() {
   if(!pendingPicks)return;
   pendingPicks.mealIds.forEach((id,i)=>{selected[id]={pax:4};skipPickMeal(i);});
   Store.saveSelected(selected);
-  // Mark picks as approved in Worker
-  if (Sync.isConnected()) {
-    fetch('https://meal-planner-api.davekingca.workers.dev/family/' + Sync.getFamilyId() + '/picks/clear', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:pendingPicks.name})}).catch(()=>{});
-  }
   showToast(`All ${pendingPicks.mealIds.length} meals added`);
   setTimeout(closeSheet,600);
   pendingPicks=null;
   document.getElementById('home-picks-area').classList.add('hidden');
-  localStorage.removeItem('mp_pending_picks');
 }
 
 // ── Meal picker ───────────────────────────────────────────────────────────────
@@ -1338,8 +1139,8 @@ function setFilter(f) {
     activeFilter = activeHealthFilter || activeCatFilter || 'all';
   }
 
-  // Update chip visuals across both rows
-  document.querySelectorAll('#meals-filter-chips-top .chip, #meals-filter-chips-cats .chip').forEach(c=>{
+  // Update chip visuals
+  document.querySelectorAll('#meals-filter-chips .chip').forEach(c=>{
     const cf=c.dataset.f;
     c.className='chip';
     c.style.background=''; c.style.color=''; c.style.border='';
@@ -1473,8 +1274,7 @@ function updateMealsCTA() {
   const n=Object.keys(selected).length;
   document.getElementById('meals-cta').classList.toggle('hidden',n===0);
   document.getElementById('meals-cta-count').textContent=n;
-  const countEl = document.getElementById('meals-selected-count');
-  if (countEl) countEl.textContent = n > 0 ? `${n} selected ✕` : '0 selected';
+  document.getElementById('meals-selected-count').textContent=`${n} selected`;
 }
 
 // ── Recipe sheet ──────────────────────────────────────────────────────────────
@@ -1506,71 +1306,33 @@ function openRecipe(id) {
 
 // ── Shopping list ─────────────────────────────────────────────────────────────
 function renderShoppingList() {
-  const body = document.getElementById('shopping-list-body');
-  const ids  = Object.keys(selected).map(Number);
-  if (!ids.length) {
-    body.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">No meals selected</div><div class="empty-sub">Go to Meals and select what you'd like to cook</div></div>`;
+  const body=document.getElementById('shopping-list-body');
+  const ids=Object.keys(selected).map(Number);
+  if(!ids.length){
+    body.innerHTML=`<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">No meals selected</div><div class="empty-sub">Go to Meals and select what you'd like to cook</div></div>`;
     return;
   }
-
-  // Collect ingredients — combine quantities when same item appears in multiple meals
-  const fridge = {}, pantry = {};
-
-  ids.forEach(id => {
-    const m = Meals.getMeal(id); if (!m) return;
-    const pax    = selected[id]?.pax || 4;
-    const factor = pax / 4; // scale from base 4 servings
-
-    const addItem = (store, i) => {
-      const name = typeof i === 'string' ? i : i.name;
-      const qty  = typeof i === 'object' ? i.qty || '' : '';
-      if (!name) return;
-      if (!store[name]) store[name] = { qtys: [], count: 0 };
-      store[name].count++;
-      if (qty) store[name].qtys.push(qty);
-    };
-
-    (m.fridge || []).forEach(i => addItem(fridge, i));
-    (m.pantry || []).forEach(i => addItem(pantry, i));
+  const fridge={},pantry={};
+  ids.forEach(id=>{
+    const m=Meals.getMeal(id); if(!m)return;
+    (m.fridge||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!fridge[k]){fridge[k]={count:0,qty:q}}fridge[k].count++;});
+    (m.pantry||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!pantry[k]){pantry[k]={count:0,qty:q}}pantry[k].count++;});
   });
-
-  const sec = (title, items) => {
-    if (!Object.keys(items).length) return '';
-    const rows = Object.entries(items)
-      .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([name, data]) => {
-        const key  = name.toLowerCase().replace(/\W+/g, '_');
-        const done = checkedItems.has(key);
-        // Show quantity: if multiple qtys show first + count, if single show it, if none show ×count
-        const qtyDisplay = data.qtys.length > 0
-          ? data.count > 1
-            ? `${data.qtys[0]} ×${data.count}`
-            : data.qtys[0]
-          : data.count > 1
-            ? `×${data.count}`
-            : '';
-        return `<div class="shop-row${done ? ' done' : ''}" onclick="toggleShopItem('${key}', this)">
-          <div class="shop-check">${done ? '✓' : ''}</div>
-          <span class="shop-name">${name}</span>
-          ${qtyDisplay ? `<span class="shop-qty">${qtyDisplay}</span>` : ''}
-        </div>`;
-      }).join('');
-    return `<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
+  const sec=(title,items)=>{
+    if(!Object.keys(items).length)return'';
+    const rows=Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([n,data])=>{const c=data.count;const qty=data.qty||'';
+      const key=n.toLowerCase().replace(/\W+/g,'_');
+      const done=checkedItems.has(key);
+      return`<div class="shop-row${done?' done':''}" onclick="toggleShopItem('${key}',this)">
+        <div class="shop-check">${done?'✓':''}</div>
+        <span class="shop-name">${n}</span>
+        ${qty?`<span class="shop-qty">${qty}</span>`:(c>1?`<span class="shop-qty">×${c}</span>`:'')}
+      </div>`;
+    }).join('');
+    return`<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
   };
-
-  // Free-text requests field
-  const savedRequests = localStorage.getItem('mp_shop_requests') || '';
-  const requestsSection = `
-    <div class="shop-section-title">Additional Items</div>
-    <div style="padding:0 16px 8px">
-      <textarea id="shop-requests" placeholder="Add anything else… e.g. birthday candles, dish soap"
-        style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid var(--sep);border-radius:var(--r12);font-family:inherit;font-size:14px;color:var(--ink);background:var(--surface);resize:none;min-height:72px;outline:none"
-        oninput="localStorage.setItem('mp_shop_requests', this.value)">${savedRequests}</textarea>
-    </div>`;
-
-  body.innerHTML = sec('Dairy & Refrigerated', fridge) + sec('Pantry & Dry Goods', pantry) + requestsSection;
+  body.innerHTML=sec('Dairy & Refrigerated',fridge)+sec('Pantry & Dry Goods',pantry);
 }
-
 function toggleShopItem(key,row) {
   checkedItems.has(key)?checkedItems.delete(key):checkedItems.add(key);
   row.classList.toggle('done',checkedItems.has(key));
@@ -1643,7 +1405,7 @@ function renderPlan() {
 
 function setPlanMeal(key,val) {
   if(!val){delete weekPlan[key];}else{weekPlan[key]={mealId:Number(val),pax:weekPlan[key]?.pax||4};}
-  Store.saveWeekPlan(weekPlan); Sync.pushWeekPlan(weekPlan).then(()=>{ Sync.notifyFamily(Sync.getFamilyId(),{title:'🍽 Meal plan updated',body:'Check this week\'s plan',url:Sync.getFamilyAppURL()}).catch(()=>{}); }).catch(()=>{}); renderPlan(); renderHomeMealList();
+  Store.saveWeekPlan(weekPlan); Sync.pushWeekPlan(weekPlan).catch(()=>{}); renderPlan(); renderHomeMealList();
 }
 function changePlanPax(key,d) {
   if(!weekPlan[key])return;
@@ -1748,55 +1510,41 @@ function getCatLabel(cat) {
 // Render filter chips dynamically including any custom categories
 function renderFilterChips() {
   const { builtin, custom } = getAllCategories();
-  const topEl  = document.getElementById('meals-filter-chips-top');
-  const catsEl = document.getElementById('meals-filter-chips-cats');
-  if (!topEl || !catsEl) return;
+  const el = document.getElementById('meals-filter-chips');
+  if (!el) return;
 
-  const bookmarkSm = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>';
-
-  // Row 1: All, Saved, Light, Balanced, Indulgent
-  topEl.innerHTML = `
+  let html = `
     <div class="chip chip-active" data-f="all" onclick="setFilter('all')">All</div>
-    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a">${bookmarkSm} Saved</div>
+    <div class="chip" data-f="fav" onclick="setFilter('fav')" style="background:#ffeae9;color:#a0201a"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Saved</div>
     <div class="chip chip-l" data-f="light" onclick="setFilter('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
     <div class="chip chip-b" data-f="balanced" onclick="setFilter('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
     <div class="chip chip-i" data-f="indulgent" onclick="setFilter('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
+    <div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>
   `;
 
-  // Row 2: Categories
-  let catsHtml = `<div class="chip chip-cat" data-f="crockpot" onclick="setFilter('crockpot')">Slow Cook</div>`;
+  // Builtin cats (except crockpot already added above)
   builtin.filter(c => c !== 'crockpot').forEach(cat => {
-    catsHtml += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
+    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')">${getCatLabel(cat)}</div>`;
   });
+
+  // Custom cats — slightly different style to distinguish
   custom.forEach(cat => {
-    catsHtml += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')" style="border:1px solid var(--blue);color:var(--blue);background:var(--blue-tint)">${getCatLabel(cat)}</div>`;
-  });
-  catsEl.innerHTML = catsHtml;
-
-  // Apply active states across both rows
-  [topEl, catsEl].forEach(row => {
-    row.querySelectorAll('.chip').forEach(c => {
-      const cf = c.dataset.f;
-      c.className = 'chip';
-      c.style.background = ''; c.style.color = ''; c.style.border = '';
-      const isActiveHealth = cf === activeHealthFilter;
-      const isActiveCat    = cf === activeCatFilter;
-      const isActiveFav    = cf === 'fav' && activeFilter === 'fav';
-      const isActiveAll    = cf === 'all' && !activeHealthFilter && !activeCatFilter && activeFilter !== 'fav';
-      if (isActiveHealth || isActiveCat || isActiveFav || isActiveAll) {
-        c.classList.add('chip-active');
-      } else {
-        const ratingCls = {light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf];
-        if (ratingCls) c.classList.add(ratingCls);
-        else if (cf === 'fav') { c.style.background='#ffeae9'; c.style.color='#a0201a'; }
-        else if (cf !== 'all' && !BUILTIN_CATS.includes(cf)) {
-          c.style.border='1px solid var(--blue)'; c.style.color='var(--blue)'; c.style.background='var(--blue-tint)';
-          c.classList.add('chip-cat');
-        } else c.classList.add('chip-cat');
-      }
-    });
+    html += `<div class="chip chip-cat" data-f="${cat}" onclick="setFilter('${cat}')" style="border:1px solid var(--blue);color:var(--blue);background:var(--blue-tint)">${getCatLabel(cat)}</div>`;
   });
 
+  el.innerHTML = html;
+
+  // Re-apply active state
+  el.querySelectorAll('.chip').forEach(c => {
+    if (c.dataset.f === activeFilter) {
+      c.classList.add('chip-active');
+      c.style.background = '';
+      c.style.color = '';
+      c.style.border = '';
+    }
+  });
+
+  // Also update the add-cat dropdown with any custom categories
   refreshCatDropdown();
 }
 
@@ -2311,19 +2059,18 @@ function renderSuggestionBadge() {
 
 function showSyncSheet() {
   const fid      = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || '—';
-  const coordURL = 'https://fongkingawesomeapps.github.io/meal-planner/?fid=' + fid;
-  const famURL   = 'https://fongkingawesomeapps.github.io/meal-planner/family.html?fid=' + fid;
+  const coordURL = Sync.getCoordinatorURL();
+  const famURL   = Sync.getFamilyAppURL();
 
-  // Populate all fields
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-  set('sync-fid-display',       fid);
-  set('sync-coord-url',         coordURL);
-  set('sync-coord-code',        fid);
-  set('sync-coord-code-inline', fid);
-  set('sync-family-url',        famURL);
-  set('sync-family-code',       fid);
-  set('sync-family-code-inline',fid);
-  set('settings-fid-display',   fid !== '—' ? 'ID: ' + fid : 'Not set up yet');
+  const fidEl    = document.getElementById('sync-fid-display');
+  const coordEl  = document.getElementById('sync-coord-url');
+  const famEl    = document.getElementById('sync-family-url');
+  const settingsEl = document.getElementById('settings-fid-display');
+
+  if (fidEl)    fidEl.textContent    = fid;
+  if (coordEl)  coordEl.textContent  = coordURL;
+  if (famEl)    famEl.textContent    = famURL;
+  if (settingsEl) settingsEl.textContent = fid !== '—' ? 'ID: ' + fid : 'Not set up yet';
 
   openSheet('sheet-sync');
 }
@@ -2492,7 +2239,7 @@ function saveNewMember() {
 
 function confirmClearMeals() {
   const count = Object.keys(selected).length;
-  if (!count) return; // silent if nothing selected
+  if (!count) { showToast('No meals selected'); return; }
   if (!confirm(`Clear all ${count} selected meal${count>1?'s':''}?`)) return;
   selected = {};
   Store.saveSelected(selected);
@@ -2543,48 +2290,6 @@ function showAddToHomeInstructions() {
   copyCoordURL();
 }
 
-function copyFamilyCode() {
-  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || '';
-  navigator.clipboard?.writeText(fid).then(() => showToast('Family code copied'));
-}
-
-function copyCoordInstructions() {
-  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || 'YOUR-FAMILY-CODE';
-  const coordURL = 'https://fongkingawesomeapps.github.io/meal-planner/?fid=' + fid;
-  const text = `Meal Planner — Coordinator Setup
-
-App Link:
-${coordURL}
-
-Setup:
-1. Copy the link above
-2. Open it in Safari on your iPhone
-3. Tap Share → Add to Home Screen
-4. Open the app from your home screen
-5. If asked for a family code, enter: ${fid}
-
-Your family code: ${fid}`;
-  navigator.clipboard?.writeText(text).then(() => showToast('Instructions copied'));
-}
-
-function copyFamilyInstructions() {
-  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || 'YOUR-FAMILY-CODE';
-  const famURL = 'https://fongkingawesomeapps.github.io/meal-planner/family.html?fid=' + fid;
-  const text = `Meal Planner — Family App
-
-App Link:
-${famURL}
-
-Setup:
-1. Open the link above in Safari
-2. Tap Share → Add to Home Screen
-3. Open the app from your home screen
-4. If asked for a family code, enter: ${fid}
-
-Pick your meals each week and tap Send — I'll take it from there!`;
-  navigator.clipboard?.writeText(text).then(() => showToast('Instructions copied'));
-}
-
 function copyCoordURL() {
   const url = Sync.getCoordinatorURL();
   navigator.clipboard?.writeText(url).then(() => showToast('Coordinator link copied'));
@@ -2601,28 +2306,6 @@ function regenerateFamilyId() {
   Sync.setFamilyId(id);
   showSyncSheet(); // refresh the sheet with new values
   showToast('New family ID generated');
-}
-
-function connectFamilyId() {
-  const input = document.getElementById('first-run-fid-input');
-  const raw = (input?.value || '').trim().toLowerCase();
-  // Accept bare ID or full URL — extract fam- part
-  const match = raw.match(/fam-[a-z0-9]+/);
-  if (!match) {
-    input.style.borderColor = 'var(--indulgent)';
-    showToast('Enter a valid family ID (e.g. fam-rqrvsmp8)');
-    return;
-  }
-  const fid = match[0];
-  Sync.setFamilyId(fid);
-  dismissFirstRun();
-  showToast('Connected ✓');
-  // Pull data from server
-  Sync.pull().then(() => {
-    renderHomeBalance();
-    renderHomeMealList();
-    renderSettings();
-  }).catch(() => {});
 }
 
 function dismissFirstRun() {
