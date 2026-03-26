@@ -859,6 +859,7 @@ G.changePlanPax=changePlanPax; G.sendPlan=sendPlan;
 G.selectRating=selectRating; G.saveNewMeal=saveNewMeal; G.aiGenerateMeal=aiGenerateMeal;
 G.createBackupUI=createBackupUI; G.applyRestoreUI=applyRestoreUI;
 G.approvePickMeal=approvePickMeal; G.skipPickMeal=skipPickMeal; G.approveAllPicks=approveAllPicks;
+G.dismissAllPicks=dismissAllPicks;
 G.showToast=showToast;
 G.changeWeek=changeWeek;
 G.toggleFav=toggleFav;
@@ -1238,7 +1239,7 @@ function renderApproveSheet() {
 
   document.getElementById('approve-sheet-body').innerHTML = cards + `
     <div style="display:flex;gap:8px;padding:8px 16px 40px">
-      <button style="flex:1;background:var(--bg2);color:var(--ink4);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;cursor:pointer" onclick="closeSheet()">Done</button>
+      <button style="flex:1;background:var(--bg2);color:var(--indulgent);border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:13px;cursor:pointer" onclick="dismissAllPicks()">Dismiss All</button>
       <button style="flex:2;background:var(--green);color:#fff;border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer" onclick="approveAllPicks()">Approve All</button>
     </div>`;
 }
@@ -1247,6 +1248,55 @@ function approvePickMeal(i,id) {
   const c=document.getElementById(`apc-${i}`);
   if(c){c.style.opacity='.4';c.style.pointerEvents='none';}
   selected[id]={pax:4}; Store.saveSelected(selected); showToast('Added to your meals');
+}
+function dismissAllPicks() {
+  if (!confirm('Dismiss all pending picks without adding them?')) return;
+  if (Sync.isConnected()) {
+    const fid = Sync.getFamilyId();
+    fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r=>r.json()).then(data => {
+      const updated = (data.picks||[]).map(p => ({...p, status:'dismissed'}));
+      return fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({picks: updated})
+      });
+    }).catch(()=>{});
+  }
+  pendingPicks = null;
+  document.getElementById('home-picks-area').classList.add('hidden');
+  closeSheet();
+  showToast('Picks dismissed');
+}
+
+function skipPickMeal(i) {
+  const c=document.getElementById(`apc-${i}`);
+  if(c){c.style.opacity='.3';c.style.pointerEvents='none';}
+}
+async function approveAllPicks() {
+  if(!pendingPicks)return;
+
+  pendingPicks.mealIds.forEach((id,i)=>{selected[id]={pax:4};skipPickMeal(i);});
+  Store.saveSelected(selected);
+
+  // Mark all picks as approved in Worker
+  if (Sync.isConnected()) {
+    try {
+      const fid = Sync.getFamilyId();
+      const data = await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r=>r.json());
+      const updatedPicks = (data.picks||[]).map(p => ({...p, status:'approved'}));
+      await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({picks: updatedPicks})
+      });
+    } catch(e) { console.warn('Could not clear picks:', e.message); }
+  }
+
+  showToast('All ' + pendingPicks.mealIds.length + ' meals added');
+  setTimeout(closeSheet, 600);
+  pendingPicks = null;
+  document.getElementById('home-picks-area').classList.add('hidden');
+  localStorage.removeItem('mp_pending_picks');
+  renderHomeBalance();
+  renderHomeMealList();
 }
 function skipPickMeal(i) {
   const c=document.getElementById(`apc-${i}`);
