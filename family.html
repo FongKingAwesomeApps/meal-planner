@@ -395,7 +395,7 @@ async function initFamilyNotifStatus() {
     const on  = !!sub;
     if (toggle) toggle.style.background = on ? 'var(--green)' : 'var(--bg2)';
     if (thumb)  thumb.style.transform   = on ? 'translateX(20px)' : 'translateX(0)';
-    if (statusEl) statusEl.textContent  = on ? 'On — you'll be notified when the plan is set' : 'Off — tap to enable';
+    if (statusEl) statusEl.textContent  = on ? "On — you'll be notified when the plan is set" : "Off — tap to enable";
   } catch(e) {
     if (statusEl) statusEl.textContent = 'Tap to enable';
   }
