@@ -17,23 +17,20 @@
   const path = window.location.pathname;
   const parts = path.split('/').filter(Boolean);
   
-  // Find the fam- segment
-  const fidSegment = parts.find(p => p.startsWith('fam-'));
-  const isFamilyApp = parts.includes('family');
+  // Only redirect if path contains a valid fam- ID
+  const fidSegment = parts.find(p => p.startsWith('fam-') && p.length > 6);
+  const isFamilyApp = parts.includes('family') && fidSegment;
 
   if (fidSegment) {
     // Save to localStorage so app can read it
     localStorage.setItem('mp_family_id', fidSegment);
-    
-    // Redirect to the correct app
     const base = '/meal-planner/';
     const dest = isFamilyApp 
       ? base + 'family.html?fid=' + fidSegment
       : base + '?fid=' + fidSegment;
-    
     window.location.replace(dest);
   } else {
-    // No family ID — just go to the app
+    // No valid family ID — go to coordinator
     window.location.replace('/meal-planner/');
   }
 </script>
