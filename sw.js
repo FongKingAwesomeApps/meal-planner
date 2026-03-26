@@ -75,9 +75,11 @@ self.addEventListener('fetch', e => {
 
 // ── Push notification handler ─────────────────────────────────────────────────
 self.addEventListener('push', e => {
-  if (!e.data) return;
-  let data = {};
-  try { data = e.data.json(); } catch { data = { title: 'Meal Planner', body: e.data.text() }; }
+  // Handle empty push (no payload) or payload
+  let data = { title: 'Meal Planner 🍽', body: 'Tap to check your picks' };
+  if (e.data) {
+    try { data = e.data.json(); } catch { data = { title: 'Meal Planner 🍽', body: e.data.text() }; }
+  }
 
   e.waitUntil(
     self.registration.showNotification(data.title || 'Meal Planner', {
