@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meal Picks">
 <meta name="theme-color" content="#f2f2f7">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="manifest" href="manifest-family.json">
-<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="family-icon-180.png">
+<link rel="manifest" href="manifest-family-clean-v7.json">
+<link rel="icon" href="family-icon-192.png" type="image/png">
 <title>Pick Your Meals</title>
 <link rel="stylesheet" href="css/design-system.css?v=5">
 <style>
@@ -159,7 +159,7 @@
 
       <div class="search-wrap">
         <span class="search-icon">⌕</span>
-        <input class="search-input" id="family-meals-search" placeholder="Search meals…" oninput="render()">
+        <input class="search-input" id="family-meals-search" placeholder="Search meals…" oninput="render()" onkeydown="if(event.key==='Enter'){event.preventDefault();render();}">
       </div>
 
       <!-- Filter chips -->
