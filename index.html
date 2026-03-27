@@ -1431,10 +1431,22 @@ function renderShoppingList() {
       // Show quantity: if multiple recipes use same ingredient, show count
       let qtyDisplay = '';
       if (data.qtys.length > 0) {
-        // Extract just the quantity number+unit (e.g. "2 lbs" from "2 lbs cut into chunks")
-        const qtyMatch = data.qtys[0].match(/^([\d./]+ ?(?:lb|lbs|kg|g|oz|cup|cups|tbsp|tsp|ml|l|can|cans|clove|cloves|slice|slices|piece|pieces)?)/i);
-        const qtyShort = qtyMatch ? qtyMatch[1].trim() : data.qtys[0];
-        qtyDisplay = data.count > 1 ? qtyShort + ' ×' + data.count : qtyShort;
+        // Parse number and unit separately so we can multiply
+        const qtyMatch = data.qtys[0].match(/^([\d.\/]+)\s*([a-zA-Z]*)/);
+        if (qtyMatch && data.count > 1) {
+          const num = parseFloat(qtyMatch[1]);
+          const unit = qtyMatch[2] || '';
+          if (!isNaN(num)) {
+            const total = Math.round(num * data.count * 100) / 100;
+            qtyDisplay = total + (unit ? ' ' + unit : '');
+          } else {
+            qtyDisplay = data.qtys[0] + ' ×' + data.count;
+          }
+        } else {
+          // Single recipe or unparseable — just show raw qty
+          const qtyMatch2 = data.qtys[0].match(/^([\d.\/]+ ?[a-zA-Z]*)/);
+          qtyDisplay = qtyMatch2 ? qtyMatch2[1].trim() : data.qtys[0];
+        }
       } else if (data.count > 1) {
         qtyDisplay = '×' + data.count;
       }
@@ -2221,19 +2233,26 @@ function setNotifToggle(on) {
 
 async function initNotifStatus() {
   const statusEl = document.getElementById('notif-status');
+  const row = document.getElementById('notif-row');
+
   if (!('Notification' in window) || !('serviceWorker' in navigator)) {
     if (statusEl) statusEl.textContent = 'Not supported on this device';
-    const row = document.getElementById('notif-row');
+    if (row) row.style.pointerEvents = 'none';
     if (row) row.style.opacity = '.5';
     return;
   }
   if (Notification.permission === 'denied') {
     if (statusEl) statusEl.textContent = 'Blocked — enable in Safari Settings';
+    if (row) row.style.pointerEvents = 'none';
+    if (row) row.style.opacity = '.6';
     return;
   }
+  // Make row tappable
+  if (row) { row.style.pointerEvents = ''; row.style.opacity = ''; }
   try {
     const reg = await navigator.serviceWorker.ready;
     const sub = await reg.pushManager.getSubscription();
+    _pushSubscription = sub;
     setNotifToggle(!!sub);
     if (statusEl) statusEl.textContent = sub
       ? "On — you'll get notified when picks arrive"
