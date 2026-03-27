@@ -1,5 +1,5 @@
 # Meal Planner PWA — Project Decisions & State
-*Last updated: Mar 27 2026*
+*Last updated: Mar 27 2026 (session 5)*
 
 ---
 
@@ -167,6 +167,7 @@ Two independent filter states: `ffHealth` and `ffCat`. Both can be active simult
 |--------|------|-------|
 | `964cd3b` | Mar 25 2026 | Last known good before session 4 corruption |
 | `272603c` | Mar 25 2026 | Most recent working version (session 4 complete) |
+| TBD | Mar 27 2026 | Session 5: push on approve, app badge, SW refresh fix |
 
 **Rule:** Never patch a corrupted file. Always restore from GitHub first, then apply targeted patches with validation.
 
@@ -198,7 +199,9 @@ See DECISIONS.md in the repo for full project state.
 - **Coordinator filter chips empty on Meals tab first visit** — `renderFilterChips()` now called at boot, needs verification after latest deploy
 - **Notifications toggle** — `_pushSubscription` declaration fix deployed, needs real-device test to confirm
 - **Shopping list qty display** — shows quantity × count but doesn't always calculate product correctly when qty includes descriptive text (e.g. "2 lbs cut into chunks")
-- **Push notification on picks approved** — coordinator approves but family members don't receive a notification confirming approval
+- **Push notification on picks approved** — ✅ FIXED session 5: added notify-family call to approveAllPicks()
+- **App badge on pending picks** — ✅ FIXED session 5: navigator.setAppBadge() on pick load, clearAppBadge() on approve/dismiss (requires iOS 16.4+ PWA install)
+- **Notification toggle requires app restart** — ✅ FIXED session 5: reg.update() called after subscribe
 - **Picks reappear after dismiss** — Worker status update may not be saving correctly in all cases; needs end-to-end retest after latest Worker deploy
 - **`apple-mobile-web-app-capable` deprecation warning** — low priority cosmetic, Chrome warning only
 
@@ -220,6 +223,7 @@ See DECISIONS.md in the repo for full project state.
 - **Week plan read-only view** — Plan tab exists but needs verification it pulls fresh data from Worker and renders correctly
 - **Notifications to family on plan publish** — family members should get a push when the week's meals are set
 - **Limit bar dots** — Indulgent showing too many circles on family app in some cases
+- **Family picks status view** — after submitting picks, family members can see their selections in the app marked as "pending" or "approved"; resets automatically at the start of each new week so they can pick fresh
 
 ---
 
@@ -260,4 +264,3 @@ See DECISIONS.md in the repo for full project state.
 - **Indulgent limit bar dots fix** — showing too many circles in some edge cases on family app
 - **Meal picker balance bar** — live updating mini bar below filter chips showing running L/B/I totals as you select; warn when over on Indulgent or under on Light target (visually flag pills, not hard block)
 - **Decision tree reconnected** — over/under weekly balance targets should visually flag meal pills in the picker (not block, just colour hint); e.g. if 3 Indulgent already selected, remaining Indulgent meals show a subtle orange tint
-
