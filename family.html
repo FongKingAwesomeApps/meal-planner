@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meal Picks">
@@ -13,8 +13,20 @@
 <title>Pick Your Meals</title>
 <link rel="stylesheet" href="css/design-system.css">
 <style>
+
+*{box-sizing:border-box}
 #app{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
 .fsafe{height:env(safe-area-inset-top,44px);background:var(--bg);flex-shrink:0}
+.tab-panel{flex:1;min-height:0}
+.tab-panel:not(.active){display:none !important}
+.tab-panel.active{display:flex !important;flex-direction:column}
+.chip-row{display:flex;gap:6px;padding:0 16px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.chip-row::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;white-space:nowrap}
+.pill-inner{display:flex;align-items:center;gap:12px;min-width:0}
+.pill-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;word-break:break-word}
+.pill-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
 
 /* Tab icon SVG color */
 .tab-icon-bg { color: var(--ink4); }
@@ -103,7 +115,7 @@
     </div>
 
     <!-- Screen content area -->
-    <div id="tab-pick" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    <div id="tab-pick" class="tab-panel active" style="overflow:hidden">
 
       <!-- Limit bar -->
       <div class="limit-bar mt-8">
@@ -145,28 +157,7 @@
         <div class="chip chip-cat" data-f="fish" onclick="fF('fish')">Fish</div>
         <div class="chip chip-cat" data-f="comfort" onclick="fF('comfort')">Comfort</div>
       </div>
-        <div class="chip" data-f="fav" onclick="fF('fav')" style="background:#ffeae9;color:#a0201a"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Saved</div>
-        <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
-        <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
-        <div class="chip chip-i" data-f="indulgent" onclick="fF('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
-        <div class="chip chip-cat" data-f="crockpot" onclick="fF('crockpot')">Slow Cook</div>
-        <div class="chip chip-cat" data-f="pasta" onclick="fF('pasta')">Pasta</div>
-        <div class="chip chip-cat" data-f="chicken" onclick="fF('chicken')">Chicken</div>
-        <div class="chip chip-cat" data-f="pork" onclick="fF('pork')">Pork</div>
-        <div class="chip chip-cat" data-f="beef" onclick="fF('beef')">Beef</div>
-        <div class="chip chip-cat" data-f="fish" onclick="fF('fish')">Fish</div>
-        <div class="chip chip-cat" data-f="comfort" onclick="fF('comfort')">Comfort</div>
-        <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
-        <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
-        <div class="chip chip-i" data-f="indulgent" onclick="fF('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
-        <div class="chip chip-cat" data-f="crockpot" onclick="fF('crockpot')">Slow Cook</div>
-        <div class="chip chip-cat" data-f="pasta" onclick="fF('pasta')">Pasta</div>
-        <div class="chip chip-cat" data-f="chicken" onclick="fF('chicken')">Chicken</div>
-        <div class="chip chip-cat" data-f="beef" onclick="fF('beef')">Beef</div>
-        <div class="chip chip-cat" data-f="pork" onclick="fF('pork')">Pork</div>
-        <div class="chip chip-cat" data-f="fish" onclick="fF('fish')">Fish</div>
-        <div class="chip chip-cat" data-f="comfort" onclick="fF('comfort')">Comfort</div>
-      </div>
+
 
       <!-- Meals list -->
       <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:80px" id="flist-scroll">
@@ -182,7 +173,7 @@
     </div>
 
     <!-- PLAN TAB -->
-    <div id="tab-plan" class="hidden" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px">
+    <div id="tab-plan" class="tab-panel" style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px">
       <div style="padding:16px 16px 8px">
         <div style="font-size:17px;font-weight:700;color:var(--ink)">This week's plan</div>
         <div style="font-size:13px;color:var(--ink4);margin-top:2px">Set by the coordinator</div>
@@ -191,7 +182,7 @@
     </div>
 
     <!-- SUGGEST TAB -->
-    <div id="tab-suggest" class="hidden" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px">
+    <div id="tab-suggest" class="tab-panel" style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px">
       <div style="padding:16px 16px 8px">
         <div style="font-size:17px;font-weight:700;color:var(--ink)">Suggest a meal</div>
         <div style="font-size:13px;color:var(--ink4);margin-top:2px">Dave will review and add it</div>
@@ -218,7 +209,7 @@
     </div>
 
     <!-- SETTINGS TAB -->
-    <div id="tab-settings" class="hidden" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:80px">
+    <div id="tab-settings" class="tab-panel" style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:80px">
       <div style="padding:16px 16px 8px">
         <div style="font-size:17px;font-weight:700;color:var(--ink)">Settings</div>
       </div>
@@ -700,7 +691,7 @@ function render() {
           ${locked ? `<div class="lock-badge">🔒</div>` : ''}
           <div class="pill-inner">
             <div class="pill-check${isSel?' on':''}">${isSel?'✓':''}</div>
-            <div style="font-size:14px;font-weight:${isSel?'500':'400'};color:${locked?'var(--ink5)':'var(--ink)'};flex:1">
+            <div class="pill-title" style="font-size:14px;font-weight:${isSel?'500':'400'};color:${locked?'var(--ink5)':'var(--ink)'};">
               ${m.name}
             </div>
             <div class="pill-meta">
@@ -809,13 +800,12 @@ function importPlan(encoded) {
 function fTab(tab) {
   activeTab = tab;
   ['pick','plan','suggest','settings'].forEach(t => {
-    document.getElementById(`tab-${t}`)?.classList.toggle('hidden', t !== tab);
+    document.getElementById(`tab-${t}`)?.classList.toggle('active', t === tab);
     document.getElementById(`ftab-icon-${t}`)?.classList.toggle('on', t === tab);
     document.getElementById(`ftab-lbl-${t}`)?.classList.toggle('on', t === tab);
   });
   if (tab === 'settings') renderSettingsTab();
   if (tab === 'plan') {
-    // Pull fresh plan from server before rendering
     if (Sync.isConnected()) {
       Sync.pull().then(() => renderPlanTab()).catch(() => renderPlanTab());
     } else {
