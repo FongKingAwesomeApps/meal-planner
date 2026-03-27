@@ -11,7 +11,7 @@
 <link rel="manifest" href="manifest-family.json">
 <link rel="icon" href="icon-192.png" type="image/png">
 <title>Pick Your Meals</title>
-<link rel="stylesheet" href="css/design-system.css">
+<link rel="stylesheet" href="css/design-system.css?v=5">
 <style>
 
 *{box-sizing:border-box}
@@ -21,27 +21,31 @@
 .tab-panel:not(.active){display:none !important}
 .tab-panel.active{display:block !important}
 #tab-pick.tab-panel.active{display:flex !important;flex-direction:column}
-.chip-row{display:flex;gap:12px;padding:0 20px 6px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.chip-row{display:flex;gap:10px;padding:0 20px 8px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .chip-row::-webkit-scrollbar{display:none}
-.chip{flex-shrink:0;white-space:nowrap;padding:10px 16px;min-height:42px;font-size:13px}
+.chip{flex-shrink:0;white-space:nowrap;padding:9px 15px;min-height:40px;font-size:13px}
 .pill-inner{display:flex;align-items:center;gap:14px;min-width:0}
 .pill-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;word-break:break-word}
 .pill-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
 
-.cat-anchor{padding:14px 20px 8px !important;margin-top:8px}
+.cat-anchor{padding:16px 22px 10px !important;margin-top:10px}
 #fchips-health{padding-top:8px}
 #fchips-cats{padding-top:4px !important}
-.pill-wrap{padding:0 16px 12px}
+.pill-wrap{padding:0 16px 14px}
 .settings-section-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:0 16px 8px}
-.settings-card{background:var(--surface);border-radius:var(--r16);margin:0 16px 16px;padding:14px 16px;display:block;min-height:72px}
+.settings-card{background:var(--surface);border-radius:var(--r16);margin:0 16px 18px;padding:15px 16px;display:block;min-height:72px}
 .settings-row{display:flex;align-items:center;gap:12px;min-height:44px}
 .settings-grow{flex:1;min-width:0}
 .settings-input-row{display:flex;gap:8px;align-items:center;flex-wrap:nowrap}
 .settings-input-row input{min-width:0}
 
-.pill-title{line-height:1.25}
+.pill-title{line-height:1.28}
 .pill-recipe-btn{min-height:32px}
 
+.chip{border:1px solid rgba(60,60,67,.08)}
+.chip-active{box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.limit-bar{margin-bottom:10px}
+.plan-day-card{margin-bottom:8px}
 
 /* Tab icon SVG color */
 .tab-icon-bg { color: var(--ink4); }
