@@ -29,13 +29,24 @@ async function init() {
   // Read fid from query string OR hash (hash is preserved by iOS when adding to home screen)
   const params = new URLSearchParams(window.location.search);
   const hashParams = new URLSearchParams(window.location.hash.replace('#',''));
-  _familyId = params.get('fid') || hashParams.get('fid') || localStorage.getItem('mp_family_id') || null;
+  // Use separate storage keys for coordinator vs family app
+  const isFamilyApp = window.location.pathname.includes('family.html');
+  const storageKey  = isFamilyApp ? 'mp_family_id_family' : 'mp_family_id';
+
+  _familyId = params.get('fid') || hashParams.get('fid') || localStorage.getItem(storageKey) || localStorage.getItem('mp_family_id') || null;
 
   if (_familyId) {
-    // Persist so it survives navigation
+    // Persist to app-specific key AND shared key
+    localStorage.setItem(storageKey, _familyId);
     localStorage.setItem('mp_family_id', _familyId);
-    // Pull latest state from server in background
-    pull().catch(() => {}); // non-blocking
+    // Rewrite URL to use hash fragment — iOS preserves # when saving PWA to home screen
+    // This means family.html#fid=fam-xxx survives Add to Home Screen
+    if (isFamilyApp && !window.location.hash.includes('fid=')) {
+      window.history.replaceState({}, '',
+        window.location.pathname + (window.location.search || '') + '#fid=' + _familyId
+      );
+    }
+    pull().catch(() => {});
   }
 
   return _familyId;
@@ -51,7 +62,9 @@ function getCoordinatorURL() {
 
 function getFamilyAppURL() {
   if (!_familyId) return window.location.origin + '/meal-planner/family.html';
-  return window.location.origin + '/meal-planner/family.html?fid=' + _familyId;
+  // Use BOTH query param AND hash — query param for initial load,
+  // hash gets rewritten by init() so iOS PWA preserves it after Add to Home Screen
+  return window.location.origin + '/meal-planner/family.html?fid=' + _familyId + '#fid=' + _familyId;
 }
 
 // Direct app URLs (for sharing as links, not home screen)
