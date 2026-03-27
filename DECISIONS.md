@@ -187,3 +187,76 @@ Last good commit: 964cd3b
 
 See DECISIONS.md in the repo for full project state.
 ```
+
+---
+
+## Full Backlog — Everything Discussed But Not Yet Built
+
+### 🐛 Bugs / Incomplete
+
+- **Family PWA still opens coordinator on some devices** — manifest fix deployed but requires fresh PWA install (delete + re-add home screen icon)
+- **Coordinator filter chips empty on Meals tab first visit** — `renderFilterChips()` now called at boot, needs verification after latest deploy
+- **Notifications toggle** — `_pushSubscription` declaration fix deployed, needs real-device test to confirm
+- **Shopping list qty display** — shows quantity × count but doesn't always calculate product correctly when qty includes descriptive text (e.g. "2 lbs cut into chunks")
+- **Push notification on picks approved** — coordinator approves but family members don't receive a notification confirming approval
+- **Picks reappear after dismiss** — Worker status update may not be saving correctly in all cases; needs end-to-end retest after latest Worker deploy
+- **`apple-mobile-web-app-capable` deprecation warning** — low priority cosmetic, Chrome warning only
+
+---
+
+### 📋 Short-Term Features (Next 1–3 Sessions)
+
+#### Coordinator
+- **Week navigation on Home screen** — currently ‹ › arrows only on Plan screen; home screen always shows current week even if you've navigated away on Plan
+- **Post-meal ratings** — thumbs up/down on Plan screen after a meal is cooked; free-text comment; stored per meal per week
+- **Push notification to family when plan is set** — currently fires via `/notify-family` endpoint but needs verification; family should get a push when the week plan is published
+- **Push notification to family when picks approved** — notify Seth/Jared that their picks were accepted
+- **Clear selection ✕ on meals count label** — tapping "N selected ✕" should confirm and clear; wired to `confirmClearMeals()` but visual ✕ indicator wasn't confirmed working
+- **Favourites sync to Worker** — currently localStorage only; if Dave selects a fav it doesn't appear on Jenn's device
+- **Coordinator picks approval sheet** — show each person's picks against their configured limits (e.g. "Seth — 2/3 picks, 1 Indulgent used"); brief analysis visible before approving
+- **`DECISIONS.md` committed to GitHub repo** — upload this file
+
+#### Family App
+- **Week plan read-only view** — Plan tab exists but needs verification it pulls fresh data from Worker and renders correctly
+- **Notifications to family on plan publish** — family members should get a push when the week's meals are set
+- **Limit bar dots** — Indulgent showing too many circles on family app in some cases
+
+---
+
+### 🔮 Long-Term / Nice-to-Have
+
+#### Planning & History
+- **Week plan history** — store plans with dated keys, never overwrite; allow browsing previous weeks
+- **Previous week browser on Plan screen** — navigate back to see what was cooked
+- **Duplicate previous week's plan** — one tap to copy last week as a starting point
+- **Per-week notes field** — free text field attached to the week (e.g. "Camping weekend, skip Thursday")
+- **Meal frequency tracking** — show how many times each meal has been planned; surface "haven't had this in a while" suggestions
+- **Special menus / saved collections** — curated meal sets for specific occasions (camping trip, Christmas week, BBQ month) that can be activated for a week
+
+#### Meal Library
+- **More recipes** — library currently has 81 meals; goal is to grow significantly
+- **Meal photos** — photo for each meal displayed in recipe sheet and meal list
+- **Meal prep page** — dedicated screen with a one-time shopping list decoupled from the week plan; for batch cooking sessions
+- **50 meal prep recipes** — with step-by-step photos, uploaded separately from the main library
+- **Update FAQ throughout** — FAQ content written for current feature set; needs updating as features change
+- **Macro calculation improvement** — AI estimates macros but they're rough; option to pull from a nutrition API for custom meals
+- **Edit meal category** — currently can edit meal details but not reassign category after saving
+
+#### Family & Social
+- **Full family member profile editing** — currently can edit limits only; need to edit name, colour, role, delete member
+- **Rating-based meal suggestions** — after post-meal rating, app learns preferences; "Seth always rates chicken dishes highly" surfaced as suggestions
+- **Meal suggestion improvements** — URL-based suggestions (YouTube, AllRecipes) currently generates a recipe "inspired by" the link since the Worker can't fetch URLs; could improve with a fetch-proxy approach
+- **Guest frequency** — track which weeks guests (Michael, Rachael) are attending to adjust shopping quantities automatically
+
+#### Technical
+- **Cloud as source of truth for all state** — favourites, custom meals, family config currently split between localStorage and Worker; full sync would mean any device is fully interchangeable
+- **Offline-first improvements** — currently works offline but changes made offline aren't queued for sync when back online
+- **Per-device coordinator access** — Dave and Jenn both use the coordinator but changes on one device don't appear on the other until pull interval (30s); real-time would require WebSockets or SSE
+- **VAPID key rotation** — push notification keys currently hardcoded as Worker secrets; should have a rotation mechanism
+- **Export to calendar** — export week plan as .ics file for iOS Calendar
+- **Print-friendly shopping list** — formatted PDF or print stylesheet for the shopping list
+
+#### Design
+- **Indulgent limit bar dots fix** — showing too many circles in some edge cases on family app
+- **Meal picker balance bar** — live updating mini bar below filter chips showing running L/B/I totals as you select; warn when over on Indulgent or under on Light target (visually flag pills, not hard block)
+- **Decision tree reconnected** — over/under weekly balance targets should visually flag meal pills in the picker (not block, just colour hint); e.g. if 3 Indulgent already selected, remaining Indulgent meals show a subtle orange tint
