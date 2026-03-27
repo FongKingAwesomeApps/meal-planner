@@ -53,7 +53,7 @@ async function init() {
 }
 
 function getFamilyId() { return _familyId; }
-function isConnected()  { return !!_familyId; }
+function isConnected()  { return !!(_familyId || localStorage.getItem('mp_family_id')); }
 
 function getCoordinatorURL() {
   const fid = _familyId || localStorage.getItem('mp_family_id');
