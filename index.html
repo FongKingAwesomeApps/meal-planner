@@ -819,7 +819,8 @@ let activeRating = 'auto';
 let screenStack  = ['screen-home'];
 let pendingPicks = null;
 let checkedItems = new Set();
-let _lastGeneratedMacros = null;  // stores macros from last AI generation
+let _lastGeneratedMacros = null;  // stores macro
+let _pushSubscription    = null;  // cached push subscriptions from last AI generation
 let weekOffset   = 0;  // 0 = current week, 1 = next week, -1 = last week
 
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
