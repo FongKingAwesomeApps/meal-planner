@@ -1431,11 +1431,10 @@ function renderShoppingList() {
       // Show quantity: if multiple recipes use same ingredient, show count
       let qtyDisplay = '';
       if (data.qtys.length > 0) {
-        if (data.count > 1) {
-          qtyDisplay = data.qtys[0] + ' × ' + data.count + ' recipes';
-        } else {
-          qtyDisplay = data.qtys[0];
-        }
+        // Extract just the quantity number+unit (e.g. "2 lbs" from "2 lbs cut into chunks")
+        const qtyMatch = data.qtys[0].match(/^([\d./]+ ?(?:lb|lbs|kg|g|oz|cup|cups|tbsp|tsp|ml|l|can|cans|clove|cloves|slice|slices|piece|pieces)?)/i);
+        const qtyShort = qtyMatch ? qtyMatch[1].trim() : data.qtys[0];
+        qtyDisplay = data.count > 1 ? qtyShort + ' ×' + data.count : qtyShort;
       } else if (data.count > 1) {
         qtyDisplay = '×' + data.count;
       }
@@ -1574,7 +1573,7 @@ function sendPlan() {
     const entry=weekPlan[key];
     const meal=entry?.mealId?Meals.getMeal(entry.mealId):null;
     const ds=`${DAYS[d].slice(0,3)} ${date.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
-    lines.push(`${ds}: ${meal?meal.name+` (${entry.pax||4}p)`:'—'}`);
+    lines.push(ds + ': ' + (meal ? meal.name + ' (' + (entry.pax||4) + 'p)' : '—'));
   }
   const text=lines.join('\n');
   if(navigator.share)navigator.share({title:'Meal Plan',text});
