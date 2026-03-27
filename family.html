@@ -28,7 +28,7 @@
 .pill-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;word-break:break-word}
 .pill-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
 
-.cat-anchor{padding:16px 22px 10px !important;margin-top:10px}
+.cat-anchor{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:16px 22px 10px !important;margin-top:10px}
 #fchips-health{padding-top:8px}
 #fchips-cats{padding-top:4px !important}
 .pill-wrap{padding:0 16px 14px}
@@ -155,6 +155,11 @@
           <div class="limit-dots" id="dots-i"></div>
         </div>
         <div class="limit-msg" id="limit-msg"></div>
+      </div>
+
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input class="search-input" id="family-meals-search" placeholder="Search meals…" oninput="render()">
       </div>
 
       <!-- Filter chips -->
@@ -679,12 +684,14 @@ function fF(f) {
 // ── Render meal pills ─────────────────────────────────────────────────────────
 function render() {
   const famFavs = Store.getFavourites();
+  const q = (document.getElementById('family-meals-search')?.value || '').trim().toLowerCase();
   const filtered = Meals.allMeals().filter(m => {
     if (ff === 'fav' && !famFavs.has(m.id)) return false;
-    if (ff === 'fav') return true;
     if (ffHealth && m.health !== ffHealth) return false;
     if (ffCat === 'crockpot' && !m.crockpot) return false;
     else if (ffCat && ffCat !== 'crockpot' && m.cat !== ffCat) return false;
+    if (q && !m.name.toLowerCase().includes(q)) return false;
+    if (ff === 'fav') return famFavs.has(m.id);
     return true;
   });
 
@@ -723,7 +730,7 @@ function render() {
   });
 
   document.getElementById('flist').innerHTML = html ||
-    '<div style="text-align:center;padding:40px 16px;color:var(--ink4)">No meals in this category</div>';
+    '<div style="text-align:center;padding:40px 16px;color:var(--ink4)">No meals found</div>';
 
   renderLimitBar();
   updateCTA();
