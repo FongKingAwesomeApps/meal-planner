@@ -84,16 +84,17 @@
   <div class="safe-top"></div>
   <div class="scroll-body" id="home-scroll">
     <!-- First-run setup card — shown only when no family ID is set -->
-    <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:14px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
-        <div style="font-size:15px;font-weight:700;color:#8a4a00">👋 Set up family sync</div>
-        <button onclick="dismissFirstRun()" style="background:none;border:none;font-size:18px;color:#8a4a00;cursor:pointer;padding:0;line-height:1;margin-left:8px">✕</button>
-      </div>
-      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:12px">Go to Settings → Family Links & Sync to get your coordinator link and share the family app link.</div>
+    <div id="first-run-card" class="hidden" style="margin:8px 16px;background:#fff8e6;border-radius:var(--r16);padding:16px">
+      <div style="font-size:15px;font-weight:700;color:#8a4a00;margin-bottom:4px">👋 Connect to your family</div>
+      <div style="font-size:13px;color:#8a4a00;line-height:1.5;margin-bottom:12px">Enter your family ID to connect. You'll find it in Settings → Family Links &amp; Sync on the coordinator app.</div>
+      <input id="first-run-fid-input" type="text" placeholder="fam-xxxxxxxx"
+        style="width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid rgba(138,74,0,.3);border-radius:var(--r12);font-size:15px;font-family:inherit;background:#fff;color:var(--ink);margin-bottom:10px;outline:none"
+        autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false">
       <div style="display:flex;gap:8px">
-        <button onclick="dismissFirstRun()" style="flex:1;background:rgba(138,74,0,.15);color:#8a4a00;border:none;border-radius:var(--r12);padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Dismiss</button>
-        <button onclick="if(window.goTo)goTo('screen-settings')" style="flex:2;background:#ff9500;color:#fff;border:none;border-radius:var(--r12);padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Go to Settings →</button>
+        <button onclick="dismissFirstRun()" style="flex:1;background:rgba(138,74,0,.15);color:#8a4a00;border:none;border-radius:var(--r12);padding:11px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Skip</button>
+        <button onclick="connectFamilyId()" style="flex:2;background:#ff9500;color:#fff;border:none;border-radius:var(--r12);padding:11px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">Connect →</button>
       </div>
+
     </div>
     <div class="greeting">
       <div class="greeting-sub" id="home-greeting-sub">Good morning</div>
@@ -853,6 +854,7 @@ G.getEffectiveCat=getEffectiveCat;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
 G.setupFamilySync=setupFamilySync;
+G.connectFamilyId=connectFamilyId;
 G.dismissFirstRun=dismissFirstRun;
 G.showSyncSheet=showSyncSheet;
 G.copyCoordURL=copyCoordURL;
@@ -908,6 +910,7 @@ async function boot() {
   renderHomeBalance();
   renderHomeMealList();
   renderSettings();
+  renderFilterChips(); // pre-populate filter chips so Meals tab is ready instantly
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
@@ -2470,6 +2473,26 @@ function regenerateFamilyId() {
   Sync.setFamilyId(id);
   showSyncSheet(); // refresh the sheet with new values
   showToast('New family ID generated');
+}
+
+function connectFamilyId() {
+  const input = document.getElementById('first-run-fid-input');
+  const raw = (input?.value || '').trim().toLowerCase();
+  const match = raw.match(/fam-[a-z0-9]+/);
+  if (!match) {
+    if (input) input.style.borderColor = 'var(--indulgent)';
+    showToast('Enter a valid family ID (e.g. fam-rqrvsmp8)');
+    return;
+  }
+  const fid = match[0];
+  Sync.setFamilyId(fid);
+  dismissFirstRun();
+  showToast('Connected ✓');
+  Sync.pull().then(() => {
+    renderHomeBalance();
+    renderHomeMealList();
+    renderSettings();
+  }).catch(() => {});
 }
 
 function dismissFirstRun() {
