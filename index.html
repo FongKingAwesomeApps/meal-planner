@@ -1195,6 +1195,8 @@ async function approveAllPicks() {
   document.getElementById('home-picks-area').classList.add('hidden');
   renderHomeBalance(); renderHomeMealList();
 }
+
+function setFilter(f) {
   const isHealth = ['light','balanced','indulgent'].includes(f);
   const isCat    = f !== 'all' && f !== 'fav' && !isHealth;
   const isFav    = f === 'fav';
