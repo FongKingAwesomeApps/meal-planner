@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meal Planner">
@@ -22,6 +22,14 @@
 </style>
 <style>
 #app{position:fixed;inset:0;overflow:hidden}
+.cat-anchor{padding:14px 20px 8px !important;margin-top:8px}
+.chip-row{padding:0 20px 6px !important;gap:12px !important;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.chip-row::-webkit-scrollbar{display:none}
+.chip{padding:10px 16px;min-height:42px;font-size:13px}
+.pick-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pick-chip{background:var(--bg);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:500;color:var(--ink2);line-height:1.2}
+.meal-name{line-height:1.25}
+
 .nav-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px;flex-shrink:0}
 .nav-back{font-size:15px;font-weight:500;color:var(--blue);padding:8px 0;min-width:60px;cursor:pointer}
 .nav-title{font-size:17px;font-weight:600;color:var(--ink)}
@@ -35,9 +43,9 @@
 .alert-name{font-size:14px;font-weight:600;color:var(--ink)}
 .alert-sub{font-size:12px;color:var(--ink4);margin-top:2px}
 .alert-time{font-size:11px;color:var(--ink5);margin-left:auto}
-.pick-chips{display:flex;flex-wrap:wrap;gap:6px}
-.pick-chip{background:var(--bg);border-radius:20px;padding:5px 11px;font-size:12px;font-weight:500;color:var(--ink2)}
-.cat-anchor{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:10px 16px 5px}
+.pick-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pick-chip{background:var(--bg);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:500;color:var(--ink2);line-height:1.2}
+.cat-anchor{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);padding:14px 20px 8px;margin-top:8px}
 .week-picker{background:var(--surface);border-radius:var(--r16);margin:0 16px;padding:13px 16px;display:flex;align-items:center;gap:12px}
 .week-picker-icon{font-size:22px}
 .week-picker-label{font-size:15px;font-weight:700;color:var(--ink)}
@@ -71,7 +79,7 @@
 .empty-title{font-size:17px;font-weight:600;color:var(--ink);margin-bottom:6px}
 .empty-sub{font-size:14px;color:var(--ink4);line-height:1.5}
 .meal-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.meal-name{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meal-name{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25}
 .meal-day{font-size:11px;color:var(--ink4);margin-top:2px}
 
 </style>
