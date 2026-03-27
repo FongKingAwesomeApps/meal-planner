@@ -1,7 +1,7 @@
 // ── Meal Planner Service Worker v4 ───────────────────────────────────────────
 // Network-first for HTML and CSS (always fresh), cache-first for assets
 // Version string — change this to force all clients to update
-const VERSION = 'mp-v5';
+const VERSION = 'mp-v6';
 
 // Files that must be available offline
 const STATIC = [
