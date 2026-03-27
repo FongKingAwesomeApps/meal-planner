@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meal Planner">
@@ -1125,6 +1125,8 @@ function renderWorkerPicks(picks) {
   }).join('') + (allMealIds.length > 5 ? '<span class="pick-chip">+' + (allMealIds.length-5) + ' more</span>' : '');
   area.classList.remove('hidden');
   pendingPicks = { name: names.length > 1 ? names.join(', ') : names[0], mealIds: allMealIds, from: picks, _fromWorker: true };
+  // Set app badge to number of pending pick meals
+  if (navigator.setAppBadge) navigator.setAppBadge(allMealIds.length).catch(()=>{});
 }
 
 function showPendingPicks() {
@@ -1202,6 +1204,7 @@ function dismissAllPicks() {
   document.getElementById('home-picks-area').classList.add('hidden');
   closeSheet();
   showToast('Picks dismissed');
+  if (navigator.clearAppBadge) navigator.clearAppBadge().catch(()=>{});
 }
 
 function skipPickMeal(i) {
@@ -1221,6 +1224,11 @@ async function approveAllPicks() {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({picks: updated})
       });
+      // Notify family their picks were approved
+      fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid + '/notify-family', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({title:'✅ Picks approved!', body:'Your meal picks have been added to the plan', url:'/meal-planner/family.html'})
+      }).catch(()=>{});
     } catch(e) { console.warn('approveAllPicks Worker update failed:', e.message); }
   }
   showToast('All ' + pendingPicks.mealIds.length + ' meals added');
@@ -1228,6 +1236,7 @@ async function approveAllPicks() {
   pendingPicks = null;
   document.getElementById('home-picks-area').classList.add('hidden');
   renderHomeBalance(); renderHomeMealList();
+  if (navigator.clearAppBadge) navigator.clearAppBadge().catch(()=>{});
 }
 
 function setFilter(f) {
@@ -2316,6 +2325,7 @@ async function togglePushNotifications() {
         setNotifToggle(true);
         document.getElementById('notif-status').textContent = 'On — you\'ll get notified when picks arrive';
         showToast('Notifications enabled ✓');
+        reg.update().catch(()=>{});
       } else {
         showToast('Could not enable: ' + (result.reason || 'unknown'));
       }
