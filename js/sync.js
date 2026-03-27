@@ -56,15 +56,16 @@ function getFamilyId() { return _familyId; }
 function isConnected()  { return !!_familyId; }
 
 function getCoordinatorURL() {
-  if (!_familyId) return window.location.origin + '/meal-planner/';
-  return window.location.origin + '/meal-planner/?fid=' + _familyId;
+  const fid = _familyId || localStorage.getItem('mp_family_id');
+  if (!fid) return window.location.origin + '/meal-planner/';
+  return window.location.origin + '/meal-planner/?fid=' + fid;
 }
 
 function getFamilyAppURL() {
-  if (!_familyId) return window.location.origin + '/meal-planner/family.html';
-  // Use BOTH query param AND hash — query param for initial load,
-  // hash gets rewritten by init() so iOS PWA preserves it after Add to Home Screen
-  return window.location.origin + '/meal-planner/family.html?fid=' + _familyId + '#fid=' + _familyId;
+  const fid = _familyId || localStorage.getItem('mp_family_id');
+  if (!fid) return window.location.origin + '/meal-planner/family.html';
+  // Use BOTH query param AND hash — iOS preserves # when saving PWA to home screen
+  return window.location.origin + '/meal-planner/family.html?fid=' + fid + '#fid=' + fid;
 }
 
 // Direct app URLs (for sharing as links, not home screen)
