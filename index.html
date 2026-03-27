@@ -244,11 +244,7 @@
         </div>
         <div class="settings-chev">›</div>
       </div>
-      <div class="settings-row" onclick="shareFamilyURL()">
-        <div class="settings-icon" style="background:#e3f9e9">👨‍👩‍👧‍👦</div>
-        <div class="settings-label">Share Family App Link</div>
-        <div class="settings-chev">›</div>
-      </div>
+
     </div>
     <div class="t-label px-16 mb-8">Notifications</div>
     <div class="settings-group mb-8">
@@ -1432,9 +1428,17 @@ function renderShoppingList() {
     const rows = Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([name, data]) => {
       const key  = name.toLowerCase().replace(/\W+/g, '_');
       const done = checkedItems.has(key);
-      const qtyDisplay = data.qtys.length > 0
-        ? (data.count > 1 ? data.qtys[0] + ' ×' + data.count : data.qtys[0])
-        : (data.count > 1 ? '×' + data.count : '');
+      // Show quantity: if multiple recipes use same ingredient, show count
+      let qtyDisplay = '';
+      if (data.qtys.length > 0) {
+        if (data.count > 1) {
+          qtyDisplay = data.qtys[0] + ' × ' + data.count + ' recipes';
+        } else {
+          qtyDisplay = data.qtys[0];
+        }
+      } else if (data.count > 1) {
+        qtyDisplay = '×' + data.count;
+      }
       return `<div class="shop-row${done?' done':''}" onclick="toggleShopItem('${key}',this)">
         <div class="shop-check">${done?'✓':''}</div>
         <span class="shop-name">${name}</span>
@@ -2214,6 +2218,30 @@ function setNotifToggle(on) {
   const thumb  = document.getElementById('notif-thumb');
   if (toggle) toggle.style.background = on ? 'var(--green)' : 'var(--bg2)';
   if (thumb)  thumb.style.transform   = on ? 'translateX(20px)' : 'translateX(0)';
+}
+
+async function initNotifStatus() {
+  const statusEl = document.getElementById('notif-status');
+  if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+    if (statusEl) statusEl.textContent = 'Not supported on this device';
+    const row = document.getElementById('notif-row');
+    if (row) row.style.opacity = '.5';
+    return;
+  }
+  if (Notification.permission === 'denied') {
+    if (statusEl) statusEl.textContent = 'Blocked — enable in Safari Settings';
+    return;
+  }
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    setNotifToggle(!!sub);
+    if (statusEl) statusEl.textContent = sub
+      ? "On — you'll get notified when picks arrive"
+      : 'Off — tap to enable';
+  } catch(e) {
+    if (statusEl) statusEl.textContent = 'Tap to enable notifications';
+  }
 }
 
 async function togglePushNotifications() {
