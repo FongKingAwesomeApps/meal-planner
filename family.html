@@ -332,6 +332,8 @@ let myLimits    = { total: 3, maxIndulgent: 1, minLight: 1 };
 let partnerJoining = false;
 let sel         = new Set();   // selected meal IDs
 let ff          = 'all';
+let ffHealth    = '';  // '' = any health
+let ffCat       = '';  // '' = any category
 let activeSheet = null;
 let suggestMode = 'text';
 let activeTab   = 'pick';
@@ -620,28 +622,35 @@ function canPick(meal) {
 
 // ── Filter ────────────────────────────────────────────────────────────────────
 function fF(f) {
-  ff = f;
+  const isHealth = ['light','balanced','indulgent'].includes(f);
+  const isCat    = f !== 'all' && f !== 'fav' && !isHealth;
+  if (f === 'all')    { ffHealth = ''; ffCat = ''; ff = 'all'; }
+  else if (f === 'fav') { ff = 'fav'; }
+  else if (isHealth)  { ffHealth = ffHealth === f ? '' : f; ff = ffHealth || ffCat || 'all'; }
+  else if (isCat)     { ffCat = ffCat === f ? '' : f; ff = ffHealth || ffCat || 'all'; }
+
   document.querySelectorAll('#fchips .chip').forEach(c => {
     const cf = c.dataset.f;
-    c.className = 'chip';
-    c.style.background = ''; c.style.color = '';
-    if (cf === f) {
-      c.classList.add('chip-active');
-    } else if (cf === 'fav') {
-      c.style.background = '#ffeae9'; c.style.color = '#a0201a';
-    } else {
-      c.classList.add({light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf]||'chip-cat');
-    }
+    c.className = 'chip'; c.style.background = ''; c.style.color = '';
+    const active = (cf === ffHealth) || (cf === ffCat) ||
+      (cf === 'fav' && ff === 'fav') ||
+      (cf === 'all' && !ffHealth && !ffCat && ff !== 'fav');
+    if (active) { c.classList.add('chip-active'); }
+    else if (cf === 'fav') { c.style.background = '#ffeae9'; c.style.color = '#a0201a'; }
+    else c.classList.add({light:'chip-l',balanced:'chip-b',indulgent:'chip-i'}[cf]||'chip-cat');
   });
   render();
 }
 
 // ── Render meal pills ─────────────────────────────────────────────────────────
 function render() {
+  const famFavs = Store.getFavourites();
   const filtered = Meals.allMeals().filter(m => {
-    if (ff === 'crockpot' && !m.crockpot) return false;
-    if (['pasta','chicken','pork','beef','fish','comfort','camping'].includes(ff) && m.cat !== ff) return false;
-    if (['light','balanced','indulgent'].includes(ff) && m.health !== ff) return false;
+    if (ff === 'fav' && !famFavs.has(m.id)) return false;
+    if (ff === 'fav') return true;
+    if (ffHealth && m.health !== ffHealth) return false;
+    if (ffCat === 'crockpot' && !m.crockpot) return false;
+    else if (ffCat && ffCat !== 'crockpot' && m.cat !== ffCat) return false;
     return true;
   });
 
