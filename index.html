@@ -153,7 +153,7 @@
     <span class="nav-back" onclick="goBack()">← Home</span>
     <span class="nav-title">Select Meals</span>
     <span class="nav-action" style="display:flex;align-items:center;gap:8px">
-      <span id="meals-selected-count" style="font-size:13px;font-weight:600;color:var(--blue)">0 selected</span>
+      <span id="meals-selected-count" style="font-size:13px;font-weight:600;color:var(--blue);cursor:pointer" onclick="confirmClearMeals()">0 selected</span>
       <button onclick="openSheet('sheet-add-meal')" style="width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">+</button>
     </span>
   </div>
@@ -187,7 +187,7 @@
     <div id="shopping-list-body"></div>
     <div style="height:8px"></div>
     <button class="btn btn-dark btn-sm" onclick="shareShoppingList()">Share List</button>
-    <button class="btn btn-primary btn-sm" onclick="if(window.goTo)goTo('screen-plan')">Set Meal Plan →</button>
+
   </div>
 
 </div>
@@ -664,55 +664,60 @@
     <div class="sheet-title">Family Links &amp; Sync</div>
     <button class="sheet-close" onclick="closeSheet()">✕</button>
   </div>
-  <div class="sheet-scroll" style="padding-bottom:40px">
-    <div style="padding:8px 16px 12px">
-      <p class="t-sec" style="line-height:1.6">Your family ID ties everyone together. Anyone with the right link sees the same meal plan in real time.</p>
+  <div class="sheet-scroll" style="padding-bottom:48px">
+    <div style="padding:8px 16px 4px">
+      <div class="t-label mb-8">Your family ID</div>
+      <div style="background:var(--bg);border-radius:var(--r12);padding:12px 14px;display:flex;align-items:center;gap:10px">
+        <div style="font-size:15px;font-weight:700;color:var(--ink);font-family:monospace;flex:1" id="sync-fid-display">—</div>
+        <button onclick="copyFamilyCode()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Copy Code</button>
+        <button onclick="regenerateFamilyId()" style="background:none;border:none;font-size:12px;color:var(--indulgent);font-weight:600;cursor:pointer;padding:4px 0;flex-shrink:0">Reset</button>
+      </div>
     </div>
-    <div class="t-label px-16 mb-8">Your family ID</div>
-    <div class="inset-list mb-8">
-      <div class="inset-row">
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:700;color:var(--ink);font-family:monospace" id="sync-fid-display">—</div>
-          <div style="font-size:11px;color:var(--ink4);margin-top:2px">This ID is unique to your family</div>
+    <!-- Section 1: Coordinator -->
+    <div style="margin:16px 16px 0;background:var(--surface);border-radius:var(--r16);overflow:hidden">
+      <div style="padding:12px 14px 8px;background:var(--blue);color:#fff">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.8;margin-bottom:2px">1 · Coordinator App (you)</div>
+        <div style="font-size:13px;opacity:.9">For Dave &amp; Jenn — full planning access</div>
+      </div>
+      <div style="padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">App Link</div>
+        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-coord-url">—</div>
+        <button onclick="copyCoordURL()" style="width:100%;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px">Copy App Link</button>
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Family Code</div>
+        <div style="font-size:15px;font-weight:700;color:var(--ink);font-family:monospace;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-coord-code">—</div>
+        <button onclick="copyFamilyCode()" style="width:100%;background:var(--bg2);color:var(--ink);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px">Copy Code</button>
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Setup Instructions</div>
+        <div style="background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:8px">
+          <div style="font-size:12px;color:var(--ink2);line-height:1.8">
+            1. Copy the App Link above<br>2. Open it in Safari on your iPhone<br>3. Tap Share → <strong>Add to Home Screen</strong><br>4. Open the app from your home screen<br>5. If asked for a family code, paste: <span style="font-family:monospace;font-weight:700" id="sync-coord-code-inline">—</span>
+          </div>
         </div>
-        <button onclick="regenerateFamilyId()" style="background:none;border:none;font-size:12px;color:var(--indulgent);font-weight:600;cursor:pointer;padding:4px 0">Reset</button>
+        <button onclick="copyCoordInstructions()" style="width:100%;background:var(--bg2);color:var(--ink);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Copy Instructions</button>
       </div>
     </div>
-    <div class="t-label px-16 mb-8">Coordinator link (you)</div>
-    <div class="inset-list mb-8">
-      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:8px">
-        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-coord-url">—</div>
-        <div style="display:flex;gap:8px;width:100%">
-          <button onclick="copyCoordURL()" style="flex:1;background:var(--bg2);color:var(--ink);border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>
-          <button onclick="if(window.showAddToHomeInstructions)showAddToHomeInstructions()" style="flex:2;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer">📲 Save to Home Screen</button>
+    <!-- Section 2: Family App -->
+    <div style="margin:12px 16px 0;background:var(--surface);border-radius:var(--r16);overflow:hidden">
+      <div style="padding:12px 14px 8px;background:var(--green);color:#fff">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.8;margin-bottom:2px">2 · Family App</div>
+        <div style="font-size:13px;opacity:.9">For Seth, Jared, Michael, Rachael</div>
+      </div>
+      <div style="padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">App Link</div>
+        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-family-url">—</div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <button onclick="copyFamilyURLFromSheet()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Copy Link</button>
+          <button onclick="shareFamilyURL()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;opacity:.8">Share</button>
         </div>
-      </div>
-    </div>
-    <!-- Add to home screen instructions — shown inline -->
-    <div id="add-home-instructions" class="hidden" style="margin:0 16px 12px;background:#e8f0ff;border-radius:var(--r12);padding:14px">
-      <div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:8px">Add to Home Screen</div>
-      <div style="font-size:13px;color:var(--ink2);line-height:1.7">
-        1. Tap the <strong>Share button</strong> at the bottom of Safari (the box with an arrow)<br>
-        2. Scroll down and tap <strong>"Add to Home Screen"</strong><br>
-        3. Tap <strong>Add</strong> — done
-      </div>
-      <div style="font-size:12px;color:var(--ink4);margin-top:8px">Make sure your coordinator link (with ?fid= in it) is in the address bar first.</div>
-    </div>
-    <div class="t-label px-16 mb-8">Family app link (Seth, Jared etc)</div>
-    <div class="inset-list mb-8">
-      <div class="inset-row" style="flex-direction:column;align-items:flex-start;gap:6px">
-        <div style="font-size:12px;color:var(--ink3);font-family:monospace;word-break:break-all;line-height:1.5" id="sync-family-url">—</div>
-        <div style="display:flex;gap:8px;width:100%">
-          <button onclick="copyFamilyURLFromSheet()" style="flex:1;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Copy</button>
-          <button onclick="shareFamilyURL()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Share</button>
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Family Code</div>
+        <div style="font-size:15px;font-weight:700;color:var(--ink);font-family:monospace;background:var(--bg);border-radius:8px;padding:8px 10px;margin-bottom:8px" id="sync-family-code">—</div>
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Setup Instructions</div>
+        <div style="background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:8px">
+          <div style="font-size:12px;color:var(--ink2);line-height:1.8">
+            1. Copy the App Link above and send via iMessage<br>2. Open it in Safari<br>3. Tap Share → <strong>Add to Home Screen</strong><br>4. Open from home screen<br>5. If asked for a family code, enter: <span style="font-family:monospace;font-weight:700" id="sync-family-code-inline">—</span>
+          </div>
         </div>
+        <button onclick="copyFamilyInstructions()" style="width:100%;background:var(--bg2);color:var(--ink);border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Copy Instructions</button>
       </div>
-    </div>
-    <div style="padding:0 16px">
-      <p class="t-sec" style="line-height:1.6;font-size:12px">
-        <strong style="color:var(--ink)">Bookmark your coordinator link</strong> — it has your family ID in it. If you open the app without the link you'll see a different empty state.<br><br>
-        <strong style="color:var(--ink)">Send the family link to everyone</strong> once. They bookmark it or add it to their home screen. That's all the setup they need.
-      </p>
     </div>
     <div style="height:24px"></div>
   </div>
@@ -855,6 +860,9 @@ G.setupFamilySync=setupFamilySync;
 G.dismissFirstRun=dismissFirstRun;
 G.showSyncSheet=showSyncSheet;
 G.copyCoordURL=copyCoordURL;
+G.copyFamilyCode=copyFamilyCode;
+G.copyCoordInstructions=copyCoordInstructions;
+G.copyFamilyInstructions=copyFamilyInstructions;
 G.showAddToHomeInstructions=showAddToHomeInstructions;
 G.togglePushNotifications=togglePushNotifications;
 G.confirmClearMeals=confirmClearMeals;
@@ -1105,6 +1113,16 @@ function renderWorkerPicks(picks) {
 
 function showPendingPicks() {
   if(!pendingPicks)return;
+  // Auto-approve picks from coordinator-tier members
+  const member = Store.getMemberByName(pendingPicks.name);
+  if (member && member.role === 'Coordinator') {
+    pendingPicks.mealIds.forEach(id => { selected[id] = {pax:4}; });
+    Store.saveSelected(selected);
+    showToast(pendingPicks.name + "'s picks added automatically");
+    pendingPicks = null;
+    renderMeals(); renderHomeBalance(); renderHomeMealList();
+    return;
+  }
   document.getElementById('home-picks-area').classList.remove('hidden');
   document.getElementById('home-picks-avatar').textContent=pendingPicks.name[0].toUpperCase();
   document.getElementById('home-picks-name').textContent=`${pendingPicks.name}'s picks`;
@@ -1354,7 +1372,8 @@ function updateMealsCTA() {
   const n=Object.keys(selected).length;
   document.getElementById('meals-cta').classList.toggle('hidden',n===0);
   document.getElementById('meals-cta-count').textContent=n;
-  document.getElementById('meals-selected-count').textContent=`${n} selected`;
+  const countEl = document.getElementById('meals-selected-count');
+  if (countEl) countEl.textContent = n > 0 ? n + ' selected ✕' : '0 selected';
 }
 
 // ── Recipe sheet ──────────────────────────────────────────────────────────────
@@ -1386,32 +1405,55 @@ function openRecipe(id) {
 
 // ── Shopping list ─────────────────────────────────────────────────────────────
 function renderShoppingList() {
-  const body=document.getElementById('shopping-list-body');
-  const ids=Object.keys(selected).map(Number);
-  if(!ids.length){
-    body.innerHTML=`<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">No meals selected</div><div class="empty-sub">Go to Meals and select what you'd like to cook</div></div>`;
+  const body = document.getElementById('shopping-list-body');
+  const ids  = Object.keys(selected).map(Number);
+  if (!ids.length) {
+    body.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">No meals selected</div><div class="empty-sub">Go to Meals and select what you'd like to cook</div></div>`;
     return;
   }
-  const fridge={},pantry={};
-  ids.forEach(id=>{
-    const m=Meals.getMeal(id); if(!m)return;
-    (m.fridge||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!fridge[k]){fridge[k]={count:0,qty:q}}fridge[k].count++;});
-    (m.pantry||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;const q=typeof i==='object'?i.qty:'';if(!pantry[k]){pantry[k]={count:0,qty:q}}pantry[k].count++;});
+
+  const fridge = {}, pantry = {};
+  ids.forEach(id => {
+    const m = Meals.getMeal(id); if (!m) return;
+    const addItem = (store, i) => {
+      const name = typeof i === 'string' ? i : i.name;
+      const qty  = typeof i === 'object' ? i.qty || '' : '';
+      if (!name) return;
+      if (!store[name]) store[name] = { qtys: [], count: 0 };
+      store[name].count++;
+      if (qty) store[name].qtys.push(qty);
+    };
+    (m.fridge||[]).forEach(i => addItem(fridge, i));
+    (m.pantry||[]).forEach(i => addItem(pantry, i));
   });
-  const sec=(title,items)=>{
-    if(!Object.keys(items).length)return'';
-    const rows=Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([n,data])=>{const c=data.count;const qty=data.qty||'';
-      const key=n.toLowerCase().replace(/\W+/g,'_');
-      const done=checkedItems.has(key);
-      return`<div class="shop-row${done?' done':''}" onclick="toggleShopItem('${key}',this)">
+
+  const sec = (title, items) => {
+    if (!Object.keys(items).length) return '';
+    const rows = Object.entries(items).sort((a,b)=>a[0].localeCompare(b[0])).map(([name, data]) => {
+      const key  = name.toLowerCase().replace(/\W+/g, '_');
+      const done = checkedItems.has(key);
+      const qtyDisplay = data.qtys.length > 0
+        ? (data.count > 1 ? data.qtys[0] + ' ×' + data.count : data.qtys[0])
+        : (data.count > 1 ? '×' + data.count : '');
+      return `<div class="shop-row${done?' done':''}" onclick="toggleShopItem('${key}',this)">
         <div class="shop-check">${done?'✓':''}</div>
-        <span class="shop-name">${n}</span>
-        ${qty?`<span class="shop-qty">${qty}</span>`:(c>1?`<span class="shop-qty">×${c}</span>`:'')}
+        <span class="shop-name">${name}</span>
+        ${qtyDisplay ? `<span class="shop-qty">${qtyDisplay}</span>` : ''}
       </div>`;
     }).join('');
-    return`<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
+    return `<div class="shop-section-title">${title}</div><div class="shop-inset">${rows}</div><div style="height:8px"></div>`;
   };
-  body.innerHTML=sec('Dairy & Refrigerated',fridge)+sec('Pantry & Dry Goods',pantry);
+
+  const savedRequests = localStorage.getItem('mp_shop_requests') || '';
+  const requestsSection = `
+    <div class="shop-section-title">Additional Items</div>
+    <div style="padding:0 16px 8px">
+      <textarea id="shop-requests" placeholder="Add anything else… e.g. birthday candles, dish soap"
+        style="width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid var(--sep);border-radius:var(--r12);font-family:inherit;font-size:14px;color:var(--ink);background:var(--surface);resize:none;min-height:72px;outline:none"
+        oninput="localStorage.setItem('mp_shop_requests', this.value)">${savedRequests}</textarea>
+    </div>`;
+
+  body.innerHTML = sec('Dairy & Refrigerated', fridge) + sec('Pantry & Dry Goods', pantry) + requestsSection;
 }
 function toggleShopItem(key,row) {
   checkedItems.has(key)?checkedItems.delete(key):checkedItems.add(key);
@@ -1485,7 +1527,16 @@ function renderPlan() {
 
 function setPlanMeal(key,val) {
   if(!val){delete weekPlan[key];}else{weekPlan[key]={mealId:Number(val),pax:weekPlan[key]?.pax||4};}
-  Store.saveWeekPlan(weekPlan); Sync.pushWeekPlan(weekPlan).catch(()=>{}); renderPlan(); renderHomeMealList();
+  Store.saveWeekPlan(weekPlan);
+  Sync.pushWeekPlan(weekPlan).then(() => {
+    // Notify family members that the plan has been updated
+    const fid = Sync.getFamilyId();
+    if (fid) fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid + '/notify-family', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({title:'🍽 Meal plan updated', body:'Check this week\'s plan', url:'/meal-planner/family.html'})
+    }).catch(()=>{});
+  }).catch(()=>{});
+  renderPlan(); renderHomeMealList();
 }
 function changePlanPax(key,d) {
   if(!weekPlan[key])return;
@@ -2148,57 +2199,16 @@ function renderSuggestionBadge() {
 
 function showSyncSheet() {
   const fid      = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || '—';
-  const coordURL = Sync.getCoordinatorURL();
-  const famURL   = Sync.getFamilyAppURL();
-
-  const fidEl    = document.getElementById('sync-fid-display');
-  const coordEl  = document.getElementById('sync-coord-url');
-  const famEl    = document.getElementById('sync-family-url');
-  const settingsEl = document.getElementById('settings-fid-display');
-
-  if (fidEl)    fidEl.textContent    = fid;
-  if (coordEl)  coordEl.textContent  = coordURL;
-  if (famEl)    famEl.textContent    = famURL;
-  if (settingsEl) settingsEl.textContent = fid !== '—' ? 'ID: ' + fid : 'Not set up yet';
-
+  const coordURL = 'https://fongkingawesomeapps.github.io/meal-planner/?fid=' + fid;
+  const famURL   = 'https://fongkingawesomeapps.github.io/meal-planner/family.html?fid=' + fid;
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('sync-fid-display', fid); set('sync-coord-url', coordURL);
+  set('sync-coord-code', fid); set('sync-coord-code-inline', fid);
+  set('sync-family-url', famURL); set('sync-family-code', fid); set('sync-family-code-inline', fid);
+  const fidEl = document.getElementById('settings-fid-display');
+  if (fidEl) fidEl.textContent = fid !== '—' ? 'ID: ' + fid : 'Not set up yet';
   openSheet('sheet-sync');
 }
-
-
-// ── Push notifications ─────────────────────────────────────────────────────────
-let _pushSubscription = null;
-
-async function initNotifStatus() {
-  const statusEl = document.getElementById('notif-status');
-  const toggle   = document.getElementById('notif-toggle');
-  const thumb    = document.getElementById('notif-thumb');
-
-  if (!('Notification' in window) || !('serviceWorker' in navigator)) {
-    if (statusEl) statusEl.textContent = 'Not supported on this device';
-    const row = document.getElementById('notif-row');
-    if (row) row.style.opacity = '.5';
-    return;
-  }
-
-  if (Notification.permission === 'denied') {
-    if (statusEl) statusEl.textContent = 'Blocked — enable in Safari Settings';
-    return;
-  }
-
-  // Check if already subscribed
-  try {
-    const reg = await navigator.serviceWorker.ready;
-    const sub = await reg.pushManager.getSubscription();
-    _pushSubscription = sub;
-    setNotifToggle(!!sub);
-    if (statusEl) statusEl.textContent = sub
-      ? 'On — you\'ll get notified when picks arrive'
-      : 'Off — tap to enable';
-  } catch(e) {
-    if (statusEl) statusEl.textContent = 'Tap to enable notifications';
-  }
-}
-
 function setNotifToggle(on) {
   const toggle = document.getElementById('notif-toggle');
   const thumb  = document.getElementById('notif-thumb');
@@ -2377,6 +2387,25 @@ function showAddToHomeInstructions() {
   const el = document.getElementById('add-home-instructions');
   if (el) el.classList.toggle('hidden');
   copyCoordURL();
+}
+
+function copyFamilyCode() {
+  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || '';
+  navigator.clipboard?.writeText(fid).then(() => showToast('Family code copied'));
+}
+
+function copyCoordInstructions() {
+  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || 'YOUR-CODE';
+  const url = 'https://fongkingawesomeapps.github.io/meal-planner/?fid=' + fid;
+  const text = 'Meal Planner — Coordinator\n\nApp Link:\n' + url + '\n\nFamily code: ' + fid + '\n\nOpen link in Safari → Share → Add to Home Screen. If asked for a code, enter: ' + fid;
+  navigator.clipboard?.writeText(text).then(() => showToast('Instructions copied'));
+}
+
+function copyFamilyInstructions() {
+  const fid = Sync.getFamilyId() || localStorage.getItem('mp_family_id') || 'YOUR-CODE';
+  const url = 'https://fongkingawesomeapps.github.io/meal-planner/family.html?fid=' + fid;
+  const text = 'Meal Planner — Family App\n\nApp Link:\n' + url + '\n\nFamily code: ' + fid + '\n\nOpen link in Safari → Share → Add to Home Screen. If asked for a code, enter: ' + fid;
+  navigator.clipboard?.writeText(text).then(() => showToast('Instructions copied'));
 }
 
 function copyCoordURL() {
