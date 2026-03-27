@@ -127,8 +127,24 @@
       </div>
 
       <!-- Filter chips -->
-      <div class="chip-row" id="fchips">
+      <!-- Row 1: All, Saved, health ratings -->
+      <div class="chip-row" id="fchips-health" style="padding-bottom:2px">
         <div class="chip chip-active" data-f="all" onclick="fF('all')">All</div>
+        <div class="chip" data-f="fav" onclick="fF('fav')" style="background:#ffeae9;color:#a0201a"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Saved</div>
+        <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
+        <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
+        <div class="chip chip-i" data-f="indulgent" onclick="fF('indulgent')"><span class="chip-dot" style="background:var(--indulgent)"></span>Indulgent</div>
+      </div>
+      <!-- Row 2: Categories -->
+      <div class="chip-row" id="fchips-cats" style="padding-top:0">
+        <div class="chip chip-cat" data-f="crockpot" onclick="fF('crockpot')">Slow Cook</div>
+        <div class="chip chip-cat" data-f="pasta" onclick="fF('pasta')">Pasta</div>
+        <div class="chip chip-cat" data-f="chicken" onclick="fF('chicken')">Chicken</div>
+        <div class="chip chip-cat" data-f="pork" onclick="fF('pork')">Pork</div>
+        <div class="chip chip-cat" data-f="beef" onclick="fF('beef')">Beef</div>
+        <div class="chip chip-cat" data-f="fish" onclick="fF('fish')">Fish</div>
+        <div class="chip chip-cat" data-f="comfort" onclick="fF('comfort')">Comfort</div>
+      </div>
         <div class="chip" data-f="fav" onclick="fF('fav')" style="background:#ffeae9;color:#a0201a"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Saved</div>
         <div class="chip chip-l" data-f="light" onclick="fF('light')"><span class="chip-dot" style="background:var(--light)"></span>Light</div>
         <div class="chip chip-b" data-f="balanced" onclick="fF('balanced')"><span class="chip-dot" style="background:var(--balanced)"></span>Balanced</div>
@@ -639,7 +655,7 @@ function fF(f) {
   else if (isHealth)  { ffHealth = ffHealth === f ? '' : f; ff = ffHealth || ffCat || 'all'; }
   else if (isCat)     { ffCat = ffCat === f ? '' : f; ff = ffHealth || ffCat || 'all'; }
 
-  document.querySelectorAll('#fchips .chip').forEach(c => {
+  document.querySelectorAll('#fchips-health .chip, #fchips-cats .chip').forEach(c => {
     const cf = c.dataset.f;
     c.className = 'chip'; c.style.background = ''; c.style.color = '';
     const active = (cf === ffHealth) || (cf === ffCat) ||
