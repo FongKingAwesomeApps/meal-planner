@@ -200,8 +200,11 @@ See DECISIONS.md in the repo for full project state.
 - **Notifications toggle** — `_pushSubscription` declaration fix deployed, needs real-device test to confirm
 - **Shopping list qty display** — shows quantity × count but doesn't always calculate product correctly when qty includes descriptive text (e.g. "2 lbs cut into chunks")
 - **Push notification on picks approved** — ✅ FIXED session 5: added notify-family call to approveAllPicks()
-- **App badge on pending picks** — ✅ FIXED session 5: navigator.setAppBadge() on pick load, clearAppBadge() on approve/dismiss (requires iOS 16.4+ PWA install)
+- **App badge on pending picks** — attempted session 5, not working; deferred to future (requires iOS 16.4+ PWA reinstall)
 - **Notification toggle requires app restart** — ✅ FIXED session 5: reg.update() called after subscribe
+- **Pull-to-refresh** — app notifications require app refresh to appear; add pull-down-to-refresh on home screen (coordinator) and pick tab (family)
+- **Qty not shown in shopping list export** — quantities calculated correctly in-app but missing from share/export output
+- **Add new category dropped from Meals** — ability to create a custom meal category has been removed; needs restoring
 - **Picks reappear after dismiss** — Worker status update may not be saving correctly in all cases; needs end-to-end retest after latest Worker deploy
 - **`apple-mobile-web-app-capable` deprecation warning** — low priority cosmetic, Chrome warning only
 
@@ -218,12 +221,16 @@ See DECISIONS.md in the repo for full project state.
 - **Favourites sync to Worker** — currently localStorage only; if Dave selects a fav it doesn't appear on Jenn's device
 - **Coordinator picks approval sheet** — show each person's picks against their configured limits (e.g. "Seth — 2/3 picks, 1 Indulgent used"); brief analysis visible before approving
 - **`DECISIONS.md` committed to GitHub repo** — upload this file
+- **Health level selector for AI recipe generation** — when generating a new recipe, allow user to specify Light/Balanced/Indulgent target so AI generates to spec (e.g. "BBQ mac and cheese but make it Light")
+- **Macros on new recipe review page** — AI-generated recipes don't show estimated macros on the review/confirm screen before saving
+- **Macros at a glance on meal selection** — show brief macro summary (cal, protein, carbs, fat) inline on meal pills or as a quick-view on the meal list
 
 #### Family App
 - **Week plan read-only view** — Plan tab exists but needs verification it pulls fresh data from Worker and renders correctly
 - **Notifications to family on plan publish** — family members should get a push when the week's meals are set
 - **Limit bar dots** — Indulgent showing too many circles on family app in some cases
 - **Family picks status view** — after submitting picks, family members can see their selections in the app marked as "pending" or "approved"; resets automatically at the start of each new week so they can pick fresh
+- **"Is NAME coming?" prompt on Send Picks** — when family member taps Send Picks, show a quick confirmation that also asks if they're joining for dinner that week (feeds into guest count / pax tracking)
 
 ---
 
