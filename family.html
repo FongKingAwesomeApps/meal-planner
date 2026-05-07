@@ -136,6 +136,15 @@
     <!-- Screen content area -->
     <div id="tab-pick" class="tab-panel active" style="overflow:hidden">
 
+      <!-- Picks status card — shown after picks are sent -->
+      <div id="picks-status-card" class="hidden" style="margin:8px 16px 0;border-radius:var(--r14);padding:13px 14px;display:flex;align-items:center;gap:10px">
+        <div id="picks-status-icon" style="font-size:20px">⏳</div>
+        <div style="flex:1">
+          <div id="picks-status-title" style="font-size:14px;font-weight:600"></div>
+          <div id="picks-status-sub" style="font-size:12px;margin-top:2px;opacity:.8"></div>
+        </div>
+      </div>
+
       <!-- Limit bar -->
       <div class="limit-bar mt-8">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
@@ -391,6 +400,7 @@ G.switchUser=switchUser; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=p
 G.cSheet=cSheet; G.showToast=showToast; G.fTab=fTab;
 G.setSuggestMode=setSuggestMode; G.submitSuggestion=submitSuggestion;
 G.setPartner=setPartner; G.render=render;
+G.loadMyPicksStatus=loadMyPicksStatus;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 async function renderSettingsTab() {
@@ -586,6 +596,65 @@ function enterPicker() {
   document.getElementById('screen-app').classList.remove('hidden');
   render();
   renderPlanTab();
+  loadMyPicksStatus();
+}
+
+// ── Picks status view ─────────────────────────────────────────────────────────
+function getCurrentWeekSunday() {
+  const now = new Date();
+  const sun = new Date(now);
+  sun.setDate(now.getDate() - now.getDay());
+  sun.setHours(0, 0, 0, 0);
+  return sun.toLocaleDateString('en-CA'); // YYYY-MM-DD
+}
+
+async function loadMyPicksStatus() {
+  if (!myName || !Sync.isConnected()) return;
+  const card = document.getElementById('picks-status-card');
+  if (!card) return;
+  try {
+    const fid = Sync.getFamilyId();
+    const data = await fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid).then(r => r.json());
+    const myPicks = (data.picks || []).filter(p => p.from === myName);
+    if (!myPicks.length) { card.classList.add('hidden'); return; }
+
+    // Check if picks are from the current week — if not, hide (stale)
+    const currentWeek = getCurrentWeekSunday();
+    const recentPick = myPicks[myPicks.length - 1];
+    if (recentPick.weekSunday && recentPick.weekSunday !== currentWeek) {
+      card.classList.add('hidden'); return;
+    }
+
+    // Determine overall status
+    const allApproved = myPicks.every(p => p.status === 'approved');
+    const anyPending  = myPicks.some(p => p.status === 'pending');
+    const mealCount   = [...new Set(myPicks.flatMap(p => p.mealIds || []))].length;
+
+    const titleEl = document.getElementById('picks-status-title');
+    const subEl   = document.getElementById('picks-status-sub');
+    const iconEl  = document.getElementById('picks-status-icon');
+
+    if (allApproved) {
+      card.style.background = 'var(--light-tint, #e8f5e9)';
+      iconEl.textContent = '✅';
+      titleEl.textContent = 'Your picks were approved!';
+      titleEl.style.color = 'var(--light-text, #1b5e20)';
+      subEl.textContent = `${mealCount} meal${mealCount !== 1 ? 's' : ''} added to this week's plan`;
+      subEl.style.color = 'var(--light-text, #1b5e20)';
+    } else if (anyPending) {
+      card.style.background = '#fff8e6';
+      iconEl.textContent = '⏳';
+      titleEl.textContent = 'Picks sent — waiting for approval';
+      titleEl.style.color = '#8a4a00';
+      subEl.textContent = `${mealCount} meal${mealCount !== 1 ? 's' : ''} submitted · coordinator will review`;
+      subEl.style.color = '#8a4a00';
+    } else {
+      card.classList.add('hidden'); return;
+    }
+    card.classList.remove('hidden');
+  } catch(e) {
+    // Silent fail — don't break UI
+  }
 }
 
 // ── Limit dots ────────────────────────────────────────────────────────────────
@@ -864,6 +933,7 @@ async function sendPicks() {
     if (serverResult.method === 'server') {
       showToast('Picks sent! 🎉');
       sel.clear(); render();
+      setTimeout(loadMyPicksStatus, 1000); // refresh status after send
       return;
     }
     result = { method: 'url', url: serverResult.url };
@@ -1019,6 +1089,56 @@ function rColor(h) {
 }
 
 boot();
-</script>
-</body>
-</html>
+
+// ── Pull-to-refresh on pick tab ───────────────────────────────────────────────
+(function() {
+  const scroller = document.getElementById('flist-scroll');
+  if (!scroller) return;
+  let startY = 0, pulling = false;
+  let indicator = null;
+
+  function getIndicator() {
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.style.cssText = 'position:absolute;top:0;left:0;right:0;height:0;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;transition:height .2s;z-index:10;pointer-events:none';
+      indicator.innerHTML = '<div style="font-size:12px;color:var(--ink4);padding-bottom:6px">↓ Pull to refresh</div>';
+      scroller.parentElement.style.position = 'relative';
+      scroller.parentElement.insertBefore(indicator, scroller);
+    }
+    return indicator;
+  }
+
+  scroller.addEventListener('touchstart', e => {
+    if (scroller.scrollTop === 0) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+
+  scroller.addEventListener('touchmove', e => {
+    if (!pulling) return;
+    const dy = e.touches[0].clientY - startY;
+    if (dy > 0) {
+      const ind = getIndicator();
+      const h = Math.min(dy * 0.4, 56);
+      ind.style.height = h + 'px';
+      ind.querySelector('div').textContent = h > 44 ? '↑ Release to refresh' : '↓ Pull to refresh';
+    }
+  }, { passive: true });
+
+  scroller.addEventListener('touchend', e => {
+    if (!pulling) return;
+    pulling = false;
+    const dy = e.changedTouches[0].clientY - startY;
+    const ind = getIndicator();
+    ind.style.height = '0';
+    if (dy > 80 && myName) {
+      showToast('Refreshing…');
+      loadMyPicksStatus().then(() => showToast('Updated ✓')).catch(() => {});
+    }
+  }, { passive: true });
+})();
+
+// ── Refresh status when app comes back to foreground ──────────────────────────
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && myName) {
+    loadMyPicksStatus().catch(() => {});
+  }
+});
