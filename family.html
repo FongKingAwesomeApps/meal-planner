@@ -416,6 +416,8 @@ G.cSheet=cSheet; G.showToast=showToast; G.fTab=fTab;
 G.setSuggestMode=setSuggestMode; G.submitSuggestion=submitSuggestion;
 G.setPartner=setPartner; G.render=render;
 G.loadMyPicksStatus=loadMyPicksStatus;
+G.toggleAttendance=toggleAttendance;
+G.togglePlusOne=togglePlusOne;
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 async function renderSettingsTab() {
@@ -610,8 +612,21 @@ function enterPicker() {
   document.getElementById('screen-name').classList.add('hidden');
   document.getElementById('screen-app').classList.remove('hidden');
   render();
+
+  const role = (myMember?.role || 'Household').toLowerCase();
+  const isGuest = role === 'guest';
+
+  if (isGuest) {
+    // Guests go straight to Plan tab
+    fTab('plan');
+    loadMyAttendance();
+  } else {
+    // Household — show picks tab, load roster status
+    fTab('pick');
+    loadRosterStatus();
+    loadMyPicksStatus();
+  }
   renderPlanTab();
-  loadMyPicksStatus();
 }
 
 // ── Picks status view ─────────────────────────────────────────────────────────
@@ -863,11 +878,77 @@ function updateCTA() {
 }
 
 // ── Plan tab ──────────────────────────────────────────────────────────────────
+// ── Roster status (household) ─────────────────────────────────────────────────
+async function loadRosterStatus() {
+  if (!Sync.isConnected() || !myName) return;
+  try {
+    const fid = Sync.getFamilyId();
+    const data = await fetch(`https://meal-planner-api.davekingca.workers.dev/family/${fid}/roster?week=${getCurrentWeekSunday()}`).then(r=>r.json());
+    const roster = data.roster || {};
+    // Default household = active unless explicitly set false
+    const active = roster[myName]?.active !== false;
+    const card = document.getElementById('picks-status-card');
+    if (!card) return;
+    if (!active) {
+      card.style.background = '#f2f2f7';
+      document.getElementById('picks-status-icon').textContent = '📅';
+      document.getElementById('picks-status-title').textContent = "You're not on the roster this week";
+      document.getElementById('picks-status-title').style.color = 'var(--ink3)';
+      document.getElementById('picks-status-sub').textContent = 'The coordinator hasn\'t added you to this week\'s plan';
+      document.getElementById('picks-status-sub').style.color = 'var(--ink4)';
+      card.classList.remove('hidden');
+    }
+  } catch(e) {}
+}
+
+// ── Guest attendance ──────────────────────────────────────────────────────────
+let _myAttendance = {}; // { "2026-05-08": { attending: true, plusOne: false } }
+
+async function loadMyAttendance() {
+  if (!Sync.isConnected() || !myName) return;
+  try {
+    const fid = Sync.getFamilyId();
+    const data = await fetch(`https://meal-planner-api.davekingca.workers.dev/family/${fid}/attendance?week=${getCurrentWeekSunday()}`).then(r=>r.json());
+    _myAttendance = (data.attendance || {})[myName] || {};
+  } catch(e) {}
+  renderPlanTab();
+}
+
+async function toggleAttendance(dateKey) {
+  const current = _myAttendance[dateKey]?.attending !== false;
+  if (!_myAttendance[dateKey]) _myAttendance[dateKey] = {};
+  _myAttendance[dateKey].attending = !current;
+  // If not attending, clear plusOne
+  if (!_myAttendance[dateKey].attending) _myAttendance[dateKey].plusOne = false;
+  renderPlanTab();
+  saveAttendance();
+}
+
+async function togglePlusOne(dateKey) {
+  if (!_myAttendance[dateKey]) _myAttendance[dateKey] = {};
+  _myAttendance[dateKey].plusOne = !(_myAttendance[dateKey]?.plusOne);
+  renderPlanTab();
+  saveAttendance();
+}
+
+async function saveAttendance() {
+  if (!Sync.isConnected() || !myName) return;
+  try {
+    const fid = Sync.getFamilyId();
+    fetch(`https://meal-planner-api.davekingca.workers.dev/family/${fid}/attendance`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name: myName, weekSunday: getCurrentWeekSunday(), attendance: _myAttendance })
+    }).catch(()=>{});
+  } catch(e) {}
+}
+
 function renderPlanTab() {
   const plan = Store.getWeekPlan();
   const now  = new Date();
   const sun  = new Date(now); sun.setDate(now.getDate() - now.getDay()); sun.setHours(0,0,0,0);
   const el   = document.getElementById('plan-list');
+  const role = (myMember?.role || 'Household').toLowerCase();
+  const isGuest = role === 'guest';
   let html   = '';
 
   for (let d = 0; d < 7; d++) {
@@ -878,18 +959,35 @@ function renderPlanTab() {
     const ds    = date.toLocaleDateString('en-US', {month:'short', day:'numeric'});
     const accent = meal ? rColor(meal.health) : 'var(--sep)';
 
-    html += `<div class="plan-day-card"${meal?' onclick="fOR('+meal.id+')" style="cursor:pointer"':''}>
+    // Guest RSVP state — default attending
+    const rsvp = isGuest ? (_myAttendance[key] || {}) : null;
+    const attending = rsvp ? rsvp.attending !== false : true;
+    const plusOne   = rsvp ? !!rsvp.plusOne : false;
+    const partner   = myMember?.partner;
+
+    html += `<div class="plan-day-card">
       <div class="plan-day-row">
         <div class="plan-day-accent" style="background:${accent}"></div>
         <div class="plan-day-name">${DAYS[d].slice(0,3)}</div>
-        <div style="flex:1;min-width:0">
+        <div style="flex:1;min-width:0" ${meal && !isGuest ? `onclick="fOR(${meal.id})" style="cursor:pointer"` : ''}>
           ${meal
-            ? `<div class="plan-day-meal">${meal.name}</div>
+            ? `<div class="plan-day-meal"${attending===false?' style="opacity:.4;text-decoration:line-through"':''}>${meal.name}</div>
                <div style="font-size:11px;color:var(--ink4);margin-top:2px">${ds} · ${entry?.pax||4} people</div>`
             : `<div class="plan-day-empty">Not set yet</div>
                <div style="font-size:11px;color:var(--ink5);margin-top:2px">${ds}</div>`}
         </div>
-        ${meal ? rp(meal.health, true) : ''}
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
+          ${meal ? rp(meal.health, true) : ''}
+          ${isGuest && meal ? `
+            <button onclick="event.stopPropagation();toggleAttendance('${key}')" style="font-size:11px;padding:3px 8px;border-radius:8px;border:none;cursor:pointer;font-weight:600;background:${attending?'var(--green)':'var(--bg2)'};color:${attending?'#fff':'var(--ink3)'}">
+              ${attending ? '✓ Going' : '✕ Skip'}
+            </button>
+            ${attending && partner ? `
+            <button onclick="event.stopPropagation();togglePlusOne('${key}')" style="font-size:10px;padding:2px 7px;border-radius:7px;border:none;cursor:pointer;background:${plusOne?'var(--blue)':'var(--bg2)'};color:${plusOne?'#fff':'var(--ink4)'}">
+              ${plusOne ? `+ ${partner}` : `+ ${partner}?`}
+            </button>` : ''}
+          ` : ''}
+        </div>
       </div>
     </div>`;
   }
