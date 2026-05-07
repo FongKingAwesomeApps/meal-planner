@@ -352,6 +352,20 @@
 </div>
 
 <!-- Partner toggle sheet -->
+<div class="sheet" id="sheet-confirm-send">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">Confirm your picks</div>
+    <button class="sheet-close" onclick="cSheet()">✕</button>
+  </div>
+  <div style="padding:0 16px 32px;display:flex;flex-direction:column;gap:12px">
+    <div id="confirm-send-meal-list" style="background:var(--bg);border-radius:var(--r12);padding:12px 14px;font-size:13px;color:var(--ink2);line-height:1.8"></div>
+    <div style="font-size:14px;font-weight:600;color:var(--ink1);padding-top:4px">Are you joining for dinner this week?</div>
+    <button class="btn btn-primary" id="confirm-send-yes-btn" onclick="confirmSendPicks(true)">✅ Yes, I'm joining</button>
+    <button class="btn btn-ghost" onclick="confirmSendPicks(false)">Send picks only</button>
+  </div>
+</div>
+
 <div class="sheet" id="sheet-partner">
   <div class="sheet-handle"></div>
   <div class="sheet-header">
@@ -397,6 +411,7 @@ G.fToggleFav=fToggleFav;
 G.toggleFamilyNotif=toggleFamilyNotif;
 G.saveSettingsFid=saveSettingsFid;
 G.switchUser=switchUser; G.fT=fT; G.fOR=fOR; G.sendPicks=sendPicks; G.pickName=pickName;
+G.confirmSendPicks=confirmSendPicks;
 G.cSheet=cSheet; G.showToast=showToast; G.fTab=fTab;
 G.setSuggestMode=setSuggestMode; G.submitSuggestion=submitSuggestion;
 G.setPartner=setPartner; G.render=render;
@@ -921,33 +936,34 @@ async function sendPicks() {
     return;
   }
 
-  // Add +1 pax note if partner joining
-  const pax = partnerJoining ? [...sel].map(id => ({id, pax: 5})) : null;
-  const ids  = [...sel];
+  // Show confirm sheet with meal list
+  const mealNames = [...sel].map(id => {
+    const m = Meals.getMeal(id);
+    return m ? `• ${m.name}` : '';
+  }).filter(Boolean).join('<br>');
+  document.getElementById('confirm-send-meal-list').innerHTML = mealNames;
+  openSheet('sheet-confirm-send');
+}
 
-  // Try server sync first, fall back to URL share
-  let result;
+async function confirmSendPicks(joining) {
+  cSheet();
+  const ids = [...sel];
+  const message = joining ? `${myName} is joining for dinner this week` : '';
+
   if (Sync.isConnected()) {
-    const serverResult = await Sync.sendPicks(myName, ids,
-      partnerJoining ? `${myMember.partner} is joining this week` : '');
+    const serverResult = await Sync.sendPicks(myName, ids, message);
     if (serverResult.method === 'server') {
-      showToast('Picks sent! 🎉');
+      showToast(joining ? 'Picks sent! See you at dinner 🍽' : 'Picks sent! 🎉');
       sel.clear(); render();
-      setTimeout(loadMyPicksStatus, 1000); // refresh status after send
+      setTimeout(loadMyPicksStatus, 1000);
       return;
     }
-    result = { method: 'url', url: serverResult.url };
-  } else {
-    result = await sharePicksURL(myName, ids,
-      partnerJoining ? `${myMember.partner} is joining this week` : '');
   }
 
-  if (result.method === 'share') {
+  const result = await sharePicksURL(myName, ids, message);
+  if (result.method === 'share' || result.method === 'clipboard') {
     showToast('Picks sent! 🎉');
-  } else if (result.method === 'clipboard') {
-    showToast('Link copied — send it to the coordinator');
   } else {
-    // Manual fallback — show URL
     const url = result.url;
     const box = document.createElement('div');
     box.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;display:flex;align-items:center;justify-content:center;padding:24px';
