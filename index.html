@@ -411,16 +411,23 @@
     <input class="form-input" id="edit-meal-name" type="text" autocapitalize="words" autocorrect="off">
     <div class="form-spacer"></div>
     <div style="display:flex;gap:8px;padding:0 16px">
-      <select class="form-input" id="edit-meal-cat" style="flex:1;margin:0">
+      <select class="form-input" id="edit-meal-cat" style="flex:1;margin:0" onchange="onEditCatChange()">
         <option value="comfort">Comfort</option><option value="pasta">Pasta</option>
         <option value="chicken">Chicken</option><option value="pork">Pork</option>
         <option value="beef">Beef</option><option value="fish">Fish</option>
         <option value="crockpot">Slow Cook</option><option value="camping">Camping</option>
+        <option value="__new__">＋ New category…</option>
       </select>
       <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:var(--r12);padding:0 12px;flex-shrink:0">
         <span style="font-size:11px;font-weight:700;color:var(--ink4)">SLOW<br>COOK</span>
         <input type="checkbox" id="edit-meal-crockpot" style="width:18px;height:18px;accent-color:var(--blue)">
       </div>
+    </div>
+    <!-- New category input for edit sheet -->
+    <div id="edit-new-cat-wrap" class="hidden" style="padding:8px 16px 0">
+      <input class="form-input" id="edit-new-cat-input" type="text" placeholder="e.g. Korean, Mexican, Soup…"
+        style="margin:0;width:100%" autocapitalize="on" autocorrect="off" autocomplete="off" spellcheck="false">
+      <div style="font-size:11px;color:var(--ink4);margin-top:5px;padding:0 2px">Becomes a filter chip automatically</div>
     </div>
     <div class="form-spacer"></div>
     <label class="form-label">Fridge ingredients <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(qty · name)</span></label>
@@ -481,6 +488,14 @@
         spellcheck="false"
         oninput="onNewCatInput()">
       <div style="font-size:11px;color:var(--ink4);margin-top:5px;padding:0 2px">e.g. Korean, Mexican, Baking — becomes a filter chip automatically</div>
+    </div>
+    <div class="form-spacer"></div>
+    <div class="form-spacer"></div>
+    <label class="form-label">Health target <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(AI will generate to this spec)</span></label>
+    <div class="rating-pick" style="margin:0 16px">
+      <div class="rating-opt ro-l" id="ro-pre-light" onclick="selectPreRating('light')">Light</div>
+      <div class="rating-opt ro-b ro-selected" id="ro-pre-balanced" onclick="selectPreRating('balanced')">Balanced</div>
+      <div class="rating-opt ro-i" id="ro-pre-indulgent" onclick="selectPreRating('indulgent')">Indulgent</div>
     </div>
     <div class="form-spacer"></div>
     <button class="ai-btn" id="ai-generate-btn" onclick="aiGenerateMeal()" disabled style="opacity:.4">✨ Generate with AI</button>
@@ -867,6 +882,8 @@ G.saveEditMeal=saveEditMeal;
 G.deleteCustomMeal=deleteCustomMeal;
 G.onCatChange=onCatChange;
 G.onNewCatInput=onNewCatInput;
+G.onEditCatChange=onEditCatChange;
+G.selectPreRating=selectPreRating;
 G.getEffectiveCat=getEffectiveCat;
 G.stepWeek=stepWeek;
 G.shareFamilyURL=shareFamilyURL;
@@ -1505,15 +1522,46 @@ function toggleShopItem(key,row) {
   row.querySelector('.shop-check').textContent=checkedItems.has(key)?'✓':'';
 }
 function shareShoppingList() {
-  const ids=Object.keys(selected).map(Number);
-  const lines=['🛒 SHOPPING LIST\n'];
-  const f={},p={};
-  ids.forEach(id=>{const m=Meals.getMeal(id);if(!m)return;(m.fridge||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;f[k]=true;});(m.pantry||[]).forEach(i=>{const k=typeof i==='string'?i:i.name;p[k]=true;});});
-  if(Object.keys(f).length){lines.push('── Fridge ──');Object.keys(f).sort().forEach(i=>lines.push(`• ${i}`));}
-  if(Object.keys(p).length){lines.push('\n── Pantry ──');Object.keys(p).sort().forEach(i=>lines.push(`• ${i}`));}
-  const text=lines.join('\n');
-  if(navigator.share)navigator.share({title:'Shopping List',text});
-  else navigator.clipboard?.writeText(text).then(()=>showToast('List copied'));
+  const ids = Object.keys(selected).map(Number);
+  const lines = ['🛒 SHOPPING LIST\n'];
+  const f = {}, p = {};
+  ids.forEach(id => {
+    const m = Meals.getMeal(id); if (!m) return;
+    const addItem = (store, i) => {
+      const name = typeof i === 'string' ? i : i.name;
+      const qty  = typeof i === 'object' ? i.qty || '' : '';
+      if (!name) return;
+      if (!store[name]) store[name] = { qtys: [], count: 0 };
+      store[name].count++;
+      if (qty) store[name].qtys.push(qty);
+    };
+    (m.fridge||[]).forEach(i => addItem(f, i));
+    (m.pantry||[]).forEach(i => addItem(p, i));
+  });
+  const fmt = (name, data) => {
+    let qty = '';
+    if (data.qtys.length > 0) {
+      const qtyMatch = data.qtys[0].match(/^([\d.\/]+)\s*([a-zA-Z]*)/);
+      if (qtyMatch && data.count > 1) {
+        const num = parseFloat(qtyMatch[1]);
+        const unit = qtyMatch[2] || '';
+        if (!isNaN(num)) qty = (Math.round(num * data.count * 100) / 100) + (unit ? ' ' + unit : '');
+        else qty = data.qtys[0] + ' ×' + data.count;
+      } else {
+        qty = data.qtys[0];
+      }
+    } else if (data.count > 1) {
+      qty = '×' + data.count;
+    }
+    return `• ${name}${qty ? ' — ' + qty : ''}`;
+  };
+  const requests = document.getElementById('shop-requests')?.value?.trim();
+  if (Object.keys(f).length) { lines.push('── Fridge ──'); Object.keys(f).sort().forEach(n => lines.push(fmt(n, f[n]))); }
+  if (Object.keys(p).length) { lines.push('\n── Pantry ──'); Object.keys(p).sort().forEach(n => lines.push(fmt(n, p[n]))); }
+  if (requests) { lines.push('\n── Additional ──'); lines.push(requests); }
+  const text = lines.join('\n');
+  if (navigator.share) navigator.share({title:'Shopping List', text});
+  else navigator.clipboard?.writeText(text).then(() => showToast('List copied'));
 }
 
 // ── Meal plan ─────────────────────────────────────────────────────────────────
@@ -1757,6 +1805,28 @@ function refreshCatDropdown() {
 }
 
 // Handle category dropdown change
+function onEditCatChange() {
+  const val = document.getElementById('edit-meal-cat')?.value;
+  const wrap = document.getElementById('edit-new-cat-wrap');
+  if (!wrap) return;
+  if (val === '__new__') {
+    wrap.classList.remove('hidden');
+    document.getElementById('edit-new-cat-input')?.focus();
+  } else {
+    wrap.classList.add('hidden');
+  }
+}
+
+function getEffectiveEditCat() {
+  const sel = document.getElementById('edit-meal-cat')?.value;
+  if (sel === '__new__') {
+    const custom = document.getElementById('edit-new-cat-input')?.value.trim();
+    if (!custom) return 'comfort';
+    return custom.toLowerCase().replace(/\s+/g, '-');
+  }
+  return sel || 'comfort';
+}
+
 function onCatChange() {
   const val = document.getElementById('add-cat')?.value;
   const wrap = document.getElementById('new-cat-wrap');
@@ -1795,6 +1865,16 @@ function onAddNameInput() {
   if (btn) { btn.disabled = name.length < 2; btn.style.opacity = name.length < 2 ? '.4' : '1'; }
 }
 
+let _preRating = 'balanced';
+function selectPreRating(r) {
+  _preRating = r;
+  ['light','balanced','indulgent'].forEach(v => {
+    const el = document.getElementById('ro-pre-' + v);
+    if (!el) return;
+    el.classList.toggle('ro-selected', v === r);
+  });
+}
+
 async function aiGenerateMeal() {
   const name = document.getElementById('add-name').value.trim();
   if (!name) { showToast('Enter a meal name first'); return; }
@@ -1815,6 +1895,7 @@ async function aiGenerateMeal() {
       body: JSON.stringify({
         name,
         category: getEffectiveCat(),
+        healthTarget: _preRating,
       })
     });
     if (!res.ok) throw new Error('Worker returned ' + res.status);
@@ -2033,7 +2114,7 @@ function saveEditMeal() {
   const updated = {
     id:       _editingMealId,
     name,
-    cat:      document.getElementById('edit-meal-cat').value,
+    cat:      getEffectiveEditCat(),
     crockpot: document.getElementById('edit-meal-crockpot').checked,
     fridge:   parseIngredientLines(document.getElementById('edit-meal-fridge').value),
     pantry:   parseIngredientLines(document.getElementById('edit-meal-pantry').value),
@@ -2551,6 +2632,57 @@ function copyFamilyURL() {
 }
 
 boot();
-</script>
-</body>
-</html>
+
+// ── Pull-to-refresh on home screen ───────────────────────────────────────────
+(function() {
+  const scroller = document.getElementById('home-scroll');
+  if (!scroller) return;
+  let startY = 0, pulling = false;
+  let indicator = null;
+
+  function getIndicator() {
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.id = 'ptr-indicator';
+      indicator.style.cssText = 'position:absolute;top:0;left:0;right:0;height:0;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;transition:height .2s;z-index:10;pointer-events:none';
+      indicator.innerHTML = '<div style="font-size:12px;color:var(--ink4);padding-bottom:6px">↓ Pull to refresh</div>';
+      scroller.parentElement.style.position = 'relative';
+      scroller.parentElement.insertBefore(indicator, scroller);
+    }
+    return indicator;
+  }
+
+  scroller.addEventListener('touchstart', e => {
+    if (scroller.scrollTop === 0) { startY = e.touches[0].clientY; pulling = true; }
+  }, { passive: true });
+
+  scroller.addEventListener('touchmove', e => {
+    if (!pulling) return;
+    const dy = e.touches[0].clientY - startY;
+    if (dy > 0) {
+      const ind = getIndicator();
+      const h = Math.min(dy * 0.4, 56);
+      ind.style.height = h + 'px';
+      ind.querySelector('div').textContent = h > 44 ? '↑ Release to refresh' : '↓ Pull to refresh';
+    }
+  }, { passive: true });
+
+  scroller.addEventListener('touchend', e => {
+    if (!pulling) return;
+    pulling = false;
+    const dy = e.changedTouches[0].clientY - startY;
+    const ind = getIndicator();
+    ind.style.height = '0';
+    if (dy > 80 && Sync.isConnected()) {
+      showToast('Refreshing…');
+      loadPicksFromWorker().then(() => showToast('Updated ✓')).catch(() => {});
+    }
+  }, { passive: true });
+})();
+
+// ── Refresh picks when app comes back to foreground ───────────────────────────
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && Sync.isConnected()) {
+    loadPicksFromWorker().catch(() => {});
+  }
+});
