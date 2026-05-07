@@ -200,11 +200,10 @@
   <div class="safe-top"></div>
   <div class="nav-bar"><span class="nav-back" onclick="goBack()">← Meals</span><span class="nav-title">Shopping List</span><span class="nav-action"></span></div>
   <div style="padding:0 16px 8px"><span class="t-sec">Tap items to check off as you shop</span></div>
-  <div class="scroll-body" style="padding-bottom:90px">
+  <div class="scroll-body" style="padding-bottom:120px">
     <div id="shopping-list-body"></div>
     <div style="height:8px"></div>
-    <button class="btn btn-dark btn-sm" onclick="shareShoppingList()">Share List</button>
-
+    <button class="btn btn-dark btn-sm" onclick="shareShoppingList()" style="margin-bottom:16px">Share List</button>
   </div>
 
 </div>
@@ -366,12 +365,18 @@
       <input class="form-input" id="build-name" type="text" autocapitalize="words" autocorrect="off">
       <div class="form-spacer"></div>
       <label class="form-label">Category</label>
-      <select class="form-input" id="build-cat">
+      <select class="form-input" id="build-cat" onchange="onBuildCatChange()">
         <option value="comfort">Comfort</option><option value="pasta">Pasta</option>
         <option value="chicken">Chicken</option><option value="pork">Pork</option>
         <option value="beef">Beef</option><option value="fish">Fish</option>
         <option value="crockpot">Crockpot</option><option value="camping">Camping</option>
+        <option value="__new__">＋ New category…</option>
       </select>
+      <div id="build-new-cat-wrap" class="hidden" style="padding:8px 0 0">
+        <input class="form-input" id="build-new-cat-input" type="text" placeholder="e.g. Korean, Mexican, Soup…"
+          style="margin:0;width:100%" autocapitalize="on" autocorrect="off" autocomplete="off" spellcheck="false">
+        <div style="font-size:11px;color:var(--ink4);margin-top:5px;padding:0 2px">Becomes a filter chip automatically</div>
+      </div>
       <div class="form-spacer"></div>
       <label class="form-label">Fridge ingredients</label>
       <textarea class="form-input form-textarea" id="build-fridge"></textarea>
@@ -883,6 +888,7 @@ G.deleteCustomMeal=deleteCustomMeal;
 G.onCatChange=onCatChange;
 G.onNewCatInput=onNewCatInput;
 G.onEditCatChange=onEditCatChange;
+G.onBuildCatChange=onBuildCatChange;
 G.selectPreRating=selectPreRating;
 G.getEffectiveCat=getEffectiveCat;
 G.stepWeek=stepWeek;
@@ -1337,7 +1343,7 @@ function renderMeals() {
     html+=`<div class="cat-anchor">${getCatLabel(cat)}</div>`;
     groups[cat].forEach(m=>{
       const sel=!!selected[m.id], pax=selected[m.id]?.pax||4;
-      html+=`<div class="pill-wrap"><div class="pill${sel?' pill-sel':''}" onclick="toggleMeal(${m.id})" oncontextmenu="event.preventDefault();openEditMeal(${m.id})" title="Long press to edit">
+      html+=`<div class="pill-wrap"><div class="pill${sel?' pill-sel':''}" onclick="toggleMeal(${m.id})" oncontextmenu="event.preventDefault();openEditMeal(${m.id})" data-edit-id="${m.id}" title="Long press to edit">
         <div class="pill-bar"></div>
         <div class="pill-inner">
           <div class="pill-check${sel?' on':''}">${sel?'✓':''}</div>
@@ -1805,6 +1811,28 @@ function refreshCatDropdown() {
 }
 
 // Handle category dropdown change
+function onBuildCatChange() {
+  const val = document.getElementById('build-cat')?.value;
+  const wrap = document.getElementById('build-new-cat-wrap');
+  if (!wrap) return;
+  if (val === '__new__') {
+    wrap.classList.remove('hidden');
+    document.getElementById('build-new-cat-input')?.focus();
+  } else {
+    wrap.classList.add('hidden');
+  }
+}
+
+function getEffectiveBuildCat() {
+  const sel = document.getElementById('build-cat')?.value;
+  if (sel === '__new__') {
+    const custom = document.getElementById('build-new-cat-input')?.value.trim();
+    if (!custom) return 'comfort';
+    return custom.toLowerCase().replace(/\s+/g, '-');
+  }
+  return sel || 'comfort';
+}
+
 function onEditCatChange() {
   const val = document.getElementById('edit-meal-cat')?.value;
   const wrap = document.getElementById('edit-new-cat-wrap');
@@ -2203,7 +2231,7 @@ function startBuildFromSuggestion(id) {
     document.getElementById('build-recipe-status').textContent = '';
     document.getElementById('build-recipe-fields')?.classList.add('hidden');
     openSheet('sheet-build-recipe');
-    generateFromSuggestion();
+    // Don't auto-generate — let user choose health level first
   }, 320);
 }
 
@@ -2262,7 +2290,7 @@ function saveBuildRecipe() {
   const meal = {
     id:      Meals.newMealId(),
     name,
-    cat:     document.getElementById('build-cat')?.value || 'comfort',
+    cat:     getEffectiveBuildCat(),
     crockpot:false,
     fridge:  parseIngredientLines(document.getElementById('build-fridge')?.value || ''),
     pantry:  parseIngredientLines(document.getElementById('build-pantry')?.value || ''),
@@ -2630,6 +2658,34 @@ function copyFamilyURL() {
   const url = Sync.getFamilyAppURL();
   navigator.clipboard?.writeText(url).then(() => showToast('Copied: ' + url));
 }
+
+// ── Long press to edit meal (iOS touch support) ───────────────────────────────
+(function() {
+  let timer = null;
+  let moved = false;
+  const LIST = document.getElementById('meals-list');
+  if (!LIST) return;
+
+  LIST.addEventListener('touchstart', e => {
+    const pill = e.target.closest('[data-edit-id]');
+    if (!pill) return;
+    moved = false;
+    timer = setTimeout(() => {
+      if (!moved) {
+        e.preventDefault();
+        openEditMeal(parseInt(pill.dataset.editId));
+      }
+    }, 500);
+  }, { passive: true });
+
+  LIST.addEventListener('touchmove', () => {
+    moved = true;
+    clearTimeout(timer);
+  }, { passive: true });
+
+  LIST.addEventListener('touchend', () => clearTimeout(timer), { passive: true });
+  LIST.addEventListener('touchcancel', () => clearTimeout(timer), { passive: true });
+})();
 
 boot();
 
