@@ -147,6 +147,21 @@
       </div>
       <button class="btn btn-primary btn-sm mb-8" onclick="openSheet('sheet-approve')">Review &amp; Approve Picks</button>
     </div>
+
+    <!-- Weekly Roster -->
+    <div id="home-roster-card" class="hidden" style="margin:0 0 8px">
+      <div class="flex-row px-16 mb-4 mt-8" style="gap:0">
+        <span class="t-label flex-1">This week's roster</span>
+        <span class="t-link-sm" onclick="openSheet('sheet-notify')">Notify →</span>
+      </div>
+      <div style="margin:0 16px;background:var(--bg);border-radius:var(--r14);padding:12px 14px">
+        <div id="home-roster-avatars" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      </div>
+    </div>
+        <div class="pick-chips" id="home-picks-chips"></div>
+      </div>
+      <button class="btn btn-primary btn-sm mb-8" onclick="openSheet('sheet-approve')">Review &amp; Approve Picks</button>
+    </div>
     <div class="flex-row px-16 mb-8 mt-8" style="gap:0">
       <span class="t-label flex-1">This week</span>
       <span class="t-link-sm" onclick="if(window.goTo)goTo('screen-plan')">See plan</span>
@@ -323,6 +338,21 @@
 <div class="sheet" id="sheet-recipe">
   <div class="sheet-handle"></div>
   <div class="sheet-scroll" id="sheet-recipe-body"></div>
+</div>
+
+<!-- SHEET: NOTIFY ROSTER -->
+<div class="sheet" id="sheet-notify">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">Notify family</div>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div style="padding:0 16px 32px;display:flex;flex-direction:column;gap:12px">
+    <div class="t-sec" style="line-height:1.6">Send a push notification to active members. Only people marked as "in" this week will receive it.</div>
+    <button class="btn btn-primary" onclick="notifyRoster('household')">🏠 Notify Household</button>
+    <button class="btn btn-ghost" onclick="notifyRoster('guest')">👥 Notify Guests</button>
+    <button class="btn btn-ghost" onclick="notifyRoster('all')" style="color:var(--ink3)">📣 Notify Everyone</button>
+  </div>
 </div>
 
 <!-- SHEET: APPROVE PICKS -->
@@ -874,6 +904,9 @@ G.createBackupUI=createBackupUI; G.applyRestoreUI=applyRestoreUI;
 G.approvePickMeal=approvePickMeal; G.skipPickMeal=skipPickMeal; G.approveAllPicks=approveAllPicks;
 G.dismissAllPicks=dismissAllPicks;
 G.loadPicksFromWorker=loadPicksFromWorker;
+G.toggleRosterMember=toggleRosterMember;
+G.notifyRoster=notifyRoster;
+G.loadAttendance=loadAttendance;
 G.showToast=showToast;
 G.changeWeek=changeWeek;
 G.toggleFav=toggleFav;
@@ -944,6 +977,8 @@ async function boot() {
   const incoming = parsePicksFromURL();
   if (incoming) { pendingPicks = incoming; clearPicksFromURL(); showPendingPicks(); }
   else if (Sync.isConnected()) { loadPicksFromWorker(); }
+  renderRoster();
+  loadRoster();
   checkForSuggestion();
   renderSuggestionBadge();
   updateGreeting();
@@ -1002,7 +1037,7 @@ function goTo(id) {
 
   if (id === 'screen-meals') renderMeals();
   if (id === 'screen-list')  renderShoppingList();
-  if (id === 'screen-plan')  renderPlan();
+  if (id === 'screen-plan')  { loadAttendance().then(() => renderPlan()); }
 }
 
 function goBack() {
@@ -1062,6 +1097,89 @@ function weekRange() {
 }
 
 // ── Balance card ──────────────────────────────────────────────────────────────
+// ── Weekly Roster ─────────────────────────────────────────────────────────────
+let _weekRoster = {}; // { name: { active: bool } }
+
+function getCurrentWeekSunday() {
+  const now = new Date();
+  const sun = new Date(now);
+  sun.setDate(now.getDate() - now.getDay());
+  sun.setHours(0,0,0,0);
+  return sun.toLocaleDateString('en-CA');
+}
+
+async function loadRoster() {
+  if (!Sync.isConnected()) return;
+  try {
+    const fid = Sync.getFamilyId();
+    const data = await fetch(`https://meal-planner-api.davekingca.workers.dev/family/${fid}/roster?week=${getCurrentWeekSunday()}`).then(r=>r.json());
+    _weekRoster = data.roster || {};
+  } catch(e) {}
+  renderRoster();
+}
+
+async function toggleRosterMember(name) {
+  const family = Store.getFamily();
+  const member = family.find(m => m.name === name);
+  if (!member) return;
+  const role = (member.role || 'Household').toLowerCase();
+  // Default: household = true, guest = false
+  const currentDefault = role !== 'guest';
+  const current = _weekRoster[name]?.active ?? currentDefault;
+  _weekRoster[name] = { active: !current };
+  renderRoster();
+  // Save to Worker
+  if (Sync.isConnected()) {
+    const fid = Sync.getFamilyId();
+    fetch(`https://meal-planner-api.davekingca.workers.dev/family/${fid}/roster`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ weekSunday: getCurrentWeekSunday(), roster: _weekRoster })
+    }).catch(()=>{});
+  }
+}
+
+function renderRoster() {
+  const family = Store.getFamily();
+  const nonCoord = family.filter(m => (m.role || 'Household').toLowerCase() !== 'coordinator');
+  const card = document.getElementById('home-roster-card');
+  const el = document.getElementById('home-roster-avatars');
+  if (!el || !card) return;
+  if (!nonCoord.length) { card.classList.add('hidden'); return; }
+  card.classList.remove('hidden');
+  el.innerHTML = nonCoord.map(m => {
+    const role = (m.role || 'Household').toLowerCase();
+    const defaultActive = role !== 'guest';
+    const active = _weekRoster[m.name]?.active ?? defaultActive;
+    const colour = active ? (m.colour || '#8e8e93') : '#c7c7cc';
+    return `<div onclick="toggleRosterMember('${m.name}')" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;min-width:48px">
+      <div style="width:40px;height:40px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;position:relative;transition:background .2s">
+        ${m.name[0]}
+        ${!active ? '<div style="position:absolute;inset:0;border-radius:50%;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:14px">✕</div>' : ''}
+      </div>
+      <div style="font-size:10px;color:${active?'var(--ink2)':'var(--ink5)'};font-weight:${active?'600':'400'}">${m.name.split(' ')[0]}</div>
+      ${role === 'guest' ? `<div style="font-size:9px;color:var(--ink5)">guest</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+async function notifyRoster(memberType) {
+  if (!Sync.isConnected()) { showToast('Not connected'); return; }
+  closeSheet();
+  try {
+    const fid = Sync.getFamilyId();
+    const res = await fetch(`https://meal-planner-api.davekingca.workers.dev/family/${fid}/notify-roster`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        memberType,
+        weekSunday: getCurrentWeekSunday(),
+        title: '🍽 Time to review the meal plan!',
+        body: "The week's meals are ready — tap to pick your favourites"
+      })
+    }).then(r=>r.json());
+    showToast(res.sent > 0 ? `Notified ${res.sent} member${res.sent>1?'s':''}` : 'No active subscribers found');
+  } catch(e) { showToast('Could not send notification'); }
+}
+
 function renderHomeBalance() {
   weekPlan = Store.getWeekPlan();
   const counts={light:0,balanced:0,indulgent:0};
@@ -1571,6 +1689,31 @@ function shareShoppingList() {
 }
 
 // ── Meal plan ─────────────────────────────────────────────────────────────────
+let _weekAttendance = {}; // { name: { "2026-05-08": { attending: true, plusOne: true } } }
+
+async function loadAttendance() {
+  if (!Sync.isConnected()) return;
+  try {
+    const fid = Sync.getFamilyId();
+    const data = await fetch(`https://meal-planner-api.davekingca.workers.dev/family/${fid}/attendance?week=${getCurrentWeekSunday()}`).then(r=>r.json());
+    _weekAttendance = data.attendance || {};
+  } catch(e) {}
+}
+
+function renderAttendanceSummary(dateKey) {
+  const family = Store.getFamily();
+  const guests = family.filter(m => (m.role||'Household').toLowerCase() === 'guest');
+  if (!guests.length) return '';
+  const attending = guests.filter(m => {
+    const a = _weekAttendance[m.name]?.[dateKey];
+    return a === undefined ? true : a.attending !== false; // default attending
+  });
+  if (!attending.length) return '';
+  const plusOnes = attending.filter(m => _weekAttendance[m.name]?.[dateKey]?.plusOne).length;
+  const names = attending.map(m => m.name.split(' ')[0]).join(', ');
+  return `<div style="font-size:10px;color:var(--ink4);margin-top:3px;text-align:right">${names}${plusOnes ? ` +${plusOnes}` : ''}</div>`;
+}
+
 function renderPlan() {
   weekPlan=Store.getWeekPlan();
   const {sun}=weekRange();
@@ -1606,6 +1749,7 @@ function renderPlan() {
           <button class="plan-pax-btn" onclick="changePlanPax('${key}',1)">+</button>
         </div>
         ${rPill(meal.health,true)}
+        ${renderAttendanceSummary(key)}
       </div>`:''}
     </div>`;
   }
