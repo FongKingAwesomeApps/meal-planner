@@ -1766,14 +1766,7 @@ function renderPlan() {
 function setPlanMeal(key,val) {
   if(!val){delete weekPlan[key];}else{weekPlan[key]={mealId:Number(val),pax:weekPlan[key]?.pax||4};}
   Store.saveWeekPlan(weekPlan);
-  Sync.pushWeekPlan(weekPlan).then(() => {
-    // Notify family members that the plan has been updated
-    const fid = Sync.getFamilyId();
-    if (fid) fetch('https://meal-planner-api.davekingca.workers.dev/family/' + fid + '/notify-family', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({title:'🍽 Meal plan updated', body:'Check this week\'s plan', url:'/meal-planner/family.html'})
-    }).catch(()=>{});
-  }).catch(()=>{});
+  Sync.pushWeekPlan(weekPlan).catch(()=>{});
   renderPlan(); renderHomeMealList();
 }
 function changePlanPax(key,d) {
